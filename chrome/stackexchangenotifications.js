@@ -75,12 +75,12 @@
             var data = JSON.parse(response);
             if (typeof data.UnreadRepCount !== "undefined") {
 
-                inbox = data.UnreadInboxCount;
-                score = data.UnreadRepCount;
+                score = 75;//data.UnreadRepCount;
+                inbox = 12;//data.UnreadInboxCount;
 
                 senCallback({
-                    "score": data.UnreadRepCount,
-                    "inbox": data.UnreadInboxCount
+                    "score": score,
+                    "inbox": inbox
                 });
             }
         }

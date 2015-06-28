@@ -60,17 +60,17 @@ function main() {
         var score = backgroundEngine.StackExchangeNotifications.getScore();
 
         if (inbox > 0) {
-            inboxData.className = "";
+            inboxData.className = "data";
             inboxData.innerHTML = inbox;
         } else {
-            inboxData.className = "hide";
+            inboxData.className = "data hide";
         }
 
         if (score !== 0) {
-            achievementsData.className = "";
+            achievementsData.className = "data";
             achievementsData.innerHTML = score;
         } else {
-            achievementsData.className = "hide";
+            achievementsData.className = "data hide";
         }
     };
 
