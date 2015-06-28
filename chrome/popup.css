@@ -1,0 +1,112 @@
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #fcfcfc;
+    width: 400px;
+    min-height: 400px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body, a {
+    color: #4F4949;
+}
+a:hover {
+    color: #A08C8C;
+}
+
+.nav {
+    position: fixed;
+    width: 135px;
+    height: 35px;
+    right: 0;
+    top: 0;
+    padding: 1px;
+    margin: 0;
+}
+.nav a {
+    float: right;
+    width: 32px;
+    height: 32px;
+    margin: 5px 5px 0 5px;
+    position: relative;
+    text-decoration: none;
+    border-radius: 50%;
+}
+.nav a span.data {
+    position: absolute;
+    left: -4px;
+    top: -4px;
+    display: block;
+    background: #d43f3a;
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    height: 20px;
+    min-width: 20px;
+    line-height: 20px;
+    font-size: 8pt;
+}
+
+.tab-item {
+    padding-top: 30px !important;
+}
+
+.tab-load {
+    background: url(images/load.svg) center center no-repeat;
+    background-size: 32px 32px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.hide {
+    display: none !important;
+}
+
+#inbox-button,
+#about-button,
+#achievements-button {
+    background: #55D255 url(../images/inbox.svg) center center no-repeat;
+    background-size: 50% 50%;
+    border: 1px #26AB26 solid;
+}
+
+#about-button {
+    background-image: url(../images/about.svg);
+    background-color: #D8D4D4;
+    border-color: #c0c0c0;
+}
+
+#achievements-button {
+    background-image: url(../images/achievements.svg);
+    background-color: #68B0E0;
+    border-color: #3E84B3;
+}
+
+#about-content {
+    padding: 0.55em 0.25em 0.55em 0.55em;
+}
+#about-content a {
+    text-decoration: none;
+}
+
+.tab-item .modal-content ul,
+.tab-item .modal-content li {
+    margin: 0;
+    padding: 0;
+}
+
+.tab-item .modal-content li {
+    border-top: 1px #cfcfcf solid;
+}
+.tab-item .modal-content li:hover {
+    background-color: #fcfcfc;
+}
+.tab-item .modal-content li a {
+    margin: 0.25em;
+    padding: 0.55em 0.25em 0.55em 0.55em;
+    text-decoration: none;
+    display: block;
+}

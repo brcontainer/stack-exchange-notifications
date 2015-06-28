@@ -1,0 +1,25 @@
+{
+    "name": "StackExchange Notifications",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "description": "Show new score and news inbox messagens from StackExchange",
+    "browser_action": {
+       "default_icon": "images/icon.png",
+       "default_popup": "popup.html"
+    },
+    "background": {
+        "scripts": [
+            "stackexchangenotifications.js",
+            "background.js"
+        ]
+    },
+    "icons": {
+        "128": "images/icon-128px.png",
+        "48":  "images/icon-48px.png",
+        "32":  "images/icon-32px.png",
+        "16":  "images/icon.png"
+    },
+    "permissions": [
+        "http://stackexchange.com/*"
+    ]
+}
