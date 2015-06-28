@@ -75,8 +75,8 @@
             var data = JSON.parse(response);
             if (typeof data.UnreadRepCount !== "undefined") {
 
-                score = 75;//data.UnreadRepCount;
-                inbox = 12;//data.UnreadInboxCount;
+                score = data.UnreadRepCount;
+                inbox = data.UnreadInboxCount;
 
                 senCallback({
                     "score": score,
