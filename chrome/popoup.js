@@ -48,7 +48,7 @@ function main() {
         backgroundEngine    = chrome.extension.getBackgroundPage()
     ;
 
-    //document.oncontextmenu = FF;
+    document.oncontextmenu = FF;
 
     inboxButton.ondragstart = FF;
     achievementsButton.ondragstart = FF;
