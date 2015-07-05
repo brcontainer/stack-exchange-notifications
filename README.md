@@ -13,13 +13,13 @@ This extension has been created for you to stay connected on their StackExchange
 # Preview
 
 - Inbox
-- 
+
   ![Inbox](http://i.stack.imgur.com/nE9pB.png)
 
 - Achievements
-- 
+
   ![achievements](http://i.stack.imgur.com/lWLNq.png)
 
 - Pushs (notifications)
-- 
+
   ![Pushs](http://i.stack.imgur.com/rcy29.png)
