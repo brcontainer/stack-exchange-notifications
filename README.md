@@ -9,3 +9,17 @@ This extension has been created for you to stay connected on their StackExchange
 
 - Improve popup menu views/styles
 - Basic support for others languages communities/sites
+
+# Preview
+
+- Inbox
+- 
+  ![Inbox](http://i.stack.imgur.com/nE9pB.png)
+
+- Achievements
+- 
+  ![achievements](http://i.stack.imgur.com/lWLNq.png)
+
+- Pushs (notifications)
+- 
+  ![Pushs](http://i.stack.imgur.com/rcy29.png)
