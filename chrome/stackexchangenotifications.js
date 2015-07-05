@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.1
+ * StackExchangeNotifications 0.0.2
  * Copyright (c) 2015 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -20,13 +20,13 @@
 
     var isRunning = false,
         timer = null,
-        senCallback;
+        doneCallback;
 
     var noCacheURI = function(uri) {
         return [ uri, "?_=", new Date().getTime() ].join("");
     };
 
-    var quickXHR = function(uri, callback) {
+    var quickXhr = function(uri, callback) {
         var xhr       = new XMLHttpRequest(),
             completed = false;
 
@@ -37,6 +37,10 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 callback(xhr.status === 200 ? xhr.responseText : { "error": xhr.status });
+                setTimeout(function() {
+                    callback = null;
+                    xhr = null;
+                }, 1000);
             }
         };
 
@@ -53,8 +57,7 @@
     };
 
     var retrieveData = function() {
-        quickXHR(unreadCountsURI, trigger);
-        //trigger('{"UnreadRepCount": 10, "UnreadInboxCount": 100}');
+        quickXhr(unreadCountsURI, trigger);
     };
 
     var getResult = function(target) {
@@ -71,40 +74,52 @@
     };
 
     var trigger = function(response) {
+        var currentDelay = 1000 * delay;
+
         if (typeof response === "string") {
-            var data = JSON.parse(response);
+            var data;
+
+            try {
+                data = JSON.parse(response);
+            } catch (ee) {}
+
             if (typeof data.UnreadRepCount !== "undefined") {
 
                 score = data.UnreadRepCount;
                 inbox = data.UnreadInboxCount;
 
-                senCallback({
+                doneCallback({
                     "score": score,
                     "inbox": inbox
                 });
             }
+        } else if (response.error === 0) {
+            /*
+             * If the internet access fails uses a smaller delay
+             */
+            currentDelay = 1000;
         }
 
-        timer = setTimeout(retrieveData, 1000 * delay);
+        timer = setTimeout(retrieveData, currentDelay);
     };
 
     window.StackExchangeNotifications = {
         "pushs": function(callback) {
             if (false === isRunning && typeof callback === "function") {
-                isRunning   = true;
-                senCallback = callback;
+                isRunning     = true;
+                doneCallback  = callback;
                 retrieveData();
             }
         },
         "achievements": function(callback) {
             if (typeof callback === "function") {
-                return quickXHR(achievementsURI, callback);
+                return quickXhr(achievementsURI, callback);
             }
             return null;
         },
         "inbox": function(callback) {
             if (typeof callback === "function") {
-                return quickXHR(inboxURI, callback);
+                return quickXhr(inboxURI, callback);
             }
             return null;
         },
@@ -114,7 +129,7 @@
             }
         },
         "setInbox": function(size) {
-            if (size > 0 && size % 1 === 0) {
+            if (size > -1 && size % 1 === 0) {
                 inbox = size;
             }
         },
@@ -136,7 +151,7 @@
 
                 setTimeout(retrieveData, 1);
             } else {
-                senCallback({
+                doneCallback({
                     "score": score,
                     "inbox": inbox
                 });

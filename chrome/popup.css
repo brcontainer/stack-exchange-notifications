@@ -1,4 +1,12 @@
-html, body {
+/*
+ * StackExchangeNotifications 0.0.2
+ * Copyright (c) 2015 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Released under the MIT license
+ *
+ * https://github.com/brcontainer/stack-exchange-notification
+ */
+
+html, body, h1, h2, h3, h4, h5 {
     padding: 0;
     margin: 0;
 }
@@ -8,6 +16,13 @@ body {
     width: 400px;
     min-height: 400px;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+       -khtml-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
 }
 
 body, a {
@@ -17,9 +32,13 @@ a:hover {
     color: #A08C8C;
 }
 
+.header {
+    padding: 0.9em 0.5em;
+}
+
 .nav {
     position: fixed;
-    width: 135px;
+    width: 270px;
     height: 35px;
     right: 0;
     top: 0;
@@ -27,6 +46,8 @@ a:hover {
     margin: 0;
 }
 .nav a {
+    background: center center no-repeat;
+    background-size: 60% 60%;
     float: right;
     width: 32px;
     height: 32px;
@@ -34,6 +55,9 @@ a:hover {
     position: relative;
     text-decoration: none;
     border-radius: 50%;
+    border: 1px transparent solid;
+    opacity: 0.8;
+    transition: opacity 0.5s;
 }
 .nav a span.data {
     position: absolute;
@@ -65,12 +89,10 @@ a:hover {
     display: none !important;
 }
 
-#inbox-button,
-#about-button,
-#achievements-button {
-    background: #55D255 url(../images/inbox.svg) center center no-repeat;
-    background-size: 50% 50%;
-    border: 1px #26AB26 solid;
+#inbox-button {
+    background-image: url(../images/inbox.svg);
+    background-color: #55D255;
+    border-color: #26AB26;
 }
 
 #about-button {
@@ -83,6 +105,11 @@ a:hover {
     background-image: url(../images/achievements.svg);
     background-color: #68B0E0;
     border-color: #3E84B3;
+}
+#inbox-button:hover,
+#about-button:hover,
+#achievements-button:hover {
+    opacity: 0.99;
 }
 
 #about-content {
@@ -98,15 +125,68 @@ a:hover {
     padding: 0;
 }
 
-.tab-item .modal-content li {
+.tab-item .modal-content li,
+.tab-item .modal-content div.date-group {
     border-top: 1px #cfcfcf solid;
 }
 .tab-item .modal-content li:hover {
-    background-color: #fcfcfc;
+    border-top-color: #7799BE;
+    background-color: #7799BE;
+}
+.tab-item .modal-content li:hover * {
+    color: #fff;
 }
 .tab-item .modal-content li a {
-    margin: 0.25em;
     padding: 0.55em 0.25em 0.55em 0.55em;
     text-decoration: none;
     display: block;
+}
+
+.date-group-toggle-row {
+    padding: 0.8em 0.5em;
+    background-color: #efefef;
+}
+
+.tab-item .site-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-color: #fc0;
+}
+
+.tab-item .message-text h4,
+.tab-item .item-location {
+    font-weight: normal;
+    color: #142877;
+}
+
+.tab-item .item-location {
+    padding: 0.8em 0;
+}
+
+.tab-item .item-summary {
+    padding-left: 0.8em;
+}
+
+.tab-item .rep-change,
+.tab-item .item-content,
+.tab-item .message-text {
+    display: inline-block;
+    vertical-align: top;
+}
+.tab-item .item-content,
+.tab-item .message-text {
+    width: 330px;
+}
+.tab-item .rep-change {
+    padding: 0 5px;
+    margin: 0 2px;
+    font-weight: bold;
+}
+
+.tab-item .rep-down {
+    color: #E20000;
+}
+.tab-item .rep-up {
+    color: #79B892;
 }

@@ -1,17 +1,21 @@
 /*
- * StackExchangeNotifications 0.0.1
+ * StackExchangeNotifications 0.0.2
  * Copyright (c) 2015 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
+function FF() {
+    return false;
+}
+
 function setActionAnchor(el) {
     if (el && el.href && el.href.indexOf("http") === 0) {
-        el.onclick = function(argument) {
+        el.onclick = function() {
             chrome.tabs.create({ "url": el.href });
         };
-        el.ondragstart = function() { return false; };
+        el.ondragstart = FF;
     }
 }
 
@@ -20,10 +24,6 @@ function getAllAnchors(target) {
     for (j = els.length; i < j; i++) {
         setActionAnchor(els[i]);
     }
-}
-
-function FF() {
-    return false;
 }
 
 function main() {
@@ -124,10 +124,17 @@ function main() {
         inboxXhr = StackExchangeNotifications.inbox(function(data) {
             if (typeof data.error !== "undefined") {
                 inboxContent.innerHTML = '<span class="sen-error">Error (http) ' + data.error + '</span>';
-            } else {
+            } else if (data.indexOf("<") !== -1) {
                 backgroundEngine.resetInbox();
 
                 inboxContent.innerHTML = data;
+                getAllAnchors(inboxContent);
+            } else {
+                inboxContent.innerHTML = [
+                    "Response error:<br>",
+                    "to use this extension you need to be logged by the",
+                    "For use go to <a href=\"http://stackexchange.com\">http://stackexchange.com</a>"
+                ].join("");
                 getAllAnchors(inboxContent);
             }
 
@@ -161,10 +168,17 @@ function main() {
         achievementsXhr = StackExchangeNotifications.achievements(function(data) {
             if (typeof data.error !== "undefined") {
                 achievementsContent.innerHTML = '<span class="sen-error">Error (http) ' + data.error + '</span>';
-            } else {
+            } else if (data.indexOf("<") !== -1) {
                 backgroundEngine.resetScore();
 
                 achievementsContent.innerHTML = data;
+                getAllAnchors(achievementsContent);
+            } else {
+                achievementsContent.innerHTML = [
+                    "Response error:<br>",
+                    "to use this extension you need to be logged by the",
+                    "For use go to <a href=\"http://stackexchange.com\">http://stackexchange.com</a>"
+                ].join("");
                 getAllAnchors(achievementsContent);
             }
 
