@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.2
+ * StackExchangeNotifications 0.0.3
  * Copyright (c) 2015 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -21,6 +21,52 @@
     var isRunning = false,
         timer = null,
         doneCallback;
+
+    var docFragment = document.createDocumentFragment();
+    var tmpDom      = document.createElement("div");
+    
+    docFragment.appendChild(tmpDom);
+
+    var validAttrs = [ "class", "id", "href" ];
+
+    var utils = {
+        "removeInvalidAttributes": function(target) {
+            var attrs = target.attributes, currentAttr;
+
+            for (var i = attrs.length - 1; i >= 0; i--) {
+                currentAttr = attrs[i].name;
+
+                if (attrs[i].specified && validAttrs.indexOf(currentAttr) === -1) {
+                    target.removeAttribute(currentAttr);
+                }
+
+                if (
+                    currentAttr === "href" &&
+                    /^(#|javascript[:])/gi.test(target.getAttribute("href"))
+                ) {
+                    target.parentNode.removeChild(currentAttr);
+                }
+            }
+        },
+        "cleanDomString": function(data) {
+            tmpDom.innerHTML = data;
+
+            var list = tmpDom.getElementsByTagName("script");
+
+            for (var i = list.length - 1; i >= 0; i--) {
+                current = list[i];
+                current.parentNode.removeChild(current);
+            }
+
+            list = tmpDom.getElementsByTagName("*");
+
+            for (i = list.length - 1; i >= 0; i--) {
+                utils.removeInvalidAttributes(list[i]);
+            }
+
+            return tmpDom.innerHTML;
+        }
+    };
 
     var noCacheURI = function(uri) {
         return [ uri, "?_=", new Date().getTime() ].join("");
@@ -48,10 +94,11 @@
 
         return {
             "abort": function() {
-                if (completed === false)
+                if (completed === false) {
                     try {
                         xhr.abort();
                     } catch (ee) {}
+                }
             }
         };
     };
@@ -85,8 +132,8 @@
 
             if (typeof data.UnreadRepCount !== "undefined") {
 
-                score = data.UnreadRepCount;
-                inbox = data.UnreadInboxCount;
+                score = parseInt(data.UnreadRepCount);
+                inbox = parseInt(data.UnreadInboxCount);
 
                 doneCallback({
                     "score": score,
@@ -156,6 +203,7 @@
                     "inbox": inbox
                 });
             }
-        }
+        },
+        "utils": utils
     };
 }());

@@ -1,21 +1,22 @@
 /*
- * StackExchangeNotifications 0.0.2
+ * StackExchangeNotifications 0.0.3
  * Copyright (c) 2015 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-html, body, h1, h2, h3, h4, h5 {
+html, body, h1, h2, h3, h4, h5, a {
+    font-family: "Helvetica Neue", Helvetica, "lucida grande", tahoma, Arial, sans-serif;
     padding: 0;
     margin: 0;
 }
 
 body {
     background-color: #fcfcfc;
-    width: 400px;
     min-height: 400px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    width: 400px;
+    font-size: 10pt;
 
     -webkit-touch-callout: none;
       -webkit-user-select: none;
@@ -25,11 +26,29 @@ body {
               user-select: none;
 }
 
+body {
+    font-size: 13px;
+}
+
 body, a {
     color: #4F4949;
 }
 a:hover {
-    color: #A08C8C;
+    color: #AD9B9B;
+}
+
+::-webkit-scrollbar {
+    background: #dfdfdf;
+    border-radius: 4px;
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    transition:background .2s ease-in-out;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background:rgba(0, 0, 0, .5);
 }
 
 .header {
@@ -49,14 +68,14 @@ a:hover {
     background: center center no-repeat;
     background-size: 60% 60%;
     float: right;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     margin: 5px 5px 0 5px;
     position: relative;
     text-decoration: none;
     border-radius: 50%;
     border: 1px transparent solid;
-    opacity: 0.8;
+    opacity: 0.85;
     transition: opacity 0.5s;
 }
 .nav a span.data {
@@ -75,7 +94,7 @@ a:hover {
 }
 
 .tab-item {
-    padding-top: 30px !important;
+    padding-top: 50px !important;
 }
 
 .tab-load {
@@ -87,6 +106,15 @@ a:hover {
 
 .hide {
     display: none !important;
+}
+
+.notice {
+    position: absolute;
+    text-align: center;
+    color: #ccc;
+    top: 40%;
+    left: 0;
+    width: 100%;
 }
 
 #inbox-button {
@@ -118,6 +146,14 @@ a:hover {
 #about-content a {
     text-decoration: none;
 }
+#about-content h3 {
+    text-align: center;
+}
+
+.about-icon {
+    padding: 0.55em 0;
+    text-align: center;
+}
 
 .tab-item .modal-content ul,
 .tab-item .modal-content li {
@@ -142,6 +178,26 @@ a:hover {
     display: block;
 }
 
+.tab-item .modal-content li.inbox-se-link {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 -2px 1px rgba(0, 0, 0, 0.04)
+}
+.tab-item .modal-content li.inbox-se-link:hover {
+    border-top-color: #cfcfcf;
+    background-color: #fcfcfc;
+}
+.tab-item .modal-content li.inbox-se-link:hover a {
+    color: #A89898;
+}
+
+.tab-item .modal-content .inbox-se-link a {
+    padding: 0.85em 0;
+    text-align: center;
+}
+
 .date-group-toggle-row {
     padding: 0.8em 0.5em;
     background-color: #efefef;
@@ -151,11 +207,10 @@ a:hover {
     width: 16px;
     height: 16px;
     display: inline-block;
-    background-color: #fc0;
 }
 
-.tab-item .message-text h4,
-.tab-item .item-location {
+.tab-item .item-location,
+.tab-item .message-text h4 {
     font-weight: normal;
     color: #142877;
 }
@@ -168,19 +223,28 @@ a:hover {
     padding-left: 0.8em;
 }
 
+.tab-item .rep-site,
 .tab-item .rep-change,
 .tab-item .item-content,
-.tab-item .message-text {
+.tab-item .message-text,
+.tab-item .achievements-badge {
     display: inline-block;
     vertical-align: top;
 }
+.tab-item .rep-change,
+.tab-item .achievements-badge {
+    text-align: right;
+    width: 35px;
+}
+.tab-item .rep-site .rep-change {
+    text-align: left;
+}
+
 .tab-item .item-content,
 .tab-item .message-text {
-    width: 330px;
+    width: 300px;
 }
 .tab-item .rep-change {
-    padding: 0 5px;
-    margin: 0 2px;
     font-weight: bold;
 }
 
@@ -189,4 +253,32 @@ a:hover {
 }
 .tab-item .rep-up {
     color: #79B892;
+}
+
+.tab-item .rep-site a {
+    text-decoration: none;
+}
+
+.tab-item .rep-site-container {
+    padding-top: 0.8em;
+    display: block;
+}
+
+.tab-item .badge1,
+.tab-item .badge2,
+.tab-item .badge3 {
+    background-color: #fc0;
+    display: inline-block;
+    overflow: hidden;
+    line-height: inherit;
+    vertical-align: text-bottom;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+.tab-item .badge2 {
+    background-color: #c5c5c5;
+}
+.tab-item .badge3 {
+    background-color: #c96;
 }

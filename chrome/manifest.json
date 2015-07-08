@@ -1,6 +1,6 @@
 {
     "name": "StackExchange Notifications",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "manifest_version": 2,
     "description": "Show new score and news inbox messagens from StackExchange",
     "browser_action": {

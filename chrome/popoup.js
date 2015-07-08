@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.2
+ * StackExchangeNotifications 0.0.3
  * Copyright (c) 2015 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -11,16 +11,23 @@ function FF() {
 }
 
 function setActionAnchor(el) {
-    if (el && el.href && el.href.indexOf("http") === 0) {
-        el.onclick = function() {
+    if (el && el.senLink !== true && el.href && el.href.indexOf("http") === 0) {
+        el.senLink = true;
+        el.onclick = function(evt) {
+            evt = evt || window.event;
+
+            if (evt.preventDefault) {
+                evt.preventDefault();
+            }
+
             chrome.tabs.create({ "url": el.href });
         };
-        el.ondragstart = FF;
     }
+    el.ondragstart = FF;
 }
 
-function getAllAnchors(target) {
-    var els = target.getElementsByTagName("a"), i = 0;
+function setDomEvents(target) {
+    var els = (target||document).querySelectorAll("a,img"), i = 0;
     for (j = els.length; i < j; i++) {
         setActionAnchor(els[i]);
     }
@@ -30,6 +37,9 @@ function main() {
     "use strict";
 
     var
+        intro               = document.getElementById("intro"),
+        introIsVisible      = true,
+
         inboxButton         = document.getElementById("inbox-button"),
         inboxContent        = document.getElementById("inbox-content"),
         inboxData           = inboxButton.querySelector("span.data"),
@@ -50,10 +60,14 @@ function main() {
 
     document.oncontextmenu = FF;
 
-    inboxButton.ondragstart = FF;
-    achievementsButton.ondragstart = FF;
+    setDomEvents();
 
-    getAllAnchors(document.getElementById("about-content"));
+    var hideIntro = function() {
+        if (introIsVisible) {
+            introIsVisible = false;
+            intro.className = "hide";
+        }
+    };
 
     var showInButtons = function() {
         var inbox = backgroundEngine.StackExchangeNotifications.getInbox();
@@ -79,6 +93,8 @@ function main() {
     showInButtons();
 
     aboutButton.onclick = function() {
+        hideIntro();
+
         if (inboxXhr) {
             inboxXhr.abort();
             inboxActive = false;
@@ -100,6 +116,8 @@ function main() {
     };
 
     inboxButton.onclick = function() {
+        hideIntro();
+
         if (achievementsXhr) {
             achievementsXhr.abort();
             achievementsActive = false;
@@ -123,19 +141,19 @@ function main() {
 
         inboxXhr = StackExchangeNotifications.inbox(function(data) {
             if (typeof data.error !== "undefined") {
-                inboxContent.innerHTML = '<span class="sen-error">Error (http) ' + data.error + '</span>';
+                inboxContent.innerHTML = '<span class="sen-error notice">Error (http) ' + data.error + '</span>';
             } else if (data.indexOf("<") !== -1) {
                 backgroundEngine.resetInbox();
 
-                inboxContent.innerHTML = data;
-                getAllAnchors(inboxContent);
+                inboxContent.innerHTML = StackExchangeNotifications.utils.cleanDomString(data);
+                setDomEvents(inboxContent);
             } else {
                 inboxContent.innerHTML = [
                     "Response error:<br>",
                     "to use this extension you need to be logged by the",
                     "For use go to <a href=\"http://stackexchange.com\">http://stackexchange.com</a>"
                 ].join("");
-                getAllAnchors(inboxContent);
+                setDomEvents(inboxContent);
             }
 
             inboxContent.className =
@@ -144,6 +162,8 @@ function main() {
     };
 
     achievementsButton.onclick = function() {
+        hideIntro();
+
         if (inboxXhr) {
             inboxXhr.abort();
             inboxActive = false;
@@ -167,19 +187,19 @@ function main() {
 
         achievementsXhr = StackExchangeNotifications.achievements(function(data) {
             if (typeof data.error !== "undefined") {
-                achievementsContent.innerHTML = '<span class="sen-error">Error (http) ' + data.error + '</span>';
+                achievementsContent.innerHTML = '<span class="sen-error notice">Error (http) ' + data.error + '</span>';
             } else if (data.indexOf("<") !== -1) {
                 backgroundEngine.resetScore();
 
-                achievementsContent.innerHTML = data;
-                getAllAnchors(achievementsContent);
+                achievementsContent.innerHTML = StackExchangeNotifications.utils.cleanDomString(data);
+                setDomEvents(achievementsContent);
             } else {
                 achievementsContent.innerHTML = [
                     "Response error:<br>",
                     "to use this extension you need to be logged by the",
                     "For use go to <a href=\"http://stackexchange.com\">http://stackexchange.com</a>"
                 ].join("");
-                getAllAnchors(achievementsContent);
+                setDomEvents(achievementsContent);
             }
 
             achievementsContent.className =

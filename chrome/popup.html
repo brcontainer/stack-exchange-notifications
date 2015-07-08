@@ -6,7 +6,6 @@
     <script type="text/javascript" src="stackexchangenotifications.js"></script>
     <script type="text/javascript" src="popoup.js"></script>
     <link rel="stylesheet" type="text/css" href="popup.css">
-    <base href="http://stackexchange.com">
 </head>
 <body class="topbar">
     <p class="nav">
@@ -19,9 +18,17 @@
         </a>
     </p>
 
+    <div id="intro" class="notice">
+        <p>Welcome!</p>
+    </div>
+
     <div class="tab-item hide" id="inbox-content"></div>
     <div class="tab-item hide" id="achievements-content"></div>
     <div class="tab-item hide" id="about-content">
+        <div class="about-icon">
+            <img src="/images/icon-128px.png">            
+        </div>
+
         <h3>About StackExchangeNotification</h3>
         <ul>
             <li>
