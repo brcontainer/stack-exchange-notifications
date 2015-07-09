@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.3
+ * StackExchangeNotifications 0.0.4
  * Copyright (c) 2015 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -20,7 +20,8 @@
 
     var isRunning = false,
         timer = null,
-        doneCallback;
+        doneCallback = null,
+        cssCallback = null;
 
     var docFragment = document.createDocumentFragment();
     var tmpDom      = document.createElement("div");
@@ -28,6 +29,8 @@
     docFragment.appendChild(tmpDom);
 
     var validAttrs = [ "class", "id", "href" ];
+
+    var cssList = [];
 
     var utils = {
         "removeInvalidAttributes": function(target) {
@@ -51,11 +54,29 @@
         "cleanDomString": function(data) {
             tmpDom.innerHTML = data;
 
-            var list = tmpDom.getElementsByTagName("script");
+            var list, current, currentHref;
+
+            list = tmpDom.querySelectorAll("script,img");
 
             for (var i = list.length - 1; i >= 0; i--) {
                 current = list[i];
                 current.parentNode.removeChild(current);
+            }
+
+            if (cssCallback !== null) {
+                list = tmpDom.querySelectorAll("link[rel=stylesheet]");
+
+                for (i = list.length - 1; i >= 0; i--) {
+                    current = list[i];
+                    currentHref = current.href;
+
+                    if (currentHref && cssList.indexOf(currentHref) === -1) {
+                        cssCallback(currentHref);
+                        cssList.push(currentHref);
+                    }
+
+                    current.parentNode.removeChild(current);
+                }
             }
 
             list = tmpDom.getElementsByTagName("*");
@@ -135,10 +156,12 @@
                 score = parseInt(data.UnreadRepCount);
                 inbox = parseInt(data.UnreadInboxCount);
 
-                doneCallback({
-                    "score": score,
-                    "inbox": inbox
-                });
+                if (doneCallback !== null) {
+                    doneCallback({
+                        "score": score,
+                        "inbox": inbox
+                    });
+                }
             }
         } else if (response.error === 0) {
             /*
@@ -151,6 +174,11 @@
     };
 
     window.StackExchangeNotifications = {
+        "style": function(callback) {
+            if (typeof callback === "function") {
+                cssCallback = callback;
+            }
+        },
         "pushs": function(callback) {
             if (false === isRunning && typeof callback === "function") {
                 isRunning     = true;
@@ -197,7 +225,7 @@
                 }
 
                 setTimeout(retrieveData, 1);
-            } else {
+            } else if (doneCallback !== null) {
                 doneCallback({
                     "score": score,
                     "inbox": inbox

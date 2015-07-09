@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.3
+ * StackExchangeNotifications 0.0.4
  * Copyright (c) 2015 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -92,6 +92,18 @@ function main() {
 
     showInButtons();
 
+    var headDOM = document.head;
+
+    StackExchangeNotifications.style(function(stylesheet) {
+        var cssDom = document.createElement("link");
+
+        cssDom.href = stylesheet;
+        cssDom.type = "text/css";
+        cssDom.rel  = "stylesheet";
+
+        headDOM.appendChild(cssDom);
+    });
+
     aboutButton.onclick = function() {
         hideIntro();
 
@@ -106,13 +118,13 @@ function main() {
         }
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|tab\-load/g, "") + " hide";
+            achievementsContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|tab\-load/g, "") + " hide";
+            inboxContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
 
         aboutContent.className =
-            aboutContent.className.replace(/hide/g, "");
+            aboutContent.className.replace(/hide/g, "").trim();
     };
 
     inboxButton.onclick = function() {
@@ -132,10 +144,10 @@ function main() {
         inboxActive = true;
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|tab\-load/g, "") + " hide";
+            achievementsContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|tab\-load/g, "") + " tab-load";
+            inboxContent.className.replace(/hide|tab\-load/g, "").trim() + " tab-load";
 
         inboxContent.innerHTML = "";
 
@@ -157,7 +169,7 @@ function main() {
             }
 
             inboxContent.className =
-                inboxContent.className.replace(/hide|tab\-load/g, "");
+                inboxContent.className.replace(/hide|tab\-load/g, "").trim();
         });
     };
 
@@ -178,10 +190,10 @@ function main() {
         achievementsActive = true;
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|tab\-load/g, "") + " hide";
+            inboxContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|tab\-load/g, "") + " tab-load";
+            achievementsContent.className.replace(/hide|tab\-load/g, "").trim() + " tab-load";
 
         achievementsContent.innerHTML = "";
 
@@ -203,7 +215,7 @@ function main() {
             }
 
             achievementsContent.className =
-                achievementsContent.className.replace(/hide|tab\-load/g, "");
+                achievementsContent.className.replace(/hide|tab\-load/g, "").trim();
         });
     };
 };
