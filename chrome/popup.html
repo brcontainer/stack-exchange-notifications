@@ -1,56 +1,107 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>StackExchange Notifications</title>
-    <meta charset="utf-8">
-    <script type="text/javascript" src="stackexchangenotifications.js"></script>
-    <script type="text/javascript" src="popoup.js"></script>
-    <link rel="stylesheet" type="text/css" href="popup.css">
-</head>
-<body class="topbar">
-    <p class="nav">
-        <a title="Show About" id="about-button" href="#">&nbsp;</a>
-        <a title="Show Achievements" id="achievements-button" href="#">
-            <span class="data hide">0</span>&nbsp;
-        </a>
-        <a title="Show Inbox" id="inbox-button" href="#">
-            <span class="data hide">0</span>&nbsp;
-        </a>
-    </p>
-
-    <div id="intro" class="notice">
-        <p>Welcome!</p>
-    </div>
-
-    <div class="tab-item hide" id="inbox-content"></div>
-    <div class="tab-item hide" id="achievements-content"></div>
-    <div class="tab-item hide" id="about-content">
-        <div class="about-icon">
-            <img src="/images/icon-128px.png">            
-        </div>
-
-        <h3>About StackExchangeNotification</h3>
-        <ul>
-            <li>
-                <a href="https://github.com/brcontainer/stack-exchange-notifications">
-                    Project in Github
-                </a>
-            </li>
-            <li>
-                <a href="http://stackexchange.com/users/1647724/guilherme-nascimento?tab=accounts">
-                    Created by Guilherme Nascimento
-                </a>
-            </li>
-        </ul>
-
-        <h3>Thanks to</h3>
-        <p>
-            <a href="http://stackexchange.com/users/5960/gabe?tab=accounts">@gabe</a>, 
-            <a href="http://stackexchange.com/users/3548243/nicael?tab=accounts">@nicael</a> and
-            <a href="http://pt.stackoverflow.com/users">
-                Stack Overflow em Português Community
+    <head>
+        <title>StackExchange Notifications</title>
+        <meta charset="utf-8">
+        <script type="text/javascript" src="stackexchangenotifications.js"></script>
+        <script type="text/javascript" src="popoup.js"></script>
+        <link rel="stylesheet" type="text/css" href="popup.css">
+    </head>
+    <body class="topbar">
+        <p class="nav">
+            <a title="Show About" id="about-button" href="#about-button">
+                <span class="icon">&nbsp;</span>
+            </a>
+            <a title="Setup" id="setup-button" href="#setup-button" style="display: none">
+                <span class="icon">&nbsp;</span>
+            </a>
+            <a title="Show Achievements" id="achievements-button" href="#achievements-button">
+                <span class="push hide">0</span>
+                <span class="icon">&nbsp;</span>
+            </a>
+            <a title="Show Inbox" id="inbox-button" href="#inbox-button">
+                <span class="push hide">0</span>
+                <span class="icon">&nbsp;</span>
             </a>
         </p>
-    </div>
-</body>
+
+        <div id="setup-content" class="tab-item hide">
+            <!-- div class="notice">
+                <div class="bg-sen">
+                    <img src="images/sen.svg#light">
+                </div>
+            </div -->
+            <div class="setup">
+                <h1>Desktop Notification</h1>
+                <p class="field">
+                    <a id="notification-switch" class="switch on input" href="#">
+                        <input type="hidden" value="off">
+                        <span class="on">
+                            <small>On</small>
+                        </span>
+                        <span class="off">
+                            <small>Off</small>
+                        </span>
+                    </a>
+                    <span class="label">Enable Desktop Notification</span>
+                </p>
+                <p class="field">
+                    <input class="input" type="number" min="0" max="60" value="0">
+                    <span class="label">Timeout for hide (seconds)</span>
+                </p>
+                <p>
+                    (Note: If select 0 seconds the notification only hide after click)
+                </p>
+            </div>
+        </div>
+
+        <div class="tab-item hide" id="inbox-content"></div>
+        <div class="tab-item hide" id="achievements-content"></div>
+        <div class="tab-item xhide" id="about-content">
+            <div class="about-icon bg-sen">
+                <img src="images/sen.svg#gray">
+            </div>
+
+            <h1 id="about-title">&nbsp;</h1>
+            <ul>
+                <li>
+                    <a href="http://stackapps.com/q/6455/33963">
+                        Project in StackApps
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/brcontainer/stack-exchange-notifications">
+                        Project in Github
+                    </a>
+                </li>
+                <li>
+                    <a href="http://stackexchange.com/users/1647724/guilherme-nascimento?tab=accounts">
+                        Created by Guilherme Nascimento
+                    </a>
+                </li>
+            </ul>
+
+            <hr>
+
+            <h2>Thanks to</h2>
+            <p>
+                <a href="http://stackexchange.com/users/5960/gabe?tab=accounts">@gabe</a>,
+                <a href="http://stackexchange.com/users/3548243/nicael?tab=accounts">@nicael</a>,
+                <a href="http://stackexchange.com/users/1211516/brasofilo?tab=accounts">@brasofilo</a>
+                and<br>
+                <a href="http://pt.stackoverflow.com/users">
+                    Stack Overflow em Português Community
+                </a>
+            </p>
+
+            <hr>
+
+            <p>
+                <!-- https://github.com/brcontainer/stack-exchange-notifications/issues?title=1&body=1 -->
+                <a href="https://github.com/brcontainer/stack-exchange-notifications/issues/new">
+                    Report issues
+                </a>
+            </p>
+        </div>
+    </body>
 </html>

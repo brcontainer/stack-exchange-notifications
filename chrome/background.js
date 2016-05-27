@@ -1,20 +1,10 @@
 /*
- * StackExchangeNotifications 0.0.4
- * Copyright (c) 2015 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * StackExchangeNotifications 0.0.5
+ * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
-
-function convertResult(size) {
-    if (size === 0) {
-        return "";
-    } else if (size < 1000) {
-        return String(size);
-    }
-
-    return "+1000";
-}
 
 (function() {
     var caller = null;
@@ -41,7 +31,7 @@ function convertResult(size) {
         }
 
         chrome.browserAction.setBadgeText({
-            "text": convertResult(response.score + response.inbox)
+            "text": StackExchangeNotifications.utils.convertResult(response.score + response.inbox)
         });
     });
 })();

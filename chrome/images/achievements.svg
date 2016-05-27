@@ -1,2 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" height="1000" width="680"><path d="M180 334.25l0 537.5l-180 0l0 -537.5l180 0zm250 137.5l0 400l-180 0l0 -400l180 0zm250 -343.75l0 743.75l-180 0l0 -743.75l180 0z" fill="#FFFFFF"/></svg>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    width="130"
+    height="130"
+    viewBox="0 0 130 130"
+    enable-background="new 0 0 130 130"
+    xml:space="preserve"
+    preserveAspectRatio="xMinYMax meet"
+    x="0px" 
+    y="0px"
+>
+    <rect x="10" y="40" fill="#FFFFFF" width="30" height="70"/>
+    <rect x="50" y="60" fill="#FFFFFF" width="30" height="50"/>
+    <rect x="90" y="0" fill="#FFFFFF" width="30" height="110"/>
+</svg>

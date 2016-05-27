@@ -1,11 +1,11 @@
 {
-    "name": "StackExchange Notifications",
-    "version": "0.0.4",
+    "name": "StackExchangeNotifications",
+    "version": "0.0.5",
     "manifest_version": 2,
     "description": "Show new score and news inbox messagens from StackExchange",
     "browser_action": {
-       "default_icon": "images/icon.png",
-       "default_popup": "popup.html"
+        "default_icon": "images/icon.png",
+        "default_popup": "popup.html"
     },
     "background": {
         "scripts": [
@@ -20,6 +20,8 @@
         "16":  "images/icon.png"
     },
     "permissions": [
-        "http://stackexchange.com/*"
+        "https://stackexchange.com/*",
+        "http://stackexchange.com/*",
+        "notifications"
     ]
 }

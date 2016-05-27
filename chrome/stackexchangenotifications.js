@@ -1,6 +1,6 @@
 /*
- * StackExchangeNotifications 0.0.4
- * Copyright (c) 2015 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * StackExchangeNotifications 0.0.5
+ * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
@@ -18,14 +18,14 @@
     var inbox = 0,
         score = 0;
 
-    var isRunning = false,
-        timer = null,
-        doneCallback = null,
-        cssCallback = null;
+    var doneCallback = null,
+        cssCallback = null,
+        isRunning = false,
+        timer = null;
 
     var docFragment = document.createDocumentFragment();
     var tmpDom      = document.createElement("div");
-    
+
     docFragment.appendChild(tmpDom);
 
     var validAttrs = [ "class", "id", "href" ];
@@ -33,6 +33,31 @@
     var cssList = [];
 
     var utils = {
+        "meta": function() {
+            var u;
+
+            if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getManifest) {
+                var meta = chrome.runtime.getManifest();
+                return {
+                    "appname": meta.name,
+                    "version": meta.version
+                };
+            }
+
+            return {
+                "appname": u,
+                "version": u
+            }
+        },
+        "convertResult": function(size) {
+            if (size === 0) {
+                return "";
+            } else if (size < 1000) {
+                return String(size);
+            }
+
+            return "+1k";
+        },
         "removeInvalidAttributes": function(target) {
             var attrs = target.attributes, currentAttr;
 
@@ -93,17 +118,49 @@
         return [ uri, "?_=", new Date().getTime() ].join("");
     };
 
+    var headersXhrJson = function(xhr) {
+        var headersStr = String(xhr.getAllResponseHeaders()).trim(),
+            headersLines = headersStr.split(/\n/),
+            current,
+            headers = {},
+            re = /^([a-z0-9\-]+[:])[\s\S]+$/gi;
+
+        for (var i = headersLines.length - 1; i >= 0; i--) {
+            current = headersLines[i];
+            headers[ current.replace(/:[\s\S]+$/, "") ] =
+                                    current.replace(/^[^:]+:/, "").trim();
+        }
+
+        return headers;
+    };
+
     var quickXhr = function(uri, callback) {
-        var xhr       = new XMLHttpRequest(),
-            completed = false;
+        var xhr, completed, isAborted, headers;
+
+        xhr       = new XMLHttpRequest();
+        isAborted = false;
+        completed = false;
 
         uri = noCacheURI(uri);
 
         xhr.open("GET", uri, true);
 
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                callback(xhr.status === 200 ? xhr.responseText : { "error": xhr.status });
+            if (xhr.readyState === 4 && isAborted === false) {
+
+                completed = true;
+
+                headers = headersXhrJson(xhr);
+
+                if (xhr.status === 0) {
+                    setTimeout(function() {
+                        callback({ "error": 0 }, headers);
+                    }, 200);
+                } else {
+                    callback(xhr.status === 200 ? xhr.responseText : { "error": xhr.status },
+                                headers);
+                }
+
                 setTimeout(function() {
                     callback = null;
                     xhr = null;
@@ -116,6 +173,7 @@
         return {
             "abort": function() {
                 if (completed === false) {
+                    isAborted = true;
                     try {
                         xhr.abort();
                     } catch (ee) {}
@@ -231,6 +289,18 @@
                     "inbox": inbox
                 });
             }
+        },
+        "saveState": function(key, data) {
+            return localStorage.setItem(key, data);
+        },
+        "restoreState": function(key) {
+            var data = localStorage.getItem(key);
+
+            if (data) {
+                return data;
+            }
+
+            return false;
         },
         "utils": utils
     };
