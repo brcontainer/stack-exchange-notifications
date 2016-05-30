@@ -7,8 +7,9 @@ This extension has been created for you to stay connected on their StackExchange
 
 # For future:
 
-- Improve popup menu views/styles
-- Basic support for others languages communities/sites
+- <s>Improve popup menu views/styles</s> (Released in 0.0.5)
+- <s>Basic support for others languages communities/sites</s> (removed)
+- In the next version the user can choose (for menus) the desired language.
 
 # Preview
 
