@@ -23,13 +23,8 @@
         isRunning = false,
         timer = null;
 
-    var docFragment = document.createDocumentFragment();
     var tmpDom      = document.createElement("div");
-
-    docFragment.appendChild(tmpDom);
-
     var validAttrs = [ "class", "id", "href" ];
-
     var cssList = [];
 
     var utils = {
@@ -77,7 +72,7 @@
             }
         },
         "cleanDomString": function(data) {
-            tmpDom.innerHTML = data;
+            tmpDom = (new DOMParser).parseFromString(data, "text/html").body;
 
             var list, current, currentHref;
 
