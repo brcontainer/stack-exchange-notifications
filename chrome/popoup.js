@@ -247,7 +247,7 @@ function main() {
                 inboxContent.innerHTML = [
                     '<span class="sen-error notice">',
                     "Response error:<br>",
-                    "Is needed logon in <br>",
+                    "You must be logged in to <br>",
                     "<a href=\"http://stackexchange.com\">http://stackexchange.com</a>",
                     '</span>'
                 ].join("");
@@ -327,7 +327,7 @@ function main() {
                 achievementsContent.innerHTML = [
                     '<span class="sen-error notice">',
                     "Response error:<br>",
-                    "Is needed logon in <br>",
+                    "You must be logged in to <br>",
                     "<a href=\"http://stackexchange.com\">http://stackexchange.com</a>",
                     '</span>'
                 ].join("");
