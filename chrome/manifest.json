@@ -2,7 +2,7 @@
     "name": "StackExchangeNotifications",
     "version": "0.0.5",
     "manifest_version": 2,
-    "description": "Show new score and news inbox messagens from StackExchange",
+    "description": "Show new score and inbox messages from StackExchange",
     "browser_action": {
         "default_icon": "images/icon.png",
         "default_popup": "popup.html"
