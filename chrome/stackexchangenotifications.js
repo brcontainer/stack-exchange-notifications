@@ -290,8 +290,6 @@
             if (typeof callback === "function") {
                 var cache = SimpleCache.get("inbox");
 
-                console.log(cache);
-
                 if (cache) {
                     callback(cache[0], cache[1]);
                     return null;
