@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.5
+ * StackExchangeNotifications 0.0.7
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -73,6 +73,8 @@ function main() {
         backgroundEngine    = chrome.extension.getBackgroundPage()
     ;
 
+    window.StackExchangeNotifications = backgroundEngine.StackExchangeNotifications;
+
     /*
     notificationSwitch.onclick = function() {
         chrome.notifications.create(getNotificationId(), {
@@ -95,8 +97,8 @@ function main() {
 
     var showInButtons = function()
     {
-        var inbox = backgroundEngine.StackExchangeNotifications.getInbox();
-        var score = backgroundEngine.StackExchangeNotifications.getScore();
+        var inbox = StackExchangeNotifications.getInbox();
+        var score = StackExchangeNotifications.getScore();
 
         if (inbox > 0) {
             inboxData.className = "push";
@@ -157,13 +159,16 @@ function main() {
     {
         if (inboxXhr) {
             inboxXhr.abort();
-            inboxActive = false;
         }
 
         if (achievementsXhr) {
             achievementsXhr.abort();
-            achievementsActive = false;
         }
+
+        inboxActive = false;
+        achievementsActive = false;
+
+        localStorage.setItem("lastTab", "setup");
 
         achievementsContent.className =
             achievementsContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
@@ -182,13 +187,16 @@ function main() {
     {
         if (inboxXhr) {
             inboxXhr.abort();
-            inboxActive = false;
         }
 
         if (achievementsXhr) {
             achievementsXhr.abort();
-            achievementsActive = false;
         }
+
+        inboxActive = false;
+        achievementsActive = false;
+
+        localStorage.setItem("lastTab", "about");
 
         achievementsContent.className =
             achievementsContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
@@ -207,14 +215,19 @@ function main() {
     {
         if (achievementsXhr) {
             achievementsXhr.abort();
-            achievementsActive = false;
         }
+
+        achievementsActive = false;
+
+        window.scrollTo(0, 0);
 
         if (inboxActive) {
             return false;
         }
 
         inboxActive = true;
+
+        localStorage.setItem("lastTab", "inbox");
 
         aboutContent.className =
             aboutContent.className.replace(/hide/g, "").trim() + " hide";
@@ -264,14 +277,19 @@ function main() {
     {
         if (inboxXhr) {
             inboxXhr.abort();
-            inboxActive = false;
         }
+
+        inboxActive = false;
+
+        window.scrollTo(0, 0);
 
         if (achievementsActive) {
             return false;
         }
 
         achievementsActive = true;
+
+        localStorage.setItem("lastTab", "achievements");
 
         aboutContent.className =
             aboutContent.className.replace(/hide/g, "").trim() + " hide";
@@ -339,6 +357,19 @@ function main() {
                 achievementsContent.className.replace(/hide|tab\-load/g, "").trim();
         });
     };
+
+    switch (localStorage.getItem("lastTab"))
+    {
+        case "about":
+            aboutButton.onclick();
+        break;
+        case "inbox":
+            inboxButton.onclick();
+        break;
+        case "achievements":
+            achievementsButton.onclick();
+        break;
+    }
 };
 
 window.onload = main;

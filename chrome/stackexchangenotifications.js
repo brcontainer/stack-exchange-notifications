@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.5
+ * StackExchangeNotifications 0.0.7
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -226,6 +226,37 @@
         timer = setTimeout(retrieveData, currentDelay);
     };
 
+    var SimpleCache = {
+        "set": function (key, data) {
+            var keyData = key + "Cache";
+            localStorage.setItem(keyData,
+                typeof data === "object" ? JSON.stringify(data) : null);
+        },
+        "get": function (key) {
+            var change = false;
+            var keyData = key + "Cache";
+            var data = localStorage.getItem(keyData);//"achievementsCache"
+
+            if (data) {
+                switch (key) {
+                    case "inbox":
+                        change = StackExchangeNotifications.getInbox() !== 0;
+                    break;
+                    case "achievements":
+                        change = StackExchangeNotifications.getScore() !== 0;
+                    break;
+                }
+
+                if (change) {
+                    data = null;
+                    SimpleCache.set(keyData, null);
+                }
+
+                return data ? JSON.parse(data) : false;
+            }
+        }
+    };
+
     window.StackExchangeNotifications = {
         "style": function(callback) {
             if (typeof callback === "function") {
@@ -241,13 +272,35 @@
         },
         "achievements": function(callback) {
             if (typeof callback === "function") {
-                return quickXhr(achievementsURI, callback);
+                var cache = SimpleCache.get("achievements");
+
+                if (cache) {
+                    callback(cache[0], cache[1]);
+                    return null;
+                }
+
+                return quickXhr(achievementsURI, function (data, headers) {
+                    SimpleCache.set("achievements", [data, headers]);
+                    callback(data, headers);
+                });
             }
             return null;
         },
         "inbox": function(callback) {
             if (typeof callback === "function") {
-                return quickXhr(inboxURI, callback);
+                var cache = SimpleCache.get("inbox");
+
+                console.log(cache);
+
+                if (cache) {
+                    callback(cache[0], cache[1]);
+                    return null;
+                }
+
+                return quickXhr(inboxURI, function (data, headers) {
+                    SimpleCache.set("inbox", [data, headers]);
+                    callback(data, headers);
+                });
             }
             return null;
         },

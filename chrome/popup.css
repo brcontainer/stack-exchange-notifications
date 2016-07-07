@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.5
+ * StackExchangeNotifications 0.0.7
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -9,6 +9,46 @@ html, body, h1, h2, h3, h4, h5, a {
     font-family: "Helvetica Neue", Helvetica, "lucida grande", tahoma, Arial, sans-serif;
     padding: 0;
     margin: 0;
+}
+
+body {
+    background-color: #fbfbfb;
+    min-width: 400px;
+    min-height: 400px;
+    font-size: 10pt;
+    font-size: 13px;
+
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+       -khtml-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+}
+
+@-moz-document url-prefix() {
+    body {
+        overflow-x: hidden;
+        max-height: 780px;
+    }
+
+    @media (max-device-width: 600px)
+    {
+        body {
+            max-height: 480px;
+        }
+    }
+
+    @media (max-device-width: 768px)
+    {
+        body {
+            max-height: 720px;
+        }
+    }
+}
+
+body, a {
+    color: #4F4949;
 }
 
 h1, h2, h3, h4, h5 {
@@ -28,28 +68,6 @@ hr {
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
     margin: 0.5em 0;
-}
-
-body {
-    background-color: #fbfbfb;
-    min-height: 400px;
-    min-width: 400px;
-    font-size: 10pt;
-
-    -webkit-touch-callout: none;
-      -webkit-user-select: none;
-       -khtml-user-select: none;
-         -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;
-}
-
-body {
-    font-size: 13px;
-}
-
-body, a {
-    color: #4F4949;
 }
 
 ::-webkit-scrollbar {
