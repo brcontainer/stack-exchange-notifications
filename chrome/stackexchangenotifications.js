@@ -177,6 +177,38 @@
         };
     };
 
+    var SimpleCache = {
+        "set": function (key, data) {
+            var keyData = key + "Cache";
+            localStorage.setItem(keyData,
+                data && typeof data === "object" ?
+                            JSON.stringify(data) : null);
+        },
+        "get": function (key) {
+            var change = false;
+            var keyData = key + "Cache";
+            var data = localStorage.getItem(keyData);//"achievementsCache"
+
+            if (data) {
+                switch (key) {
+                    case "inbox":
+                        change = StackExchangeNotifications.getInbox() !== 0;
+                    break;
+                    case "achievements":
+                        change = StackExchangeNotifications.getScore() !== 0;
+                    break;
+                }
+
+                if (change) {
+                    data = null;
+                    SimpleCache.set(keyData, null);
+                }
+
+                return data ? JSON.parse(data) : false;
+            }
+        }
+    };
+
     var retrieveData = function() {
         quickXhr(unreadCountsURI, trigger);
     };
@@ -209,6 +241,14 @@
                 score = parseInt(data.UnreadRepCount);
                 inbox = parseInt(data.UnreadInboxCount);
 
+                if (score !== 0) {
+                    SimpleCache.set("achievements", null);
+                }
+
+                if (inbox !== 0) {
+                    SimpleCache.set("inbox", null);
+                }
+
                 if (doneCallback !== null) {
                     doneCallback({
                         "score": score,
@@ -224,37 +264,6 @@
         }
 
         timer = setTimeout(retrieveData, currentDelay);
-    };
-
-    var SimpleCache = {
-        "set": function (key, data) {
-            var keyData = key + "Cache";
-            localStorage.setItem(keyData,
-                typeof data === "object" ? JSON.stringify(data) : null);
-        },
-        "get": function (key) {
-            var change = false;
-            var keyData = key + "Cache";
-            var data = localStorage.getItem(keyData);//"achievementsCache"
-
-            if (data) {
-                switch (key) {
-                    case "inbox":
-                        change = StackExchangeNotifications.getInbox() !== 0;
-                    break;
-                    case "achievements":
-                        change = StackExchangeNotifications.getScore() !== 0;
-                    break;
-                }
-
-                if (change) {
-                    data = null;
-                    SimpleCache.set(keyData, null);
-                }
-
-                return data ? JSON.parse(data) : false;
-            }
-        }
     };
 
     window.StackExchangeNotifications = {
