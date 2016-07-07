@@ -267,6 +267,9 @@
     };
 
     window.StackExchangeNotifications = {
+        "clearStyleList": function() {
+            cssList = [];
+        },
         "style": function(callback) {
             if (typeof callback === "function") {
                 cssCallback = callback;

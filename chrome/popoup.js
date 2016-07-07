@@ -145,6 +145,8 @@ function main() {
 
     var headDOM = document.head;
 
+    StackExchangeNotifications.clearStyleList();
+
     StackExchangeNotifications.style(function(stylesheet) {
         var cssDom = document.createElement("link");
 
