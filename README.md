@@ -5,7 +5,7 @@
 
 # About
 
-![preview](http://i.stack.imgur.com/QHmvS.png)
+![preview](http://i.stack.imgur.com/EM13u.png)
 
 This extension has been created for you to stay connected on their StackExchange sites when you're doing other activities:
 
@@ -16,11 +16,11 @@ This extension has been created for you to stay connected on their StackExchange
 
 # Screenshots
 
-- Inbox: [Inbox](http://i.stack.imgur.com/8QG5F.png)
+- Inbox: [Inbox](http://i.stack.imgur.com/6FS0H.png)
 
-- Achivements and score: [Achivements/score](http://i.stack.imgur.com/WRwCB.png)
+- Achivements and score: [Achivements/score](http://i.stack.imgur.com/2LqNo.png)
 
-![inbox and achivements in your browser](http://i.stack.imgur.com/NZjbl.png)
+![inbox and achivements in your browser](http://i.stack.imgur.com/YgDIV.png)
 
 # For developers
 
