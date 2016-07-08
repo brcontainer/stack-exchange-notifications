@@ -1,8 +1,8 @@
 {
     "name": "StackExchangeNotifications",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "manifest_version": 2,
-    "description": "Show new score and inbox messages from StackExchange",
+    "description": "Show recent achievements and inbox messages from StackExchange",
     "browser_action": {
         "default_icon": "images/icon.png",
         "default_popup": "popup.html"
@@ -13,6 +13,28 @@
             "background.js"
         ]
     },
+    "content_scripts" : [{
+        "matches": [
+            "*://stackapps.com/*",
+            "*://askubuntu.com/*",
+            "*://superuser.com/*",
+            "*://superuser.com/*",
+            "*://serverfault.com/*",
+            "*://mathoverflow.com/*",
+            "*://stackoverflow.com/*",
+            "*://stackexchange.com/*",
+
+            "*://*.stackapps.com/*",
+            "*://*.askubuntu.com/*",
+            "*://*.superuser.com/*",
+            "*://*.superuser.com/*",
+            "*://*.serverfault.com/*",
+            "*://*.mathoverflow.com/*",
+            "*://*.stackoverflow.com/*",
+            "*://*.stackexchange.com/*"
+        ],
+        "js": [ "detectchanges.js" ]
+    }],
     "icons": {
         "128": "images/icon-128px.png",
         "48":  "images/icon-48px.png",
@@ -20,8 +42,6 @@
         "16":  "images/icon.png"
     },
     "permissions": [
-        "https://stackexchange.com/*",
-        "http://stackexchange.com/*",
-        "notifications"
+        "*://stackexchange.com/*"
     ]
 }

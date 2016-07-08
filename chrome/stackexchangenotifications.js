@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.8
+ * StackExchangeNotifications 0.0.9
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -16,7 +16,7 @@
         inboxURI        = "http://stackexchange.com/topbar/inbox";
 
     var inbox = 0,
-        score = 0;
+        achievements = 0;
 
     var doneCallback = null,
         cssCallback = null,
@@ -195,7 +195,7 @@
                         change = StackExchangeNotifications.getInbox() !== 0;
                     break;
                     case "achievements":
-                        change = StackExchangeNotifications.getScore() !== 0;
+                        change = StackExchangeNotifications.getAchievements() !== 0;
                     break;
                 }
 
@@ -238,10 +238,10 @@
 
             if (typeof data.UnreadRepCount !== "undefined") {
 
-                score = parseInt(data.UnreadRepCount);
+                achievements = parseInt(data.UnreadRepCount);
                 inbox = parseInt(data.UnreadInboxCount);
 
-                if (score !== 0) {
+                if (achievements !== 0) {
                     SimpleCache.set("achievements", null);
                 }
 
@@ -251,7 +251,7 @@
 
                 if (doneCallback !== null) {
                     doneCallback({
-                        "score": score,
+                        "achievements": achievements,
                         "inbox": inbox
                     });
                 }
@@ -314,9 +314,9 @@
             }
             return null;
         },
-        "setScore": function(size) {
+        "setAchievements": function(size) {
             if (size % 1 === 0) {
-                score = size;
+                achievements = size;
             }
         },
         "setInbox": function(size) {
@@ -324,8 +324,8 @@
                 inbox = size;
             }
         },
-        "getScore": function() {
-            return score;
+        "getAchievements": function() {
+            return achievements;
         },
         "getInbox": function() {
             return inbox;
@@ -343,7 +343,7 @@
                 setTimeout(retrieveData, 1);
             } else if (doneCallback !== null) {
                 doneCallback({
-                    "score": score,
+                    "achievements": achievements,
                     "inbox": inbox
                 });
             }

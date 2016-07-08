@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.8
+ * StackExchangeNotifications 0.0.9
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -29,20 +29,13 @@ body {
 @-moz-document url-prefix() {
     body {
         overflow-x: hidden;
-        max-height: 780px;
+        max-height: 600px;
     }
 
-    @media (max-device-width: 600px)
+    @media (max-device-height: 600px)
     {
         body {
             max-height: 480px;
-        }
-    }
-
-    @media (max-device-width: 768px)
-    {
-        body {
-            max-height: 720px;
         }
     }
 }

@@ -3,6 +3,10 @@
 - Opera: https://addons.opera.com/en/extensions/details/stackexchange-notifications/
 - Firefox: https://addons.mozilla.org/en-US/firefox/addon/stackexchangenotifications/
 
+# About
+
+![preview](http://i.stack.imgur.com/QHmvS.png)
+
 This extension has been created for you to stay connected on their StackExchange sites when you're doing other activities:
 
 - Notifies you of new messages in "inbox"
@@ -21,16 +25,11 @@ This extension has been created for you to stay connected on their StackExchange
 - <s>Basic support for others languages communities/sites</s> (removed)
 - In the next version you will can choose (for menus) the desired language.
 
-# Preview
 
-- Inbox
+# Screenshots
 
-  ![Inbox](http://i.stack.imgur.com/nE9pB.png)
+- Inbox: [Inbox](http://i.stack.imgur.com/8QG5F.png)
 
-- Achievements
+- Achivements and score: [Achivements/score](http://i.stack.imgur.com/WRwCB.png)
 
-  ![achievements](http://i.stack.imgur.com/lWLNq.png)
-
-- Pushs (notifications)
-
-  ![Pushs](http://i.stack.imgur.com/rcy29.png)
+![inbox and achivements in your browser](http://i.stack.imgur.com/NZjbl.png)

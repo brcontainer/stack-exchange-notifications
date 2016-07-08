@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.8
+ * StackExchangeNotifications 0.0.9
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -68,7 +68,7 @@ function main() {
         setupButton         = document.getElementById("setup-button"),
         setupContent        = document.getElementById("setup-content"),
 
-        notificationSwitch = document.getElementById("notification-switch"),
+        notificationSwitch  = document.getElementById("notification-switch"),
 
         backgroundEngine    = chrome.extension.getBackgroundPage()
     ;
@@ -98,7 +98,7 @@ function main() {
     var showInButtons = function()
     {
         var inbox = StackExchangeNotifications.getInbox();
-        var score = StackExchangeNotifications.getScore();
+        var achievements = StackExchangeNotifications.getAchievements();
 
         if (inbox > 0) {
             inboxData.className = "push";
@@ -107,9 +107,9 @@ function main() {
             inboxData.className = "push hide";
         }
 
-        if (score !== 0) {
+        if (achievements !== 0) {
             achievementsData.className = "push";
-            achievementsData.innerHTML = StackExchangeNotifications.utils.convertResult(score);
+            achievementsData.innerHTML = StackExchangeNotifications.utils.convertResult(achievements);
         } else {
             achievementsData.className = "push hide";
         }
@@ -316,7 +316,7 @@ function main() {
                         data.error + '</span>';
 
             } else if (data.indexOf("<") !== -1) {
-                backgroundEngine.resetScore();
+                backgroundEngine.resetAchievements();
 
                 achievementsContent.innerHTML =
                     StackExchangeNotifications.utils.cleanDomString(data);

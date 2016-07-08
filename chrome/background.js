@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.8
+ * StackExchangeNotifications 0.0.9
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -15,8 +15,8 @@
         }
     };
 
-    window.resetScore = function() {
-        StackExchangeNotifications.setScore(0);
+    window.resetAchievements = function() {
+        StackExchangeNotifications.setAchievements(0);
         StackExchangeNotifications.update();
     };
 
@@ -31,7 +31,17 @@
         }
 
         chrome.browserAction.setBadgeText({
-            "text": StackExchangeNotifications.utils.convertResult(response.score + response.inbox)
+            "text": StackExchangeNotifications.utils.convertResult(response.achievements + response.inbox)
         });
+    });
+
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+        switch (request.clear) {
+            case "inbox":
+            case "achievements":
+                StackExchangeNotifications.setInbox(request.data);
+                StackExchangeNotifications.update();
+            break;
+        }
     });
 })();
