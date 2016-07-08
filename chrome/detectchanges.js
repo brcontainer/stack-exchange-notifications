@@ -9,15 +9,6 @@
 (function (doc) {
     var running = false;
 
-    function getStyle(elem, prop)
-    {
-        if (elem.currentStyle) { //IE8
-            return elem.currentStyle[prop];
-        } else if (window.getComputedStyle) {//Navegadores modernos
-            return ;
-        }
-    }
-
     function isHide(elem)
     {
         if (window.getComputedStyle(elem, null).getPropertyValue("visibility") === "hidden") {
