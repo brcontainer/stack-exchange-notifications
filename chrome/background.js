@@ -30,8 +30,10 @@
             caller();
         }
 
+        var updates = (response.achievements !== 0 ? 1 : 0) + response.inbox;
+
         chrome.browserAction.setBadgeText({
-            "text": StackExchangeNotifications.utils.convertResult(response.achievements + response.inbox)
+            "text": StackExchangeNotifications.utils.convertResult(updates)
         });
     });
 
