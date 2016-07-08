@@ -23,7 +23,7 @@
         isRunning = false,
         timer = null;
 
-    var tmpDom      = document.createElement("div");
+    var tmpDom     = document.createElement("div");
     var validAttrs = [ "class", "id", "href" ];
     var cssList = [];
 

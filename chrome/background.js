@@ -38,8 +38,11 @@
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         switch (request.clear) {
             case "inbox":
-            case "achievements":
                 StackExchangeNotifications.setInbox(request.data);
+                StackExchangeNotifications.update();
+            break;
+            case "achievements":
+                StackExchangeNotifications.setAchievements(request.data);
                 StackExchangeNotifications.update();
             break;
         }

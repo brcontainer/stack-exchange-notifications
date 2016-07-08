@@ -6,14 +6,25 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-
 (function (doc) {
+    var running = false;
+
     var applyEvents = function () {
+        if (running) {
+            return;
+        }
+
         var networkSE = doc.querySelector(".network-items");
+
+        if (networkSE) {
+            return;
+        }
+
+        running = true;
 
         var observer = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutation) {
-                var type, el = mutation.target;
+                var type, checkTab, el = mutation.target;
 
                 if (/(^|\s)unread\-count($|\s)/.test(el.className)) {
                     if (/(^|\s)icon\-achievements($|\s)/.test(el.parentNode.className)) {
@@ -23,7 +34,7 @@
                     }
                 }
 
-                if (type) {
+                if (type && chrome.runtime && chrome.runtime.sendMessage) {
                     chrome.runtime.sendMessage({
                         "data": parseInt(el.textContent),
                         "clear": type
@@ -43,5 +54,6 @@
         applyEvents();
     } else {
         doc.addEventListener("DOMContentLoaded", applyEvents);
+        window.addEventListener("onload", applyEvents);
     }
 })(document);
