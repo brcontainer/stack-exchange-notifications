@@ -292,7 +292,9 @@
                 }
 
                 return quickXhr(achievementsURI, function (data, headers) {
-                    SimpleCache.set("achievements", [data, headers]);
+                    if (!data.error) {
+                        SimpleCache.set("achievements", [data, headers]);
+                    }
                     callback(data, headers);
                 });
             }
@@ -308,7 +310,9 @@
                 }
 
                 return quickXhr(inboxURI, function (data, headers) {
-                    SimpleCache.set("inbox", [data, headers]);
+                    if (!data.error) {
+                        SimpleCache.set("inbox", [data, headers]);
+                    }
                     callback(data, headers);
                 });
             }
@@ -329,6 +333,9 @@
         },
         "getInbox": function() {
             return inbox;
+        },
+        "hasCache": function(cache) {
+            return !!SimpleCache.get(cache);
         },
         "update": function(reload) {
             if (false === isRunning) {

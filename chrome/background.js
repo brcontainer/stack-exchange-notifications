@@ -10,19 +10,9 @@
     var caller = null;
 
     window.detectUpdate = function(callback) {
-        if (typeof callback === "function") {
+        if (typeof callback === "function" || callback === null) {
             caller = callback;
         }
-    };
-
-    window.resetAchievements = function() {
-        StackExchangeNotifications.setAchievements(0);
-        StackExchangeNotifications.update();
-    };
-
-    window.resetInbox = function() {
-        StackExchangeNotifications.setInbox(0);
-        StackExchangeNotifications.update();
     };
 
     StackExchangeNotifications.pushs(function(response) {
@@ -38,13 +28,22 @@
     });
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+        var data = request.data;
+
         switch (request.clear) {
             case "inbox":
-                StackExchangeNotifications.setInbox(request.data);
+                if (data !== StackExchangeNotifications.getInbox()) {
+                    StackExchangeNotifications.setInbox(data);
+                }
+
                 StackExchangeNotifications.update();
             break;
+
             case "achievements":
-                StackExchangeNotifications.setAchievements(request.data);
+                if (data !== StackExchangeNotifications.getAchievements()) {
+                    StackExchangeNotifications.setAchievements(data);
+                }
+
                 StackExchangeNotifications.update();
             break;
         }

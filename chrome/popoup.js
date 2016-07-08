@@ -115,8 +115,8 @@ function main() {
         }
     };
 
-    backgroundEngine.detectUpdate(showInButtons);
     showInButtons();
+    backgroundEngine.detectUpdate(showInButtons);
 
     var actionCheckRead = function(current, box) {
         var target = box === "inbox" ? inboxContent : achievementsContent;
@@ -223,7 +223,7 @@ function main() {
 
         window.scrollTo(0, 0);
 
-        if (inboxActive) {
+        if (inboxActive && StackExchangeNotifications.hasCache("inbox")) {
             return false;
         }
 
@@ -252,7 +252,8 @@ function main() {
                         data.error + '</span>';
 
             } else if (data.indexOf("<") !== -1) {
-                backgroundEngine.resetInbox();
+                StackExchangeNotifications.setInbox(0);
+                StackExchangeNotifications.update();
 
                 inboxContent.innerHTML = StackExchangeNotifications.utils.cleanDomString(data);
 
@@ -285,7 +286,7 @@ function main() {
 
         window.scrollTo(0, 0);
 
-        if (achievementsActive) {
+        if (achievementsActive && StackExchangeNotifications.hasCache("achievements")) {
             return false;
         }
 
@@ -316,7 +317,8 @@ function main() {
                         data.error + '</span>';
 
             } else if (data.indexOf("<") !== -1) {
-                backgroundEngine.resetAchievements();
+                StackExchangeNotifications.setAchievements(0);
+                StackExchangeNotifications.update();
 
                 achievementsContent.innerHTML =
                     StackExchangeNotifications.utils.cleanDomString(data);
