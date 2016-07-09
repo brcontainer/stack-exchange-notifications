@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.9
+ * StackExchangeNotifications 0.0.10
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -69,6 +69,8 @@ function main() {
         setupContent        = document.getElementById("setup-content"),
 
         notificationSwitch  = document.getElementById("notification-switch"),
+
+        clearCache          = document.getElementById("clear-cache"),
 
         backgroundEngine    = chrome.extension.getBackgroundPage()
     ;
@@ -360,6 +362,11 @@ function main() {
             achievementsContent.className =
                 achievementsContent.className.replace(/hide|tab\-load/g, "").trim();
         });
+    };
+
+    clearCache.onclick = function()
+    {
+        StackExchangeNotifications.clearCache();
     };
 
     switch (localStorage.getItem("lastTab"))

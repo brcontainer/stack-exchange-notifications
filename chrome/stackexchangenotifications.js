@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.9
+ * StackExchangeNotifications 0.0.10
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -23,16 +23,17 @@
         isRunning = false,
         timer = null;
 
-    var tmpDom     = document.createElement("div");
-    var validAttrs = [ "class", "id", "href" ];
-    var cssList = [];
+    var tmpDom     = document.createElement("div"),
+        validAttrs = [ "class", "id", "href" ],
+        cssList    = [];
 
-    var utils = {
+    var Utils = {
         "meta": function() {
             var u;
 
             if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getManifest) {
                 var meta = chrome.runtime.getManifest();
+
                 return {
                     "appname": meta.name,
                     "version": meta.version
@@ -102,7 +103,7 @@
             list = tmpDom.getElementsByTagName("*");
 
             for (i = list.length - 1; i >= 0; i--) {
-                utils.removeInvalidAttributes(list[i]);
+                Utils.removeInvalidAttributes(list[i]);
             }
 
             return tmpDom.innerHTML;
@@ -149,11 +150,12 @@
 
                 if (xhr.status === 0) {
                     setTimeout(function() {
-                        callback({ "error": 0 }, headers);
+                        callback("", 0, headers);
                     }, 200);
                 } else {
-                    callback(xhr.status === 200 ? xhr.responseText : { "error": xhr.status },
-                                headers);
+                    var status = xhr.responseText === "" ? 0 : xhr.status;
+
+                    callback(xhr.responseText, status, headers);
                 }
 
                 setTimeout(function() {
@@ -177,23 +179,27 @@
         };
     };
 
+    var tokenCache = String(Utils.meta().version) + "_cache";
+
     var SimpleCache = {
         "set": function (key, data) {
-            var keyData = key + "Cache";
+            var keyData = key + "_" + tokenCache;
+
             localStorage.setItem(keyData,
                 data && typeof data === "object" ?
                             JSON.stringify(data) : null);
         },
         "get": function (key) {
-            var change = false;
-            var keyData = key + "Cache";
-            var data = localStorage.getItem(keyData);//"achievementsCache"
+            var change  = false,
+                keyData = key + "_" + tokenCache,
+                data    = localStorage.getItem(keyData);
 
             if (data) {
                 switch (key) {
                     case "inbox":
                         change = StackExchangeNotifications.getInbox() !== 0;
                     break;
+
                     case "achievements":
                         change = StackExchangeNotifications.getAchievements() !== 0;
                     break;
@@ -287,15 +293,16 @@
                 var cache = SimpleCache.get("achievements");
 
                 if (cache) {
-                    callback(cache[0], cache[1]);
+                    callback(cache[0], cache[1], cache[2]);
                     return null;
                 }
 
-                return quickXhr(achievementsURI, function (data, headers) {
-                    if (!data.error) {
-                        SimpleCache.set("achievements", [data, headers]);
+                return quickXhr(achievementsURI, function (data, code, headers) {
+                    if (code === 200) {
+                        SimpleCache.set("achievements", [data, code, headers]);
                     }
-                    callback(data, headers);
+
+                    callback(data, code, headers);
                 });
             }
             return null;
@@ -305,14 +312,15 @@
                 var cache = SimpleCache.get("inbox");
 
                 if (cache) {
-                    callback(cache[0], cache[1]);
+                    callback(cache[0], cache[1], cache[2]);
                     return null;
                 }
 
-                return quickXhr(inboxURI, function (data, headers) {
-                    if (!data.error) {
-                        SimpleCache.set("inbox", [data, headers]);
+                return quickXhr(inboxURI, function (data, code, headers) {
+                    if (code === 200) {
+                        SimpleCache.set("inbox", [data, code, headers]);
                     }
+
                     callback(data, headers);
                 });
             }
@@ -336,6 +344,10 @@
         },
         "hasCache": function(cache) {
             return !!SimpleCache.get(cache);
+        },
+        "clearCache": function() {
+            SimpleCache.set("inbox", null);
+            SimpleCache.set("achievements", null);
         },
         "update": function(reload) {
             if (false === isRunning) {
@@ -367,6 +379,6 @@
 
             return false;
         },
-        "utils": utils
+        "utils": Utils
     };
 }());
