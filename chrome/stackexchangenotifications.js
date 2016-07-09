@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.10
+ * StackExchangeNotifications 0.0.11
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -153,7 +153,7 @@
                         callback("", 0, headers);
                     }, 200);
                 } else {
-                    var status = xhr.responseText === "" ? 0 : xhr.status;
+                    var status = xhr.responseText === "" && xhr.status === 200 ? -1 : xhr.status;
 
                     callback(xhr.responseText, status, headers);
                 }
@@ -232,10 +232,15 @@
         return isNaN(result) ? 0 : result;
     };
 
-    var trigger = function(response) {
+    var trigger = function(response, code) {
         var currentDelay = 1000 * delay;
 
-        if (typeof response === "string") {
+        if (code !== 200) {
+            /*
+             * If the internet access fails uses a smaller delay
+             */
+            currentDelay = 1000;
+        } else if (typeof response === "string") {
             var data;
 
             try {
@@ -262,11 +267,6 @@
                     });
                 }
             }
-        } else if (response.error === 0) {
-            /*
-             * If the internet access fails uses a smaller delay
-             */
-            currentDelay = 1000;
         }
 
         timer = setTimeout(retrieveData, currentDelay);
@@ -321,7 +321,7 @@
                         SimpleCache.set("inbox", [data, code, headers]);
                     }
 
-                    callback(data, headers);
+                    callback(data, code, headers);
                 });
             }
             return null;

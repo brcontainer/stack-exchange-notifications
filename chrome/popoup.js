@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.10
+ * StackExchangeNotifications 0.0.11
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -247,21 +247,13 @@ function main() {
 
         inboxContent.innerHTML = "";
 
-        inboxXhr = StackExchangeNotifications.inbox(function(data) {
-            if (typeof data.error !== "undefined") {
+        inboxXhr = StackExchangeNotifications.inbox(function(data, code) {
+            if (code !== 200 && code !== -1) {
                 inboxContent.innerHTML =
                     '<span class="sen-error notice">HTTP error - status: ' +
                         data.error + '</span>';
 
-            } else if (data.indexOf("<") !== -1) {
-                StackExchangeNotifications.setInbox(0);
-                StackExchangeNotifications.update();
-
-                inboxContent.innerHTML = StackExchangeNotifications.utils.cleanDomString(data);
-
-                setDomEvents(inboxContent);
-                saveStateDetect("inbox");
-            } else {
+            } else if (code === -1) {
                 inboxContent.innerHTML = [
                     '<span class="sen-error notice">',
                     "Response error:<br>",
@@ -271,6 +263,14 @@ function main() {
                 ].join("");
 
                 setDomEvents(inboxContent);
+            } else if (data.indexOf("<") !== -1) {
+                StackExchangeNotifications.setInbox(0);
+                StackExchangeNotifications.update();
+
+                inboxContent.innerHTML = StackExchangeNotifications.utils.cleanDomString(data);
+
+                setDomEvents(inboxContent);
+                saveStateDetect("inbox");
             }
 
             inboxContent.className =
@@ -310,14 +310,19 @@ function main() {
 
         achievementsContent.innerHTML = "";
 
-        achievementsXhr = StackExchangeNotifications.achievements(function(data, headers) {
+        achievementsXhr = StackExchangeNotifications.achievements(function(data, code, headers) {
             var dateContent, date, hour, min;
 
-            if (typeof data.error !== "undefined") {
+            if (code !== 200 && code !== -1) {
                 achievementsContent.innerHTML =
                     '<span class="sen-error notice">HTTP error - status: ' +
-                        data.error + '</span>';
+                        status + '</span>';
 
+            }  else if (code === -1) {
+                dateContent = document.querySelector(".utc-clock");
+                if (dateContent) {
+                    dateContent.className += " hide";
+                }
             } else if (data.indexOf("<") !== -1) {
                 StackExchangeNotifications.setAchievements(0);
                 StackExchangeNotifications.update();
@@ -337,11 +342,6 @@ function main() {
                         min  = min  > 9 ? min  : ("0" + "" + min );
 
                         dateContent.innerHTML = hour + ":" + min
-                    }
-                } else {
-                    dateContent = document.querySelector(".utc-clock");
-                    if (dateContent) {
-                        dateContent.className += " hide";
                     }
                 }
 
