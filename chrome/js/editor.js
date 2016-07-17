@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.12
+ * StackExchangeNotifications 0.1.0
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -12,29 +12,52 @@ function SEN_Editor_main(Space, Button)
         fullRegExp     = /(^|\s)SEN\-full\-editor($|\s)/g,
         noscrollRegExp = /(^|\s)SEN\-noscroll($|\s)/g,
         hideRegExp     = /(^|\s)SEN\-hide($|\s)/g,
+        readyRegExp    = /(^|\s)SEN\-readonly($|\s)/g,
 
-        rootDoc        = document.body.parentNode;
+        rootDoc        = document.body.parentNode,
 
-        postEditor     = document.getElementById("post-editor")
+        postEditor     = document.querySelector(".post-editor"),
+
+        standardActs
+                = postEditor.querySelectorAll(
+                    ".wmd-button:not(.SEN-button), .wmd-spacer"),
 
         textField      = postEditor.querySelector("textarea"),
-        postPreview    = document.getElementById("wmd-preview"),
-        grippie        = postEditor.querySelector(".grippie"),
-        communityOpt   = postEditor.querySelector(".community-option")
+        postPreview    = postEditor.querySelector(".wmd-preview"),
+        fl             = postEditor.querySelector(".fl"),
+
+        inReadOnlyMode = false
     ;
 
+    for (var i = 0, j = standardActs.length; i < j; i++) {
+        var btn, el = standardActs[i];
+
+        if (el.className.indexOf("wmd-button") !== -1) {
+            btn = Button("SEN-fakeact " + el.className);
+            btn.innerHTML = el.innerHTML;
+        } else if (el.className.indexOf("wmd-spacer") !== -1) {
+            Space("SEN-fakeact");
+        }
+    }
+
     postPreview.className += " SEN-hide";
+
+    if (fl) {
+        fl.className += " SEN-hide";
+    }
+
+    textField.parentNode.insertBefore(postPreview, textField.nextSibling);
 
     Space();
 
     var fullViewAction = Button("sen-editor-full", "Expand editor in full view-port");
     var showPreview    = Button("sen-editor-preview", "Show post preview");
-    var sibeBySide     = Button("sen-editor-sidebyside", "Show preview on left editor");
+    //var sibeBySide     = Button("sen-editor-sidebyside", "Show preview on left editor");
 
     fullViewAction.addEventListener("click", function() {
         if (fullRegExp.test(postEditor.className)) {
-            postEditor.className = postEditor.className.replace(fullRegExp, "").trim();
-            rootDoc.className    = rootDoc.className.replace(noscrollRegExp, "").trim();
+            postEditor.className = postEditor.className.replace(fullRegExp, " ").replace(/\s\s/g, " ").trim();
+            rootDoc.className = rootDoc.className.replace(noscrollRegExp, " ").replace(/\s\s/g, " ").trim();
         } else {
             postEditor.className += " SEN-full-editor";
             rootDoc.className += " SEN-noscroll";
@@ -43,15 +66,19 @@ function SEN_Editor_main(Space, Button)
 
     showPreview.addEventListener("click", function() {
         if (hideRegExp.test(textField.className)) {
-            communityOpt.className = communityOpt.className.replace(hideRegExp, "").trim();
-            textField.className = textField.className.replace(hideRegExp, "").trim();
-            grippie.className = grippie.className.replace(hideRegExp, "").trim();
+            inReadOnlyMode = false;
+
+            textField.className = textField.className.replace(hideRegExp, " ").replace(/\s\s/g, " ").trim();
             postPreview.className += " SEN-hide";
+
+            postEditor.className = postEditor.className.replace(readyRegExp, " ").replace(/\s\s/g, " ").trim();
         } else {
-            grippie.className += " SEN-hide";
+            inReadOnlyMode = true;
+
             textField.className += " SEN-hide";
-            communityOpt.className += " SEN-hide";
-            postPreview.className = textField.className.replace(hideRegExp, "").trim();
+            postPreview.className = postPreview.className.replace(hideRegExp, " ").replace(/\s\s/g, " ").trim();
+
+            postEditor.className += " SEN-readonly";
         }
     });
 }
@@ -61,9 +88,10 @@ function SEN_Editor_main(Space, Button)
     var done = false;
 
     var initiate = function() {
-        var sc,
+        var
+            sc,
             btn,
-            actions = doc.getElementById("wmd-button-row"),
+            actions = doc.querySelector(".wmd-button-row"),
             helpButton = doc.querySelector(".wmd-button-row > .wmd-help-button");
 
         if (!actions) {
@@ -81,39 +109,51 @@ function SEN_Editor_main(Space, Button)
 
         doc.body.appendChild(editorCss);
 
-        var Space = function() {
+        var Space = function(className) {
             if (sc) {
-                helpButton.parentNode.insertBefore(sc.cloneNode(), helpButton);
-                return;
+                var tmp = sc.cloneNode();
+
+                helpButton.parentNode.insertBefore(tmp, helpButton);
+
+                if (className) {
+                    tmp.className += " " + className;
+                }
+                return tmp;
             }
 
             sc = doc.createElement("li");
-            sc.className = "wmd-spacer";
+            sc.className = "wmd-spacer SEN-spacer";
 
-            Space();
+            Space(className);
         };
 
         var Button = function(className, title) {
             if (btn) {
                 var tmp = btn.cloneNode(true);
 
-                tmp.className += " " + className;
+                if (className) {
+                    tmp.className += " " + className;
+                }
 
-                actions.appendChild(tmp);
+                if (title) {
+                    btn.setAttribute("title", title);
+                }
+
+                helpButton.parentNode.insertBefore(tmp, helpButton);
 
                 return tmp;
             }
 
             btn = doc.createElement("li");
-            btn.className = "wmd-button";
+            btn.className = "wmd-button SEN-button";
             btn.innerHTML = "<span></span>";
 
-            btn.setAttribute("title", title);
-
-            return Button(title);
+            return Button(className, title);
         };
 
-        SEN_Editor_main(Space, Button);
+        setTimeout(function() {
+            SEN_Editor_main(Space, Button);
+        }, 10);
     };
 
     var load = function() {

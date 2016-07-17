@@ -1,6 +1,6 @@
 {
     "name": "StackExchangeNotifications",
-    "version": "0.0.12",
+    "version": "0.1.0",
     "manifest_version": 2,
     "description": "Show recent achievements and inbox messages from StackExchange",
     "icons": {
@@ -45,7 +45,8 @@
         ]
     }],
     "web_accessible_resources": [
-        "css/editor.css"
+        "css/editor.css",
+        "images/*"
     ],
     "permissions": [
         "*://stackexchange.com/*",
