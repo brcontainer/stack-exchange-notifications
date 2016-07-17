@@ -73,9 +73,18 @@ function SEN_Editor_main(Space, Button, postEditor)
         if (fullRegExp.test(postEditor.className)) {
             postEditor.className = postEditor.className.replace(fullRegExp, " ").replace(/\s\s/g, " ").trim();
             rootDoc.className = rootDoc.className.replace(noscrollRegExp, " ").replace(/\s\s/g, " ").trim();
+
+            if (postEditor.childElementCount == 2) {
+                postEditor.firstElementChild.className
+                    = postEditor.firstElementChild.className.replace(hideRegExp, " ").replace(/\s\s/g, " ").trim();
+            }
         } else {
             postEditor.className += " SEN-full-editor";
             rootDoc.className += " SEN-noscroll";
+
+            if (postEditor.childElementCount == 8) {
+                postEditor.firstElementChild.className += " SEN-hide";
+            }
         }
     });
 
