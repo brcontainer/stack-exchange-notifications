@@ -33,6 +33,10 @@ For debugging or testing push notifications there are some functions:
 | `StackExchangeNotifications.update` | After use setAchievements and/or setInbox, perfom this function, this function show results in "push notifications" over icon and popup tabs |
 | `StackExchangeNotifications.getAchievements` | Get current total achivements |
 | `StackExchangeNotifications.getInbox` | Get total messages in Inbox |
+| `StackExchangeNotifications.enableNotifications` | Get or set notifications activetions |
+| `StackExchangeNotifications.hasCache` | Return true if has cache or false if no |
+| `StackExchangeNotifications.clearCache` | Clear inbox and achivements cache |
+| `StackExchangeNotifications.utils.meta` | Get appname and version |
 
 ## Debugging in Opera or Chrome
 

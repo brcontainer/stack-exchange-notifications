@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.11
+ * StackExchangeNotifications 0.0.12
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -207,24 +207,24 @@ hr {
     background-color: #ccc;
     text-decoration: none;
     display: inline-block;
+    color: #8c8585;
 }
 .switch .on, .switch .off {
     display: none;
     padding: 2px;
 }
-.switch.on {
+.switch-on {
     background-color: #ED7500;
     color: #fff;
 }
-
-.switch.on .on, .switch.off .off {
+.switch-on .on, .switch-off .off {
     display: inline-block;
     line-height: 0;
 }
-.switch.on small {
+.switch-on small {
     padding: 5px 5px 5px 3px;
 }
-.switch.off small {
+.switch-off small {
     padding: 5px 3px 5px 5px;
 }
 

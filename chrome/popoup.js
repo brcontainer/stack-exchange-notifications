@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.11
+ * StackExchangeNotifications 0.0.12
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -68,6 +68,8 @@ function main() {
         setupButton         = document.getElementById("setup-button"),
         setupContent        = document.getElementById("setup-content"),
 
+        switchs             = document.getElementsByClassName("switch"),
+
         notificationSwitch  = document.getElementById("notification-switch"),
 
         clearCache          = document.getElementById("clear-cache"),
@@ -76,17 +78,6 @@ function main() {
     ;
 
     window.StackExchangeNotifications = backgroundEngine.StackExchangeNotifications;
-
-    /*
-    notificationSwitch.onclick = function() {
-        chrome.notifications.create(getNotificationId(), {
-            title: 'SEN Notification',
-            iconUrl: 'images/icon-128px.png',
-            type: 'basic',
-            message: "xxxx"
-        }, function() {});
-    };
-    */
 
     document.oncontextmenu = FF;
 
@@ -158,6 +149,33 @@ function main() {
 
         headDOM.appendChild(cssDom);
     });
+
+    var changeSwitchEvent = document.createEvent("Event");
+        changeSwitchEvent.initEvent("changeswitch", true, true);
+
+    var switchsREOn  = /(^|\s)switch\-on($|\s)/;
+    var switchsREOff = /(^|\s)switch\-off($|\s)/;
+
+    for (var i = 0, j = switchs.length; i < j; i++) {
+        switchs[i].addEventListener("click", function()
+        {
+            var sre, nv;
+
+            if (switchsREOn.test(this.className)) {
+                sre = switchsREOn;
+                this.value = "off";
+                nv = " switch-off";
+            } else {
+                sre = switchsREOff;
+                this.value = "on";
+                nv = " switch-on";
+            }
+
+            this.className = this.className.replace(sre, "").trim() + nv;
+
+            this.dispatchEvent(changeSwitchEvent);
+        });
+    }
 
     setupButton.onclick = function()
     {
@@ -264,8 +282,10 @@ function main() {
 
                 setDomEvents(inboxContent);
             } else if (data.indexOf("<") !== -1) {
-                StackExchangeNotifications.setInbox(0);
-                StackExchangeNotifications.update();
+                setTimeout(function () {
+                    StackExchangeNotifications.setInbox(0);
+                    StackExchangeNotifications.update();
+                }, 1500);
 
                 inboxContent.innerHTML = StackExchangeNotifications.utils.cleanDomString(data);
 
@@ -319,13 +339,20 @@ function main() {
                         status + '</span>';
 
             }  else if (code === -1) {
-                dateContent = document.querySelector(".utc-clock");
-                if (dateContent) {
-                    dateContent.className += " hide";
-                }
+                achievementsContent.innerHTML = [
+                    '<span class="sen-error notice">',
+                    "Response error:<br>",
+                    "You must be logged in to <br>",
+                    "<a href=\"http://stackexchange.com\">http://stackexchange.com</a>",
+                    '</span>'
+                ].join("");
+
+                setDomEvents(achievementsContent);
             } else if (data.indexOf("<") !== -1) {
-                StackExchangeNotifications.setAchievements(0);
-                StackExchangeNotifications.update();
+                setTimeout(function () {
+                    StackExchangeNotifications.setAchievements(0);
+                    StackExchangeNotifications.update();
+                }, 1500);
 
                 achievementsContent.innerHTML =
                     StackExchangeNotifications.utils.cleanDomString(data);
@@ -343,20 +370,15 @@ function main() {
 
                         dateContent.innerHTML = hour + ":" + min
                     }
+                } else {
+                    dateContent = document.querySelector(".utc-clock");
+                    if (dateContent) {
+                        dateContent.className += " hide";
+                    }
                 }
 
                 setDomEvents(achievementsContent);
                 saveStateDetect("achievements");
-            } else {
-                achievementsContent.innerHTML = [
-                    '<span class="sen-error notice">',
-                    "Response error:<br>",
-                    "You must be logged in to <br>",
-                    "<a href=\"http://stackexchange.com\">http://stackexchange.com</a>",
-                    '</span>'
-                ].join("");
-
-                setDomEvents(achievementsContent);
             }
 
             achievementsContent.className =
@@ -369,8 +391,25 @@ function main() {
         StackExchangeNotifications.clearCache();
     };
 
+    if (!StackExchangeNotifications.enableNotifications()) {
+        var evt = new MouseEvent("click", {
+            "view": window,
+            "bubbles": true,
+            "cancelable": true
+        });
+
+        notificationSwitch.dispatchEvent(evt);
+    }
+
+    notificationSwitch.addEventListener("changeswitch", function() {
+        StackExchangeNotifications.enableNotifications(this.value === "on");
+    });
+
     switch (localStorage.getItem("lastTab"))
     {
+        case "setup":
+            setupButton.onclick();
+        break;
         case "about":
             aboutButton.onclick();
         break;

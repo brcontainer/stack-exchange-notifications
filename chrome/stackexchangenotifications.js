@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.0.11
+ * StackExchangeNotifications 0.0.12
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -131,11 +131,11 @@
     };
 
     var quickXhr = function(uri, callback) {
-        var xhr, completed, isAborted, headers;
-
-        xhr       = new XMLHttpRequest();
-        isAborted = false;
-        completed = false;
+        var
+            headers,
+            completed = false,
+            isAborted = false,
+            xhr       = new XMLHttpRequest();
 
         uri = noCacheURI(uri);
 
@@ -187,7 +187,7 @@
 
             localStorage.setItem(keyData,
                 data && typeof data === "object" ?
-                            JSON.stringify(data) : null);
+                            JSON.stringify(data) : data);
         },
         "get": function (key) {
             var change  = false,
@@ -224,6 +224,7 @@
 
         if (target.length > 0) {
             el = target[0];
+
             if (el.display !== "none") {
                 result = parseInt(el.innerHTML);
             }
@@ -275,6 +276,35 @@
     window.StackExchangeNotifications = {
         "clearStyleList": function() {
             cssList = [];
+        },
+        "enableNotifications": function(enable) {
+            if (enable === true || enable === false) {
+                SimpleCache.set("disableNotification", !enable);
+            }
+
+            return !SimpleCache.get("disableNotification");
+        },
+        "notify": function(id, title, message) {
+            if (SimpleCache.get("disableNotification")) {
+                return;
+            }
+
+            var props = {
+                "type":    "basic",
+                "title":   title,
+                "iconUrl": "images/icon-128px.png",
+                "message": message
+            };
+
+            var propsCopy = JSON.parse(JSON.stringify(props));
+            propsCopy.requireInteraction = true;
+
+            //Prevent exception in Firefox
+            try {
+                chrome.notifications.create(id, propsCopy, function() {});
+            } catch (ee) {
+                chrome.notifications.create(id, props, function() {});
+            }
         },
         "style": function(callback) {
             if (typeof callback === "function") {
@@ -345,9 +375,17 @@
         "hasCache": function(cache) {
             return !!SimpleCache.get(cache);
         },
-        "clearCache": function() {
-            SimpleCache.set("inbox", null);
-            SimpleCache.set("achievements", null);
+        "clearCache": function(current) {
+            switch (current) {
+                case "inbox":
+                case "achievements":
+                    SimpleCache.set(current, null);
+                break;
+
+                default:
+                    SimpleCache.set("inbox", null);
+                    SimpleCache.set("achievements", null);
+            }
         },
         "update": function(reload) {
             if (false === isRunning) {

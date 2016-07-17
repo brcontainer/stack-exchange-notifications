@@ -12,7 +12,7 @@
             <a title="Show About" id="about-button" href="#about-button">
                 <span class="icon">&nbsp;</span>
             </a>
-            <a title="Setup" id="setup-button" href="#setup-button" style="display: none">
+            <a title="Setup" id="setup-button" href="#setup-button">
                 <span class="icon">&nbsp;</span>
             </a>
             <a title="Show Achievements" id="achievements-button" href="#achievements-button">
@@ -26,16 +26,10 @@
         </p>
 
         <div id="setup-content" class="tab-item hide">
-            <!-- div class="notice">
-                <div class="bg-sen">
-                    <img src="images/sen.svg#light">
-                </div>
-            </div -->
             <div class="setup">
                 <h1>Desktop Notification</h1>
                 <p class="field">
-                    <a id="notification-switch" class="switch on input" href="#">
-                        <input type="hidden" value="off">
+                    <a id="notification-switch" class="switch switch-on" href="#">
                         <span class="on">
                             <small>On</small>
                         </span>
@@ -44,13 +38,6 @@
                         </span>
                     </a>
                     <span class="label">Enable Desktop Notifications</span>
-                </p>
-                <p class="field">
-                    <input class="input" type="number" min="0" max="60" value="0">
-                    <span class="label">Timeout for hide (seconds)</span>
-                </p>
-                <p>
-                    (Note: If 0 seconds are selected, the notifications are only hidden after a click)
                 </p>
             </div>
         </div>
