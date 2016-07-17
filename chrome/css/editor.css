@@ -49,10 +49,42 @@ html.SEN-noscroll, html.SEN-noscroll body {
 .SEN-fakeact {
     display: none !important;
     opacity: 0.08 !important;
+    cursor: default !important;
 }
 
 .SEN-readonly .SEN-fakeact {
     display: block !important;
+}
+
+.SEN-master-button {
+    display: none !important;
+    position: fixed !important;
+    z-index: 999 !important;
+    background: transparent !important;
+    border: 1px #c0c0c0 solid !important;
+    color: #c0c0c0 !important;
+    right: 10px !important;
+    bottom: 10px !important;
+    box-shadow: none !important;
+    border-radius: 20px !important;
+    transition: all .2s !important;
+}
+
+.SEN-master-button:focus,
+.SEN-master-button:hover {
+    background: #07c !important;
+    border: 1px #07c solid !important;
+    color: #fff !important;
+}
+
+.SEN-editor-full span {
+    background: url(../images/expand.svg) center center no-repeat !important;
+    background-size: 80% 80% !important;
+}
+
+.SEN-editor-preview span {
+    background: url(../images/eye.svg) center center no-repeat !important;
+    background-size: cover !important;
 }
 
 .SEN-readonly .grippie,
@@ -65,7 +97,7 @@ html.SEN-noscroll, html.SEN-noscroll body {
 
 .SEN-full-editor {
     position: fixed !important;
-    z-index: 1000 !important;
+    z-index: 998 !important;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
@@ -106,16 +138,10 @@ html.SEN-noscroll, html.SEN-noscroll body {
     flex-direction: column !important;
 }
 
+.SEN-full-editor .SEN-master-button {
+    display: inline-block !important;
+}
+
 .SEN-full-editor .wmd-preview {
-    overflow: auto;
-}
-
-.sen-editor-full span {
-    background: url(../images/expand.svg) center center no-repeat !important;
-    background-size: 80% 80% !important;
-}
-
-.sen-editor-preview span {
-    background: url(../images/eye.svg) center center no-repeat !important;
-    background-size: cover !important;
+    overflow: auto !important;
 }

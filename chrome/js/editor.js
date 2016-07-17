@@ -6,9 +6,9 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-function SEN_Editor_main(Space, Button)
+function SEN_Editor_main(Space, Button, postEditor)
 {
-    if (!!document.querySelector(".sen-editor-full")) {
+    if (!!postEditor.querySelector(".SEN-editor-full")) {
         return;
     }
 
@@ -19,8 +19,6 @@ function SEN_Editor_main(Space, Button)
         readyRegExp    = /(^|\s)SEN\-readonly($|\s)/g,
 
         rootDoc        = document.body.parentNode,
-
-        postEditor     = document.querySelector(".post-editor"),
 
         standardActs
                 = postEditor.querySelectorAll(
@@ -37,10 +35,10 @@ function SEN_Editor_main(Space, Button)
         var btn, el = standardActs[i];
 
         if (el.className.indexOf("wmd-button") !== -1) {
-            btn = Button("SEN-fakeact " + el.className);
+            btn = Button("SEN-fakeact " + el.className, "", postEditor);
             btn.innerHTML = el.innerHTML;
         } else if (el.className.indexOf("wmd-spacer") !== -1) {
-            Space("SEN-fakeact");
+            Space("SEN-fakeact", postEditor);
         }
     }
 
@@ -52,11 +50,24 @@ function SEN_Editor_main(Space, Button)
 
     textField.parentNode.insertBefore(postPreview, textField.nextSibling);
 
-    Space();
+    var pb = postEditor.querySelector(".form-submit input[type=submit]");
 
-    var fullViewAction = Button("sen-editor-full", "Expand editor in full view-port");
-    var showPreview    = Button("sen-editor-preview", "Show post preview");
-    //var sibeBySide     = Button("sen-editor-sidebyside", "Show preview on left editor");
+    if (pb) {
+        var publicButton = document.createElement("button");
+        publicButton.className = "SEN-master-button";
+        publicButton.textContent = pb.value||pb.textContent;
+        textField.parentNode.insertBefore(publicButton, textField.nextSibling);
+
+        publicButton.onclick = function() {
+            pb.click();
+        };
+    }
+
+    Space(false, postEditor);
+
+    var fullViewAction = Button("SEN-editor-full", "Expand editor in full view-port", postEditor);
+    var showPreview    = Button("SEN-editor-preview", "Show post preview", postEditor);
+    //var sibeBySide     = Button("SEN-editor-sidebyside", "Show preview on left editor", postEditor);
 
     fullViewAction.addEventListener("click", function() {
         if (fullRegExp.test(postEditor.className)) {
@@ -94,14 +105,7 @@ function SEN_Editor_main(Space, Button)
     var initiate = function() {
         var
             sc,
-            btn,
-            actions = document.querySelector(".wmd-button-row"),
-            helpButton = document.querySelector(".wmd-button-row > .wmd-help-button");
-
-        if (!actions) {
-            setTimeout(initiate, 200);
-            return;
-        }
+            btn;
 
         done = true;
 
@@ -113,8 +117,10 @@ function SEN_Editor_main(Space, Button)
 
         document.body.appendChild(editorCss);
 
-        var Space = function(className) {
+        var Space = function(className, target) {
             if (sc) {
+                var helpButton = target.querySelector(".wmd-button-row > .wmd-help-button");
+                var actions = actions = target.querySelector(".wmd-button-row");
                 var tmp = sc.cloneNode();
 
                 if (helpButton) {
@@ -132,11 +138,13 @@ function SEN_Editor_main(Space, Button)
             sc = document.createElement("li");
             sc.className = "wmd-spacer SEN-spacer";
 
-            Space(className);
+            Space(className, target);
         };
 
-        var Button = function(className, title) {
+        var Button = function(className, title, target) {
             if (btn) {
+                var helpButton = target.querySelector(".wmd-button-row > .wmd-help-button");
+                var actions = actions = target.querySelector(".wmd-button-row");
                 var tmp = btn.cloneNode(true);
 
                 if (className) {
@@ -160,17 +168,35 @@ function SEN_Editor_main(Space, Button)
             btn.className = "wmd-button SEN-button";
             btn.innerHTML = "<span></span>";
 
-            return Button(className, title);
+            return Button(className, title, target);
         };
 
-        setTimeout(function() {
-            SEN_Editor_main(Space, Button);
-        }, 800);
-
-        document.querySelector("textarea.wmd-input").addEventListener("click", function() {
+        var addButtons = function(target) {
             setTimeout(function() {
-                SEN_Editor_main(Space, Button);
+                SEN_Editor_main(Space, Button, target);
             }, 500);
+
+            target.querySelector("textarea.wmd-input").addEventListener("focus", function() {
+                addButtons(target);
+            });
+        };
+
+        addButtons(document.querySelector(".post-editor"));
+
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function (mutation) {
+                var el = mutation.target;
+
+                if (/(^|\s)inline\-editor($|\s)/.test(el.className)) {
+                    addButtons(el.querySelector(".post-editor"));
+                }
+            });
+        });
+
+        observer.observe(document, {
+            subtree: true,
+            childList: true,
+            attributes: true
         });
     };
 
