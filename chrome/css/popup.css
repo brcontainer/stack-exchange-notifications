@@ -140,7 +140,7 @@ hr {
 }
 
 .tab-load {
-    background: url(images/load.svg) center center no-repeat;
+    background: url(../images/load.svg) center center no-repeat;
     background-size: 32px 32px;
     height: 100%;
     width: 100%;
@@ -238,10 +238,29 @@ hr {
     background-color: #fff;
 }
 
+.field {
+    margin: 0;
+    padding: 10px;
+    border-bottom: 1px #e4e4e4 solid;
+    background-color: #fff;
+}
+.field::after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+.field.first {
+    border-top: 1px #e4e4e4 solid;
+}
 
 .field .label {
     vertical-align: middle;
 }
+
+.field .switch {
+    float: right;
+}
+
 .field .input {
     font-size: 11pt;
 }
@@ -291,19 +310,19 @@ hr {
 }
 
 #inbox-button span.icon {
-    background-image: url(images/inbox.svg);
+    background-image: url(../images/inbox.svg);
 }
 
 #about-button span.icon {
-    background-image: url(images/about.svg);
+    background-image: url(../images/about.svg);
 }
 
 #achievements-button span.icon {
-    background-image: url(images/achievements.svg);
+    background-image: url(../images/achievements.svg);
 }
 
 #setup-button span.icon {
-    background-image: url(images/gears.svg);
+    background-image: url(../images/gears.svg);
 }
 
 .tab-item .modal-content ul,
@@ -479,6 +498,14 @@ hr {
 }
 
 .setup {
-    padding: 75px 10px 10px 10px;
+    padding: 75px 0 10px 0;
+}
+
+.setup h1 {
+    padding: 25px 0;
     text-align: center;
+}
+
+.setup h2 {
+    padding: 15px 0;
 }

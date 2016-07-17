@@ -111,7 +111,7 @@
         }
     });
 
-    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    function updateChanges(request) {
         var data = request.data;
 
         switch (request.clear) {
@@ -130,6 +130,14 @@
 
                 StackExchangeNotifications.update();
             break;
+        }
+    }
+
+    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+        if (request.data && request.clear) {
+            updateChanges(resquest);
+        } else if (request === "editorAvailable") {
+            sendResponse(StackExchangeNotifications.enableEditor());
         }
     });
 })();

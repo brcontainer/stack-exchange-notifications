@@ -3,9 +3,9 @@
     <head>
         <title>StackExchange Notifications</title>
         <meta charset="utf-8">
-        <script type="text/javascript" src="stackexchangenotifications.js"></script>
-        <script type="text/javascript" src="popoup.js"></script>
-        <link rel="stylesheet" type="text/css" href="popup.css">
+        <script type="text/javascript" src="js/stackexchangenotifications.js"></script>
+        <script type="text/javascript" src="js/popoup.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/popup.css">
     </head>
     <body class="topbar">
         <p class="nav">
@@ -27,8 +27,13 @@
 
         <div id="setup-content" class="tab-item hide">
             <div class="setup">
-                <h1>Desktop Notification</h1>
-                <p class="field">
+                <h1>Options</h1>
+
+                <!-- h2>Desktop</h2 -->
+
+                <p class="field first">
+                    <span class="label">Enable Desktop Notifications</span>
+
                     <a id="notification-switch" class="switch switch-on" href="#">
                         <span class="on">
                             <small>On</small>
@@ -37,7 +42,21 @@
                             <small>Off</small>
                         </span>
                     </a>
-                    <span class="label">Enable Desktop Notifications</span>
+                </p>
+
+                <!-- h2>Editor</h2 -->
+
+                <p class="field _first">
+                    <span class="label">Enable improved text editor</span>
+
+                    <a id="editor-switch" class="switch switch-on" href="#">
+                        <span class="on">
+                            <small>On</small>
+                        </span>
+                        <span class="off">
+                            <small>Off</small>
+                        </span>
+                    </a>
                 </p>
             </div>
         </div>

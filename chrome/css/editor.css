@@ -1,0 +1,85 @@
+/*
+ * StackExchangeNotifications 0.0.12
+ * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Released under the MIT license
+ *
+ * https://github.com/brcontainer/stack-exchange-notification
+ */
+
+.post-editor {
+}
+
+.wmd-button-bar {
+
+}
+
+.wmd-preview {
+    adisplay: none !important;
+}
+
+.wmd-button, .wmd-spacer {
+    display: block !important;
+    position: static !important;
+    margin: 0 0 0 5px !important;
+    float: left !important;
+}
+
+.wmd-spacer {
+    width: 10px !important;
+}
+
+.wmd-help-button {
+    position: absolute !important;
+}
+
+html.SEN-noscroll, html.SEN-noscroll body {
+    overflow: hidden;
+}
+
+#wmd-preview {
+    clear: both;
+    border: 1px solid #c8ccd0;
+}
+
+.SEN-hide {
+    display: none !important;
+}
+
+.SEN-full-editor {
+    position: fixed !important;
+    z-index: 9999998 !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.SEN-full-editor .wmd-button-bar {
+    width: auto !important;
+    float: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+
+.SEN-full-editor #wmd-input {
+    width: 100% !important;
+}
+
+.SEN-full-editor .grippie {
+    display: none !important;
+}
+
+.SEN-full-editor > div,
+.SEN-full-editor .wmd-container,
+.SEN-full-editor textarea {
+    height: 100% !important;
+}
+
+.SEN-full-editor .wmd-container {
+    display: flex !important;
+    flex-direction: column !important;
+}

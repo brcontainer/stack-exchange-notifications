@@ -277,6 +277,13 @@
         "clearStyleList": function() {
             cssList = [];
         },
+        "enableEditor": function(enable) {
+            if (enable === true || enable === false) {
+                SimpleCache.set("disableEditor", !enable);
+            }
+
+            return !SimpleCache.get("disableEditor");
+        },
         "enableNotifications": function(enable) {
             if (enable === true || enable === false) {
                 SimpleCache.set("disableNotification", !enable);

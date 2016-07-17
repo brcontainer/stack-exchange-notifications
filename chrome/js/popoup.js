@@ -71,6 +71,7 @@ function main() {
         switchs             = document.getElementsByClassName("switch"),
 
         notificationSwitch  = document.getElementById("notification-switch"),
+        editorSwitch        = document.getElementById("editor-switch"),
 
         clearCache          = document.getElementById("clear-cache"),
 
@@ -391,18 +392,26 @@ function main() {
         StackExchangeNotifications.clearCache();
     };
 
-    if (!StackExchangeNotifications.enableNotifications()) {
-        var evt = new MouseEvent("click", {
-            "view": window,
-            "bubbles": true,
-            "cancelable": true
-        });
+    var evt = new MouseEvent("click", {
+        "view": window,
+        "bubbles": true,
+        "cancelable": true
+    });
 
+    if (!StackExchangeNotifications.enableNotifications()) {
         notificationSwitch.dispatchEvent(evt);
+    }
+
+    if (!StackExchangeNotifications.enableEditor()) {
+        editorSwitch.dispatchEvent(evt);
     }
 
     notificationSwitch.addEventListener("changeswitch", function() {
         StackExchangeNotifications.enableNotifications(this.value === "on");
+    });
+
+    editorSwitch.addEventListener("changeswitch", function() {
+        StackExchangeNotifications.enableEditor(this.value === "on");
     });
 
     switch (localStorage.getItem("lastTab"))

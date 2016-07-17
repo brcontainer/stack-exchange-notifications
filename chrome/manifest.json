@@ -3,14 +3,20 @@
     "version": "0.0.12",
     "manifest_version": 2,
     "description": "Show recent achievements and inbox messages from StackExchange",
+    "icons": {
+        "128": "images/icon-128px.png",
+        "48":  "images/icon-48px.png",
+        "32":  "images/icon-32px.png",
+        "16":  "images/icon.png"
+    },
     "browser_action": {
         "default_icon": "images/icon.png",
         "default_popup": "popup.html"
     },
     "background": {
         "scripts": [
-            "stackexchangenotifications.js",
-            "background.js"
+            "js/stackexchangenotifications.js",
+            "js/background.js"
         ]
     },
     "content_scripts" : [{
@@ -33,14 +39,14 @@
             "*://*.stackoverflow.com/*",
             "*://*.stackexchange.com/*"
         ],
-        "js": [ "detectchanges.js" ]
+        "js": [
+            "js/detectchanges.js",
+            "js/editor.js"
+        ]
     }],
-    "icons": {
-        "128": "images/icon-128px.png",
-        "48":  "images/icon-48px.png",
-        "32":  "images/icon-32px.png",
-        "16":  "images/icon.png"
-    },
+    "web_accessible_resources": [
+        "css/editor.css"
+    ],
     "permissions": [
         "*://stackexchange.com/*",
         "notifications"
