@@ -8,6 +8,10 @@
 
 function SEN_Editor_main(Space, Button)
 {
+    if (!!document.querySelector(".sen-editor-full")) {
+        return;
+    }
+
     var
         fullRegExp     = /(^|\s)SEN\-full\-editor($|\s)/g,
         noscrollRegExp = /(^|\s)SEN\-noscroll($|\s)/g,
@@ -91,8 +95,8 @@ function SEN_Editor_main(Space, Button)
         var
             sc,
             btn,
-            actions = doc.querySelector(".wmd-button-row"),
-            helpButton = doc.querySelector(".wmd-button-row > .wmd-help-button");
+            actions = document.querySelector(".wmd-button-row"),
+            helpButton = document.querySelector(".wmd-button-row > .wmd-help-button");
 
         if (!actions) {
             setTimeout(initiate, 200);
@@ -101,19 +105,23 @@ function SEN_Editor_main(Space, Button)
 
         done = true;
 
-        var editorCss = doc.createElement("link");
+        var editorCss = document.createElement("link");
 
         editorCss.rel  = "stylesheet";
         editorCss.type = "text/css";
         editorCss.href = chrome.extension.getURL("/css/editor.css");
 
-        doc.body.appendChild(editorCss);
+        document.body.appendChild(editorCss);
 
         var Space = function(className) {
             if (sc) {
                 var tmp = sc.cloneNode();
 
-                helpButton.parentNode.insertBefore(tmp, helpButton);
+                if (helpButton) {
+                    helpButton.parentNode.insertBefore(tmp, helpButton);
+                } else {
+                    actions.appendChild(tmp);
+                }
 
                 if (className) {
                     tmp.className += " " + className;
@@ -121,7 +129,7 @@ function SEN_Editor_main(Space, Button)
                 return tmp;
             }
 
-            sc = doc.createElement("li");
+            sc = document.createElement("li");
             sc.className = "wmd-spacer SEN-spacer";
 
             Space(className);
@@ -139,12 +147,16 @@ function SEN_Editor_main(Space, Button)
                     btn.setAttribute("title", title);
                 }
 
-                helpButton.parentNode.insertBefore(tmp, helpButton);
+                if (helpButton) {
+                    helpButton.parentNode.insertBefore(tmp, helpButton);
+                } else {
+                    actions.appendChild(tmp);
+                }
 
                 return tmp;
             }
 
-            btn = doc.createElement("li");
+            btn = document.createElement("li");
             btn.className = "wmd-button SEN-button";
             btn.innerHTML = "<span></span>";
 
@@ -153,7 +165,13 @@ function SEN_Editor_main(Space, Button)
 
         setTimeout(function() {
             SEN_Editor_main(Space, Button);
-        }, 10);
+        }, 800);
+
+        document.querySelector("textarea.wmd-input").addEventListener("click", function() {
+            setTimeout(function() {
+                SEN_Editor_main(Space, Button);
+            }, 500);
+        });
     };
 
     var load = function() {
@@ -166,6 +184,10 @@ function SEN_Editor_main(Space, Button)
         }
     };
 
-    doc.addEventListener("DOMContentLoaded", load);
-    window.addEventListener("load", load);
+    if (/interactive|complete/i.test(doc.readyState)) {
+        load();
+    } else {
+        doc.addEventListener("DOMContentLoaded", load);
+        window.addEventListener("load", load);
+    }
 })(document);
