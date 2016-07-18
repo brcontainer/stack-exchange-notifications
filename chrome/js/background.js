@@ -62,7 +62,7 @@
                     var obj = relist[i];
 
                     StackExchangeNotifications.notify(
-                        obj.href,
+                        obj.id,
                         obj.type + " in " + obj.location,
                         obj.summary
                     );
@@ -106,9 +106,7 @@
     });
 
     chrome.notifications.onClosed.addListener(function(notificationId, byUser) {
-        if (notificationId === "inboxDesktopNotification") {
-            lastInboxCounter = 0;
-        }
+        chrome.notifications.clear(notificationId);
     });
 
     function updateChanges(request) {

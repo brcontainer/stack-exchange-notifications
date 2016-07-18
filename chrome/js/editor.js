@@ -6,198 +6,165 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-function SEN_Editor_main(Space, Button, postEditor)
-{
-    if (!!postEditor.querySelector(".SEN-editor-full")) {
-        return;
-    }
-
+(function (doc) {
     var
-        fullRegExp     = /(^|\s)SEN\-full\-editor($|\s)/g,
-        noscrollRegExp = /(^|\s)SEN\-noscroll($|\s)/g,
-        hideRegExp     = /(^|\s)SEN\-hide($|\s)/g,
-        readyRegExp    = /(^|\s)SEN\-readonly($|\s)/g,
-
-        rootDoc        = document.body.parentNode,
-
-        standardActs
-                = postEditor.querySelectorAll(
-                    ".wmd-button:not(.SEN-button), .wmd-spacer"),
-
-        textField      = postEditor.querySelector("textarea"),
-        postPreview    = postEditor.querySelector(".wmd-preview"),
-        fl             = postEditor.querySelector(".fl"),
-
-        inReadOnlyMode = false
+        rootDoc,
+        done = false,
+        viewHTML,
+        visibleRegExp  = /(^|\s)sen\-editor\-visible($|\s)/g,
+        fullRegExp     = /(^|\s)sen\-editor\-full($|\s)/g,
+        readyRegExp    = /(^|\s)sen\-editor\-ready($|\s)/g,
+        noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/g
     ;
 
-    for (var i = 0, j = standardActs.length; i < j; i++) {
-        var btn, el = standardActs[i];
+    var addEventButton = function(button, realEditor, realTextField) {
+        var btn = realEditor.querySelector("li[id=" + button.className + "] > *");
 
-        if (el.className.indexOf("wmd-button") !== -1) {
-            btn = Button("SEN-fakeact " + el.className, "", postEditor);
-            btn.innerHTML = el.innerHTML;
-        } else if (el.className.indexOf("wmd-spacer") !== -1) {
-            Space("SEN-fakeact", postEditor);
+        if (!btn) {
+            btn = realEditor.querySelector("li[id=" + button.className + "]");
         }
-    }
 
-    postPreview.className += " SEN-hide";
+        if (!btn) {
+            return;
+        }
 
-    if (fl) {
-        fl.className += " SEN-hide";
-    }
+        button.addEventListener("click", function() {
+            realEditor.className += " sen-editor-visible";
 
-    textField.parentNode.insertBefore(postPreview, textField.nextSibling);
+            var event = new Event("click", {
+                "view": window,
+                "bubbles": true,
+                "cancelable": true
+            });
 
-    var pb = postEditor.querySelector(".form-submit input[type=submit]");
+            btn.dispatchEvent(event);
 
-    if (pb) {
-        var publicButton = document.createElement("button");
-        publicButton.className = "SEN-master-button";
-        publicButton.textContent = pb.value||pb.textContent;
-        textField.parentNode.insertBefore(publicButton, textField.nextSibling);
+            event = new Event("paste", {
+                "view": window,
+                "bubbles": true,
+                "cancelable": true
+            });
 
-        publicButton.onclick = function() {
-            pb.click();
+            realTextField.dispatchEvent(event);
+
+            event = null;
+
+            realEditor.className
+                = realEditor.className
+                    .replace(visibleRegExp, " ")
+                        .replace(/\s\s/g, " ")
+                            .trim();
+        });
+    };
+
+    var main = function(newEditor, realEditor) {
+        var realPreview = realEditor.querySelector(".wmd-preview");
+        var realTextField = realEditor.querySelector(".wmd-input");
+
+        var previewTarget = newEditor.querySelector(".sen-preview");
+        var textTarget = newEditor.querySelector(".sen-textfield");
+
+        previewTarget.appendChild(realPreview);
+        textTarget.appendChild(realTextField);
+
+        newEditor.querySelector("a.sen-full-button").addEventListener("click", function() {
+            if (fullRegExp.test(newEditor.className)) {
+                newEditor.className = newEditor.className.replace(fullRegExp, " ").replace(/\s\s/g, " ").trim();
+                rootDoc.className = rootDoc.className.replace(noscrollRegExp, " ").replace(/\s\s/g, " ").trim();
+            } else {
+                newEditor.className += " sen-editor-full";
+                rootDoc.className += " sen-editor-noscroll";
+            }
+        });
+
+        newEditor.querySelector("a.sen-preview-button").addEventListener("click", function() {
+            if (readyRegExp.test(newEditor.className)) {
+                newEditor.className = newEditor.className.replace(readyRegExp, " ").replace(/\s\s/g, " ").trim();
+            } else {
+                newEditor.className += " sen-editor-ready";
+            }
+        });
+
+        var buttons = newEditor.querySelectorAll(".sen-editor-toolbar > a[class^=wmd]");
+
+        for (var i = buttons.length - 1; i >= 0; i--) {
+            addEventButton(buttons[i], realEditor, realTextField);
+        }
+
+        //realEditor.appendChild(newEditor);
+        realEditor.parentNode.insertBefore(newEditor, realEditor.nextSibling);
+    };
+
+    var loadCss = function() {
+        var l = document.createElement("link");
+
+        l.rel  = "stylesheet";
+        l.type = "text/css";
+        l.href = chrome.extension.getURL("/css/editor.css");
+
+        document.body.appendChild(l);
+    };
+
+    var loadView = function(callback) {
+        if (viewHTML) {
+            callback(viewHTML.cloneNode(true));
+            return;
+        }
+
+        var
+            xhr = new XMLHttpRequest(),
+            uri = chrome.extension.getURL("/view/editor.html")
+        ;
+
+        xhr.open("GET", uri, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var data = xhr.responseText;
+
+                viewHTML = document.createElement("div");
+                viewHTML.innerHTML = data;
+                viewHTML = viewHTML.firstElementChild;
+
+                callback(viewHTML.cloneNode(true));
+            }
         };
-    }
 
-    Space(false, postEditor);
+        xhr.send(null);
+    };
 
-    var fullViewAction = Button("SEN-editor-full", "Expand editor in full view-port", postEditor);
-    var showPreview    = Button("SEN-editor-preview", "Show post preview", postEditor);
-    //var sibeBySide     = Button("SEN-editor-sidebyside", "Show preview on left editor", postEditor);
-
-    fullViewAction.addEventListener("click", function() {
-        if (fullRegExp.test(postEditor.className)) {
-            postEditor.className = postEditor.className.replace(fullRegExp, " ").replace(/\s\s/g, " ").trim();
-            rootDoc.className = rootDoc.className.replace(noscrollRegExp, " ").replace(/\s\s/g, " ").trim();
-
-            if (postEditor.childElementCount == 2) {
-                postEditor.firstElementChild.className
-                    = postEditor.firstElementChild.className.replace(hideRegExp, " ").replace(/\s\s/g, " ").trim();
-            }
-        } else {
-            postEditor.className += " SEN-full-editor";
-            rootDoc.className += " SEN-noscroll";
-
-            if (postEditor.childElementCount == 8) {
-                postEditor.firstElementChild.className += " SEN-hide";
-            }
+    var editor = function(target) {
+        if (!target || target.senEditorAtived) {
+            return;
         }
-    });
 
-    showPreview.addEventListener("click", function() {
-        if (hideRegExp.test(textField.className)) {
-            inReadOnlyMode = false;
+        target.senEditorAtived = true;
 
-            textField.className = textField.className.replace(hideRegExp, " ").replace(/\s\s/g, " ").trim();
-            postPreview.className += " SEN-hide";
-
-            postEditor.className = postEditor.className.replace(readyRegExp, " ").replace(/\s\s/g, " ").trim();
-        } else {
-            inReadOnlyMode = true;
-
-            textField.className += " SEN-hide";
-            postPreview.className = postPreview.className.replace(hideRegExp, " ").replace(/\s\s/g, " ").trim();
-
-            postEditor.className += " SEN-readonly";
-        }
-    });
-}
-
-
-(function (doc) {
-    var done = false;
+        loadView(function(newEditor) {
+            main(newEditor, target);
+        });
+    };
 
     var initiate = function() {
-        var
-            sc,
-            btn;
+        if (done) {
+            return;
+        }
+
+        rootDoc = document.body.parentNode;
 
         done = true;
 
-        var editorCss = document.createElement("link");
+        loadCss();
 
-        editorCss.rel  = "stylesheet";
-        editorCss.type = "text/css";
-        editorCss.href = chrome.extension.getURL("/css/editor.css");
-
-        document.body.appendChild(editorCss);
-
-        var Space = function(className, target) {
-            if (sc) {
-                var helpButton = target.querySelector(".wmd-button-row > .wmd-help-button");
-                var actions = actions = target.querySelector(".wmd-button-row");
-                var tmp = sc.cloneNode();
-
-                if (helpButton) {
-                    helpButton.parentNode.insertBefore(tmp, helpButton);
-                } else {
-                    actions.appendChild(tmp);
-                }
-
-                if (className) {
-                    tmp.className += " " + className;
-                }
-                return tmp;
-            }
-
-            sc = document.createElement("li");
-            sc.className = "wmd-spacer SEN-spacer";
-
-            Space(className, target);
-        };
-
-        var Button = function(className, title, target) {
-            if (btn) {
-                var helpButton = target.querySelector(".wmd-button-row > .wmd-help-button");
-                var actions = actions = target.querySelector(".wmd-button-row");
-                var tmp = btn.cloneNode(true);
-
-                if (className) {
-                    tmp.className += " " + className;
-                }
-
-                if (title) {
-                    btn.setAttribute("title", title);
-                }
-
-                if (helpButton) {
-                    helpButton.parentNode.insertBefore(tmp, helpButton);
-                } else {
-                    actions.appendChild(tmp);
-                }
-
-                return tmp;
-            }
-
-            btn = document.createElement("li");
-            btn.className = "wmd-button SEN-button";
-            btn.innerHTML = "<span></span>";
-
-            return Button(className, title, target);
-        };
-
-        var addButtons = function(target) {
-            setTimeout(function() {
-                SEN_Editor_main(Space, Button, target);
-            }, 500);
-
-            target.querySelector("textarea.wmd-input").addEventListener("focus", function() {
-                addButtons(target);
-            });
-        };
-
-        addButtons(document.querySelector(".post-editor"));
+        setTimeout(function() {
+            editor(document.querySelector(".post-editor"));
+        }, 2000);
 
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function (mutation) {
                 var el = mutation.target;
 
                 if (/(^|\s)inline\-editor($|\s)/.test(el.className)) {
-                    addButtons(el.querySelector(".post-editor"));
+                    editor(el.querySelector(".post-editor"));
                 }
             });
         });
@@ -219,7 +186,7 @@ function SEN_Editor_main(Space, Button, postEditor)
         }
     };
 
-    if (/interactive|complete/i.test(doc.readyState)) {
+    if (doc.readyState === "complete") {
         load();
     } else {
         doc.addEventListener("DOMContentLoaded", load);

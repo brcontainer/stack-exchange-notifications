@@ -273,6 +273,44 @@
         timer = setTimeout(retrieveData, currentDelay);
     };
 
+    var
+        RunnigNotifications = false,
+        ListNotifications = [],
+        CurrentNotification = -1;
+
+    var ShowNotifications = function() {
+        RunnigNotifications = true;
+
+        CurrentNotification++;
+
+        var data = ListNotifications[CurrentNotification];
+
+        if (!data) {
+            RunnigNotifications = false;
+            ListNotifications = [];
+            return;
+        }
+
+        var props = {
+            "type":    "basic",
+            "title":   data.title,
+            "iconUrl": "images/icon-128px.png",
+            "message": data.message
+        };
+
+        var propsCopy = JSON.parse(JSON.stringify(props));
+        propsCopy.requireInteraction = true;
+
+        //Prevent exception in Firefox
+        try {
+            chrome.notifications.create(data.id, propsCopy, function() {});
+        } catch (ee) {
+            chrome.notifications.create(data.id, props, function() {});
+        }
+
+        setTimeout(ShowNotifications, 500);
+    };
+
     window.StackExchangeNotifications = {
         "clearStyleList": function() {
             cssList = [];
@@ -296,21 +334,12 @@
                 return;
             }
 
-            var props = {
-                "type":    "basic",
-                "title":   title,
-                "iconUrl": "images/icon-128px.png",
-                "message": message
-            };
+            ListNotifications.push({ "id": id, "title": title, "message": message });
 
-            var propsCopy = JSON.parse(JSON.stringify(props));
-            propsCopy.requireInteraction = true;
+            if (!RunnigNotifications) {
+                RunnigNotifications = true;
 
-            //Prevent exception in Firefox
-            try {
-                chrome.notifications.create(id, propsCopy, function() {});
-            } catch (ee) {
-                chrome.notifications.create(id, props, function() {});
+                ShowNotifications();
             }
         },
         "style": function(callback) {

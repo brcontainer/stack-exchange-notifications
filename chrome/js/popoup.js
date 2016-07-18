@@ -23,6 +23,7 @@ function setActionAnchor(el) {
             setTimeout(function()
             {
                 chrome.tabs.create({ "url": el.href });
+                chrome.notifications.clear(el.href);
             }, 1);
         };
     }
@@ -270,7 +271,7 @@ function main() {
             if (code !== 200 && code !== -1) {
                 inboxContent.innerHTML =
                     '<span class="sen-error notice">HTTP error - status: ' +
-                        data.error + '</span>';
+                        code + '</span>';
 
             } else if (code === -1) {
                 inboxContent.innerHTML = [
@@ -337,7 +338,7 @@ function main() {
             if (code !== 200 && code !== -1) {
                 achievementsContent.innerHTML =
                     '<span class="sen-error notice">HTTP error - status: ' +
-                        status + '</span>';
+                        code + '</span>';
 
             }  else if (code === -1) {
                 achievementsContent.innerHTML = [

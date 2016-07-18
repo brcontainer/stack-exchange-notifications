@@ -6,142 +6,143 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-.wmd-button, .wmd-spacer {
-    display: block !important;
-    position: static !important;
-    margin: 0 5px !important;
-    float: left !important;
+html.sen-editor-noscroll, html.sen-editor-noscroll body {
+    overflow: hidden;
 }
 
-.wmd-spacer {
-    border-left: 1px #ccc solid !important;
+.sen-editor, .sen-editor * {
+    -moz-box-sizing: border-box !important;
+    -webkit-box-sizing: border-box !important;
+    box-sizing: border-box !important;
 }
-
-.wmd-help-button {
-    position: absolute !important;
-}
-
-html.SEN-noscroll, html.SEN-noscroll body {
-    overflow: hidden !important;
-}
-
-.wmd-input {
-    width: 100% !important;
-    box-shadow: 0 1px 2px rgba(12, 13, 14, 0.1) inset !important;
-}
-
-.wmd-preview {
-    clear: both;
+.sen-editor {
+    clear: both !important;
+    background: #FFF !important;
     border: 1px solid #c8ccd0 !important;
-    min-height: 200px !important;
-    padding: 10px;
+}
+.sen-editor .sen-textfield > textarea {
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.08) inset !important;
+    border: none !important;
+    width: 100% !important;
 }
 
-.SEN-hide {
-    display: none !important;
+.sen-editor .sen-preview,
+.sen-editor .sen-textfield > textarea {
+    padding: 10px !important;
+    min-height: 300px !important;
 }
 
-.SEN-readonly .wmd-button:not(.SEN-button),
-.SEN-readonly .wmd-spacer:not(.SEN-spacer) {
-    display: none !important;
+.sen-editor .sen-editor-toolbar {
+    border-bottom: 1px solid #c8ccd0 !important;
+    padding: 4px 6px !important;
 }
 
-.SEN-fakeact {
-    display: none !important;
-    opacity: 0.08 !important;
-    cursor: default !important;
+.sen-editor .sen-editor-toolbar > a {
+    display: inline-block !important;
+    padding: 14px !important;
+    background-color: #fcfcfc !important;
+    vertical-align: middle !important;
+    border-radius: 2px !important;
+    border: 1px transparent solid !important;
+}
+.sen-editor .sen-editor-toolbar > a:hover {
+    border-color: #cfcfcf !important;
 }
 
-.SEN-readonly .SEN-fakeact {
+.sen-editor .sen-editor-toolbar > span {
+    margin: 0 10px !important;
+}
+
+.sen-editor .sen-textfield > textarea {
+    background-color: #fdfdfd !important;
+    width: 100% !important;
+    -moz-tab-size: 4 !important;
+    tab-size: 4 !important;
+    resize: vertical !important;
     display: block !important;
 }
+.sen-editor .sen-textfield {
+    width: 100% !important;
+}
 
-.SEN-master-button {
-    display: none !important;
+.sen-editor {
+    width: 660px !important;
+}
+
+.sen-editor-full {
+    width: 100% !important;
     position: fixed !important;
-    z-index: 999 !important;
-    background: transparent !important;
-    border: 1px #c0c0c0 solid !important;
-    color: #c0c0c0 !important;
-    right: 10px !important;
-    bottom: 10px !important;
-    box-shadow: none !important;
-    border-radius: 20px !important;
-    transition: all .2s !important;
-}
-
-.SEN-master-button:focus,
-.SEN-master-button:hover {
-    background: #07c !important;
-    border: 1px #07c solid !important;
-    color: #fff !important;
-}
-
-.SEN-editor-full span {
-    background: url(../images/expand.svg) center center no-repeat !important;
-    background-size: 80% 80% !important;
-}
-
-.SEN-editor-preview span {
-    background: url(../images/eye.svg) center center no-repeat !important;
-    background-size: cover !important;
-}
-
-.SEN-readonly .grippie,
-.SEN-readonly .community-option,
-.SEN-readonly .wmd-help-button,
-.SEN-readonly .mdhelp,
-.SEN-readonly .wmd-button-bar + div {
-    display: none !important;
-}
-
-.SEN-full-editor {
-    position: fixed !important;
-    z-index: 998 !important;
-    top: 0 !important;
+    z-index: 995 !important;
     left: 0 !important;
+    top: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    background-color: #fff !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-.SEN-full-editor .wmd-button-bar {
-    width: auto !important;
-    float: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
-}
-
-.SEN-full-editor .grippie {
-    display: none !important;
-}
-
-.SEN-full-editor > div,
-.SEN-full-editor .wmd-container,
-.SEN-full-editor .wmd-preview,
-.SEN-full-editor .wmd-input {
-    height: 100% !important;
-    margin: 0 !important;
-}
-
-.SEN-full-editor .wmd-preview,
-.SEN-full-editor .wmd-input {
-    width: 100% !important;
-    margin: 0 !important;
-}
-
-.SEN-full-editor .wmd-container {
+    border: none !important;
     display: flex !important;
     flex-direction: column !important;
 }
 
-.SEN-full-editor .SEN-master-button {
-    display: inline-block !important;
+.sen-editor-full .sen-container {
+    display: flex !important;
+    flex-direction: row !important;
+    height: 100% !important;
 }
 
-.SEN-full-editor .wmd-preview {
+.sen-editor .sen-preview {
+    display: none !important;
+}
+
+.sen-editor .sen-preview .wmd-preview {
+    width: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+.sen-editor-full .sen-textfield > textarea {
+    resize: none !important;
+}
+
+.sen-editor-full .sen-textfield > textarea,
+.sen-editor-full .sen-textfield,
+.sen-editor-full .sen-preview {
+    height: 100% !important;
+}
+
+.sen-editor-ready .sen-textfield {
+    display: none !important;
+}
+
+.sen-editor-full.sen-editor-ready .sen-textfield {
+    display: block !important;
+}
+
+.sen-editor-full.sen-editor-ready .sen-textfield {
+    width: 50% !important;
+}
+.sen-editor-full.sen-editor-ready .sen-preview {
+    width: 50% !important;
     overflow: auto !important;
+}
+
+.sen-editor-ready .sen-preview {
+    display: block !important;
+}
+
+.post-editor .wmd-container {
+    visibility: hidden !important;
+    position: absolute !important;
+    left: -9988px !important;
+    top: -9988px !important;
+}
+.post-editor .wmd-preview,
+.post-editor .wmd-button-bar {
+    display: none !important;
+
+.sen-editor-visible .wmd-container {
+    display: block !important;
+}
+
+.grippie, .hide-preview {
+    display: none !important;
 }

@@ -3,9 +3,9 @@
     <head>
         <title>StackExchange Notifications</title>
         <meta charset="utf-8">
-        <script type="text/javascript" src="js/stackexchangenotifications.js"></script>
-        <script type="text/javascript" src="js/popoup.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/popup.css">
+        <script type="text/javascript" src="../js/stackexchangenotifications.js"></script>
+        <script type="text/javascript" src="../js/popoup.js"></script>
+        <link rel="stylesheet" type="text/css" href="../css/popup.css">
     </head>
     <body class="topbar">
         <p class="nav">
@@ -27,9 +27,9 @@
 
         <div id="setup-content" class="tab-item hide">
             <div class="setup">
-                <h1>Options</h1>
+                <!--h1>Options</h1-->
 
-                <!-- h2>Desktop</h2 -->
+                <h2>Desktop</h2>
 
                 <p class="field first">
                     <span class="label">Desktop Notifications</span>
@@ -44,12 +44,25 @@
                     </a>
                 </p>
 
-                <!-- h2>Editor</h2 -->
+                <h2>Editor</h2>
 
-                <p class="field _first">
+                <p class="field first">
                     <span class="label">Improved text editor</span>
 
                     <a id="editor-switch" class="switch switch-on" href="#">
+                        <span class="on">
+                            <small>On</small>
+                        </span>
+                        <span class="off">
+                            <small>Off</small>
+                        </span>
+                    </a>
+                </p>
+
+                <p class="field">
+                    <span class="label">Autopreview in full-view-port</span>
+
+                    <a id="editor-switch-preview" class="switch switch-on" href="#">
                         <span class="on">
                             <small>On</small>
                         </span>
@@ -65,27 +78,22 @@
         <div class="tab-item hide" id="achievements-content"></div>
         <div class="tab-item xhide" id="about-content">
             <div class="about-icon bg-sen">
-                <img src="images/sen.svg#gray">
+                <img src="../images/sen.svg#gray">
             </div>
 
             <h1 id="about-title">&nbsp;</h1>
-            <ul>
-                <li>
-                    <a href="http://stackapps.com/q/6455/33963">
-                        Project on StackApps
-                    </a>
-                </li>
-                <li>
-                    <a href="https://github.com/brcontainer/stack-exchange-notifications">
-                        Project on Github
-                    </a>
-                </li>
-                <li>
-                    <a href="http://stackexchange.com/users/1647724/guilherme-nascimento?tab=accounts">
-                        Created by Guilherme Nascimento
-                    </a>
-                </li>
-            </ul>
+            <p>
+                Created by
+                <a href="http://stackexchange.com/users/1647724/guilherme-nascimento?tab=accounts">
+                    Guilherme Nascimento
+                </a>
+            </p>
+            <p>
+                Hosted in
+                <a href="http://stackapps.com/q/6455/33963">StackApps</a>
+                and
+                <a href="https://github.com/brcontainer/stack-exchange-notifications">Github</a>
+            </p>
 
             <hr>
 
