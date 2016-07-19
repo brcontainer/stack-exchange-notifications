@@ -86,9 +86,17 @@
             if (fullRegExp.test(newEditor.className)) {
                 newEditor.className = newEditor.className.replace(fullRegExp, " ").replace(/\s\s/g, " ").trim();
                 rootDoc.className = rootDoc.className.replace(noscrollRegExp, " ").replace(/\s\s/g, " ").trim();
+
+                if (preferPreviewInFull) {
+                    newEditor.className = newEditor.className.replace(readyRegExp, " ").replace(/\s\s/g, " ").trim();
+                }
             } else {
                 newEditor.className += " sen-editor-full";
                 rootDoc.className += " sen-editor-noscroll";
+
+                if (preferPreviewInFull) {
+                    newEditor.className += " sen-editor-ready";
+                }
             }
         });
 
