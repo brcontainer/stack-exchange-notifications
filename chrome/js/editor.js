@@ -24,6 +24,10 @@
             btn = realEditor.querySelector("li[id=" + button.className + "] > *");
 
         if (!btn) {
+            btn = realEditor.querySelector("li[id^=" + button.className + "-] > *");
+        }
+
+        if (!btn) {
             return;
         }
 
@@ -58,7 +62,7 @@
 
             event = null;
 
-            timerHideButtons = seTimeout(function() {
+            timerHideButtons = setTimeout(function() {
                 realEditor.className
                     = realEditor.className
                         .replace(visibleRegExp, " ")
