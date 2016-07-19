@@ -133,7 +133,7 @@
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (request && request.data && request.clear) {
-            updateChanges(resquest);
+            updateChanges(request);
         } else if (request === "editor") {
             sendResponse({
                 "available": StackExchangeNotifications.enableEditor(),
