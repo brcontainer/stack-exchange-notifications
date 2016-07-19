@@ -19,8 +19,6 @@
 
     var GetMessages = function()
     {
-        StackExchangeNotifications.clearCache("inbox");
-
         StackExchangeNotifications.inbox(function(data, code) {
             if (code == 200 && data.indexOf("<") !== -1) {
                 var tmpParseDom = document.createElement("div");
@@ -86,7 +84,7 @@
 
         var updates = (response.achievements !== 0 ? 1 : 0) + response.inbox;
 
-        if (response.inbox > 0) {
+        if (response.inbox > 0 && StackExchangeNotifications.enableNotifications()) {
             setTimeout(GetMessages, 200);
         }
 
