@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.0
+ * StackExchangeNotifications 0.1.2
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -401,15 +401,15 @@ function main() {
         "cancelable": true
     });
 
-    if (!StackExchangeNotifications.enableNotifications()) {
+    if (StackExchangeNotifications.enableNotifications()) {
         notificationSwitch.dispatchEvent(evt);
     }
 
-    if (!StackExchangeNotifications.enableEditor()) {
+    if (StackExchangeNotifications.enableEditor()) {
         editorSwitch.dispatchEvent(evt);
     }
 
-    if (!StackExchangeNotifications.enablePreferPreview()) {
+    if (StackExchangeNotifications.enablePreferPreview()) {
         editorSwitchPreview.dispatchEvent(evt);
     }
 

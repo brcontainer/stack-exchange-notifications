@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.0
+ * StackExchangeNotifications 0.1.2
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -8,6 +8,11 @@
 
 (function() {
     var caller = null;
+
+    if (!StackExchangeNotifications.enableNotifications()) {
+        //Force false if empty, default is disabled
+        StackExchangeNotifications.enableNotifications(false);
+    }
 
     window.detectUpdate = function(callback) {
         if (typeof callback === "function" || callback === null) {

@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.0
+ * StackExchangeNotifications 0.1.2
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -19,23 +19,27 @@
     ;
 
     var addEventButton = function(button, realEditor, realTextField) {
-        var timerHideButtons,
-            innerBtn,
-            btn = realEditor.querySelector("li[id=" + button.className + "] > *");
-
-        if (!btn) {
-            btn = realEditor.querySelector("li[id^=" + button.className + "-] > *");
-        }
-
-        if (!btn) {
-            return;
-        }
-
-        innerBtn = realEditor.querySelector("li[id=" + button.className + "]");
+        var timerHideButtons, innerBtn, btn;
 
         button.addEventListener("click", function() {
             if (timerHideButtons) {
                 clearTimeout(timerHideButtons);
+            }
+
+            if (!btn) {
+                btn = realEditor.querySelector("li[id=" + button.className + "]");
+
+                if (!btn) {
+                    btn = realEditor.querySelector("li[id^=" + button.className + "-]");
+                }
+            }
+
+            if (!btn) {
+                return;
+            }
+
+            if (!innerBtn) {
+                innerBtn = btn.querySelector("*");
             }
 
             realEditor.className += " sen-editor-visible";
@@ -179,14 +183,19 @@
         loadCss();
 
         setTimeout(function() {
-            editor(document.querySelector(".post-editor"));
+            var els = document.querySelectorAll(".post-editor");
+            if (els.length > 0) {
+                for (var i = els.length - 1; i >= 0; i--) {
+                    editor(els[i]);
+                }
+            }
         }, 100);
 
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function (mutation) {
                 var el = mutation.target;
 
-                if (/(^|\s)inline\-editor($|\s)/.test(el.className)) {
+                if (/(^|\s)inline\-(editor|answer)($|\s)/.test(el.className)) {
                     editor(el.querySelector(".post-editor"));
                 }
             });

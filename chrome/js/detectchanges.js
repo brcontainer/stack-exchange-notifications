@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.0
+ * StackExchangeNotifications 0.1.2
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
