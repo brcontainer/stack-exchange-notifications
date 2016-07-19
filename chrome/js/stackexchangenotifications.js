@@ -276,7 +276,9 @@
     var
         RunnigNotifications = false,
         ListNotifications = [],
-        CurrentNotification = -1;
+        CurrentNotification = -1,
+        PrefixNotification = String(parseInt(new Date().getTime() / 1000)) + "_"
+    ;
 
     var ShowNotifications = function() {
         RunnigNotifications = true;
@@ -303,9 +305,9 @@
 
         //Prevent exception in Firefox
         try {
-            chrome.notifications.create(data.id, propsCopy, function() {});
+            chrome.notifications.create(PrefixNotification + data.id, propsCopy, function() {});
         } catch (ee) {
-            chrome.notifications.create(data.id, props, function() {});
+            chrome.notifications.create(PrefixNotification + data.id, props, function() {});
         }
 
         setTimeout(ShowNotifications, 500);
@@ -317,10 +319,20 @@
         },
         "enableEditor": function(enable) {
             if (enable === true || enable === false) {
-                SimpleCache.set("disableEditor", !enable);
+                SimpleCache.set("editorDisabled", !enable);
             }
 
-            return !SimpleCache.get("disableEditor");
+            return !SimpleCache.get("editorDisabled");
+        },
+        "enablePreferPreview": function(enable) {
+            if (enable === true || enable === false) {
+                SimpleCache.set("editorPreviewInFull", !enable);
+            }
+
+            return !SimpleCache.get("editorPreviewInFull");
+        },
+        "notificationPrefix": function() {
+            return PrefixNotification;
         },
         "enableNotifications": function(enable) {
             if (enable === true || enable === false) {

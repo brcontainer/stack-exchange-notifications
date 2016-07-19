@@ -11,6 +11,7 @@
         rootDoc,
         done = false,
         viewHTML,
+        preferPreviewInFull = false,
         visibleRegExp  = /(^|\s)sen\-editor\-visible($|\s)/g,
         fullRegExp     = /(^|\s)sen\-editor\-full($|\s)/g,
         readyRegExp    = /(^|\s)sen\-editor\-ready($|\s)/g,
@@ -18,17 +19,21 @@
     ;
 
     var addEventButton = function(button, realEditor, realTextField) {
-        var btn = realEditor.querySelector("li[id=" + button.className + "] > *");
-
-        if (!btn) {
-            btn = realEditor.querySelector("li[id=" + button.className + "]");
-        }
+        var timerHideButtons,
+            innerBtn,
+            btn = realEditor.querySelector("li[id=" + button.className + "] > *");
 
         if (!btn) {
             return;
         }
 
+        innerBtn = realEditor.querySelector("li[id=" + button.className + "]");
+
         button.addEventListener("click", function() {
+            if (timerHideButtons) {
+                clearTimeout(timerHideButtons);
+            }
+
             realEditor.className += " sen-editor-visible";
 
             var event = new Event("click", {
@@ -37,7 +42,11 @@
                 "cancelable": true
             });
 
-            btn.dispatchEvent(event);
+            if (innerBtn) {
+                innerBtn.dispatchEvent(event);
+            } else {
+                btn.dispatchEvent(event);
+            }
 
             event = new Event("paste", {
                 "view": window,
@@ -49,11 +58,13 @@
 
             event = null;
 
-            realEditor.className
-                = realEditor.className
-                    .replace(visibleRegExp, " ")
-                        .replace(/\s\s/g, " ")
-                            .trim();
+            timerHideButtons = seTimeout(function() {
+                realEditor.className
+                    = realEditor.className
+                        .replace(visibleRegExp, " ")
+                            .replace(/\s\s/g, " ")
+                                .trim();
+            }, 200);
         });
     };
 
@@ -157,7 +168,7 @@
 
         setTimeout(function() {
             editor(document.querySelector(".post-editor"));
-        }, 2000);
+        }, 100);
 
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function (mutation) {
@@ -170,23 +181,27 @@
         });
 
         observer.observe(document, {
-            subtree: true,
-            childList: true,
-            attributes: true
+            "subtree": true,
+            "childList": true,
+            "attributes": true
         });
     };
 
     var load = function() {
         if (chrome.runtime && chrome.runtime.sendMessage) {
-            chrome.runtime.sendMessage("editorAvailable", function(response) {
-                if (response === true) {
-                    setTimeout(initiate, 200);
+            chrome.runtime.sendMessage("editor", function(response) {
+                if (response) {
+                    preferPreviewInFull = !!response.preview;
+
+                    if (response.available === true) {
+                        setTimeout(initiate, 200);
+                    }
                 }
             });
         }
     };
 
-    if (doc.readyState === "complete") {
+    if (/interactive|complete/i.test(doc.readyState)) {
         load();
     } else {
         doc.addEventListener("DOMContentLoaded", load);

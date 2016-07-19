@@ -74,6 +74,8 @@ function main() {
         notificationSwitch  = document.getElementById("notification-switch"),
         editorSwitch        = document.getElementById("editor-switch"),
 
+        editorSwitchPreview  = document.getElementById("editor-switch-preview"),
+
         clearCache          = document.getElementById("clear-cache"),
 
         backgroundEngine    = chrome.extension.getBackgroundPage()
@@ -287,7 +289,7 @@ function main() {
                 setTimeout(function () {
                     StackExchangeNotifications.setInbox(0);
                     StackExchangeNotifications.update();
-                }, 1500);
+                }, 500);
 
                 inboxContent.innerHTML = StackExchangeNotifications.utils.cleanDomString(data);
 
@@ -354,7 +356,7 @@ function main() {
                 setTimeout(function () {
                     StackExchangeNotifications.setAchievements(0);
                     StackExchangeNotifications.update();
-                }, 1500);
+                }, 500);
 
                 achievementsContent.innerHTML =
                     StackExchangeNotifications.utils.cleanDomString(data);
@@ -407,12 +409,20 @@ function main() {
         editorSwitch.dispatchEvent(evt);
     }
 
+    if (!StackExchangeNotifications.enablePreferPreview()) {
+        editorSwitchPreview.dispatchEvent(evt);
+    }
+
     notificationSwitch.addEventListener("changeswitch", function() {
         StackExchangeNotifications.enableNotifications(this.value === "on");
     });
 
     editorSwitch.addEventListener("changeswitch", function() {
         StackExchangeNotifications.enableEditor(this.value === "on");
+    });
+
+    editorSwitchPreview.addEventListener("changeswitch", function() {
+        StackExchangeNotifications.enablePreferPreview(this.value === "on");
     });
 
     switch (localStorage.getItem("lastTab"))

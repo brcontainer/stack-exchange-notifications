@@ -95,18 +95,20 @@
         });
     });
 
-    chrome.notifications.onClicked.addListener(function(notificationId, byUser) {
-        if (/^(http|https):\/\//.test(notificationId)) {
+    chrome.notifications.onClicked.addListener(function(id, byUser) {
+        var tryUri = id.substring(StackExchangeNotifications.notificationPrefix().length);
+
+        if (/^(http|https):\/\//.test(tryUri)) {
             setTimeout(function() {
-                chrome.tabs.create({ "url": notificationId });
+                chrome.tabs.create({ "url": tryUri });
             }, 1);
         }
 
-        chrome.notifications.clear(notificationId);
+        chrome.notifications.clear(id);
     });
 
-    chrome.notifications.onClosed.addListener(function(notificationId, byUser) {
-        chrome.notifications.clear(notificationId);
+    chrome.notifications.onClosed.addListener(function(id, byUser) {
+        chrome.notifications.clear(id);
     });
 
     function updateChanges(request) {
@@ -132,10 +134,13 @@
     }
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-        if (request.data && request.clear) {
+        if (request && request.data && request.clear) {
             updateChanges(resquest);
-        } else if (request === "editorAvailable") {
-            sendResponse(StackExchangeNotifications.enableEditor());
+        } else if (request === "editor") {
+            sendResponse({
+                "available": StackExchangeNotifications.enableEditor(),
+                "preview": StackExchangeNotifications.enablePreferPreview()
+            });
         }
     });
 })();

@@ -25,6 +25,9 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     border: none !important;
     width: 100% !important;
 }
+.sen-editor .sen-textfield > :not(textarea) {
+    display: none !important;
+}
 
 .sen-editor .sen-preview,
 .sen-editor .sen-textfield > textarea {
@@ -35,18 +38,6 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 .sen-editor .sen-editor-toolbar {
     border-bottom: 1px solid #c8ccd0 !important;
     padding: 4px 6px !important;
-}
-
-.sen-editor .sen-editor-toolbar > a {
-    display: inline-block !important;
-    padding: 14px !important;
-    background-color: #fcfcfc !important;
-    vertical-align: middle !important;
-    border-radius: 2px !important;
-    border: 1px transparent solid !important;
-}
-.sen-editor .sen-editor-toolbar > a:hover {
-    border-color: #cfcfcf !important;
 }
 
 .sen-editor .sen-editor-toolbar > span {
@@ -60,6 +51,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     tab-size: 4 !important;
     resize: vertical !important;
     display: block !important;
+    margin: 0 !important;
 }
 .sen-editor .sen-textfield {
     width: 100% !important;
@@ -138,6 +130,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 .post-editor .wmd-preview,
 .post-editor .wmd-button-bar {
     display: none !important;
+}
 
 .sen-editor-visible .wmd-container {
     display: block !important;
@@ -145,4 +138,96 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .grippie, .hide-preview {
     display: none !important;
+}
+
+.sen-editor .sen-editor-toolbar > a {
+    display: inline-block !important;
+    padding: 5px !important;
+    background-color: transparent !important;
+    vertical-align: middle !important;
+    border-radius: 2px !important;
+    border: 1px transparent solid !important;
+}
+
+.sen-editor .sen-editor-toolbar > a::before {
+    background: transparent no-repeat !important;
+    background-size: cover !important;
+    padding: 9px !important;
+    content: " " !important;
+    display: block !important;
+}
+
+.sen-editor .sen-editor-toolbar > a:hover {
+    border-color: #cfcfcf !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-bold-button::before {
+    background-image: url(../images/editor/bold.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-italic-button::before {
+    background-image: url(../images/editor/italic.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-link-button::before {
+    background-image: url(../images/editor/link.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-quote-button::before {
+    background-image: url(../images/editor/quote.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-code-button::before {
+    background-image: url(../images/editor/code.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-image-button::before {
+    background-image: url(../images/editor/image.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-snippet-button::before {
+    background-image: url(../images/editor/snippet.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-olist-button::before {
+    background-image: url(../images/editor/olist.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-ulist-button::before {
+    background-image: url(../images/editor/ulist.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-heading-button::before {
+    background-image: url(../images/editor/header.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-hr-button::before {
+    background-image: url(../images/editor/hr.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-undo-button::before {
+    background-image: url(../images/editor/undo.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-redo-button::before {
+    background-image: url(../images/editor/undo.svg) !important;
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-full-button::before {
+    background-image: url(../images/editor/expand.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-preview-button::before {
+    background-image: url(../images/editor/preview.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-undo-button,
+.sen-editor .sen-editor-toolbar > a.wmd-redo-button {
+    opacity: 0.3 !important;
+},
+.sen-editor .sen-editor-toolbar > a.enable {
+    opacity: 1.0 !important;
 }
