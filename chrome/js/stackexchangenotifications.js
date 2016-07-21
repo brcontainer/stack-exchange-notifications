@@ -327,6 +327,8 @@
                 return false;
             }
 
+            localStorage.clear();
+
             StackExchangeNotifications.enableEditor(true);
             StackExchangeNotifications.enablePreferPreview(true);
             StackExchangeNotifications.enableReplaceTabsBySpaces(false);
