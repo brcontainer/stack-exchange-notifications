@@ -72,16 +72,20 @@ function main() {
         switchs             = document.getElementsByClassName("switch"),
 
         notificationSwitch  = document.getElementById("notification-switch"),
-        editorSwitch        = document.getElementById("editor-switch"),
 
-        editorSwitchPreview  = document.getElementById("editor-switch-preview"),
+        editorSwitch        = document.getElementById("editor-switch"),
+        editorSwitchPreview = document.getElementById("editor-switch-preview"),
+        editorSwitchTabs    = document.getElementById("editor-switch-tabs"),
 
         clearCache          = document.getElementById("clear-cache"),
+        clearAllData        = document.getElementById("clear-all-data"),
 
         backgroundEngine    = chrome.extension.getBackgroundPage()
     ;
 
     window.StackExchangeNotifications = backgroundEngine.StackExchangeNotifications;
+
+    StackExchangeNotifications.boot();
 
     document.oncontextmenu = FF;
 
@@ -395,6 +399,14 @@ function main() {
         StackExchangeNotifications.clearCache();
     };
 
+    clearAllData.onclick = function()
+    {
+        if (window.confirm("Realy? Delete all data?")) {
+            localStorage.clear();
+            window.location.reload();
+        }
+    };
+
     var evt = new MouseEvent("click", {
         "view": window,
         "bubbles": true,
@@ -413,6 +425,10 @@ function main() {
         editorSwitchPreview.dispatchEvent(evt);
     }
 
+    if (StackExchangeNotifications.enableReplaceTabsBySpaces()) {
+        editorSwitchTabs.dispatchEvent(evt);
+    }
+
     notificationSwitch.addEventListener("changeswitch", function() {
         StackExchangeNotifications.enableNotifications(this.value === "on");
     });
@@ -423,6 +439,10 @@ function main() {
 
     editorSwitchPreview.addEventListener("changeswitch", function() {
         StackExchangeNotifications.enablePreferPreview(this.value === "on");
+    });
+
+    editorSwitchTabs.addEventListener("changeswitch", function() {
+        StackExchangeNotifications.enableReplaceTabsBySpaces(this.value === "on");
     });
 
     switch (localStorage.getItem("lastTab"))

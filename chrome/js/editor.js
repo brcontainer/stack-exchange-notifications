@@ -11,12 +11,28 @@
         rootDoc,
         done = false,
         viewHTML,
+        tabsBySpaces = false,
         preferPreviewInFull = false,
         visibleRegExp  = /(^|\s)sen\-editor\-visible($|\s)/g,
         fullRegExp     = /(^|\s)sen\-editor\-full($|\s)/g,
         readyRegExp    = /(^|\s)sen\-editor\-ready($|\s)/g,
         noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/g
     ;
+
+    var rtsTimer;
+
+    var replaceTabsBySpaces = function() {
+        var el = this;
+
+        if (rtsTimer) {
+            clearTimeout(rtsTimer);
+        }
+
+        rtsTimer = setTimeout(function(obj) {
+            el.value = el.value.replace(/\t/g, "    ");
+            console.log(el.value);
+        });
+    };
 
     var addEventButton = function(button, realEditor, realTextField) {
         var timerHideButtons, innerBtn, btn;
@@ -86,13 +102,24 @@
         previewTarget.appendChild(realPreview);
         textTarget.appendChild(realTextField);
 
+        if (tabsBySpaces) {
+            realTextField.addEventListener("keyup", replaceTabsBySpaces);
+        }
+
         newEditor.querySelector("a.sen-full-button").addEventListener("click", function() {
             if (fullRegExp.test(newEditor.className)) {
-                newEditor.className = newEditor.className.replace(fullRegExp, " ").replace(/\s\s/g, " ").trim();
-                rootDoc.className = rootDoc.className.replace(noscrollRegExp, " ").replace(/\s\s/g, " ").trim();
+                newEditor.className = newEditor.className
+                                        .replace(fullRegExp, " ")
+                                            .replace(/\s\s/g, " ").trim();
+
+                rootDoc.className = rootDoc.className
+                                        .replace(noscrollRegExp, " ")
+                                            .replace(/\s\s/g, " ").trim();
 
                 if (preferPreviewInFull) {
-                    newEditor.className = newEditor.className.replace(readyRegExp, " ").replace(/\s\s/g, " ").trim();
+                    newEditor.className = newEditor.className
+                                                .replace(readyRegExp, " ")
+                                                    .replace(/\s\s/g, " ").trim();
                 }
             } else {
                 newEditor.className += " sen-editor-full";
@@ -106,7 +133,9 @@
 
         newEditor.querySelector("a.sen-preview-button").addEventListener("click", function() {
             if (readyRegExp.test(newEditor.className)) {
-                newEditor.className = newEditor.className.replace(readyRegExp, " ").replace(/\s\s/g, " ").trim();
+                newEditor.className = newEditor.className
+                                        .replace(readyRegExp, " ")
+                                            .replace(/\s\s/g, " ").trim();
             } else {
                 newEditor.className += " sen-editor-ready";
             }
@@ -118,7 +147,6 @@
             addEventButton(buttons[i], realEditor, realTextField);
         }
 
-        //realEditor.appendChild(newEditor);
         realEditor.parentNode.insertBefore(newEditor, realEditor.nextSibling);
     };
 
@@ -213,6 +241,7 @@
             chrome.runtime.sendMessage("editor", function(response) {
                 if (response) {
                     preferPreviewInFull = !!response.preview;
+                    tabsBySpaces = !!response.spaceindentation;
 
                     if (response.available === true) {
                         setTimeout(initiate, 200);

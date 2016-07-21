@@ -5,7 +5,7 @@
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
-html, body, h1, h2, h3, h4, h5, a {
+html, body, h1, h2, h3, h4, h5, p, a {
     font-family: "Helvetica Neue", Helvetica, "lucida grande", tahoma, Arial, sans-serif;
     padding: 0;
     margin: 0;
@@ -208,6 +208,7 @@ hr {
     text-decoration: none;
     display: inline-block;
     color: #8c8585;
+    transition: all .2s;
 }
 .switch .on, .switch .off {
     display: none;
@@ -238,26 +239,37 @@ hr {
     background-color: #fff;
 }
 
-.field {
+.field, .btn {
     margin: 0;
-    padding: 10px;
+    padding: 1px 10px 0 10px;
     border-bottom: 1px #e4e4e4 solid;
     background-color: #fff;
+    display: block;
 }
+
+.btn {
+    padding: 13px 10px;
+    text-align: center;
+    text-decoration: none;
+}
+
 .field::after {
     content: " ";
     display: block;
     clear: both;
 }
-.field.first {
+.field.first, .btn.first {
     border-top: 1px #e4e4e4 solid;
 }
 
 .field .label {
+    margin: 12px 0;
     vertical-align: middle;
+    float: left;
 }
 
 .field .switch {
+    margin: 7px 0;
     float: right;
 }
 
@@ -498,7 +510,7 @@ hr {
 }
 
 .setup {
-    padding: 75px 0 10px 0;
+    padding: 35px 0 15px 0;
 }
 
 .setup h1 {

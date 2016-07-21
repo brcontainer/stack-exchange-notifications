@@ -182,16 +182,16 @@
     var tokenCache = String(Utils.meta().version) + "_cache";
 
     var SimpleCache = {
-        "set": function (key, data) {
-            var keyData = key + "_" + tokenCache;
+        "set": function (key, data, noToken) {
+            var keyData = key + (noToken ? "" : ("_" + tokenCache));
 
             localStorage.setItem(keyData,
                 data && typeof data === "object" ?
                             JSON.stringify(data) : data);
         },
-        "get": function (key) {
+        "get": function (key, noToken) {
             var change  = false,
-                keyData = key + "_" + tokenCache,
+                keyData = key + (noToken ? "" : ("_" + tokenCache)),
                 data    = localStorage.getItem(keyData);
 
             if (data) {
@@ -313,33 +313,48 @@
         setTimeout(ShowNotifications, 500);
     };
 
+    var EnableInterface = function(key, enable) {
+        if (enable === true || enable === false) {
+            SimpleCache.set(key, enable ? 1 : 0, true);
+        }
+
+        return SimpleCache.get(key, true) == 1;
+    };
+
     window.StackExchangeNotifications = {
+        "boot": function() {
+            if (SimpleCache.get("firstconfig", true)) {
+                return false;
+            }
+
+            StackExchangeNotifications.enableEditor(true);
+            StackExchangeNotifications.enablePreferPreview(true);
+            StackExchangeNotifications.enableReplaceTabsBySpaces(false);
+
+            //Temporary force false if empty, default is disabled
+            StackExchangeNotifications.enableNotifications(false);
+
+            SimpleCache.set("firstconfig", 1, true);
+
+            return true;
+        },
         "clearStyleList": function() {
             cssList = [];
         },
         "enableEditor": function(enable) {
-            if (enable === true || enable === false) {
-                SimpleCache.set("editorDisabled", !enable);
-            }
-
-            return !SimpleCache.get("editorDisabled");
+            return EnableInterface("editorDisabled", enable);
         },
         "enablePreferPreview": function(enable) {
-            if (enable === true || enable === false) {
-                SimpleCache.set("editorPreviewInFull", !enable);
-            }
-
-            return !SimpleCache.get("editorPreviewInFull");
+            return EnableInterface("editorPreviewInFull", enable);
+        },
+        "enableReplaceTabsBySpaces": function(enable) {
+            return EnableInterface("editorTabsBySpaces", enable);
+        },
+        "enableNotifications": function(enable) {
+            return EnableInterface("notifications", enable);
         },
         "notificationPrefix": function() {
             return PrefixNotification;
-        },
-        "enableNotifications": function(enable) {
-            if (enable === true || enable === false) {
-                SimpleCache.set("disableNotification", !enable);
-            }
-
-            return !SimpleCache.get("disableNotification");
         },
         "notify": function(id, title, message) {
             if (SimpleCache.get("disableNotification")) {
@@ -454,10 +469,10 @@
             }
         },
         "saveState": function(key, data) {
-            return localStorage.setItem(key, data);
+            return SimpleCache.set(key, data);
         },
         "restoreState": function(key) {
-            var data = localStorage.getItem(key);
+            var data = SimpleCache.get(key);
 
             if (data) {
                 return data;

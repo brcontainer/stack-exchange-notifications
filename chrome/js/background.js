@@ -9,10 +9,7 @@
 (function() {
     var caller = null;
 
-    if (!StackExchangeNotifications.enableNotifications()) {
-        //Force false if empty, default is disabled
-        StackExchangeNotifications.enableNotifications(false);
-    }
+    StackExchangeNotifications.boot();
 
     window.detectUpdate = function(callback) {
         if (typeof callback === "function" || callback === null) {
@@ -142,7 +139,8 @@
         } else if (request === "editor") {
             sendResponse({
                 "available": StackExchangeNotifications.enableEditor(),
-                "preview": StackExchangeNotifications.enablePreferPreview()
+                "preview": StackExchangeNotifications.enablePreferPreview(),
+                "spaceindentation": StackExchangeNotifications.enableReplaceTabsBySpaces()
             });
         }
     });
