@@ -21,30 +21,14 @@
     var doneCallback = null,
         cssCallback = null,
         isRunning = false,
-        timer = null;
+        timer = null,
+        inSleepMode = false;
 
     var tmpDom     = document.createElement("div"),
         validAttrs = [ "class", "id", "href" ],
         cssList    = [];
 
     var Utils = {
-        "meta": function() {
-            var u;
-
-            if (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getManifest) {
-                var meta = chrome.runtime.getManifest();
-
-                return {
-                    "appname": meta.name,
-                    "version": meta.version
-                };
-            }
-
-            return {
-                "appname": u,
-                "version": u
-            }
-        },
         "convertResult": function(size) {
             if (size === 0) {
                 return "";
@@ -107,6 +91,24 @@
             }
 
             return tmpDom.innerHTML;
+        }
+    };
+
+    var Meta = function() {
+        var u;
+
+        if (chrome && chrome.runtime && chrome.runtime.getManifest) {
+            var meta = chrome.runtime.getManifest();
+
+            return {
+                "appname": meta.name,
+                "version": meta.version
+            };
+        }
+
+        return {
+            "appname": u,
+            "version": u
         }
     };
 
@@ -179,20 +181,22 @@
         };
     };
 
-    var tokenCache = String(Utils.meta().version) + "_cache";
+    var tokenCache = String(Meta().version) + "_cache";
 
     var SimpleCache = {
         "set": function (key, data, noToken) {
             var keyData = key + (noToken ? "" : ("_" + tokenCache));
 
-            localStorage.setItem(keyData,
-                data && typeof data === "object" ?
-                            JSON.stringify(data) : data);
+            if (data !== null) {
+                localStorage.setItem(keyData, JSON.stringify([data]));
+            } else {
+                localStorage.removeItem(keyData);
+            }
         },
         "get": function (key, noToken) {
             var change  = false,
                 keyData = key + (noToken ? "" : ("_" + tokenCache)),
-                data    = localStorage.getItem(keyData);
+                data = localStorage.getItem(keyData);
 
             if (data) {
                 switch (key) {
@@ -207,10 +211,19 @@
 
                 if (change) {
                     data = null;
-                    SimpleCache.set(keyData, null);
+                    SimpleCache.set(key, null);
                 }
 
-                return data ? JSON.parse(data) : false;
+                if (data) {
+                    try {
+                        data = JSON.parse(data);
+                        data = data[0];
+                    } catch (ee) {
+                        data = null;
+                    }
+                }
+
+                return data ? data : false;
             }
         }
     };
@@ -274,13 +287,27 @@
     };
 
     var
+        timerNotifications,
         RunnigNotifications = false,
-        ListNotifications = [],
-        CurrentNotification = -1,
-        PrefixNotification = String(parseInt(new Date().getTime() / 1000)) + "_"
+        ListNotifications,
+        CurrentNotification = -1
     ;
 
+    var SaveNotifications = function() {
+        SimpleCache.set("notificationbackup", ListNotifications, true);
+    };
+
+    ListNotifications = SimpleCache.get("notificationbackup", true);
+
+    if (!ListNotifications) {
+        ListNotifications = [];
+    }
+
     var ShowNotifications = function() {
+        if (timerNotifications) {
+            clearTimeout(timerNotifications);
+        }
+
         RunnigNotifications = true;
 
         CurrentNotification++;
@@ -290,6 +317,7 @@
         if (!data) {
             RunnigNotifications = false;
             ListNotifications = [];
+            CurrentNotification = 0;
             return;
         }
 
@@ -297,20 +325,20 @@
             "type":    "basic",
             "title":   data.title,
             "iconUrl": "images/icon-128px.png",
-            "message": data.message
+            "message": data.message,
+            "requireInteraction": true
         };
 
-        var propsCopy = JSON.parse(JSON.stringify(props));
-        propsCopy.requireInteraction = true;
-
-        //Prevent exception in Firefox
         try {
-            chrome.notifications.create(PrefixNotification + data.id, propsCopy, function() {});
+            chrome.notifications.create(data.id, props, function() {});
         } catch (ee) {
-            chrome.notifications.create(PrefixNotification + data.id, props, function() {});
+            //Firefox don't support requireInteraction and causes exception
+
+            delete props.requireInteraction;
+            chrome.notifications.create(data.id, props, function() {});
         }
 
-        setTimeout(ShowNotifications, 500);
+        timerNotifications = setTimeout(ShowNotifications, 500);
     };
 
     var EnableInterface = function(key, enable) {
@@ -343,6 +371,17 @@
         "clearStyleList": function() {
             cssList = [];
         },
+        "enableSleepMode": function(enable) {
+            if (typeof enable === "boolean") {
+                inSleepMode = !!enable;
+            }
+
+            if (!inSleepMode && !RunnigNotifications) {
+                ShowNotifications();
+            }
+
+            return inSleepMode;
+        },
         "enableEditor": function(enable) {
             return EnableInterface("editorDisabled", enable);
         },
@@ -355,15 +394,18 @@
         "enableNotifications": function(enable) {
             return EnableInterface("notifications", enable);
         },
-        "notificationPrefix": function() {
-            return PrefixNotification;
-        },
         "notify": function(id, title, message) {
-            if (SimpleCache.get("disableNotification")) {
+            if (!StackExchangeNotifications.enableNotifications()) {
                 return;
             }
 
             ListNotifications.push({ "id": id, "title": title, "message": message });
+
+            SaveNotifications();
+
+            if (inSleepMode) {
+                return;
+            }
 
             if (!RunnigNotifications) {
                 RunnigNotifications = true;
@@ -470,11 +512,11 @@
                 });
             }
         },
-        "saveState": function(key, data) {
-            return SimpleCache.set(key, data);
+        "saveState": function(key, data, noToken) {
+            return SimpleCache.set(key, data, noToken);
         },
-        "restoreState": function(key) {
-            var data = SimpleCache.get(key);
+        "restoreState": function(key, noToken) {
+            var data = SimpleCache.get(key, noToken);
 
             if (data) {
                 return data;
@@ -482,6 +524,7 @@
 
             return false;
         },
+        "meta": Meta,
         "utils": Utils
     };
 }());

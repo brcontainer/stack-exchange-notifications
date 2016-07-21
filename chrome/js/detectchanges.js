@@ -7,6 +7,8 @@
  */
 
 (function (doc) {
+    "use strict";
+
     var running = false;
 
     function isHide(elem)

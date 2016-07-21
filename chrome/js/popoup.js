@@ -6,13 +6,20 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
+var debugMode;
+
+if ("update_url" in chrome.runtime.getManifest()) {
+    debugMode = false;
+}
+
 function FF() {
-    return false;
+    return debugMode;
 }
 
 function setActionAnchor(el) {
-    if (el && el.senLink !== true && el.href && el.href.indexOf("http") === 0) {
+    if (el && el.senLink !== true && el.href && /^(http|https)\:\/\//.test(el.href)) {
         el.senLink = true;
+
         el.onclick = function(evt) {
             evt = evt || window.event;
 
@@ -20,13 +27,13 @@ function setActionAnchor(el) {
                 evt.preventDefault();
             }
 
-            setTimeout(function()
-            {
+            setTimeout(function() {
                 chrome.tabs.create({ "url": el.href });
                 chrome.notifications.clear(el.href);
             }, 1);
         };
     }
+
     el.ondragstart = FF;
 }
 
@@ -91,7 +98,7 @@ function main() {
 
     setDomEvents();
 
-    var manifestData = StackExchangeNotifications.utils.meta();
+    var manifestData = StackExchangeNotifications.meta();
 
     document.getElementById("about-title").innerHTML =
                                             manifestData.appname + " " + manifestData.version;

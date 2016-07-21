@@ -7,6 +7,8 @@
  */
 
 (function() {
+    "use strict";
+
     var caller = null;
 
     StackExchangeNotifications.boot();
@@ -21,6 +23,10 @@
 
     var GetMessages = function()
     {
+        if (!StackExchangeNotifications.enableNotifications()) {
+            return;
+        }
+
         StackExchangeNotifications.inbox(function(data, code) {
             if (code == 200 && data.indexOf("<") !== -1) {
                 var tmpParseDom = document.createElement("div");
@@ -111,7 +117,7 @@
         chrome.notifications.clear(id);
     });
 
-    function updateChanges(request) {
+    var updateChanges = function(request) {
         var data = request.data;
 
         switch (request.clear) {
@@ -131,17 +137,21 @@
                 StackExchangeNotifications.update();
             break;
         }
-    }
+    };
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-        if (request && request.data && request.clear) {
-            updateChanges(request);
-        } else if (request === "editor") {
-            sendResponse({
-                "available": StackExchangeNotifications.enableEditor(),
-                "preview": StackExchangeNotifications.enablePreferPreview(),
-                "spaceindentation": StackExchangeNotifications.enableReplaceTabsBySpaces()
-            });
+        if (request === "editor") {
+                sendResponse({
+                    "available": StackExchangeNotifications.enableEditor(),
+                    "preview": StackExchangeNotifications.enablePreferPreview(),
+                    "spaceindentation": StackExchangeNotifications.enableReplaceTabsBySpaces()
+                });
+        } else if (request) {
+            if (request.data && request.clear) {
+                updateChanges(request);
+            } else if (typeof request.sleepMode === "boolean") {
+                StackExchangeNotifications.enableSleepMode(request.sleepMode);
+            }
         }
     });
 })();

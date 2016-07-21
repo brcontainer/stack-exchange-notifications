@@ -7,6 +7,8 @@
  */
 
 (function (doc) {
+    "use strict";
+
     var
         rootDoc,
         done = false,
@@ -30,7 +32,6 @@
 
         rtsTimer = setTimeout(function(obj) {
             el.value = el.value.replace(/\t/g, "    ");
-            console.log(el.value);
         });
     };
 
@@ -43,10 +44,12 @@
             }
 
             if (!btn) {
-                btn = realEditor.querySelector("li[id=" + button.className + "]");
+                var c = button.className.replace(/sen\-btn/, "").trim();
+
+                btn = realEditor.querySelector("[id=" + c + "]");
 
                 if (!btn) {
-                    btn = realEditor.querySelector("li[id^=" + button.className + "-]");
+                    btn = realEditor.querySelector("[id^=" + c + "-]");
                 }
             }
 
@@ -141,7 +144,7 @@
             }
         });
 
-        var buttons = newEditor.querySelectorAll(".sen-editor-toolbar > a[class^=wmd]");
+        var buttons = newEditor.querySelectorAll(".sen-editor-toolbar > a[class^='sen-btn ']");
 
         for (var i = buttons.length - 1; i >= 0; i--) {
             addEventButton(buttons[i], realEditor, realTextField);
@@ -187,7 +190,7 @@
         xhr.send(null);
     };
 
-    var editor = function(target) {
+    var CreateEditor = function(target) {
         if (!target || target.senEditorAtived) {
             return;
         }
@@ -214,7 +217,7 @@
             var els = document.querySelectorAll(".post-editor");
             if (els.length > 0) {
                 for (var i = els.length - 1; i >= 0; i--) {
-                    editor(els[i]);
+                    CreateEditor(els[i]);
                 }
             }
         }, 100);
@@ -224,7 +227,7 @@
                 var el = mutation.target;
 
                 if (/(^|\s)inline\-(editor|answer)($|\s)/.test(el.className)) {
-                    editor(el.querySelector(".post-editor"));
+                    CreateEditor(el.querySelector(".post-editor"));
                 }
             });
         });

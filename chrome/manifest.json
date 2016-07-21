@@ -43,6 +43,13 @@
             "js/detectchanges.js",
             "js/editor.js"
         ]
+    }, {
+        "matches": [
+            "<all_urls>"
+        ],
+        "js": [
+            "js/detectuseractive.js"
+        ]
     }],
     "web_accessible_resources": [
         "view/editor.html",
