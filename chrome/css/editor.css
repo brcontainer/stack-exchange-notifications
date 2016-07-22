@@ -259,7 +259,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 .sen-editor .sen-editor-toolbar > a.sen-btn::before {
     border-style: solid !important;
     border-width: 0 8px 10px 8px !important;
-    border-color: transparent transparent rgba(0, 0, 0, .90) transparent !important;
+    border-color: transparent transparent rgba(82, 72, 71, .90) transparent !important;
     top: 90% !important;
     margin-left: -8px !important;
     content: " " !important;
@@ -267,7 +267,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 
 .sen-editor .sen-editor-toolbar > a.sen-btn::after {
-    background: rgba(0, 0, 0, .90) !important;
+    background: rgba(82, 72, 71, .90) !important;
     border-radius: 0.25em !important;
     top: 35px !important;
     color: #fff !important;

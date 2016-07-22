@@ -443,6 +443,7 @@
                     callback(data, code, headers);
                 });
             }
+
             return null;
         },
         "inbox": function(callback) {
@@ -462,6 +463,7 @@
                     callback(data, code, headers);
                 });
             }
+
             return null;
         },
         "setAchievements": function(size) {

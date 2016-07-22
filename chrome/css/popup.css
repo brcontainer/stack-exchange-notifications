@@ -11,11 +11,14 @@ html, body, h1, h2, h3, h4, h5, p, a {
     margin: 0;
 }
 
-body {
-    background-color: #fbfbfb;
+html {
     min-width: 400px;
     max-width: 400px;
         width: 400px;
+}
+
+body {
+    background-color: #fbfbfb;
     min-height: 400px;
     font-size: 10pt;
     font-size: 13px;

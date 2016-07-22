@@ -132,8 +132,15 @@ function main() {
         var target = box === "inbox" ? inboxContent : achievementsContent;
 
         current.addEventListener("click", function() {
-            current.className = current.className.replace(/unread\-item/g, "");
-            StackExchangeNotifications.saveState(box, target.innerHTML);
+            var data = StackExchangeNotifications.restoreState(box);
+
+            current.className = current.className
+                                        .replace(/(^|\s)unread\-item($|\s)/g, " ").trim();
+
+            if (data.length === 3) {
+                data[2] = target.innerHTML;
+                StackExchangeNotifications.saveState(box, data);
+            }
         });
     };
 
