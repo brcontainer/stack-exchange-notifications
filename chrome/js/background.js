@@ -19,11 +19,13 @@
         restoreMessages = restoreMessages.reverse();
 
         for (var i = restoreMessages.length - 1; i >= 0; i--) {
-            StackExchangeNotifications.notify(
-                restoreMessages[i].id,
-                restoreMessages[i].title,
-                restoreMessages[i].message
-            );
+            if (restoreMessages[i] !== true) {
+                StackExchangeNotifications.notify(
+                    restoreMessages[i].id,
+                    restoreMessages[i].title,
+                    restoreMessages[i].message
+                );
+            }
         }
     }
 
@@ -100,8 +102,6 @@
         });
     };
 
-    setTimeout(function() {
-
     StackExchangeNotifications.pushs(function(response) {
         if (caller) {
             caller();
@@ -118,8 +118,6 @@
         });
     });
 
-    }, 10000);
-
     chrome.notifications.onClicked.addListener(function(id, byUser) {
         if (/^(http|https):\/\//.test(id)) {
             setTimeout(function() {
@@ -128,11 +126,12 @@
         }
 
         chrome.notifications.clear(id);
+        StackExchangeNotifications.removeNotificationFromCache(id);
     });
 
-    chrome.notifications.onClosed.addListener(function(id, byUser) {
+    /*chrome.notifications.onClosed.addListener(function(id, byUser) {
         chrome.notifications.clear(id);
-    });
+    });*/
 
     chrome.windows.onFocusChanged.addListener(function(windowId) {
         if (windowId === -1) {

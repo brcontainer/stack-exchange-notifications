@@ -140,9 +140,7 @@
             isAborted = false,
             xhr       = new XMLHttpRequest();
 
-        uri = noCacheURI(uri);
-
-        xhr.open("GET", uri, true);
+        xhr.open("GET", noCacheURI(uri), true);
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && isAborted === false) {
@@ -308,12 +306,11 @@
         CurrentNotification++;
 
         if (!data) {
-            ListNotifications = [];
-
-            SaveNotifications();
-
-            CurrentNotification = 0;
+            CurrentNotification--;
             RunnigNotifications = false;
+            return;
+        } else if (data === 1) {
+            setTimeout(ShowNotifications, 1000);
             return;
         }
 
@@ -392,6 +389,17 @@
         },
         "enableNotifications": function(enable) {
             return EnableInterface("notifications", enable);
+        },
+        "removeNotificationFromCache": function(id) {
+            for (var c, i = ListNotifications.length - 1; i >= 0; i--) {
+                c = ListNotifications[i];
+                if (c && c.id === id) {
+                    c = true;
+                    break;
+                }
+            }
+
+            SaveNotifications();
         },
         "notify": function(id, title, message) {
             if (!StackExchangeNotifications.enableNotifications()) {
