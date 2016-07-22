@@ -142,7 +142,6 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .sen-editor .sen-editor-toolbar > a.sen-btn {
     display: inline-block !important;
-    padding: 5px !important;
     background-color: transparent !important;
     vertical-align: middle !important;
     border-radius: 2px !important;
@@ -150,7 +149,12 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     text-decoration: none !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-btn::before {
+.sen-editor .sen-editor-toolbar > a.sen-btn i {
+    display: block !important;
+    padding: 5px !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-btn i::before {
     background: transparent no-repeat !important;
     background-size: cover !important;
     padding: 9px !important;
@@ -162,76 +166,120 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     border-color: #cfcfcf !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-bold-button::before {
+.sen-editor .sen-editor-toolbar > a.wmd-bold-button i::before {
     background-image: url(../images/editor/bold.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-italic-button::before {
+.sen-editor .sen-editor-toolbar > a.wmd-italic-button i::before {
     background-image: url(../images/editor/italic.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-link-button::before {
+.sen-editor .sen-editor-toolbar > a.wmd-link-button i::before {
     background-image: url(../images/editor/link.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-quote-button::before {
+.sen-editor .sen-editor-toolbar > a.wmd-quote-button i::before {
     background-image: url(../images/editor/quote.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-code-button::before {
+.sen-editor .sen-editor-toolbar > a.wmd-code-button i::before {
     background-image: url(../images/editor/code.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-image-button::before {
+.sen-editor .sen-editor-toolbar > a.wmd-image-button i::before {
     background-image: url(../images/editor/image.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-snippet-button::before {
+.sen-editor .sen-editor-toolbar > a.wmd-snippet-button i::before {
     background-image: url(../images/editor/snippet.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-olist-button::before {
+.sen-editor .sen-editor-toolbar > a.wmd-olist-button i::before {
     background-image: url(../images/editor/olist.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-ulist-button::before {
+.sen-editor .sen-editor-toolbar > a.wmd-ulist-button i::before {
     background-image: url(../images/editor/ulist.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-heading-button::before {
+.sen-editor .sen-editor-toolbar > a.wmd-heading-button i::before {
     background-image: url(../images/editor/header.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-hr-button::before {
+.sen-editor .sen-editor-toolbar > a.wmd-hr-button i::before {
     background-image: url(../images/editor/hr.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-undo-button::before {
-    background-image: url(../images/editor/undo.svg) !important;
+.sen-editor .sen-editor-toolbar > a.wmd-redo-button i::before {
+    background-image: url(../images/editor/redo.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-redo-button::before {
-    background-image: url(../images/editor/undo.svg) !important;
+.sen-editor .sen-editor-toolbar > a.wmd-undo-button i::before {
+    background-image: url(../images/editor/redo.svg) !important;
     -moz-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-full-button::before {
+.sen-editor .sen-editor-toolbar > a.sen-full-button i::before {
     background-image: url(../images/editor/expand.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-preview-button::before {
+.sen-editor .sen-editor-toolbar > a.sen-preview-button i::before {
     background-image: url(../images/editor/preview.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-undo-button,
-.sen-editor .sen-editor-toolbar > a.wmd-redo-button {
+.sen-editor .sen-editor-toolbar > a.wmd-undo-button i,
+.sen-editor .sen-editor-toolbar > a.wmd-redo-button i {
     opacity: 0.3 !important;
 },
-.sen-editor .sen-editor-toolbar > a.enable {
+.sen-editor .sen-editor-toolbar > a.enable i {
     opacity: 1.0 !important;
 }
+
+/*tooltip*/
+.sen-editor .sen-editor-toolbar > a.sen-btn {
+    position: relative !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-btn::before,
+.sen-editor .sen-editor-toolbar > a.sen-btn::after {
+    position: absolute !important;
+    left: 50% !important;
+    display: none !important;
+    z-index: 100 !important;
+    transition: opacity .2s !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-btn:hover::before,
+.sen-editor .sen-editor-toolbar > a.sen-btn:hover::after {
+    display: block !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-btn::before {
+    border-style: solid !important;
+    border-width: 0 8px 10px 8px !important;
+    border-color: transparent transparent rgba(0, 0, 0, .90) transparent !important;
+    top: 90% !important;
+    margin-left: -8px !important;
+    content: " " !important;
+    font-size: 0 !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-btn::after {
+    background: rgba(0, 0, 0, .90) !important;
+    border-radius: 0.25em !important;
+    top: 35px !important;
+    color: #fff !important;
+    min-width: 13.5em !important;
+    max-width: 17.5em !important;
+    padding: 1em !important;
+    margin-left: -1.5em !important;
+    content: attr(data-title) !important;
+    text-align: center !important;
+    font-size: 9pt !important;
+}
+/*tooltip*/
 
 .sen-editor .sen-editor-toolbar .sen-actions {
     display: none !important;
@@ -255,4 +303,8 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .sen-editor .sen-editor-toolbar .sen-save-button {
     background-color: #4CAF50 !important;
+}
+
+.sen-hide {
+    display: none !important;
 }

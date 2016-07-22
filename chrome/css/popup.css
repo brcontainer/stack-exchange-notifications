@@ -14,6 +14,8 @@ html, body, h1, h2, h3, h4, h5, p, a {
 body {
     background-color: #fbfbfb;
     min-width: 400px;
+    max-width: 400px;
+        width: 400px;
     min-height: 400px;
     font-size: 10pt;
     font-size: 13px;
@@ -251,6 +253,12 @@ hr {
     padding: 13px 10px;
     text-align: center;
     text-decoration: none;
+    transition: background-color .4s, color .4s;
+}
+
+.btn:focus {
+    background-color: #fcfcfc;
+    color: #e4e4e4;
 }
 
 .field::after {
@@ -484,14 +492,14 @@ hr {
     padding: 60px 0.25em 0.55em 0.55em;
     color: #4F4949;
     text-shadow: 0 1px 0 #fff;
+    text-align: center;
 }
 #about-content a {
     text-decoration: none;
 }
 #about-content h1,
-#about-content h2,
-#about-content p {
-    text-align: center;
+#about-content h2 {
+    padding: 10px 0;
 }
 #about-content h3 {
     color: #4F4949;
@@ -500,6 +508,10 @@ hr {
     width: 240px;
     padding: 0.8em 0;
     margin: 0 auto;
+}
+
+.about {
+    padding: 1px 0 25px 0;
 }
 
 .about-icon {

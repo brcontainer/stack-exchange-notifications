@@ -21,28 +21,10 @@
         noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/g
     ;
 
-    var rtsTimer;
-
-    var replaceTabsBySpaces = function(el) {
-        el = el || this;
-
-        if (rtsTimer) {
-            clearTimeout(rtsTimer);
-        }
-
-        rtsTimer = setTimeout(function(obj) {
-            el.value = el.value.replace(/\t/g, "    ");
-        }, 100);
-    };
-
     var addEventButton = function(button, realEditor, realTextField) {
-        var timerHideButtons, innerBtn, btn;
+        var timerHideButtons, innerBtn, btn, hasTip = false;
 
-        button.addEventListener("click", function() {
-            if (timerHideButtons) {
-                clearTimeout(timerHideButtons);
-            }
-
+        var getRealButton = function() {
             if (!btn) {
                 var c = button.className.replace(/sen\-btn/, "").trim();
 
@@ -52,6 +34,19 @@
                     btn = realEditor.querySelector("[id^=" + c + "-]");
                 }
             }
+
+            if (!hasTip && btn) {
+                button.setAttribute("data-title", btn.getAttribute("title"));
+            }
+        };
+
+        button.addEventListener("mousemove", getRealButton);
+        button.addEventListener("click", function() {
+            if (timerHideButtons) {
+                clearTimeout(timerHideButtons);
+            }
+
+            getRealButton();
 
             if (!btn) {
                 return;
@@ -95,6 +90,20 @@
         });
     };
 
+    var rtsTimer;
+    var replaceTabsBySpaces = function() {
+        var el = this;
+
+        if (rtsTimer) {
+            clearTimeout(rtsTimer);
+        }
+
+        rtsTimer = setTimeout(function(obj) {
+            el.value = el.value.replace(/\t/g, "    ");
+            el = null;
+        }, 100);
+    };
+
     var main = function(newEditor, realEditor) {
         var realPreview = realEditor.querySelector(".wmd-preview");
         var realTextField = realEditor.querySelector(".wmd-input");
@@ -106,10 +115,10 @@
         textTarget.appendChild(realTextField);
 
         if (tabsBySpaces) {
-            realTextField.addEventListener("keyup", replaceTabsBySpaces);
-            realTextField.addEventListener("paste", replaceTabsBySpaces);
-
-            replaceTabsBySpaces(realTextField);
+            realTextField.addEventListener("keyup",  replaceTabsBySpaces);
+            realTextField.addEventListener("paste",  replaceTabsBySpaces);
+            realTextField.addEventListener("change", replaceTabsBySpaces);
+            realTextField.addEventListener("input",  replaceTabsBySpaces);
         }
 
         newEditor.querySelector("a.sen-full-button").addEventListener("click", function() {

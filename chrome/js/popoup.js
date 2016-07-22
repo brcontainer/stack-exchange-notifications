@@ -84,6 +84,8 @@ function main() {
         editorSwitchPreview = document.getElementById("editor-switch-preview"),
         editorSwitchTabs    = document.getElementById("editor-switch-tabs"),
 
+        btns                = document.querySelectorAll(".btn"),
+
         clearCache          = document.getElementById("clear-cache"),
         clearAllData        = document.getElementById("clear-all-data"),
 
@@ -449,6 +451,16 @@ function main() {
     editorSwitchTabs.addEventListener("changeswitch", function() {
         StackExchangeNotifications.enableReplaceTabsBySpaces(this.value === "on");
     });
+
+    for (var i = btns.length - 1; i >= 0; i--) {
+        btns[i].addEventListener("click", function() {
+            var s = this;
+
+            setTimeout(function() {
+                s.blur();
+            }, 300);
+        });
+    }
 
     switch (localStorage.getItem("lastTab"))
     {

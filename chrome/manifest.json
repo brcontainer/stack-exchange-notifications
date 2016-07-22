@@ -19,7 +19,7 @@
             "js/background.js"
         ]
     },
-    "content_scripts" : [{
+    "content_scripts": [{
         "matches": [
             "*://stackapps.com/*",
             "*://askubuntu.com/*",
@@ -58,7 +58,6 @@
     ],
     "permissions": [
         "*://stackexchange.com/*",
-        "*://localhost/*",
         "notifications"
     ]
 }
