@@ -265,10 +265,12 @@
             if (typeof data.UnreadRepCount !== "undefined") {
 
                 achievements = parseInt(data.UnreadRepCount);
-                inbox = parseInt(data.UnreadInboxCount);
+                inbox = data.UnreadInboxCount ? parseInt(data.UnreadInboxCount) : 0;
 
                 if (achievements !== 0) {
                     SimpleCache.set("achievements", null);
+                } else {
+                    achievements = data.UnreadNonRepCount ? parseInt(data.UnreadNonRepCount) : 0;
                 }
 
                 if (inbox !== 0) {
