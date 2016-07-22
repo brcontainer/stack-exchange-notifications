@@ -1,6 +1,6 @@
 {
     "name": "StackExchangeNotifications",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "manifest_version": 2,
     "description": "Show recent achievements and inbox messages from StackExchange",
     "icons": {
@@ -10,7 +10,7 @@
         "16":  "images/icon.png"
     },
     "browser_action": {
-        "default_icon": "images/icon.png",
+        "default_icon":  "images/icon.png",
         "default_popup": "view/popup.html"
     },
     "background": {
@@ -48,7 +48,7 @@
             "<all_urls>"
         ],
         "js": [
-            "js/detectuseractive.js"
+            "js/detectuseractivity.js"
         ]
     }],
     "web_accessible_resources": [

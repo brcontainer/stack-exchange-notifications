@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.2
+ * StackExchangeNotifications 0.1.3
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -23,8 +23,8 @@
 
     var rtsTimer;
 
-    var replaceTabsBySpaces = function() {
-        var el = this;
+    var replaceTabsBySpaces = function(el) {
+        el = el || this;
 
         if (rtsTimer) {
             clearTimeout(rtsTimer);
@@ -32,7 +32,7 @@
 
         rtsTimer = setTimeout(function(obj) {
             el.value = el.value.replace(/\t/g, "    ");
-        });
+        }, 100);
     };
 
     var addEventButton = function(button, realEditor, realTextField) {
@@ -107,6 +107,9 @@
 
         if (tabsBySpaces) {
             realTextField.addEventListener("keyup", replaceTabsBySpaces);
+            realTextField.addEventListener("paste", replaceTabsBySpaces);
+
+            replaceTabsBySpaces(realTextField);
         }
 
         newEditor.querySelector("a.sen-full-button").addEventListener("click", function() {

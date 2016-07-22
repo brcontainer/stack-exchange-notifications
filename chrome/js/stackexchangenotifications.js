@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.2
+ * StackExchangeNotifications 0.1.3
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -22,7 +22,8 @@
         cssCallback = null,
         isRunning = false,
         timer = null,
-        inSleepMode = false;
+        inSleepMode = false
+    ;
 
     var tmpDom     = document.createElement("div"),
         validAttrs = [ "class", "id", "href" ],
@@ -287,37 +288,30 @@
     };
 
     var
-        timerNotifications,
         RunnigNotifications = false,
-        ListNotifications,
-        CurrentNotification = -1
+        ListNotifications = [],
+        UsedNotificationsSession = [],
+        CurrentNotification = 0
     ;
 
     var SaveNotifications = function() {
         SimpleCache.set("notificationbackup", ListNotifications, true);
     };
 
-    ListNotifications = SimpleCache.get("notificationbackup", true);
-
-    if (!ListNotifications) {
-        ListNotifications = [];
-    }
-
     var ShowNotifications = function() {
-        if (timerNotifications) {
-            clearTimeout(timerNotifications);
-        }
-
         RunnigNotifications = true;
-
-        CurrentNotification++;
 
         var data = ListNotifications[CurrentNotification];
 
+        CurrentNotification++;
+
         if (!data) {
-            RunnigNotifications = false;
             ListNotifications = [];
+
+            SaveNotifications();
+
             CurrentNotification = 0;
+            RunnigNotifications = false;
             return;
         }
 
@@ -335,10 +329,11 @@
             //Firefox don't support requireInteraction and causes exception
 
             delete props.requireInteraction;
+
             chrome.notifications.create(data.id, props, function() {});
         }
 
-        timerNotifications = setTimeout(ShowNotifications, 500);
+        setTimeout(ShowNotifications, 1000);
     };
 
     var EnableInterface = function(key, enable) {
@@ -377,6 +372,8 @@
             }
 
             if (!inSleepMode && !RunnigNotifications) {
+                RunnigNotifications = true;
+
                 ShowNotifications();
             }
 
@@ -399,15 +396,17 @@
                 return;
             }
 
+            if (UsedNotificationsSession.indexOf(id) !== -1) {
+                return;
+            }
+
+            UsedNotificationsSession.push(id);
+
             ListNotifications.push({ "id": id, "title": title, "message": message });
 
             SaveNotifications();
 
-            if (inSleepMode) {
-                return;
-            }
-
-            if (!RunnigNotifications) {
+            if (!inSleepMode && !RunnigNotifications) {
                 RunnigNotifications = true;
 
                 ShowNotifications();

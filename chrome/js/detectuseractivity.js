@@ -1,3 +1,11 @@
+/*
+ * StackExchangeNotifications 0.1.3
+ * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Released under the MIT license
+ *
+ * https://github.com/brcontainer/stack-exchange-notification
+ */
+
 (function() {
     "use strict";
 
@@ -29,20 +37,11 @@
         }, DELAY * 1000);
     };
 
-    if (chrome && chrome.windows) {
-        chrome.windows.onFocusChanged.addListener(function(windowId) {
-            if (windowId === -1) {
-                userIsActive(false);
-            } else {
-                chrome.windows.get(windowId, function(chromeWindow) {
-                    userIsActive(chromeWindow.state !== "minimized");
-                });
-            }
-        });
-    }
-
-    document.addEventListener("mousemove", function(evt) {
+    var detectUserActivity = function(evt) {
         userIsActive(true);
         triggerInactive();
-    }, true);
+    };
+
+    document.addEventListener("mousemove", detectUserActivity, true);
+    document.addEventListener("keydown", detectUserActivity, true);
 })();

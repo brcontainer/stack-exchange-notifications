@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.2
+ * StackExchangeNotifications 0.1.3
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -129,8 +129,7 @@ function main() {
     var actionCheckRead = function(current, box) {
         var target = box === "inbox" ? inboxContent : achievementsContent;
 
-        current.addEventListener("click", function()
-        {
+        current.addEventListener("click", function() {
             current.className = current.className.replace(/unread\-item/g, "");
             StackExchangeNotifications.saveState(box, target.innerHTML);
         });
@@ -172,8 +171,7 @@ function main() {
     var switchsREOff = /(^|\s)switch\-off($|\s)/;
 
     for (var i = 0, j = switchs.length; i < j; i++) {
-        switchs[i].addEventListener("click", function()
-        {
+        switchs[i].addEventListener("click", function() {
             var sre, nv;
 
             if (switchsREOn.test(this.className)) {
