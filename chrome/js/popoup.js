@@ -28,8 +28,13 @@ function setActionAnchor(el) {
             }
 
             setTimeout(function() {
+                var id = StackExchangeNotifications.notificationsSession() + el.href;
+
                 chrome.tabs.create({ "url": el.href });
-                chrome.notifications.clear(el.href);
+
+                chrome.notifications.clear(id);
+
+                StackExchangeNotifications.removeNotificationFromCache(el.href);
             }, 1);
         };
     }
