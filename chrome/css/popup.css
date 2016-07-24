@@ -11,7 +11,7 @@ html, body, h1, h2, h3, h4, h5, p, a {
     margin: 0;
 }
 
-html, body {
+html {
     min-width: 400px;
     max-width: 400px;
         width: 400px;
@@ -19,7 +19,7 @@ html, body {
 
 body {
     background-color: #fbfbfb;
-    min-height: 400px;
+    min-height: 460px;
     min-width: 400px;
     font-size: 10pt;
     font-size: 13px;
@@ -521,7 +521,7 @@ hr {
 .about-icon {
     width: 88px;
     height: 88px;
-    margin: 25px auto;
+    margin: 5px auto;
     border-color: rgb(208, 190, 190);
 }
 
