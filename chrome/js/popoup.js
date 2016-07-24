@@ -30,11 +30,11 @@ function setActionAnchor(el) {
             setTimeout(function() {
                 var id = StackExchangeNotifications.notificationsSession() + el.href;
 
-                chrome.tabs.create({ "url": el.href });
-
                 chrome.notifications.clear(id);
 
                 StackExchangeNotifications.removeNotificationFromCache(el.href);
+
+                chrome.tabs.create({ "url": el.href });
             }, 1);
         };
     }
@@ -137,13 +137,14 @@ function main() {
         var target = box === "inbox" ? inboxContent : achievementsContent;
 
         current.addEventListener("click", function() {
-            var data = StackExchangeNotifications.restoreState(box);
-
             current.className = current.className
                                         .replace(/(^|\s)unread\-item($|\s)/g, " ").trim();
 
+            var data = StackExchangeNotifications.restoreState(box);
+
             if (data.length === 3) {
-                data[2] = target.innerHTML;
+                data[0] = target.innerHTML;
+
                 StackExchangeNotifications.saveState(box, data);
             }
         });
