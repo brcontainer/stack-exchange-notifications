@@ -155,6 +155,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     border: 1px transparent solid !important;
     text-decoration: none !important;
     vertical-align: middle !important;
+    outline: none !important;
 }
 
 .sen-editor .sen-editor-toolbar > a.sen-btn i {

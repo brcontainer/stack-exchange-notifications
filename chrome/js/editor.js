@@ -92,7 +92,7 @@
 
             realEditor.className += " sen-editor-visible";
 
-            var event = new Event("click", {
+            var event = new MouseEvent("click", {
                 "view": window,
                 "bubbles": true,
                 "cancelable": true
@@ -195,7 +195,7 @@
         realEditor.className += " sen-editor-visible";
 
         triggerFocus(realEditor.querySelector("textarea"));
-        setTimeout(mainActivity, 300, newEditor, realEditor);
+        setTimeout(mainActivity, 600, newEditor, realEditor);
     };
 
     var loadCss = function() {
