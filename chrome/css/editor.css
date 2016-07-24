@@ -7,7 +7,7 @@
  */
 
 html.sen-editor-noscroll, html.sen-editor-noscroll body {
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 .sen-editor, .sen-editor * {
@@ -21,7 +21,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     border: 1px solid #c8ccd0 !important;
 }
 .sen-editor .sen-textfield > textarea {
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.08) inset !important;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08) inset !important;
     border: none !important;
     width: 100% !important;
 }
@@ -41,7 +41,12 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 
 .sen-editor .sen-editor-toolbar > span {
-    margin: 0 10px !important;
+    margin: 0 4px !important;
+    border-left: 1px #e2e2e2 solid !important;
+    padding: 13px 0 !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    font-size: 0 !important;
 }
 
 .sen-editor .sen-textfield > textarea {
@@ -52,7 +57,9 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     resize: vertical !important;
     display: block !important;
     margin: 0 !important;
+    outline: 0 !important;
 }
+
 .sen-editor .sen-textfield {
     width: 100% !important;
 }
@@ -147,17 +154,18 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     border-radius: 2px !important;
     border: 1px transparent solid !important;
     text-decoration: none !important;
+    vertical-align: middle !important;
 }
 
 .sen-editor .sen-editor-toolbar > a.sen-btn i {
     display: block !important;
-    padding: 5px !important;
+    padding: 7px !important;
 }
 
 .sen-editor .sen-editor-toolbar > a.sen-btn i::before {
     background: transparent no-repeat !important;
     background-size: cover !important;
-    padding: 9px !important;
+    padding: 7px !important;
     content: " " !important;
     display: block !important;
 }
@@ -216,9 +224,9 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .sen-editor .sen-editor-toolbar > a.wmd-undo-button i::before {
     background-image: url(../images/editor/redo.svg) !important;
-    -moz-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+    -moz-transform: scaleX(-1) !important;
+    -webkit-transform: scaleX(-1) !important;
+    transform: scaleX(-1) !important;
 }
 
 .sen-editor .sen-editor-toolbar > a.sen-full-button i::before {
@@ -229,6 +237,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     background-image: url(../images/editor/preview.svg) !important;
 }
 
+/*
 .sen-editor .sen-editor-toolbar > a.wmd-undo-button i,
 .sen-editor .sen-editor-toolbar > a.wmd-redo-button i {
     opacity: 0.3 !important;
@@ -236,10 +245,11 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 .sen-editor .sen-editor-toolbar > a.enable i {
     opacity: 1.0 !important;
 }
-
+*/
 /*tooltip*/
 .sen-editor .sen-editor-toolbar > a.sen-btn {
     position: relative !important;
+    font-size: 0 !important;
 }
 
 .sen-editor .sen-editor-toolbar > a.sen-btn::before,
@@ -258,12 +268,11 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .sen-editor .sen-editor-toolbar > a.sen-btn::before {
     border-style: solid !important;
-    border-width: 0 8px 10px 8px !important;
+    border-width: 0 6px 8px 6px !important;
     border-color: transparent transparent rgba(82, 72, 71, .90) transparent !important;
-    top: 90% !important;
-    margin-left: -8px !important;
+    top: 27px !important;
+    margin-left: -6px !important;
     content: " " !important;
-    font-size: 0 !important;
 }
 
 .sen-editor .sen-editor-toolbar > a.sen-btn::after {
@@ -283,7 +292,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .sen-editor .sen-editor-toolbar .sen-actions {
     display: none !important;
-    float: right;
+    float: right !important;
 }
 
 .sen-editor-full .sen-editor-toolbar .sen-actions {
@@ -305,6 +314,6 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     background-color: #4CAF50 !important;
 }
 
-.sen-hide {
+.sen-editor .sen-editor-toolbar > a.sen-btn.sen-hide {
     display: none !important;
 }

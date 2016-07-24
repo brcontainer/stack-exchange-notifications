@@ -21,32 +21,66 @@
         noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/g
     ;
 
+    var triggerFocus = function(target) {
+        if (!target) {
+            return;
+        }
+
+        var evt = new MouseEvent("focus", {
+            "view": window,
+            "bubbles": true,
+            "cancelable": true
+        });
+
+        target.dispatchEvent(evt);
+
+        var evt = new MouseEvent("click", {
+            "view": window,
+            "bubbles": true,
+            "cancelable": true
+        });
+
+        target.dispatchEvent(evt);
+
+        evt = null;
+    };
+
+    var hideRealEditor = function(target) {
+        target.className
+            = target.className
+                .replace(visibleRegExp, " ")
+                    .replace(/\s\s/g, " ")
+                        .trim();
+    };
+
     var addEventButton = function(button, realEditor, realTextField) {
-        var timerHideButtons, innerBtn, btn, hasTip = false;
+        var timerHideButtons, innerBtn;
 
-        var getRealButton = function() {
-            if (!btn) {
-                var c = button.className.replace(/sen\-btn/, "").trim();
+        if (/sen\-(preview|full)\-button/.test(button.className)) {
+            return;
+        }
 
-                btn = realEditor.querySelector("[id=" + c + "]");
+        var c = button.className.replace(/sen\-btn/, "").trim();
 
-                if (!btn) {
-                    btn = realEditor.querySelector("[id^=" + c + "-]");
-                }
-            }
+        var btn = realEditor.querySelector("[id=" + c + "]");
 
-            if (!hasTip && btn) {
+        if (!btn) {
+            btn = realEditor.querySelector("[id^=" + c + "-]");
+        }
+
+        if (btn) {
+            if (btn.getAttribute("title")) {
                 button.setAttribute("data-title", btn.getAttribute("title"));
             }
-        };
+        } else {
+            button.className += " sen-hide";
+            return;
+        }
 
-        button.addEventListener("mousemove", getRealButton);
         button.addEventListener("click", function() {
             if (timerHideButtons) {
                 clearTimeout(timerHideButtons);
             }
-
-            getRealButton();
 
             if (!btn) {
                 return;
@@ -70,24 +104,12 @@
                 btn.dispatchEvent(event);
             }
 
-            event = new Event("paste", {
-                "view": window,
-                "bubbles": true,
-                "cancelable": true
-            });
-
-            realTextField.dispatchEvent(event);
-
             event = null;
 
-            timerHideButtons = setTimeout(function() {
-                realEditor.className
-                    = realEditor.className
-                        .replace(visibleRegExp, " ")
-                            .replace(/\s\s/g, " ")
-                                .trim();
-            }, 200);
+            timerHideButtons = setTimeout(hideRealEditor, 200, realEditor);
         });
+
+        return !!btn;
     };
 
     var rtsTimer;
@@ -104,7 +126,7 @@
         }, 100);
     };
 
-    var main = function(newEditor, realEditor) {
+    var mainActivity = function(newEditor, realEditor) {
         var realPreview = realEditor.querySelector(".wmd-preview");
         var realTextField = realEditor.querySelector(".wmd-input");
 
@@ -115,9 +137,9 @@
         textTarget.appendChild(realTextField);
 
         if (tabsBySpaces) {
+            realTextField.addEventListener("change", replaceTabsBySpaces);
             realTextField.addEventListener("keyup",  replaceTabsBySpaces);
             realTextField.addEventListener("paste",  replaceTabsBySpaces);
-            realTextField.addEventListener("change", replaceTabsBySpaces);
             realTextField.addEventListener("input",  replaceTabsBySpaces);
         }
 
@@ -133,8 +155,8 @@
 
                 if (preferPreviewInFull) {
                     newEditor.className = newEditor.className
-                                                .replace(readyRegExp, " ")
-                                                    .replace(/\s\s/g, " ").trim();
+                                            .replace(readyRegExp, " ")
+                                                .replace(/\s\s/g, " ").trim();
                 }
             } else {
                 newEditor.className += " sen-editor-full";
@@ -156,28 +178,39 @@
             }
         });
 
+        realEditor.className += "";
+
+        realEditor.parentNode.insertBefore(newEditor, realEditor.nextSibling);
+
         var buttons = newEditor.querySelectorAll(".sen-editor-toolbar > a[class^='sen-btn ']");
 
         for (var i = buttons.length - 1; i >= 0; i--) {
             addEventButton(buttons[i], realEditor, realTextField);
         }
 
-        realEditor.parentNode.insertBefore(newEditor, realEditor.nextSibling);
+        hideRealEditor(realEditor);
+    };
+
+    var bootMain = function(newEditor, realEditor) {
+        realEditor.className += " sen-editor-visible";
+
+        triggerFocus(realEditor.querySelector("textarea"));
+        setTimeout(mainActivity, 300, newEditor, realEditor);
     };
 
     var loadCss = function() {
-        var l = document.createElement("link");
+        var style = document.createElement("link");
 
-        l.rel  = "stylesheet";
-        l.type = "text/css";
-        l.href = chrome.extension.getURL("/css/editor.css");
+        style.rel  = "stylesheet";
+        style.type = "text/css";
+        style.href = chrome.extension.getURL("/css/editor.css");
 
-        document.body.appendChild(l);
+        document.body.appendChild(style);
     };
 
-    var loadView = function(callback) {
+    var loadView = function(realEditor) {
         if (viewHTML) {
-            callback(viewHTML.cloneNode(true));
+            bootMain(viewHTML.cloneNode(true), realEditor);
             return;
         }
 
@@ -195,7 +228,7 @@
                 viewHTML.innerHTML = data;
                 viewHTML = viewHTML.firstElementChild;
 
-                callback(viewHTML.cloneNode(true));
+                bootMain(viewHTML.cloneNode(true), realEditor);
             }
         };
 
@@ -203,15 +236,18 @@
     };
 
     var CreateEditor = function(target) {
-        if (!target || target.senEditorAtived) {
+        if (
+            !target ||
+            target.offsetParent === null ||
+            target.querySelector(".wmd-button-bar li") === null ||
+            target.senEditorAtived
+        ) {
             return;
         }
 
         target.senEditorAtived = true;
 
-        loadView(function(newEditor) {
-            main(newEditor, target);
-        });
+        loadView(target);
     };
 
     var initiate = function() {
@@ -227,9 +263,10 @@
 
         setTimeout(function() {
             var els = document.querySelectorAll(".post-editor");
+
             if (els.length > 0) {
                 for (var i = els.length - 1; i >= 0; i--) {
-                    CreateEditor(els[i]);
+                    setTimeout(CreateEditor, 100, els[i]);
                 }
             }
         }, 100);
@@ -239,7 +276,9 @@
                 var el = mutation.target;
 
                 if (/(^|\s)inline\-(editor|answer)($|\s)/.test(el.className)) {
-                    CreateEditor(el.querySelector(".post-editor"));
+                    setTimeout(CreateEditor, 100, el.querySelector(".post-editor"));
+                } else if (/(^|\s)post\-form($|\s)/.test(el.className)) {
+                    setTimeout(CreateEditor, 100, el.querySelector(".post-editor"));
                 }
             });
         });
@@ -251,7 +290,7 @@
         });
     };
 
-    var load = function() {
+    var loadAll = function() {
         if (chrome.runtime && chrome.runtime.sendMessage) {
             chrome.runtime.sendMessage("editor", function(response) {
                 if (response) {
@@ -267,9 +306,9 @@
     };
 
     if (/interactive|complete/i.test(doc.readyState)) {
-        load();
+        loadAll();
     } else {
-        doc.addEventListener("DOMContentLoaded", load);
-        window.addEventListener("load", load);
+        doc.addEventListener("DOMContentLoaded", loadAll);
+        window.addEventListener("load", loadAll);
     }
 })(document);

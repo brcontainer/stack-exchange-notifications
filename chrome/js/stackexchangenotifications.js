@@ -9,7 +9,8 @@
 (function() {
     "use strict";
 
-    var delay = 60; //In seconds
+    var delay = 60, //In seconds
+        initiateDelay = 5000; //Milesec
 
     var unreadCountsURI = "http://stackexchange.com/topbar/get-unread-counts",
         achievementsURI = "http://stackexchange.com/topbar/achievements",
@@ -291,7 +292,8 @@
         RunnigNotifications = false,
         ListNotifications = [],
         UsedNotificationsSession = [],
-        CurrentNotification = 0
+        CurrentNotification = 0,
+        TokenNotifications = String(new Date().getTime() / 1000) + "_"
     ;
 
     var SaveNotifications = function() {
@@ -322,14 +324,17 @@
             "requireInteraction": true
         };
 
+        //Prevent not show in Opera
+        var id = TokenNotifications + data.id;
+
         try {
-            chrome.notifications.create(data.id, props, function() {});
+            chrome.notifications.create(id, props, function() {});
         } catch (ee) {
             //Firefox don't support requireInteraction and causes exception
 
             delete props.requireInteraction;
 
-            chrome.notifications.create(data.id, props, function() {});
+            chrome.notifications.create(id, props, function() {});
         }
 
         setTimeout(ShowNotifications, 1000);
@@ -345,6 +350,9 @@
 
     window.StackExchangeNotifications = {
         "boot": function() {
+            //Improve perfomance in Opera and older machines
+            setTimeout(function() { initiateDelay = 1; }, initiateDelay);
+
             if (SimpleCache.get("firstconfig", true)) {
                 return false;
             }
@@ -373,7 +381,7 @@
             if (!inSleepMode && !RunnigNotifications) {
                 RunnigNotifications = true;
 
-                ShowNotifications();
+                setTimeout(ShowNotifications, initiateDelay);
             }
 
             return inSleepMode;
@@ -391,15 +399,19 @@
             return EnableInterface("notifications", enable);
         },
         "removeNotificationFromCache": function(id) {
-            for (var c, i = ListNotifications.length - 1; i >= 0; i--) {
-                c = ListNotifications[i];
+            for (var i = ListNotifications.length - 1; i >= 0; i--) {
+                var c = ListNotifications[i];
+
                 if (c && c.id === id) {
-                    c = true;
+                    ListNotifications[i] = true;
                     break;
                 }
             }
 
             SaveNotifications();
+        },
+        "notificationsSession": function() {
+            return TokenNotifications;
         },
         "notify": function(id, title, message) {
             if (!StackExchangeNotifications.enableNotifications()) {
@@ -419,7 +431,7 @@
             if (!inSleepMode && !RunnigNotifications) {
                 RunnigNotifications = true;
 
-                ShowNotifications();
+                setTimeout(ShowNotifications, initiateDelay);
             }
         },
         "style": function(callback) {

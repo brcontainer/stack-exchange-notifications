@@ -119,19 +119,17 @@
     });
 
     chrome.notifications.onClicked.addListener(function(id, byUser) {
-        if (/^(http|https):\/\//.test(id)) {
+        var tryUri = id.substr(StackExchangeNotifications.notificationsSession().length);
+
+        if (/^(http|https):\/\//.test(tryUri)) {
             setTimeout(function() {
-                chrome.tabs.create({ "url": id });
+                chrome.tabs.create({ "url": tryUri });
             }, 1);
         }
 
         chrome.notifications.clear(id);
-        StackExchangeNotifications.removeNotificationFromCache(id);
+        StackExchangeNotifications.removeNotificationFromCache(tryUri);
     });
-
-    /*chrome.notifications.onClosed.addListener(function(id, byUser) {
-        chrome.notifications.clear(id);
-    });*/
 
     chrome.windows.onFocusChanged.addListener(function(windowId) {
         if (windowId === -1) {
