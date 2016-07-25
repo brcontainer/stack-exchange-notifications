@@ -231,7 +231,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 
 .sen-editor .sen-editor-toolbar > a.sen-full-button i::before {
-    background-image: url(../images/editor/expand.svg) !important;
+    background-image: url(../images/editor/resize-max.svg) !important;
 }
 
 .sen-editor .sen-editor-toolbar > a.sen-preview-button i::before {
@@ -288,6 +288,18 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     content: attr(data-title) !important;
     text-align: center !important;
     font-size: 9pt !important;
+}
+
+.sen-editor-full .sen-editor-toolbar > a.sen-full-button::after {
+    content: attr(data-title-inmax) !important;
+}
+
+.sen-editor-full .sen-editor-toolbar > a.sen-full-button i::before {
+    background-image: url(../images/editor/resize-restore.svg) !important;
+}
+
+.sen-editor-ready .sen-editor-toolbar > a.sen-preview-button::after {
+    content: attr(data-title-inpreview) !important;
 }
 /*tooltip*/
 

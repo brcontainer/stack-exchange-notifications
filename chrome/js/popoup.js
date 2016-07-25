@@ -138,7 +138,7 @@ function main() {
 
         current.addEventListener("click", function() {
             current.className = current.className
-                                        .replace(/(^|\s)unread\-item($|\s)/g, " ").trim();
+                                    .replace(/(^|\s)unread\-item($|\s)/g, " ").trim();
 
             var data = StackExchangeNotifications.restoreState(box);
 
@@ -166,17 +166,13 @@ function main() {
     };
 
     var headDOM = document.head;
+    var hasHref = [];
 
-    StackExchangeNotifications.clearStyleList();
-
-    StackExchangeNotifications.style(function(stylesheet) {
-        var cssDom = document.createElement("link");
-
-        cssDom.href = stylesheet;
-        cssDom.type = "text/css";
-        cssDom.rel  = "stylesheet";
-
-        headDOM.appendChild(cssDom);
+    StackExchangeNotifications.style(function(cssDom) {
+        if (hasHref.indexOf(cssDom.href) === -1) {
+            hasHref.push(cssDom.href);
+            headDOM.appendChild(cssDom);
+        }
     });
 
     var changeSwitchEvent = document.createEvent("Event");

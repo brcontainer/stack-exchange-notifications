@@ -70,19 +70,15 @@
                 current.parentNode.removeChild(current);
             }
 
-            if (cssCallback !== null) {
-                list = tmpDom.querySelectorAll("link[rel=stylesheet]");
+            if (cssCallback) {
+                list = tmpDom.querySelectorAll("link");
 
                 for (i = list.length - 1; i >= 0; i--) {
                     current = list[i];
-                    currentHref = current.href;
 
-                    if (currentHref && cssList.indexOf(currentHref) === -1) {
-                        cssCallback(currentHref);
-                        cssList.push(currentHref);
+                    if (current.type === "text/css" && current.rel === "stylesheet") {
+                        cssCallback(current);
                     }
-
-                    current.parentNode.removeChild(current);
                 }
             }
 
@@ -349,6 +345,11 @@
     };
 
     window.StackExchangeNotifications = {
+        "style": function(callback) {
+            if (typeof callback === "function") {
+                cssCallback = callback;
+            }
+        },
         "boot": function() {
             //Improve perfomance in Opera and older machines
             setTimeout(function() { initiateDelay = 1; }, initiateDelay);
@@ -369,9 +370,6 @@
             SimpleCache.set("firstconfig", 1, true);
 
             return true;
-        },
-        "clearStyleList": function() {
-            cssList = [];
         },
         "enableSleepMode": function(enable) {
             if (typeof enable === "boolean") {
@@ -432,11 +430,6 @@
                 RunnigNotifications = true;
 
                 setTimeout(ShowNotifications, initiateDelay);
-            }
-        },
-        "style": function(callback) {
-            if (typeof callback === "function") {
-                cssCallback = callback;
             }
         },
         "pushs": function(callback) {
