@@ -15,6 +15,7 @@
         viewHTML,
         tabsBySpaces = false,
         preferPreviewInFull = false,
+        focusRegExp    = /(^|\s)sen\-editor\-focus($|\s)/g,
         visibleRegExp  = /(^|\s)sen\-editor\-visible($|\s)/g,
         fullRegExp     = /(^|\s)sen\-editor\-full($|\s)/g,
         readyRegExp    = /(^|\s)sen\-editor\-ready($|\s)/g,
@@ -192,9 +193,24 @@
     };
 
     var bootMain = function(newEditor, realEditor) {
+        var textField = realEditor.querySelector("textarea");
+
         realEditor.className += " sen-editor-visible";
 
-        triggerFocus(realEditor.querySelector("textarea"));
+        triggerFocus(textField);
+
+        textField.addEventListener("focus", function() {
+            newEditor.className += " sen-editor-focus";
+        });
+
+        textField.addEventListener("blur", function() {
+            newEditor.className
+                = newEditor.className
+                    .replace(focusRegExp, " ")
+                        .replace(/\s\s/g, " ")
+                            .trim();
+        });
+
         setTimeout(mainActivity, 600, newEditor, realEditor);
     };
 
@@ -250,7 +266,7 @@
         loadView(target);
     };
 
-    var initiate = function() {
+    var loadAll = function() {
         if (done) {
             return;
         }
@@ -258,8 +274,6 @@
         rootDoc = document.body.parentNode;
 
         done = true;
-
-        loadCss();
 
         setTimeout(function() {
             var els = document.querySelectorAll(".post-editor");
@@ -290,25 +304,27 @@
         });
     };
 
-    var loadAll = function() {
-        if (chrome.runtime && chrome.runtime.sendMessage) {
-            chrome.runtime.sendMessage("editor", function(response) {
-                if (response) {
-                    preferPreviewInFull = !!response.preview;
-                    tabsBySpaces = !!response.spaceindentation;
+    var initiate = function() {
+        loadCss();
 
-                    if (response.available === true) {
-                        setTimeout(initiate, 200);
-                    }
-                }
-            });
+        if (/interactive|complete/i.test(doc.readyState)) {
+            loadAll();
+        } else {
+            doc.addEventListener("DOMContentLoaded", loadAll);
+            window.addEventListener("load", loadAll);
         }
     };
 
-    if (/interactive|complete/i.test(doc.readyState)) {
-        loadAll();
-    } else {
-        doc.addEventListener("DOMContentLoaded", loadAll);
-        window.addEventListener("load", loadAll);
+    if (chrome.runtime && chrome.runtime.sendMessage) {
+        chrome.runtime.sendMessage("editor", function(response) {
+            if (response) {
+                preferPreviewInFull = !!response.preview;
+                tabsBySpaces = !!response.spaceindentation;
+
+                if (response.available === true) {
+                    initiate();
+                }
+            }
+        });
     }
 })(document);
