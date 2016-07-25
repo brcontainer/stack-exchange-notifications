@@ -94,6 +94,8 @@ function main() {
         clearCache          = document.getElementById("clear-cache"),
         clearAllData        = document.getElementById("clear-all-data"),
 
+        headDOM             = document.head,
+
         backgroundEngine    = chrome.extension.getBackgroundPage()
     ;
 
@@ -164,16 +166,6 @@ function main() {
             actionCheckRead(els[i], box);
         }
     };
-
-    var headDOM = document.head;
-    var hasHref = [];
-
-    StackExchangeNotifications.style(function(cssDom) {
-        if (hasHref.indexOf(cssDom.href) === -1) {
-            hasHref.push(cssDom.href);
-            headDOM.appendChild(cssDom);
-        }
-    });
 
     var changeSwitchEvent = document.createEvent("Event");
         changeSwitchEvent.initEvent("changeswitch", true, true);

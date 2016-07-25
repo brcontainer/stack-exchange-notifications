@@ -20,15 +20,13 @@
         achievements = 0;
 
     var doneCallback = null,
-        cssCallback = null,
         isRunning = false,
         timer = null,
         inSleepMode = false
     ;
 
     var tmpDom     = document.createElement("div"),
-        validAttrs = [ "class", "id", "href" ],
-        cssList    = [];
+        validAttrs = [ "class", "id", "href" ];
 
     var Utils = {
         "convertResult": function(size) {
@@ -70,22 +68,17 @@
                 current.parentNode.removeChild(current);
             }
 
-            if (cssCallback) {
-                list = tmpDom.querySelectorAll("link");
-
-                for (i = list.length - 1; i >= 0; i--) {
-                    current = list[i];
-
-                    if (current.type === "text/css" && current.rel === "stylesheet") {
-                        cssCallback(current);
-                    }
-                }
-            }
-
             list = tmpDom.getElementsByTagName("*");
 
             for (i = list.length - 1; i >= 0; i--) {
                 Utils.removeInvalidAttributes(list[i]);
+            }
+
+            list = tmpDom.querySelectorAll("link");
+
+            for (var i = list.length - 1; i >= 0; i--) {
+                list[i].type = "text/css";
+                list[i].rel  = "stylesheet";
             }
 
             return tmpDom.innerHTML;
@@ -345,11 +338,6 @@
     };
 
     window.StackExchangeNotifications = {
-        "style": function(callback) {
-            if (typeof callback === "function") {
-                cssCallback = callback;
-            }
-        },
         "boot": function() {
             //Improve perfomance in Opera and older machines
             setTimeout(function() { initiateDelay = 1; }, initiateDelay);
