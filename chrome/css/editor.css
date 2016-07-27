@@ -24,8 +24,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .sen-editor.sen-editor-focus:not(.sen-editor-ready) {
     border-color: #51a7e8 !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset,
-                0 0 5px rgba(81, 167, 232, 0.5) !important;
+    box-shadow: 0 0 5px rgba(81, 167, 232, 0.5) !important;
 }
 
 .sen-editor .sen-textfield > textarea {
@@ -171,8 +170,8 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 
 .sen-editor .sen-editor-toolbar > a.sen-btn i::before {
-    background: transparent no-repeat !important;
-    background-size: cover !important;
+    background: transparent center center no-repeat !important;
+    background-size: contain !important;
     padding: 7px !important;
     content: " " !important;
     display: block !important;
@@ -243,6 +242,18 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .sen-editor .sen-editor-toolbar > a.sen-preview-button i::before {
     background-image: url(../images/editor/preview.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-flip-button i::before {
+    background-image: url(../images/editor/flip.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-flip-button {
+    display: none !important;
+}
+
+.sen-editor-full .sen-editor-toolbar > a.sen-flip-button {
+    display: inline-block !important;
 }
 
 /*

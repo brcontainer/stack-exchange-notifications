@@ -57,7 +57,7 @@
     var addEventButton = function(button, realEditor, realTextField) {
         var timerHideButtons, innerBtn;
 
-        if (/sen\-(preview|full)\-button/.test(button.className)) {
+        if (/sen\-(preview|full|flip)\-button/.test(button.className)) {
             return;
         }
 

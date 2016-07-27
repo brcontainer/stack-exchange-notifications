@@ -11,12 +11,6 @@ html, body, h1, h2, h3, h4, h5, p, a {
     margin: 0;
 }
 
-html {
-    min-width: 400px;
-    max-width: 400px;
-        width: 400px;
-}
-
 body {
     background-color: #fbfbfb;
     min-height: 460px;
@@ -31,7 +25,7 @@ body {
           -ms-user-select: none;
               user-select: none;
 }
-
+/*
 @-moz-document url-prefix() {
     body {
         overflow-x: hidden;
@@ -44,7 +38,7 @@ body {
             max-height: 480px;
         }
     }
-}
+}*/
 
 body, a {
     color: #4F4949;
@@ -347,6 +341,10 @@ hr {
 
 #setup-button span.icon {
     background-image: url(../images/gears.svg);
+}
+
+.tab-item {
+    min-width: 400px;
 }
 
 .tab-item .modal-content ul,
