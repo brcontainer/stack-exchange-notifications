@@ -63,9 +63,9 @@
         var observer = new MutationObserver(updateStates);
 
         observer.observe(networkSE, {
-            subtree: true,
-            childList: true,
-            attributes: true
+            "subtree": true,
+            "childList": true,
+            "attributes": true
         });
     };
 

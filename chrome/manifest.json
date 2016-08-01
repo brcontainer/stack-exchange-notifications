@@ -41,6 +41,7 @@
         ],
         "js": [
             "js/detectchanges.js",
+            "js/gallery.js",
             "js/editor.js"
         ]
     }, {
@@ -54,6 +55,8 @@
     "web_accessible_resources": [
         "view/editor.html",
         "css/editor.css",
+        "view/gallery.html",
+        "css/gallery.css",
         "images/*"
     ],
     "permissions": [

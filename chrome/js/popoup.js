@@ -16,17 +16,17 @@ function FF() {
     return debugMode;
 }
 
+function LinkPrevent(el) {
+    el.addEventListener("click", function(evt) {
+        (evt || window.event).preventDefault();
+    });
+}
+
 function setActionAnchor(el) {
     if (el && el.senLink !== true && el.href && /^(http|https)\:\/\//.test(el.href)) {
         el.senLink = true;
 
         el.onclick = function(evt) {
-            evt = evt || window.event;
-
-            if (evt.preventDefault) {
-                evt.preventDefault();
-            }
-
             setTimeout(function() {
                 var id = StackExchangeNotifications.notificationsSession() + el.href;
 
@@ -38,6 +38,8 @@ function setActionAnchor(el) {
             }, 1);
         };
     }
+
+    LinkPrevent(el);
 
     el.ondragstart = FF;
 }
@@ -54,15 +56,20 @@ function setDomEvents(target) {
     }
 }
 
+/*
 function getNotificationId() {
     var id = Math.floor(Math.random() * 9007199254740992) + 1;
     return id.toString();
 }
+*/
 
 function main() {
     "use strict";
 
     var
+        navRegexp           = /(^|\s)nav\-shadow($|\s)/g,
+        navgation           = document.querySelector(".nav"),
+
         inboxButton         = document.getElementById("inbox-button"),
         inboxContent        = document.getElementById("inbox-content"),
         inboxData           = inboxButton.querySelector("span.push"),
@@ -81,13 +88,14 @@ function main() {
         setupButton         = document.getElementById("setup-button"),
         setupContent        = document.getElementById("setup-content"),
 
-        switchs             = document.getElementsByClassName("switch"),
+        switchs             = document.querySelectorAll("a[data-switch]"),
 
         notificationSwitch  = document.getElementById("notification-switch"),
 
         editorSwitch        = document.getElementById("editor-switch"),
-        editorSwitchPreview = document.getElementById("editor-switch-preview"),
         editorSwitchTabs    = document.getElementById("editor-switch-tabs"),
+        editorSwitchInvert  = document.getElementById("editor-switch-invert"),
+        editorSwitchPreview = document.getElementById("editor-switch-preview"),
 
         btns                = document.querySelectorAll(".btn"),
 
@@ -133,6 +141,7 @@ function main() {
     };
 
     showInButtons();
+
     backgroundEngine.detectUpdate(showInButtons);
 
     var actionCheckRead = function(current, box) {
@@ -167,30 +176,40 @@ function main() {
         }
     };
 
-    var changeSwitchEvent = document.createEvent("Event");
-        changeSwitchEvent.initEvent("changeswitch", true, true);
+    var switchEngine = function(el)
+    {
+        var
+            val,
+            key = el.getAttribute("data-switch");
 
-    var switchsREOn  = /(^|\s)switch\-on($|\s)/;
-    var switchsREOff = /(^|\s)switch\-off($|\s)/;
+        if (key) {
 
-    for (var i = 0, j = switchs.length; i < j; i++) {
-        switchs[i].addEventListener("click", function() {
-            var sre, nv;
+            val = StackExchangeNotifications.switchEnable(key);
 
-            if (switchsREOn.test(this.className)) {
-                sre = switchsREOn;
-                this.value = "off";
-                nv = " switch-off";
+            if (val === true) {
+                el.setAttribute("data-switch-value", "on");
+            }
+        }
+
+        el.addEventListener("click", function() {
+            var nval;
+
+            if (el.getAttribute("data-switch-value") === "on") {
+                nval = "off";
             } else {
-                sre = switchsREOff;
-                this.value = "on";
-                nv = " switch-on";
+                nval = "on";
             }
 
-            this.className = this.className.replace(sre, "").trim() + nv;
+            el.setAttribute("data-switch-value", nval);
 
-            this.dispatchEvent(changeSwitchEvent);
+            if (key) {
+                StackExchangeNotifications.switchEnable(key, nval === "on");
+            }
         });
+    };
+
+    for (var i = 0, j = switchs.length; i < j; i++) {
+        switchEngine(switchs[i]);
     }
 
     setupButton.onclick = function()
@@ -206,7 +225,7 @@ function main() {
         inboxActive = false;
         achievementsActive = false;
 
-        localStorage.setItem("lastTab", "setup");
+        StackExchangeNotifications.saveState("lastTab", "setup");
 
         achievementsContent.className =
             achievementsContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
@@ -234,7 +253,7 @@ function main() {
         inboxActive = false;
         achievementsActive = false;
 
-        localStorage.setItem("lastTab", "about");
+        StackExchangeNotifications.saveState("lastTab", "about");
 
         achievementsContent.className =
             achievementsContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
@@ -265,7 +284,7 @@ function main() {
 
         inboxActive = true;
 
-        localStorage.setItem("lastTab", "inbox");
+        StackExchangeNotifications.saveState("lastTab", "inbox");
 
         aboutContent.className =
             aboutContent.className.replace(/hide/g, "").trim() + " hide";
@@ -330,7 +349,7 @@ function main() {
 
         achievementsActive = true;
 
-        localStorage.setItem("lastTab", "achievements");
+        StackExchangeNotifications.saveState("lastTab", "achievements");
 
         aboutContent.className =
             aboutContent.className.replace(/hide/g, "").trim() + " hide";
@@ -415,44 +434,6 @@ function main() {
         }
     };
 
-    var evt = new MouseEvent("click", {
-        "view": window,
-        "bubbles": true,
-        "cancelable": true
-    });
-
-    if (StackExchangeNotifications.enableNotifications()) {
-        notificationSwitch.dispatchEvent(evt);
-    }
-
-    if (StackExchangeNotifications.enableEditor()) {
-        editorSwitch.dispatchEvent(evt);
-    }
-
-    if (StackExchangeNotifications.enablePreferPreview()) {
-        editorSwitchPreview.dispatchEvent(evt);
-    }
-
-    if (StackExchangeNotifications.enableReplaceTabsBySpaces()) {
-        editorSwitchTabs.dispatchEvent(evt);
-    }
-
-    notificationSwitch.addEventListener("changeswitch", function() {
-        StackExchangeNotifications.enableNotifications(this.value === "on");
-    });
-
-    editorSwitch.addEventListener("changeswitch", function() {
-        StackExchangeNotifications.enableEditor(this.value === "on");
-    });
-
-    editorSwitchPreview.addEventListener("changeswitch", function() {
-        StackExchangeNotifications.enablePreferPreview(this.value === "on");
-    });
-
-    editorSwitchTabs.addEventListener("changeswitch", function() {
-        StackExchangeNotifications.enableReplaceTabsBySpaces(this.value === "on");
-    });
-
     for (var i = btns.length - 1; i >= 0; i--) {
         btns[i].addEventListener("click", function() {
             var s = this;
@@ -463,7 +444,7 @@ function main() {
         });
     }
 
-    switch (localStorage.getItem("lastTab"))
+    switch (StackExchangeNotifications.restoreState("lastTab"))
     {
         case "setup":
             setupButton.onclick();

@@ -13,12 +13,14 @@
         rootDoc,
         done = false,
         viewHTML,
+        inverted = false,
         tabsBySpaces = false,
         preferPreviewInFull = false,
         focusRegExp    = /(^|\s)sen\-editor\-focus($|\s)/g,
         visibleRegExp  = /(^|\s)sen\-editor\-visible($|\s)/g,
         fullRegExp     = /(^|\s)sen\-editor\-full($|\s)/g,
         readyRegExp    = /(^|\s)sen\-editor\-ready($|\s)/g,
+        invertedRegExp = /(^|\s)sen\-editor\-inverted($|\s)/g,
         noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/g
     ;
 
@@ -179,7 +181,21 @@
             }
         });
 
-        realEditor.className += "";
+        if (inverted) {
+            newEditor.className += " sen-editor-inverted";
+        }
+
+        newEditor.querySelector("a.sen-flip-button").addEventListener("click", function() {
+            if (invertedRegExp.test(newEditor.className)) {
+                newEditor.className = newEditor.className
+                                        .replace(invertedRegExp, " ")
+                                            .replace(/\s\s/g, " ").trim();
+            } else {
+                newEditor.className += " sen-editor-inverted";
+            }
+        });
+
+        //realEditor.className += "";
 
         realEditor.parentNode.insertBefore(newEditor, realEditor.nextSibling);
 
@@ -238,10 +254,8 @@
         xhr.open("GET", uri, true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                var data = xhr.responseText;
-
                 viewHTML = document.createElement("div");
-                viewHTML.innerHTML = data;
+                viewHTML.innerHTML = xhr.responseText;
                 viewHTML = viewHTML.firstElementChild;
 
                 bootMain(viewHTML.cloneNode(true), realEditor);
@@ -307,7 +321,7 @@
     var initiate = function() {
         loadCss();
 
-        if (/interactive|complete/i.test(doc.readyState)) {
+        if (/^(interactive|complete)$/i.test(doc.readyState)) {
             loadAll();
         } else {
             doc.addEventListener("DOMContentLoaded", loadAll);
@@ -320,6 +334,7 @@
             if (response) {
                 preferPreviewInFull = !!response.preview;
                 tabsBySpaces = !!response.spaceindentation;
+                inverted = !!response.inverted;
 
                 if (response.available === true) {
                     initiate();

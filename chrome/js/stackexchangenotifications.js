@@ -212,7 +212,7 @@
                     }
                 }
 
-                return data ? data : false;
+                return data;
             }
         }
     };
@@ -339,23 +339,23 @@
 
     window.StackExchangeNotifications = {
         "boot": function() {
-            //Improve perfomance in Opera and older machines
+            //Improve perfomance in Opera and older machinesSW
             setTimeout(function() { initiateDelay = 1; }, initiateDelay);
 
-            if (SimpleCache.get("firstconfig", true)) {
+            if (SimpleCache.get("firstrun", true)) {
                 return false;
             }
 
             localStorage.clear();
 
-            StackExchangeNotifications.enableEditor(true);
-            StackExchangeNotifications.enablePreferPreview(true);
-            StackExchangeNotifications.enableReplaceTabsBySpaces(false);
+            StackExchangeNotifications.switchEnable("editor_actived", true);
+            StackExchangeNotifications.switchEnable("editor_preview", true);
 
-            //Temporary force false if empty, default is disabled
-            StackExchangeNotifications.enableNotifications(false);
+            StackExchangeNotifications.switchEnable("inbox", true);
+            StackExchangeNotifications.switchEnable("achievements", true);
+            StackExchangeNotifications.switchEnable("inbox", true);
 
-            SimpleCache.set("firstconfig", 1, true);
+            SimpleCache.set("firstrun", 1, true);
 
             return true;
         },
@@ -372,17 +372,15 @@
 
             return inSleepMode;
         },
-        "enableEditor": function(enable) {
-            return EnableInterface("editorDisabled", enable);
-        },
-        "enablePreferPreview": function(enable) {
-            return EnableInterface("editorPreviewInFull", enable);
-        },
-        "enableReplaceTabsBySpaces": function(enable) {
-            return EnableInterface("editorTabsBySpaces", enable);
-        },
-        "enableNotifications": function(enable) {
-            return EnableInterface("notifications", enable);
+        "switchEnable": function(key, enable) {
+            var kn = "switch_" + key;
+
+            if (typeof enable === "boolean") {
+                SimpleCache.set(kn, enable, true);
+                return enable;
+            }
+
+            return !!SimpleCache.get(kn, true);
         },
         "removeNotificationFromCache": function(id) {
             for (var i = ListNotifications.length - 1; i >= 0; i--) {
@@ -400,7 +398,7 @@
             return TokenNotifications;
         },
         "notify": function(id, title, message) {
-            if (!StackExchangeNotifications.enableNotifications()) {
+            if (!StackExchangeNotifications.switchEnable("editor_actived")) {
                 return;
             }
 

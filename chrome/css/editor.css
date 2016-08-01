@@ -27,11 +27,6 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     box-shadow: 0 0 5px rgba(81, 167, 232, 0.5) !important;
 }
 
-.sen-editor .sen-textfield > textarea {
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08) inset !important;
-    border: none !important;
-    width: 100% !important;
-}
 .sen-editor .sen-textfield > :not(textarea) {
     display: none !important;
 }
@@ -57,12 +52,14 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 
 .sen-editor .sen-textfield > textarea {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08) inset !important;
     background-color: #fdfdfd !important;
     width: 100% !important;
     resize: vertical !important;
     display: block !important;
     margin: 0 !important;
     outline: 0 !important;
+    border: none !important;
     -moz-tab-size: 4 !important;
          tab-size: 4 !important;
 }
@@ -94,6 +91,10 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     flex-direction: row !important;
 }
 
+.sen-editor-full.sen-editor-inverted .sen-container {
+    flex-direction: row-reverse !important;
+}
+
 .sen-editor .sen-preview {
     display: none !important;
 }
@@ -107,6 +108,10 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .sen-editor-full .sen-textfield > textarea {
     resize: none !important;
+    padding-bottom: 100px !important;
+}
+.sen-editor-full .sen-preview {
+    padding-bottom: 100px !important;
 }
 
 .sen-editor-full .sen-textfield > textarea,
