@@ -9,7 +9,7 @@
 (function (doc) {
     "use strict";
 
-    var viewHTML;
+    var viewHTML, mainBody;
 
     var loadCss = function() {
         var style = document.createElement("link");
@@ -34,12 +34,12 @@
 
         xhr.open("GET", uri, true);
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
+            if (xhr.readyState === 4 && xhr.status === 200 && mainBody) {
                 viewHTML = document.createElement("div");
                 viewHTML.innerHTML = xhr.responseText;
                 viewHTML = viewHTML.firstElementChild;
 
-                document.body.appendChild(viewHTML.cloneNode(true));
+                mainBody.appendChild(viewHTML.cloneNode(true));
             }
         };
 
@@ -79,6 +79,8 @@
     };
 
     var bootGallery = function() {
+        mainBody = document.body;
+
         loadCss();
 
         loadView();
