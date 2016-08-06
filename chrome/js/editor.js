@@ -24,7 +24,8 @@
         noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/g
     ;
 
-    var triggerFocus = function(target) {
+    function triggerFocus(target)
+    {
         if (!target) {
             return;
         }
@@ -46,17 +47,19 @@
         target.dispatchEvent(evt);
 
         evt = null;
-    };
+    }
 
-    var hideRealEditor = function(target) {
+    function hideRealEditor(target)
+    {
         target.className
             = target.className
                 .replace(visibleRegExp, " ")
                     .replace(/\s\s/g, " ")
                         .trim();
-    };
+    }
 
-    var addEventButton = function(button, realEditor, realTextField) {
+    function addEventButton(button, realEditor, realTextField)
+    {
         var timerHideButtons, innerBtn;
 
         if (/sen\-(preview|full|flip)\-button/.test(button.className)) {
@@ -113,10 +116,12 @@
         });
 
         return !!btn;
-    };
+    }
 
     var rtsTimer;
-    var replaceTabsBySpaces = function() {
+
+    function replaceTabsBySpaces()
+    {
         var el = this;
 
         if (rtsTimer) {
@@ -127,9 +132,10 @@
             el.value = el.value.replace(/\t/g, "    ");
             el = null;
         }, 100);
-    };
+    }
 
-    var mainActivity = function(newEditor, realEditor) {
+    function mainActivity(newEditor, realEditor)
+    {
         var realPreview = realEditor.querySelector(".wmd-preview");
         var realTextField = realEditor.querySelector(".wmd-input");
 
@@ -206,9 +212,10 @@
         }
 
         hideRealEditor(realEditor);
-    };
+    }
 
-    var bootMain = function(newEditor, realEditor) {
+    function bootMain(newEditor, realEditor)
+    {
         var textField = realEditor.querySelector("textarea");
 
         realEditor.className += " sen-editor-visible";
@@ -228,9 +235,10 @@
         });
 
         setTimeout(mainActivity, 600, newEditor, realEditor);
-    };
+    }
 
-    var loadCss = function() {
+    function loadCss()
+    {
         var style = document.createElement("link");
 
         style.rel  = "stylesheet";
@@ -238,9 +246,10 @@
         style.href = chrome.extension.getURL("/css/editor.css");
 
         document.body.appendChild(style);
-    };
+    }
 
-    var loadView = function(realEditor) {
+    function loadView(realEditor)
+    {
         if (viewHTML) {
             bootMain(viewHTML.cloneNode(true), realEditor);
             return;
@@ -263,9 +272,10 @@
         };
 
         xhr.send(null);
-    };
+    }
 
-    var CreateEditor = function(target) {
+    function createEditor(target)
+    {
         if (
             !target ||
             target.offsetParent === null ||
@@ -278,9 +288,10 @@
         target.senEditorAtived = true;
 
         loadView(target);
-    };
+    }
 
-    var loadAll = function() {
+    function loadAll()
+    {
         if (done) {
             return;
         }
@@ -294,7 +305,7 @@
 
             if (els.length > 0) {
                 for (var i = els.length - 1; i >= 0; i--) {
-                    setTimeout(CreateEditor, 100, els[i]);
+                    setTimeout(createEditor, 100, els[i]);
                 }
             }
         }, 100);
@@ -304,9 +315,9 @@
                 var el = mutation.target;
 
                 if (/(^|\s)inline\-(editor|answer)($|\s)/.test(el.className)) {
-                    setTimeout(CreateEditor, 100, el.querySelector(".post-editor"));
+                    setTimeout(createEditor, 100, el.querySelector(".post-editor"));
                 } else if (/(^|\s)post\-form($|\s)/.test(el.className)) {
-                    setTimeout(CreateEditor, 100, el.querySelector(".post-editor"));
+                    setTimeout(createEditor, 100, el.querySelector(".post-editor"));
                 }
             });
         });
@@ -316,9 +327,10 @@
             "childList": true,
             "attributes": true
         });
-    };
+    }
 
-    var initiate = function() {
+    function initiate()
+    {
         loadCss();
 
         if (/^(interactive|complete)$/i.test(doc.readyState)) {
@@ -327,7 +339,7 @@
             doc.addEventListener("DOMContentLoaded", loadAll);
             window.addEventListener("load", loadAll);
         }
-    };
+    }
 
     if (chrome.runtime && chrome.runtime.sendMessage) {
         chrome.runtime.sendMessage("editor", function(response) {

@@ -22,9 +22,10 @@
         }
 
         return false;
-    };
+    }
 
-    var updateStates = function(mutations) {
+    function updateStates(mutations)
+    {
         mutations.forEach(function (mutation) {
             var type, checkTab, el = mutation.target;
 
@@ -45,9 +46,10 @@
                 }
             }
         });
-    };
+    }
 
-    var applyEvents = function () {
+    function applyEvents()
+    {
         if (running) {
             return;
         }
@@ -67,7 +69,7 @@
             "childList": true,
             "attributes": true
         });
-    };
+    }
 
     if (/interactive|complete/i.test(doc.readyState)) {
         applyEvents();

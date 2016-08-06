@@ -37,7 +37,7 @@
 
     var idMessages = [];
 
-    var GetMessages = function()
+    function getMessages()
     {
         if (!StackExchangeNotifications.switchEnable("desktop_notification")) {
             return;
@@ -100,7 +100,7 @@
                 currentEl = null;
             }
         });
-    };
+    }
 
     StackExchangeNotifications.pushs(function(response) {
         if (caller) {
@@ -112,7 +112,7 @@
         if (response.inbox > 0 &&
               StackExchangeNotifications.switchEnable("desktop_notification")
         ) {
-            setTimeout(GetMessages, 200);
+            setTimeout(getMessages, 200);
         }
 
         chrome.browserAction.setBadgeText({
@@ -143,7 +143,8 @@
         }
     });
 
-    var updateChanges = function(request) {
+    function updateChanges(request)
+    {
         var data = request.data;
 
         switch (request.clear) {
@@ -163,15 +164,14 @@
                 StackExchangeNotifications.update();
             break;
         }
-    };
+    }
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (request === "editor") {
-                //StackExchangeNotifications.enable
                 sendResponse({
                     "available": StackExchangeNotifications.switchEnable("editor_actived"),
-                    "preview": StackExchangeNotifications.switchEnable("editor_preview"),
-                    "inverted": StackExchangeNotifications.switchEnable("editor_inverted"),
+                    "preview":   StackExchangeNotifications.switchEnable("editor_preview"),
+                    "inverted":  StackExchangeNotifications.switchEnable("editor_inverted"),
                     "spaceindentation": StackExchangeNotifications.switchEnable("editor_tabs_by_spaces")
                 });
         } else if (request) {

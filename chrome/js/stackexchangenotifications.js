@@ -85,7 +85,8 @@
         }
     };
 
-    var Meta = function() {
+    function metaData()
+    {
         var u;
 
         if (chrome && chrome.runtime && chrome.runtime.getManifest) {
@@ -103,11 +104,13 @@
         }
     };
 
-    var noCacheURI = function(uri) {
+    function noCacheURI(uri)
+    {
         return [ uri, "?_=", new Date().getTime() ].join("");
-    };
+    }
 
-    var headersXhrJson = function(xhr) {
+    function headersXhrJson(xhr)
+    {
         var headersStr = String(xhr.getAllResponseHeaders()).trim(),
             headersLines = headersStr.split(/\n/),
             current,
@@ -121,9 +124,10 @@
         }
 
         return headers;
-    };
+    }
 
-    var quickXhr = function(uri, callback) {
+    function quickXhr(uri, callback)
+    {
         var
             headers,
             completed = false,
@@ -168,9 +172,9 @@
                 }
             }
         };
-    };
+    }
 
-    var tokenCache = String(Meta().version) + "_cache";
+    var tokenCache = String(metaData().version) + "_cache";
 
     var SimpleCache = {
         "set": function (key, data, noToken) {
@@ -215,13 +219,15 @@
                 return data;
             }
         }
-    };
+    }
 
-    var retrieveData = function() {
-        quickXhr(unreadCountsURI, trigger);
-    };
+    function retrieveData()
+    {
+        quickXhr(unreadCountsURI, triggerEvt);
+    }
 
-    var getResult = function(target) {
+    function getResult(target)
+    {
         var el, result = 0;
 
         if (target.length > 0) {
@@ -233,9 +239,10 @@
         }
 
         return isNaN(result) ? 0 : result;
-    };
+    }
 
-    var trigger = function(response, code) {
+    function triggerEvt(response, code)
+    {
         var currentDelay = 1000 * delay;
 
         if (code !== 200) {
@@ -275,7 +282,7 @@
         }
 
         timer = setTimeout(retrieveData, currentDelay);
-    };
+    }
 
     var
         RunnigNotifications = false,
@@ -285,11 +292,13 @@
         TokenNotifications = String(new Date().getTime() / 1000) + "_"
     ;
 
-    var SaveNotifications = function() {
+    function saveNotifications()
+    {
         SimpleCache.set("notificationbackup", ListNotifications, true);
-    };
+    }
 
-    var ShowNotifications = function() {
+    function showNotifications()
+    {
         RunnigNotifications = true;
 
         var data = ListNotifications[CurrentNotification];
@@ -301,7 +310,7 @@
             RunnigNotifications = false;
             return;
         } else if (data === 1) {
-            setTimeout(ShowNotifications, 1000);
+            setTimeout(showNotifications, 1000);
             return;
         }
 
@@ -326,16 +335,8 @@
             chrome.notifications.create(id, props, function() {});
         }
 
-        setTimeout(ShowNotifications, 1000);
-    };
-
-    var EnableInterface = function(key, enable) {
-        if (enable === true || enable === false) {
-            SimpleCache.set(key, enable ? 1 : 0, true);
-        }
-
-        return SimpleCache.get(key, true) == 1;
-    };
+        setTimeout(showNotifications, 1000);
+    }
 
     window.StackExchangeNotifications = {
         "boot": function() {
@@ -352,8 +353,10 @@
             StackExchangeNotifications.switchEnable("editor_preview", true);
 
             StackExchangeNotifications.switchEnable("inbox", true);
+            StackExchangeNotifications.switchEnable("reputation", true);
             StackExchangeNotifications.switchEnable("achievements", true);
-            StackExchangeNotifications.switchEnable("inbox", true);
+
+            StackExchangeNotifications.switchEnable("lightbox", true);
 
             SimpleCache.set("firstrun", 1, true);
 
@@ -367,7 +370,7 @@
             if (!inSleepMode && !RunnigNotifications) {
                 RunnigNotifications = true;
 
-                setTimeout(ShowNotifications, initiateDelay);
+                setTimeout(showNotifications, initiateDelay);
             }
 
             return inSleepMode;
@@ -392,7 +395,7 @@
                 }
             }
 
-            SaveNotifications();
+            saveNotifications();
         },
         "notificationsSession": function() {
             return TokenNotifications;
@@ -410,12 +413,12 @@
 
             ListNotifications.push({ "id": id, "title": title, "message": message });
 
-            SaveNotifications();
+            saveNotifications();
 
             if (!inSleepMode && !RunnigNotifications) {
                 RunnigNotifications = true;
 
-                setTimeout(ShowNotifications, initiateDelay);
+                setTimeout(showNotifications, initiateDelay);
             }
         },
         "pushs": function(callback) {
@@ -526,7 +529,7 @@
 
             return false;
         },
-        "meta": Meta,
+        "meta": metaData,
         "utils": Utils
     };
 }());

@@ -11,11 +11,10 @@
 
     var DELAY = 5;
 
-    var timer,
-        userIsActive,
-        triggerInactive;
+    var timer;
 
-    userIsActive = function(type) {
+    function userIsActive(type)
+    {
         if (chrome.runtime && chrome.runtime.sendMessage) {
             chrome.runtime.sendMessage({ "sleepMode": !type }, function(response) {});
             return;
@@ -25,9 +24,10 @@
         if (type === false) {
             triggerInactive();
         }
-    };
+    }
 
-    triggerInactive = function() {
+    function triggerInactive()
+    {
         if (timer) {
             clearTimeout(timer);
         }
@@ -35,13 +35,14 @@
         timer = setTimeout(function() {
             userIsActive(false);
         }, DELAY * 1000);
-    };
+    }
 
-    var detectUserActivity = function(evt) {
+    function detectUserActivity(evt)
+    {
         userIsActive(true);
         triggerInactive();
-    };
+    }
 
     document.addEventListener("mousemove", detectUserActivity, true);
-    document.addEventListener("keydown", detectUserActivity, true);
+    document.addEventListener("keydown",   detectUserActivity, true);
 })();

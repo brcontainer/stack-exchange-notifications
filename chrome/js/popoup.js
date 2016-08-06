@@ -6,67 +6,12 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-var debugMode;
-
-if ("update_url" in chrome.runtime.getManifest()) {
-    debugMode = false;
-}
-
-function FF() {
-    return debugMode;
-}
-
-function LinkPrevent(el) {
-    el.addEventListener("click", function(evt) {
-        (evt || window.event).preventDefault();
-    });
-}
-
-function setActionAnchor(el) {
-    if (el && el.senLink !== true && el.href && /^(http|https)\:\/\//.test(el.href)) {
-        el.senLink = true;
-
-        el.onclick = function(evt) {
-            setTimeout(function() {
-                var id = StackExchangeNotifications.notificationsSession() + el.href;
-
-                chrome.notifications.clear(id);
-
-                StackExchangeNotifications.removeNotificationFromCache(el.href);
-
-                chrome.tabs.create({ "url": el.href });
-            }, 1);
-        };
-    }
-
-    LinkPrevent(el);
-
-    el.ondragstart = FF;
-}
-
-function setDomEvents(target) {
-    var els, j, i = 0;
-
-    target = target||document;
-
-    els = target.getElementsByTagName("a");
-
-    for (j = els.length; i < j; i++) {
-        setActionAnchor(els[i]);
-    }
-}
-
-/*
-function getNotificationId() {
-    var id = Math.floor(Math.random() * 9007199254740992) + 1;
-    return id.toString();
-}
-*/
-
-function main() {
+window.onload = function()
+{
     "use strict";
 
     var
+        debugMode,
         navRegexp           = /(^|\s)nav\-shadow($|\s)/g,
         navgation           = document.querySelector(".nav"),
 
@@ -107,11 +52,63 @@ function main() {
         backgroundEngine    = chrome.extension.getBackgroundPage()
     ;
 
+    if ("update_url" in chrome.runtime.getManifest()) {
+        debugMode = false;
+    }
+
+    function disableEvent()
+    {
+        return debugMode;
+    }
+
+    function linkPrevent(el)
+    {
+        el.addEventListener("click", function(evt) {
+            (evt || window.event).preventDefault();
+        });
+    }
+
+    function setActionAnchor(el)
+    {
+        if (el && el.senLink !== true && el.href && /^(http|https)\:\/\//.test(el.href)) {
+            el.senLink = true;
+
+            el.onclick = function(evt) {
+                setTimeout(function() {
+                    var id = StackExchangeNotifications.notificationsSession() + el.href;
+
+                    chrome.notifications.clear(id);
+
+                    StackExchangeNotifications.removeNotificationFromCache(el.href);
+
+                    chrome.tabs.create({ "url": el.href });
+                }, 1);
+            };
+        }
+
+        linkPrevent(el);
+
+        el.ondragstart = disableEvent;
+    }
+
+    function setDomEvents(target)
+    {
+        var els, j, i = 0;
+
+        target = target||document;
+
+        els = target.getElementsByTagName("a");
+
+        for (j = els.length; i < j; i++) {
+            setActionAnchor(els[i]);
+        }
+    }
+
     window.StackExchangeNotifications = backgroundEngine.StackExchangeNotifications;
 
     StackExchangeNotifications.boot();
 
-    document.oncontextmenu = FF;
+    document.oncontextmenu = disableEvent;
 
     setDomEvents();
 
@@ -120,7 +117,7 @@ function main() {
     document.getElementById("about-title").innerHTML =
                                             manifestData.appname + " " + manifestData.version;
 
-    var showInButtons = function()
+    function showInButtons()
     {
         var inbox = StackExchangeNotifications.getInbox();
         var achievements = StackExchangeNotifications.getAchievements();
@@ -138,13 +135,14 @@ function main() {
         } else {
             achievementsData.className = "push hide";
         }
-    };
+    }
 
     showInButtons();
 
     backgroundEngine.detectUpdate(showInButtons);
 
-    var actionCheckRead = function(current, box) {
+    function actionCheckRead(current, box)
+    {
         var target = box === "inbox" ? inboxContent : achievementsContent;
 
         current.addEventListener("click", function() {
@@ -159,9 +157,10 @@ function main() {
                 StackExchangeNotifications.saveState(box, data);
             }
         });
-    };
+    }
 
-    var saveStateDetect = function(box) {
+    function saveStateDetect(box)
+    {
         var
             j,
             i = 0,
@@ -174,9 +173,9 @@ function main() {
         for (j = els.length; i < j; i++) {
             actionCheckRead(els[i], box);
         }
-    };
+    }
 
-    var switchEngine = function(el)
+    function switchEngine(el)
     {
         var
             val,
@@ -206,7 +205,7 @@ function main() {
                 StackExchangeNotifications.switchEnable(key, nval === "on");
             }
         });
-    };
+    }
 
     for (var i = 0, j = switchs.length; i < j; i++) {
         switchEngine(switchs[i]);
@@ -460,5 +459,3 @@ function main() {
         break;
     }
 };
-
-window.onload = main;

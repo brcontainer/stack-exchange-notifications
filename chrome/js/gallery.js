@@ -11,7 +11,8 @@
 
     var viewHTML, mainBody;
 
-    var loadCss = function() {
+    function loadCss()
+    {
         var style = document.createElement("link");
 
         style.rel  = "stylesheet";
@@ -19,9 +20,10 @@
         style.href = chrome.extension.getURL("/css/gallery.css");
 
         document.body.appendChild(style);
-    };
+    }
 
-    var loadView = function() {
+    function loadView()
+    {
         if (viewHTML) {
             document.body.appendChild(viewHTML.cloneNode(true));
             return;
@@ -44,25 +46,29 @@
         };
 
         xhr.send(null);
-    };
+    }
 
-    var showPhoto = function(el) {
-        alert(1);
-    };
+    function showPhoto(el)
+    {
+        console.log(el);
+    }
 
-    var eventPhoto = function(e) {
+    function eventPhoto(e)
+    {
         e.preventDefault();
 
         setTimeout(showPhoto, 1, this);
 
         return false;
-    };
+    }
 
-    var isValid = function(url) {
+    function isValid(url)
+    {
         return /\.(png|jpeg|jpg|svg|gif)$/i.test(String(url).replace(/\?[\s\S]+$/, ""));
-    };
+    }
 
-    var setGallery = function(target) {
+    function setGallery(target)
+    {
         if (!target) {
             return;
         }
@@ -76,9 +82,10 @@
                 current.addEventListener("click", eventPhoto);
             }
         }
-    };
+    }
 
-    var bootGallery = function() {
+    function bootGallery()
+    {
         mainBody = document.body;
 
         loadCss();
@@ -94,7 +101,7 @@
         for (var i = answers.length - 1; i >= 0; i--) {
             setGallery(answers[i]);
         }
-    };
+    }
 
     if (/^(interactive|complete)$/i.test(doc.readyState)) {
         bootGallery();
