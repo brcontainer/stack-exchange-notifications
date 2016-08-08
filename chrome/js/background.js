@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.3
+ * StackExchangeNotifications 0.1.4
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -167,11 +167,16 @@
     }
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-        if (request === "editor") {
+        if (request === "gallery") {
+                sendResponse({
+                    "available": StackExchangeNotifications.switchEnable("gallery_box")
+                });
+        } else if (request === "editor") {
                 sendResponse({
                     "available": StackExchangeNotifications.switchEnable("editor_actived"),
                     "preview":   StackExchangeNotifications.switchEnable("editor_preview"),
                     "inverted":  StackExchangeNotifications.switchEnable("editor_inverted"),
+                    "italic":    StackExchangeNotifications.switchEnable("editor_italic"),
                     "spaceindentation": StackExchangeNotifications.switchEnable("editor_tabs_by_spaces")
                 });
         } else if (request) {

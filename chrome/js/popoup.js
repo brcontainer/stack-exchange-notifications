@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.3
+ * StackExchangeNotifications 0.1.4
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -106,11 +106,11 @@ window.onload = function()
 
     window.StackExchangeNotifications = backgroundEngine.StackExchangeNotifications;
 
-    StackExchangeNotifications.boot();
-
     document.oncontextmenu = disableEvent;
 
     setDomEvents();
+
+    StackExchangeNotifications.boot();
 
     var manifestData = StackExchangeNotifications.meta();
 
@@ -224,6 +224,8 @@ window.onload = function()
         inboxActive = false;
         achievementsActive = false;
 
+        window.scrollTo(0, 0);
+
         StackExchangeNotifications.saveState("lastTab", "setup");
 
         achievementsContent.className =
@@ -251,6 +253,8 @@ window.onload = function()
 
         inboxActive = false;
         achievementsActive = false;
+
+        window.scrollTo(0, 0);
 
         StackExchangeNotifications.saveState("lastTab", "about");
 

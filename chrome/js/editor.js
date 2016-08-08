@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.3
+ * StackExchangeNotifications 0.1.4
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -13,15 +13,18 @@
         rootDoc,
         done = false,
         viewHTML,
+        italicWithUnderScore = false,
         inverted = false,
         tabsBySpaces = false,
         preferPreviewInFull = false,
+        italicRegExp   = /(^|\s|\*\*)\*([^*]+)\*(\s|\*\*|$)/g,
         focusRegExp    = /(^|\s)sen\-editor\-focus($|\s)/g,
         visibleRegExp  = /(^|\s)sen\-editor\-visible($|\s)/g,
         fullRegExp     = /(^|\s)sen\-editor\-full($|\s)/g,
         readyRegExp    = /(^|\s)sen\-editor\-ready($|\s)/g,
         invertedRegExp = /(^|\s)sen\-editor\-inverted($|\s)/g,
-        noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/g
+        noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/g,
+        regexGetClass  = /^([\s\S]+?\s|)(wmd\-[\S]+?\-button)([\s\S]+|)$/
     ;
 
     function triggerFocus(target)
@@ -62,11 +65,11 @@
     {
         var timerHideButtons, innerBtn;
 
-        if (/sen\-(preview|full|flip)\-button/.test(button.className)) {
+        if (/sen\-(preview|full|flip|italic)\-button/.test(button.className)) {
             return;
         }
 
-        var c = button.className.replace(/sen\-btn/, "").trim();
+        var c = button.className.replace(regexGetClass, "$2").trim();
 
         var btn = realEditor.querySelector("[id=" + c + "]");
 
@@ -120,7 +123,7 @@
 
     var rtsTimer;
 
-    function replaceTabsBySpaces()
+    function eventsInput()
     {
         var el = this;
 
@@ -129,8 +132,31 @@
         }
 
         rtsTimer = setTimeout(function(obj) {
-            el.value = el.value.replace(/\t/g, "    ");
+            var val = el.value;
+            /*var ss = val.selectionStart,
+                se = val.selectionEnd;*/
+
+            if (val && tabsBySpaces) {
+                val = val.replace(/\t/g, "    ");
+            }
+
+            /*if (val && italicWithUnderScore) {
+                val = val.replace(italicRegExp, "$1_$2_$3");
+            }*/
+
+            if (el.value !== val) {
+                el.value = val;
+            }
+
             el = null;
+
+            /*
+            if (ss !== se) {
+                console.log(ss, se);
+                val.selectionStart = ss;
+                val.selectionEnd = se;
+                val.focus();
+            }*/
         }, 100);
     }
 
@@ -145,11 +171,11 @@
         previewTarget.appendChild(realPreview);
         textTarget.appendChild(realTextField);
 
-        if (tabsBySpaces) {
-            realTextField.addEventListener("change", replaceTabsBySpaces);
-            realTextField.addEventListener("keyup",  replaceTabsBySpaces);
-            realTextField.addEventListener("paste",  replaceTabsBySpaces);
-            realTextField.addEventListener("input",  replaceTabsBySpaces);
+        if (tabsBySpaces || italicWithUnderScore) {
+            realTextField.addEventListener("change", eventsInput);
+            realTextField.addEventListener("keyup",  eventsInput);
+            realTextField.addEventListener("paste",  eventsInput);
+            realTextField.addEventListener("input",  eventsInput);
         }
 
         newEditor.querySelector("a.sen-full-button").addEventListener("click", function() {
@@ -347,6 +373,7 @@
                 preferPreviewInFull = !!response.preview;
                 tabsBySpaces = !!response.spaceindentation;
                 inverted = !!response.inverted;
+                italicWithUnderScore = !!response.italic;
 
                 if (response.available === true) {
                     initiate();
