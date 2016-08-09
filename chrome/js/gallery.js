@@ -9,7 +9,8 @@
 (function (doc) {
     "use strict";
 
-    var viewHTML,
+    var setupKeyEsc,
+        viewHTML,
         mainBody,
         photos,
         targetImg,
@@ -29,17 +30,26 @@
 
     function resizeImage()
     {
-        if (targetImg.naturalWidth > targetImg.naturalHeight) {
-            currentPhoto.style.width = String(targetImg.naturalWidth) + "px";
-            currentPhoto.style.height = "auto";
-            targetImg.className = "sen-limit-width";
-        } else {
-            currentPhoto.style.height = String(targetImg.naturalWidth) + "px";
-            currentPhoto.style.width = "auto";
-            targetImg.className = "sen-limit-height";
+        targetImg.className = "";
+
+        var ih = targetImg.naturalHeight;
+        var iw = targetImg.naturalWidth;
+
+        if (iw === 0 || ih === 0) {
+            return;
         }
 
-        setTimeout(resizeImage, 100);
+        if (iw >= ih) {
+            targetImg.className = "sen-limit-width";
+        } else {
+            targetImg.className = "sen-limit-height";
+        }
+    }
+
+    function hideView()
+    {
+        viewHTML.className = viewHTML.className
+                                .replace(showRegExp, " ").trim();
     }
 
     function loadView()
@@ -66,8 +76,7 @@
                             return;
                         }
 
-                        viewHTML.className = viewHTML.className
-                                                .replace(showRegExp, " ").trim();
+                        hideView();
                     });
                 }
             }
@@ -78,18 +87,38 @@
 
     function showPhoto(el)
     {
-        viewHTML.className += " show";
+        currentPhoto.style.removeProperty("width");
+        currentPhoto.style.removeProperty("height");
         currentPhoto.innerHTML = "";
+
+        viewHTML.className += " show";
 
         var img = new Image;
 
-        img.onload = resizeImage;
+        img.onload = function () {
+            setTimeout(resizeImage, 100);
+        };
+        img.onerror = function () {
+            currentPhoto.innerHTML = "Failed!";
+        };
 
         img.src = el.href;
 
         targetImg = img;
 
         currentPhoto.appendChild(img);
+
+        if (!setupKeyEsc) {
+            setupKeyEsc = true;
+
+            document.addEventListener("keydown", function (e) {
+                var code = typeof e.which === "undefined" ? e.keyCode : e.which;
+
+                if (code == 27) {
+                    hideView();
+                }
+            });
+        }
     }
 
     function eventPhoto(e)
@@ -137,8 +166,7 @@
         loadCss();
         loadView();
 
-        var
-            question = document.querySelector(".question"),
+        var question = document.querySelector(".question"),
             answers = document.querySelectorAll("#answers .post-text");
 
         setGallery(question);

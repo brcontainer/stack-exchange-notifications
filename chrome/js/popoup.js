@@ -117,6 +117,15 @@ window.onload = function()
     document.getElementById("about-title").innerHTML =
                                             manifestData.appname + " " + manifestData.version;
 
+    function changeTheme()
+    {
+        if (StackExchangeNotifications.switchEnable("black_theme")) {
+            document.body.parentNode.className = "theme-black";
+        } else {
+            document.body.parentNode.className = "";
+        }
+    }
+
     function showInButtons()
     {
         var inbox = StackExchangeNotifications.getInbox();
@@ -436,6 +445,10 @@ window.onload = function()
             window.location.reload();
         }
     };
+
+    document.querySelector("a[data-switch='black_theme']").addEventListener("click", changeTheme);
+
+    changeTheme();
 
     for (var i = btns.length - 1; i >= 0; i--) {
         btns[i].addEventListener("click", function() {

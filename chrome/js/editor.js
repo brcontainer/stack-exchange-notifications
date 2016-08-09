@@ -260,6 +260,24 @@
                             .trim();
         });
 
+        var fullBtn = newEditor.querySelector("a.sen-full-button");
+        var previewBtn = newEditor.querySelector("a.sen-preview-button");
+
+        textField.addEventListener("keydown", function(e) {
+            if (e.altKey) {
+                switch (e.keyCode) {
+                    case 70: //Alt+F change to fullscreen or normal
+                        e.preventDefault();
+                        fullBtn.click();
+                    break;
+                    case 86: //Alt+V show/hide preview
+                        e.preventDefault();
+                        previewBtn.click();
+                    break;
+                }
+            }
+        });
+
         setTimeout(mainActivity, 600, newEditor, realEditor);
     }
 
