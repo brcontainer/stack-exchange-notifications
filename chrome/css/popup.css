@@ -439,7 +439,9 @@ hr {
     text-align: left;
 }
 
-.tab-item .item-content,
+.tab-item .item-content {
+    width: 340px;
+}
 .tab-item .message-text {
     width: 300px;
 }
