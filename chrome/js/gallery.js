@@ -10,44 +10,70 @@
     "use strict";
 
     var setupKeyEsc,
+        setupResize,
         viewHTML,
         mainBody,
         photos,
+        loader,
         targetImg,
+        maskPhoto,
         currentPhoto,
-        showRegExp = /(^|\s)show(\s|$)/;
+        errorRegExp  = /(^|\s)sen\-error(\s|$)/,
+        loaderRegExp = /(^|\s)sen\-bg\-loader(\s|$)/,
+        showRegExp   = /(^|\s)show(\s|$)/;
 
-    function loadCss()
+    function loadCss(uri)
     {
         var style = document.createElement("link");
 
         style.rel  = "stylesheet";
         style.type = "text/css";
-        style.href = chrome.extension.getURL("/css/gallery.css");
+        style.href = chrome.extension.getURL(uri);
 
         mainBody.appendChild(style);
     }
 
     function resizeImage()
     {
-        targetImg.className = "";
+        if (!targetImg) {
+            return;
+        }
 
-        var ih = targetImg.naturalHeight;
-        var iw = targetImg.naturalWidth;
+        //targetImg.className = "";
+
+        var cw, ch,
+            iw = targetImg.naturalWidth,
+            ih = targetImg.naturalHeight;
 
         if (iw === 0 || ih === 0) {
             return;
         }
 
-        if (iw >= ih) {
-            targetImg.className = "sen-limit-width";
+        var vw = maskPhoto.clientWidth,
+            vh = maskPhoto.clientHeight;
+
+        cw = iw < vw ? iw : vw;
+        ch = ih < vh ? ih : vh;
+
+        if (cw >= ch) {
+            targetImg.style.setProperty("height", ch + "px", "important");
+            targetImg.style.setProperty("width",  "auto",    "important");
         } else {
-            targetImg.className = "sen-limit-height";
+            targetImg.style.setProperty("width", cw + "px", "important");
+            targetImg.style.setProperty("height", "auto",    "important");
         }
     }
 
-    function hideView()
+    function hideView(e)
     {
+        if (e && e.preventDefault) {
+            e.preventDefault();
+        }
+
+        if (targetImg) {
+            targetImg.onload = targetImg.onerror = null;
+        }
+
         viewHTML.className = viewHTML.className
                                 .replace(showRegExp, " ").trim();
     }
@@ -67,8 +93,17 @@
                 viewHTML = viewHTML.firstElementChild;
 
                 mainBody.appendChild(viewHTML);
+
                 currentPhoto = viewHTML.querySelector(".sen-gallery-current");
+                maskPhoto = viewHTML.querySelector(".sen-gallery-image-mask");
                 photos = viewHTML.querySelector(".sen-gallery-photos");
+                loader = viewHTML.querySelector(".sen-gallery-loader");
+
+                var closeBtn = viewHTML.querySelector(".sen-gallery-close");
+
+                if (closeBtn) {
+                    closeBtn.addEventListener("click", hideView);
+                }
 
                 if (currentPhoto) {
                     viewHTML.addEventListener("click", function(e) {
@@ -85,28 +120,45 @@
         xhr.send(null);
     }
 
+    function removeLoader()
+    {
+        loader.className = loader.className
+                            .replace(loaderRegExp, " ").trim();
+    }
+
     function showPhoto(el)
     {
-        currentPhoto.style.removeProperty("width");
-        currentPhoto.style.removeProperty("height");
-        currentPhoto.innerHTML = "";
+        if (targetImg) {
+            currentPhoto.removeChild(targetImg);
+        }
+
+        loader.className += " sen-bg-loader";
+        currentPhoto.className = currentPhoto.className
+                                    .replace(errorRegExp, " ").trim();
 
         viewHTML.className += " show";
 
-        var img = new Image;
+        targetImg = new Image;
 
-        img.onload = function () {
-            setTimeout(resizeImage, 100);
+        targetImg.onload = function () {
+            removeLoader();
+
+            setTimeout(resizeImage, 50);
+
+            targetImg.onerror = targetImg.onload = null;
         };
-        img.onerror = function () {
-            currentPhoto.innerHTML = "Failed!";
+
+        targetImg.onerror = function () {
+            removeLoader();
+
+            currentPhoto.className += " sen-error";
+
+            targetImg.onload = targetImg.onerror = null;
         };
 
-        img.src = el.href;
+        targetImg.src = el.href;
 
-        targetImg = img;
-
-        currentPhoto.appendChild(img);
+        currentPhoto.appendChild(targetImg);
 
         if (!setupKeyEsc) {
             setupKeyEsc = true;
@@ -118,6 +170,12 @@
                     hideView();
                 }
             });
+        }
+
+        if (!setupResize) {
+            setupResize = true;
+
+            window.addEventListener("resize", resizeImage);
         }
     }
 
@@ -163,7 +221,9 @@
             return;
         }
 
-        loadCss();
+        loadCss("/css/gallery.css");
+        loadCss("/css/animate.css");
+
         loadView();
 
         var question = document.querySelector(".question"),

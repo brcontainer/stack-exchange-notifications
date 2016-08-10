@@ -154,35 +154,13 @@ hr {
     box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
 }
 
-.tab-load {
-    background: url(../images/load.svg) center center no-repeat;
-    background-size: 32px 32px;
+.sen-bg-loader {
     height: 100%;
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 98;
-    overflow: hidden;
-    -webkit-animation: spin .5s linear infinite;
-       -moz-animation: spin .5s linear infinite;
-            animation: spin .5s linear infinite;
-}
-@-moz-keyframes spin {
-    100% {
-        -moz-transform: rotate(360deg);
-    }
-}
-@-webkit-keyframes spin {
-    100% {
-        -webkit-transform: rotate(360deg);
-    }
-}
-@keyframes spin {
-    100% {
-        -webkit-transform: rotate(360deg);
-                transform: rotate(360deg);
-    }
 }
 
 .hide {

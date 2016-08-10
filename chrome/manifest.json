@@ -57,6 +57,7 @@
         "css/editor.css",
         "view/gallery.html",
         "css/gallery.css",
+        "css/animate.css",
         "images/*"
     ],
     "permissions": [

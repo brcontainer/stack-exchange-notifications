@@ -238,13 +238,13 @@ window.onload = function()
         StackExchangeNotifications.saveState("lastTab", "setup");
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
+            achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
+            inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
         aboutContent.className =
-            aboutContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
+            aboutContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
         setupContent.className =
             aboutContent.className.replace(/hide/g, "").trim();
@@ -268,13 +268,13 @@ window.onload = function()
         StackExchangeNotifications.saveState("lastTab", "about");
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
+            achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
+            inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
         setupContent.className =
-            setupContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
+            setupContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
         aboutContent.className =
             aboutContent.className.replace(/hide/g, "").trim();
@@ -302,13 +302,13 @@ window.onload = function()
             aboutContent.className.replace(/hide/g, "").trim() + " hide";
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
+            achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
         setupContent.className =
-            setupContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
+            setupContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|tab\-load/g, "").trim() + " tab-load";
+            inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " sen-bg-loader";
 
         inboxContent.innerHTML = "";
 
@@ -341,7 +341,7 @@ window.onload = function()
             }
 
             inboxContent.className =
-                inboxContent.className.replace(/hide|tab\-load/g, "").trim();
+                inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim();
         });
     };
 
@@ -367,13 +367,13 @@ window.onload = function()
             aboutContent.className.replace(/hide/g, "").trim() + " hide";
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
+            inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
         setupContent.className =
-            setupContent.className.replace(/hide|tab\-load/g, "").trim() + " hide";
+            setupContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|tab\-load/g, "").trim() + " tab-load";
+            achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " sen-bg-loader";
 
         achievementsContent.innerHTML = "";
 
@@ -429,7 +429,7 @@ window.onload = function()
             }
 
             achievementsContent.className =
-                achievementsContent.className.replace(/hide|tab\-load/g, "").trim();
+                achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim();
         });
     };
 
