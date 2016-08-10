@@ -10,6 +10,19 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     overflow: hidden !important;
 }
 
+/* This will be removed in the future. */
+.sen-error-fixed-temp {
+    background-color: #9e0000;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+}
+/* This will be removed in the future. */
+
 .sen-editor, .sen-editor * {
        -moz-box-sizing: border-box !important;
     -webkit-box-sizing: border-box !important;
@@ -17,7 +30,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 .sen-editor {
     clear: both !important;
-    background: #FFF !important;
+    background-color: #fff !important;
     border: 1px solid #c8ccd0 !important;
     transition: border-color .2s, box-shadow .2s !important;
 }

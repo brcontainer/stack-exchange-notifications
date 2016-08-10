@@ -20,7 +20,8 @@
         currentPhoto,
         errorRegExp  = /(^|\s)sen\-error(\s|$)/,
         loaderRegExp = /(^|\s)sen\-bg\-loader(\s|$)/,
-        showRegExp   = /(^|\s)show(\s|$)/;
+        showRegExp   = /(^|\s)show(\s|$)/
+    ;
 
     function loadCss(uri)
     {
@@ -87,32 +88,38 @@
 
         xhr.open("GET", uri, true);
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200 && mainBody) {
-                viewHTML = document.createElement("div");
-                viewHTML.innerHTML = xhr.responseText;
-                viewHTML = viewHTML.firstElementChild;
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    if (!mainBody) {
+                        return;
+                    }
 
-                mainBody.appendChild(viewHTML);
+                    viewHTML = document.createElement("div");
+                    viewHTML.innerHTML = xhr.responseText;
+                    viewHTML = viewHTML.firstElementChild;
 
-                currentPhoto = viewHTML.querySelector(".sen-gallery-current");
-                maskPhoto = viewHTML.querySelector(".sen-gallery-image-mask");
-                photos = viewHTML.querySelector(".sen-gallery-photos");
-                loader = viewHTML.querySelector(".sen-gallery-loader");
+                    mainBody.appendChild(viewHTML);
 
-                var closeBtn = viewHTML.querySelector(".sen-gallery-close");
+                    currentPhoto = viewHTML.querySelector(".sen-gallery-current");
+                    maskPhoto = viewHTML.querySelector(".sen-gallery-image-mask");
+                    photos = viewHTML.querySelector(".sen-gallery-photos");
+                    loader = viewHTML.querySelector(".sen-gallery-loader");
 
-                if (closeBtn) {
-                    closeBtn.addEventListener("click", hideView);
-                }
+                    var closeBtn = viewHTML.querySelector(".sen-gallery-close");
 
-                if (currentPhoto) {
-                    viewHTML.addEventListener("click", function(e) {
-                        if (e.target !== photos) {
-                            return;
-                        }
+                    if (closeBtn) {
+                        closeBtn.addEventListener("click", hideView);
+                    }
 
-                        hideView();
-                    });
+                    if (currentPhoto) {
+                        viewHTML.addEventListener("click", function(e) {
+                            if (e.target !== photos) {
+                                return;
+                            }
+
+                            hideView();
+                        });
+                    }
                 }
             }
         };

@@ -24,7 +24,8 @@
         readyRegExp    = /(^|\s)sen\-editor\-ready($|\s)/g,
         invertedRegExp = /(^|\s)sen\-editor\-inverted($|\s)/g,
         noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/g,
-        regexGetClass  = /^([\s\S]+?\s|)(wmd\-[\S]+?\-button)([\s\S]+|)$/
+        getClassRegexp = /^([\s\S]+?\s|)(wmd\-[\S]+?\-button)([\s\S]+|)$/,
+        checkPost      = /(^|\s)(inline\-(editor|answer)|post\-form)($|\s)/
     ;
 
     function triggerFocus(target)
@@ -69,7 +70,7 @@
             return;
         }
 
-        var c = button.className.replace(regexGetClass, "$2").trim();
+        var c = button.className.replace(getClassRegexp, "$2").trim();
 
         var btn = realEditor.querySelector("[id=" + c + "]");
 
@@ -305,13 +306,16 @@
         ;
 
         xhr.open("GET", uri, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                viewHTML = document.createElement("div");
-                viewHTML.innerHTML = xhr.responseText;
-                viewHTML = viewHTML.firstElementChild;
 
-                bootMain(viewHTML.cloneNode(true), realEditor);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    viewHTML = document.createElement("div");
+                    viewHTML.innerHTML = xhr.responseText;
+                    viewHTML = viewHTML.firstElementChild;
+
+                    bootMain(viewHTML.cloneNode(true), realEditor);
+                }
             }
         };
 
@@ -320,12 +324,12 @@
 
     function createEditor(target)
     {
-        if (
-            !target ||
-            target.offsetParent === null ||
-            target.querySelector(".wmd-button-bar li") === null ||
-            target.senEditorAtived
-        ) {
+        if (!target || target.senEditorAtived) {
+            return;
+        }
+
+        if (target.offsetParent === null || target.querySelector(".wmd-button-bar li") === null) {
+            setTimeout(createEditor, 100, target);
             return;
         }
 
@@ -349,8 +353,10 @@
 
             if (els.length > 0) {
                 for (var i = els.length - 1; i >= 0; i--) {
-                    setTimeout(createEditor, 100, els[i]);
+                    setTimeout(createEditor, 1, els[i]);
                 }
+            } else {
+                console.log(els.length);
             }
         }, 100);
 
@@ -358,10 +364,8 @@
             mutations.forEach(function (mutation) {
                 var el = mutation.target;
 
-                if (/(^|\s)inline\-(editor|answer)($|\s)/.test(el.className)) {
-                    setTimeout(createEditor, 100, el.querySelector(".post-editor"));
-                } else if (/(^|\s)post\-form($|\s)/.test(el.className)) {
-                    setTimeout(createEditor, 100, el.querySelector(".post-editor"));
+                if (checkPost.test(el.className)) {
+                    setTimeout(createEditor, 1, el.querySelector(".post-editor"));
                 }
             });
         });
