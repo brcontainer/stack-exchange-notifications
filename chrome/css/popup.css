@@ -29,6 +29,8 @@ body {
          -moz-user-select: none;
           -ms-user-select: none;
               user-select: none;
+
+    transition: background-color .4s, color .4s;
 }
 
 body, a {
@@ -512,7 +514,13 @@ hr {
 }
 
 html.theme-black body {
-    background-color: #504646 !important;
+    background-color: #353535 !important;
+    background-size: 90% auto !important;
+}
+
+html.theme-black body.halloween {
+    background: #353535 url(../images/pumpkins.svg#clear) center center fixed no-repeat !important;
+    background-size: 90% auto !important;
 }
 
 html.theme-black body,
@@ -527,6 +535,7 @@ html.theme-black .tab-item .message-text h4 {
     color: #fff !important;
 }
 
+html.theme-black hr,
 html.theme-black .utc-clock,
 html.theme-black .tab-item
 html.theme-black .modal-content li,
@@ -545,11 +554,11 @@ html.theme-black .tab-item .modal-content li.unread-item {
 }
 
 html.theme-black .tab-item .modal-content li:hover {
-    background-color: #282e35 !important;
+    background-color: #333d48 !important;
 }
 
 html.theme-black .header {
-    background-color: #615b5b !important;
+    background-color: #646464 !important;
     color: #fff !important;
 }
 
@@ -566,6 +575,13 @@ html.theme-black .field.first,
 html.theme-black .tab-item .modal-content li {
     border-color: #272525 !important;
 }
+
+
+html.theme-black .btn:focus {
+    background-color: #333d48 !important;
+    color: #cfcfcf !important;
+}
+
 html.theme-black .nav a {
     border-color: transparent;
 }

@@ -19,12 +19,12 @@
     #black:target ~ g {
         fill: black;
     }
-    
+
     #white:target ~ use,
     #white:target ~ g {
         fill: white;
     }
-    
+
     #gray:target ~ use,
     #gray:target ~ g {
         fill: rgb(208, 190, 190);
@@ -60,10 +60,4 @@
 <use xlink:href="#s" />
 <use xlink:href="#e" />
 <use xlink:href="#n" />
-
-<g>
-    <use xlink:href="#s" />
-    <use xlink:href="#e" />
-    <use xlink:href="#n" />
-</g>
 </svg>

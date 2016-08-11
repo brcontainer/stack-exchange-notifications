@@ -117,10 +117,24 @@ window.onload = function()
     document.getElementById("about-title").innerHTML =
                                             manifestData.appname + " " + manifestData.version;
 
+    function checkEvent()
+    {
+        var lastCheck = StackExchangeNotifications.restoreState("lastCheck");
+
+        if (lastCheck) {
+            var d = new Date(lastCheck);
+
+            if (d.getDate() == 31 && d.getMonth() == 9) {
+                document.body.className += " halloween";
+            }
+        }
+    }
+
     function changeTheme()
     {
         if (StackExchangeNotifications.switchEnable("black_theme")) {
             document.body.parentNode.className = "theme-black";
+            checkEvent();
         } else {
             document.body.parentNode.className = "";
         }

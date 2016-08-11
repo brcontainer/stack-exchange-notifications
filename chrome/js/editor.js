@@ -161,13 +161,63 @@
         }, 100);
     }
 
-    function mainActivity(newEditor, realEditor)
+    function bootMain(newEditor, realEditor)
     {
-        var realPreview = realEditor.querySelector(".wmd-preview");
-        var realTextField = realEditor.querySelector(".wmd-input");
+        var
+            realPreview = realEditor.querySelector(".wmd-preview"),
+            realTextField = realEditor.querySelector(".wmd-input"),
 
-        var previewTarget = newEditor.querySelector(".sen-preview");
-        var textTarget = newEditor.querySelector(".sen-textfield");
+            previewTarget = newEditor.querySelector(".sen-preview"),
+            textTarget = newEditor.querySelector(".sen-textfield"),
+
+            textField = realEditor.querySelector("textarea"),
+
+            fullBtn = newEditor.querySelector("a.sen-full-button"),
+            previewBtn = newEditor.querySelector("a.sen-preview-button")
+        ;
+
+        realEditor.className += " sen-editor-visible";
+
+        triggerFocus(textField);
+
+        textField.addEventListener("focus", function() {
+            newEditor.className += " sen-editor-focus";
+        });
+
+        var d = new Date;
+
+        console.log(d, d.getMonth(), d.getDate());
+
+        if (d.getDate() == 31 && d.getMonth() == 9) {
+            previewTarget.className += " halloween";
+        }
+
+        textField.addEventListener("blur", function() {
+            newEditor.className
+                = newEditor.className
+                    .replace(focusRegExp, " ")
+                        .replace(/\s\s/g, " ")
+                            .trim();
+        });
+
+        textField.addEventListener("keydown", function(e) {
+            if (e.altKey) {
+                switch (e.keyCode) {
+                    case 70: //Alt+F change to fullscreen or normal
+                        e.preventDefault();
+                        fullBtn.click();
+                    break;
+                    case 86: //Alt+V show/hide preview
+                        e.preventDefault();
+                        previewBtn.click();
+                    break;
+                }
+            }
+        });
+
+        previewTarget.addEventListener("click", function() {
+            realTextField.focus();
+        });
 
         previewTarget.appendChild(realPreview);
         textTarget.appendChild(realTextField);
@@ -179,7 +229,10 @@
             realTextField.addEventListener("input",  eventsInput);
         }
 
-        newEditor.querySelector("a.sen-full-button").addEventListener("click", function() {
+        fullBtn.addEventListener("click", function()
+        {
+            var inPreview = readyRegExp.test(newEditor.className);
+
             if (fullRegExp.test(newEditor.className)) {
                 newEditor.className = newEditor.className
                                         .replace(fullRegExp, " ")
@@ -193,6 +246,13 @@
                     newEditor.className = newEditor.className
                                             .replace(readyRegExp, " ")
                                                 .replace(/\s\s/g, " ").trim();
+
+                    inPreview = false;
+                }
+
+                if (inPreview) {
+                    realTextField.readOnly = true;
+                    realTextField.focus();
                 }
             } else {
                 newEditor.className += " sen-editor-full";
@@ -200,17 +260,36 @@
 
                 if (preferPreviewInFull) {
                     newEditor.className += " sen-editor-ready";
+                    inPreview = true;
+                }
+
+                if (inPreview) {
+                    realTextField.readOnly = false;
+                    realTextField.focus();
                 }
             }
         });
 
-        newEditor.querySelector("a.sen-preview-button").addEventListener("click", function() {
+        previewBtn.addEventListener("click", function()
+        {
+            var inFull = fullRegExp.test(newEditor.className);
+
             if (readyRegExp.test(newEditor.className)) {
+
                 newEditor.className = newEditor.className
                                         .replace(readyRegExp, " ")
                                             .replace(/\s\s/g, " ").trim();
+
+                if (!inFull) {
+                    realTextField.readOnly = false;
+                }
             } else {
+
                 newEditor.className += " sen-editor-ready";
+
+                if (!inFull) {
+                    realTextField.readOnly = true;
+                }
             }
         });
 
@@ -239,47 +318,6 @@
         }
 
         hideRealEditor(realEditor);
-    }
-
-    function bootMain(newEditor, realEditor)
-    {
-        var textField = realEditor.querySelector("textarea");
-
-        realEditor.className += " sen-editor-visible";
-
-        triggerFocus(textField);
-
-        textField.addEventListener("focus", function() {
-            newEditor.className += " sen-editor-focus";
-        });
-
-        textField.addEventListener("blur", function() {
-            newEditor.className
-                = newEditor.className
-                    .replace(focusRegExp, " ")
-                        .replace(/\s\s/g, " ")
-                            .trim();
-        });
-
-        var fullBtn = newEditor.querySelector("a.sen-full-button");
-        var previewBtn = newEditor.querySelector("a.sen-preview-button");
-
-        textField.addEventListener("keydown", function(e) {
-            if (e.altKey) {
-                switch (e.keyCode) {
-                    case 70: //Alt+F change to fullscreen or normal
-                        e.preventDefault();
-                        fullBtn.click();
-                    break;
-                    case 86: //Alt+V show/hide preview
-                        e.preventDefault();
-                        previewBtn.click();
-                    break;
-                }
-            }
-        });
-
-        setTimeout(mainActivity, 600, newEditor, realEditor);
     }
 
     function loadCss()

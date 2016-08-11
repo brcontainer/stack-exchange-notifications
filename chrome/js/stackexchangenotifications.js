@@ -241,7 +241,7 @@
         return isNaN(result) ? 0 : result;
     }
 
-    function triggerEvt(response, code)
+    function triggerEvt(response, code, headers)
     {
         var currentDelay = 1000 * delay;
 
@@ -258,6 +258,10 @@
             } catch (ee) {}
 
             if (typeof data.UnreadRepCount !== "undefined") {
+
+                if (headers && headers.Date) {
+                    StackExchangeNotifications.saveState("lastCheck", headers.Date);
+                }
 
                 achievements = parseInt(data.UnreadRepCount);
                 inbox = data.UnreadInboxCount ? parseInt(data.UnreadInboxCount) : 0;
