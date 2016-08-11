@@ -18,12 +18,12 @@
         tabsBySpaces = false,
         preferPreviewInFull = false,
         italicRegExp   = /(^|\s|\*\*)\*([^*]+)\*(\s|\*\*|$)/g,
-        focusRegExp    = /(^|\s)sen\-editor\-focus($|\s)/g,
-        visibleRegExp  = /(^|\s)sen\-editor\-visible($|\s)/g,
-        fullRegExp     = /(^|\s)sen\-editor\-full($|\s)/g,
-        readyRegExp    = /(^|\s)sen\-editor\-ready($|\s)/g,
-        invertedRegExp = /(^|\s)sen\-editor\-inverted($|\s)/g,
-        noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/g,
+        focusRegExp    = /(^|\s)sen\-editor\-focus($|\s)/,
+        visibleRegExp  = /(^|\s)sen\-editor\-visible($|\s)/,
+        fullRegExp     = /(^sen|\ssen)\-editor\-(full$|full\s)/,
+        readyRegExp    = /(^|\s)sen\-editor\-ready($|\s)/,
+        invertedRegExp = /(^|\s)sen\-editor\-inverted($|\s)/,
+        noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/,
         getClassRegexp = /^([\s\S]+?\s|)(wmd\-[\S]+?\-button)([\s\S]+|)$/,
         checkPost      = /(^|\s)(inline\-(editor|answer)|post\-form)($|\s)/
     ;
@@ -53,6 +53,7 @@
         evt = null;
     }
 
+    //Fix bug in Firefox when on click in a button
     function hideRealEditor(target)
     {
         target.className
@@ -186,8 +187,6 @@
 
         var d = new Date;
 
-        console.log(d, d.getMonth(), d.getDate());
-
         if (d.getDate() == 31 && d.getMonth() == 9) {
             previewTarget.className += " halloween";
         }
@@ -200,8 +199,8 @@
                             .trim();
         });
 
-        textField.addEventListener("keydown", function(e) {
-            if (e.altKey) {
+        doc.addEventListener("keydown", function(e) {
+            if (e.altKey && e.target === textField) {
                 switch (e.keyCode) {
                     case 70: //Alt+F change to fullscreen or normal
                         e.preventDefault();
@@ -249,11 +248,6 @@
 
                     inPreview = false;
                 }
-
-                if (inPreview) {
-                    realTextField.readOnly = true;
-                    realTextField.focus();
-                }
             } else {
                 newEditor.className += " sen-editor-full";
                 rootDoc.className += " sen-editor-noscroll";
@@ -262,19 +256,20 @@
                     newEditor.className += " sen-editor-ready";
                     inPreview = true;
                 }
+            }
 
-                if (inPreview) {
-                    realTextField.readOnly = false;
-                    realTextField.focus();
-                }
+            if (inPreview) {
+                realTextField.readOnly = false;
+                realTextField.focus();
             }
         });
 
         previewBtn.addEventListener("click", function()
         {
-            var inFull = fullRegExp.test(newEditor.className);
+            var ca = "" + newEditor.className;
+            var inFull = fullRegExp.test(ca);
 
-            if (readyRegExp.test(newEditor.className)) {
+            if (readyRegExp.test(ca)) {
 
                 newEditor.className = newEditor.className
                                         .replace(readyRegExp, " ")
@@ -322,13 +317,13 @@
 
     function loadCss()
     {
-        var style = document.createElement("link");
+        var style = doc.createElement("link");
 
         style.rel  = "stylesheet";
         style.type = "text/css";
         style.href = chrome.extension.getURL("/css/editor.css");
 
-        document.body.appendChild(style);
+        doc.body.appendChild(style);
     }
 
     function loadView(realEditor)
@@ -348,7 +343,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
-                    viewHTML = document.createElement("div");
+                    viewHTML = doc.createElement("div");
                     viewHTML.innerHTML = xhr.responseText;
                     viewHTML = viewHTML.firstElementChild;
 
@@ -382,19 +377,17 @@
             return;
         }
 
-        rootDoc = document.body.parentNode;
+        rootDoc = doc.body.parentNode;
 
         done = true;
 
         setTimeout(function() {
-            var els = document.querySelectorAll(".post-editor");
+            var els = doc.querySelectorAll(".post-editor");
 
             if (els.length > 0) {
                 for (var i = els.length - 1; i >= 0; i--) {
                     setTimeout(createEditor, 1, els[i]);
                 }
-            } else {
-                console.log(els.length);
             }
         }, 100);
 
@@ -408,7 +401,7 @@
             });
         });
 
-        observer.observe(document, {
+        observer.observe(doc, {
             "subtree": true,
             "childList": true,
             "attributes": true

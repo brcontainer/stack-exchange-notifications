@@ -360,7 +360,7 @@
             StackExchangeNotifications.switchEnable("reputation", true);
             StackExchangeNotifications.switchEnable("achievements", true);
 
-            StackExchangeNotifications.switchEnable("lightbox", true);
+            StackExchangeNotifications.switchEnable("gallery_box", true);
 
             SimpleCache.set("firstrun", 1, true);
 

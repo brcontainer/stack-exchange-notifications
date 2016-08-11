@@ -12,7 +12,6 @@ window.onload = function()
 
     var
         debugMode,
-        navRegexp           = /(^|\s)nav\-shadow($|\s)/g,
         navgation           = document.querySelector(".nav"),
 
         inboxButton         = document.getElementById("inbox-button"),
@@ -134,6 +133,7 @@ window.onload = function()
     {
         if (StackExchangeNotifications.switchEnable("black_theme")) {
             document.body.parentNode.className = "theme-black";
+
             checkEvent();
         } else {
             document.body.parentNode.className = "";
