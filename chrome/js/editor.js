@@ -306,11 +306,13 @@
 
         realEditor.parentNode.insertBefore(newEditor, realEditor.nextSibling);
 
-        var buttons = newEditor.querySelectorAll(".sen-editor-toolbar > a[class^='sen-btn ']");
+        setTimeout(function () {
+            var buttons = newEditor.querySelectorAll(".sen-editor-toolbar > a[class^='sen-btn ']");
 
-        for (var i = buttons.length - 1; i >= 0; i--) {
-            addEventButton(buttons[i], realEditor, realTextField);
-        }
+            for (var i = buttons.length - 1; i >= 0; i--) {
+                addEventButton(buttons[i], realEditor, realTextField);
+            }
+        }, 600);
 
         hideRealEditor(realEditor);
     }
