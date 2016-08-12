@@ -255,6 +255,10 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     transform: scaleX(-1) !important;
 }
 
+.sen-editor .sen-editor-toolbar > a.sen-strikethrough-button i::before {
+    background-image: url(../images/editor/strikethrough.svg) !important;
+}
+
 .sen-editor .sen-editor-toolbar > a.sen-full-button i::before {
     background-image: url(../images/editor/resize-max.svg) !important;
 }

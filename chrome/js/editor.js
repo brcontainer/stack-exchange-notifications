@@ -25,7 +25,9 @@
         invertedRegExp = /(^|\s)sen\-editor\-inverted($|\s)/,
         noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/,
         getClassRegexp = /^([\s\S]+?\s|)(wmd\-[\S]+?\-button)([\s\S]+|)$/,
-        checkPost      = /(^|\s)(inline\-(editor|answer)|post\-form)($|\s)/
+        skipBtnRegexp  = /sen\-(preview|full|flip|italic|strikethrough)\-button/,
+        isPostRegexp   = /(^|\s)(inline\-(editor|answer)|post\-form)($|\s)/,
+        isMac          = /Mac/.test(navigator.platform)
     ;
 
     function triggerFocus(target)
@@ -67,7 +69,7 @@
     {
         var timerHideButtons, innerBtn;
 
-        if (/sen\-(preview|full|flip|italic)\-button/.test(button.className)) {
+        if (skipBtnRegexp.test(button.className)) {
             return;
         }
 
@@ -160,6 +162,18 @@
                 val.focus();
             }*/
         }, 100);
+    }
+
+    function changeShorcutTitle(btn)
+    {
+        if (!isMac) {
+            return;
+        }
+
+        var o = btn.getAttribute("data-title");
+        var n = o.replace("Ctrl", "\u2318").replace("Alt", "\u2325");
+
+        if (o !== n) { btn.setAttribute("data-title", n); }
     }
 
     function bootMain(newEditor, realEditor)
@@ -311,6 +325,7 @@
 
             for (var i = buttons.length - 1; i >= 0; i--) {
                 addEventButton(buttons[i], realEditor, realTextField);
+                changeShorcutTitle(buttons[i]);
             }
         }, 600);
 
@@ -397,7 +412,7 @@
             mutations.forEach(function (mutation) {
                 var el = mutation.target;
 
-                if (checkPost.test(el.className)) {
+                if (isPostRegexp.test(el.className)) {
                     setTimeout(createEditor, 1, el.querySelector(".post-editor"));
                 }
             });

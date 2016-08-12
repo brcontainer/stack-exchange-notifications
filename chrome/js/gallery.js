@@ -18,6 +18,7 @@
         targetImg,
         maskPhoto,
         currentPhoto,
+        validImages  = /\.(png|jpeg|jpe|jpg|svg|gif)(|\?[\s\S]+)$/i,
         errorRegExp  = /(^|\s)sen\-error(\s|$)/,
         loaderRegExp = /(^|\s)sen\-bg\-loader(\s|$)/,
         showRegExp   = /(^|\s)show(\s|$)/
@@ -197,11 +198,6 @@
         return false;
     }
 
-    function isValid(url)
-    {
-        return /\.(png|jpeg|jpg|svg|gif)$/i.test(String(url).replace(/\?[\s\S]+$/, ""));
-    }
-
     function setGallery(target)
     {
         if (!target) {
@@ -213,7 +209,7 @@
         for (var i = links.length - 1, current; i >= 0; i--) {
             current = links[i];
 
-            if (isValid(current.href) && current.getElementsByTagName("img").length === 1) {
+            if (validImages.test(current.href) && current.getElementsByTagName("img").length === 1) {
                 current.addEventListener("click", eventPhoto);
             }
         }
