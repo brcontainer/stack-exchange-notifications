@@ -21,7 +21,8 @@
         validImages  = /\.(png|jpeg|jpe|jpg|svg|gif)(|\?[\s\S]+)$/i,
         errorRegExp  = /(^|\s)sen\-error(\s|$)/,
         loaderRegExp = /(^|\s)sen\-bg\-loader(\s|$)/,
-        showRegExp   = /(^|\s)show(\s|$)/
+        showRegExp   = /(^|\s)show(\s|$)/,
+        checkTarget  = /(^|\s)wmd\-preview|(inline|sen)\-editor($|\s)/
     ;
 
     function loadCss(uri)
@@ -209,10 +210,50 @@
         for (var i = links.length - 1, current; i >= 0; i--) {
             current = links[i];
 
-            if (validImages.test(current.href) && current.getElementsByTagName("img").length === 1) {
+            if (
+                !current.senLightbox &&
+                validImages.test(current.href) &&
+                current.getElementsByTagName("img").length === 1
+            ) {
+                current.senLightbox = true;
                 current.addEventListener("click", eventPhoto);
             }
         }
+    }
+
+    function findImageLinks()
+    {
+        var question = doc.querySelector(".question"),
+            answers = doc.querySelectorAll("#answers .post-text");
+
+        setGallery(question);
+
+        for (var i = answers.length - 1; i >= 0; i--) {
+            setGallery(answers[i]);
+        }
+    }
+
+    var timerObserver;
+
+    function triggerObserver()
+    {
+        var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function (mutation) {
+                if (checkTarget.test(mutation.target.className)) {
+                    if (timerObserver) {
+                        clearTimeout(timerObserver);
+                    }
+
+                    timerObserver = setTimeout(setGallery, 300, mutation.target);
+                }
+            });
+        });
+
+        observer.observe(doc, {
+            "subtree": true,
+            "childList": true,
+            "attributes": true
+        });
     }
 
     function bootGallery()
@@ -229,14 +270,9 @@
 
         loadView();
 
-        var question = document.querySelector(".question"),
-            answers = document.querySelectorAll("#answers .post-text");
+        setTimeout(findImageLinks, 1);
 
-        setGallery(question);
-
-        for (var i = answers.length - 1; i >= 0; i--) {
-            setGallery(answers[i]);
-        }
+        setTimeout(triggerObserver, 100);
     }
 
     function initiate()
