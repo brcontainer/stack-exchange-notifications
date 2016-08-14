@@ -158,8 +158,6 @@ window.onload = function()
         var achievements = StackExchangeNotifications.getAchievements();
         var total = 0;
 
-        console.log(achievements);
-
         if (achievements.acquired > 0) {
             total += achievements.acquired;
         }
@@ -167,8 +165,6 @@ window.onload = function()
         if (total.score !== 0) {
             total += achievements.score;
         }
-
-        console.log(total);
 
         if (inbox > 0) {
             inboxData.className = "push";
