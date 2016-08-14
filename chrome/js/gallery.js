@@ -27,7 +27,7 @@
 
     function loadCss(uri)
     {
-        var style = document.createElement("link");
+        var style = doc.createElement("link");
 
         style.rel  = "stylesheet";
         style.type = "text/css";
@@ -96,7 +96,7 @@
                         return;
                     }
 
-                    viewHTML = document.createElement("div");
+                    viewHTML = doc.createElement("div");
                     viewHTML.innerHTML = xhr.responseText;
                     viewHTML = viewHTML.firstElementChild;
 
@@ -172,7 +172,7 @@
         if (!setupKeyEsc) {
             setupKeyEsc = true;
 
-            document.addEventListener("keydown", function (e) {
+            doc.addEventListener("keydown", function (e) {
                 var code = typeof e.which === "undefined" ? e.keyCode : e.which;
 
                 if (code == 27) {
@@ -258,7 +258,7 @@
 
     function bootGallery()
     {
-        mainBody = document.body;
+        mainBody = doc.body;
 
         if (!mainBody) {
             setTimeout(bootGallery, 2000);

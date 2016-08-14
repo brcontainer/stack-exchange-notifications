@@ -434,6 +434,15 @@
         loadView(target);
     }
 
+    function checkRemoveFullEditorOpts()
+    {
+        if (doc.getElementsByClassName("sen-editor-full").length === 0) {
+            rootDoc.className = rootDoc.className
+                                    .replace(noscrollRegExp, " ")
+                                        .replace(/\s\s/g, " ").trim();
+        }
+    }
+
     function loadAll()
     {
         if (done) {
@@ -461,6 +470,8 @@
                 if (isPostRegexp.test(el.className)) {
                     setTimeout(createEditor, 1, el.querySelector(".post-editor"));
                 }
+
+                setTimeout(checkRemoveFullEditorOpts, 1);
             });
         });
 
