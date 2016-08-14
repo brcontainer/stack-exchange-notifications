@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.5
+ * StackExchangeNotifications 0.2.0
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -17,7 +17,8 @@
         inboxURI        = "http://stackexchange.com/topbar/inbox";
 
     var inbox = 0,
-        achievements = 0;
+        score = 0,
+        acquired = 0;
 
     var doneCallback = null,
         isRunning = false,
@@ -198,7 +199,8 @@
                     break;
 
                     case "achievements":
-                        change = StackExchangeNotifications.getAchievements() !== 0;
+                        var ach = StackExchangeNotifications.getAchievements();
+                        change = ach.score !== 0 || ach.acquired !== 0;
                     break;
                 }
 
@@ -263,13 +265,12 @@
                     StackExchangeNotifications.saveState("lastCheck", headers.Date);
                 }
 
-                achievements = parseInt(data.UnreadRepCount);
+                score = parseInt(data.UnreadRepCount);
                 inbox = data.UnreadInboxCount ? parseInt(data.UnreadInboxCount) : 0;
+                acquired = data.UnreadNonRepCount ? parseInt(data.UnreadNonRepCount) : 0;
 
-                if (achievements !== 0) {
+                if (score > 0 || acquired > 0) {
                     SimpleCache.set("achievements", null);
-                } else {
-                    achievements = data.UnreadNonRepCount ? parseInt(data.UnreadNonRepCount) : 0;
                 }
 
                 if (inbox !== 0) {
@@ -278,7 +279,8 @@
 
                 if (doneCallback !== null) {
                     doneCallback({
-                        "achievements": achievements,
+                        "acquired": acquired,
+                        "score": score,
                         "inbox": inbox
                     });
                 }
@@ -347,7 +349,7 @@
             //Improve perfomance in Opera and older machinesSW
             setTimeout(function() { initiateDelay = 1; }, initiateDelay);
 
-            if (SimpleCache.get("firstrun", true)) {
+            if (SimpleCache.get("firstrun2", true)) {
                 return false;
             }
 
@@ -358,12 +360,12 @@
             StackExchangeNotifications.switchEnable("editor_sync_scroll", true);
 
             StackExchangeNotifications.switchEnable("inbox", true);
-            StackExchangeNotifications.switchEnable("reputation", true);
-            StackExchangeNotifications.switchEnable("achievements", true);
+            StackExchangeNotifications.switchEnable("score", true);
+            StackExchangeNotifications.switchEnable("acquired", true);
 
             StackExchangeNotifications.switchEnable("gallery_box", true);
 
-            SimpleCache.set("firstrun", 1, true);
+            SimpleCache.set("firstrun2", 1, true);
 
             return true;
         },
@@ -430,6 +432,7 @@
             if (false === isRunning && typeof callback === "function") {
                 isRunning     = true;
                 doneCallback  = callback;
+
                 retrieveData();
             }
         },
@@ -473,9 +476,13 @@
 
             return null;
         },
-        "setAchievements": function(size) {
-            if (size % 1 === 0) {
-                achievements = size;
+        "setAchievements": function(sizeScore, sizeAcquired) {
+            if (sizeScore % 1 === 0) {
+                score = sizeScore;
+            }
+
+            if (sizeAcquired > -1 && sizeAcquired % 1 === 0) {
+                acquired = sizeAcquired;
             }
         },
         "setInbox": function(size) {
@@ -484,7 +491,10 @@
             }
         },
         "getAchievements": function() {
-            return achievements;
+            return {
+                "acquired": acquired,
+                "score": score,
+            };
         },
         "getInbox": function() {
             return inbox;
@@ -517,7 +527,8 @@
                 setTimeout(retrieveData, 1);
             } else if (doneCallback !== null) {
                 doneCallback({
-                    "achievements": achievements,
+                    "acquired": acquired,
+                    "score": score,
                     "inbox": inbox
                 });
             }

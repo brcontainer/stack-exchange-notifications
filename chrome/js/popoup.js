@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.5
+ * StackExchangeNotifications 0.2.0
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -156,6 +156,19 @@ window.onload = function()
     {
         var inbox = StackExchangeNotifications.getInbox();
         var achievements = StackExchangeNotifications.getAchievements();
+        var total = 0;
+
+        console.log(achievements);
+
+        if (achievements.acquired > 0) {
+            total += achievements.acquired;
+        }
+
+        if (total.score !== 0) {
+            total += achievements.score;
+        }
+
+        console.log(total);
 
         if (inbox > 0) {
             inboxData.className = "push";
@@ -164,9 +177,9 @@ window.onload = function()
             inboxData.className = "push hide";
         }
 
-        if (achievements !== 0) {
+        if (total !== 0) {
             achievementsData.className = "push";
-            achievementsData.innerHTML = StackExchangeNotifications.utils.convertResult(achievements);
+            achievementsData.innerHTML = StackExchangeNotifications.utils.convertResult(total);
         } else {
             achievementsData.className = "push hide";
         }
@@ -219,8 +232,6 @@ window.onload = function()
         if (key) {
 
             val = StackExchangeNotifications.switchEnable(key);
-
-            console.log(key, val);
 
             if (val === true) {
                 el.setAttribute("data-switch-value", "on");
@@ -425,7 +436,7 @@ window.onload = function()
                 setDomEvents(achievementsContent);
             } else if (data.indexOf("<") !== -1) {
                 setTimeout(function () {
-                    StackExchangeNotifications.setAchievements(0);
+                    StackExchangeNotifications.setAchievements(0, 0);
                     StackExchangeNotifications.update();
                 }, 500);
 

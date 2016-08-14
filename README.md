@@ -28,15 +28,16 @@ For debugging or testing push notifications there are some functions:
 
 | Function | Description |
 | --- | --- |
-| `StackExchangeNotifications.setAchievements` | Use integers |
-| `StackExchangeNotifications.setInbox` | Use integers, may be 0, 1 or higher |
-| `StackExchangeNotifications.update` | After use setAchievements and/or setInbox, perfom this function, this function show results in "push notifications" over icon and popup tabs |
-| `StackExchangeNotifications.getAchievements` | Get current total achivements |
-| `StackExchangeNotifications.getInbox` | Get total messages in Inbox |
+| `.setAchievements(int achivements [, int score])` | Use integers in two params |
+| `.setInbox(int msgs)` | Use integers, may be 0, 1 or higher |
+| `.update()` | After use setAchievements and/or setInbox, perfom this function, this function show results in "push notifications" over icon and popup tabs |
+| `.getAchievements()` | Get current total achivements, return a object like `{score: int, acquired: int}` |
+| `.hasCache()` | Return true if has cache or false if no |
+| `.clearCache([, type])` | Clear inbox and achivements cache, if fisrt param empty clear cache from inbox and achivements, or specific inbox and achivements in first param |
+| `.meta` | Get appname and version, return object like this `{appname: string, version: string}` |
+| `.getInbox()` | Get total messages in Inbox, return int |
+| (Removed) <del>`StackExchangeNotifications.utils.meta`</del> | <del>Get appname and version</del> |
 | (Removed) <del>`StackExchangeNotifications.enableNotifications`</del> | <del>Get or set notifications activetions</del> |
-| `StackExchangeNotifications.hasCache` | Return true if has cache or false if no |
-| `StackExchangeNotifications.clearCache` | Clear inbox and achivements cache |
-| `StackExchangeNotifications.utils.meta` | Get appname and version |
 
 ## Debugging in Opera or Chrome
 
