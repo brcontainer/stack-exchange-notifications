@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 0.1.4
+ * StackExchangeNotifications 0.1.5
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -33,21 +33,13 @@
         isMac          = /Mac/.test(navigator.platform)
     ;
 
-    function triggerFocus(target)
+    function triggerEvent(type, target)
     {
         if (!target) {
             return;
         }
 
-        var evt = new MouseEvent("focus", {
-            "view": window,
-            "bubbles": true,
-            "cancelable": true
-        });
-
-        target.dispatchEvent(evt);
-
-        var evt = new MouseEvent("click", {
+        var evt = new MouseEvent(type, {
             "view": window,
             "bubbles": true,
             "cancelable": true
@@ -164,6 +156,8 @@
                 val.selectionEnd = se;
                 val.focus();
             }*/
+
+            triggerEvent("scroll", el);
         }, 100);
     }
 
@@ -200,7 +194,8 @@
 
         realEditor.className += " sen-editor-visible";
 
-        triggerFocus(textField);
+        triggerEvent("click", textField);
+        triggerEvent("focus", textField);
 
         textField.addEventListener("focus", function() {
             newEditor.className += " sen-editor-focus";
@@ -235,10 +230,6 @@
             }
         });
 
-        previewTarget.addEventListener("click", function() {
-            realTextField.focus();
-        });
-
         var inScrollEvt, timerScroll;
 
         function onScroll(type, from, to) {
@@ -266,9 +257,11 @@
         onScroll("preview", previewTarget, realTextField);
         onScroll("field", realTextField, previewTarget);
 
-        if (syncScroll) {
-
-        }
+        previewTarget.addEventListener("click", function() {
+            if (!fullRegExp.test(newEditor.className)) {
+                realTextField.focus();
+            }
+        });
 
         previewTarget.appendChild(realPreview);
 
