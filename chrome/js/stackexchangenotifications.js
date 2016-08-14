@@ -355,6 +355,7 @@
 
             StackExchangeNotifications.switchEnable("editor_actived", true);
             StackExchangeNotifications.switchEnable("editor_preview", true);
+            StackExchangeNotifications.switchEnable("editor_sync_scroll", true);
 
             StackExchangeNotifications.switchEnable("inbox", true);
             StackExchangeNotifications.switchEnable("reputation", true);

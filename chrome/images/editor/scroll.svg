@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 330.002 330.002" xml:space="preserve">
+<style>
+.default {
+    fill: #524847 !important;
+}
+
+#gray:target ~ use {
+    fill: #c1d1d0 !important;
+}
+
+use {
+    -webkit-transition: 1s fill;
+    -moz-transition: 1s fill;
+    transition: 1s fill;
+}
+</style>
+
+<defs>
+<g id="main">
+	<path d="M315.001,180.001h-300c-6.371,0-12.046,4.024-14.154,10.035c-2.109,6.011-0.19,12.699,4.784,16.678   l150.004,120c2.739,2.191,6.055,3.287,9.37,3.287c3.316,0,6.631-1.096,9.371-3.287l149.996-120   c4.974-3.98,6.893-10.667,4.784-16.678C327.047,184.024,321.371,180.001,315.001,180.001z" />
+	<path id="XMLID_10_" d="M15.001,150.001h300c6.371,0,12.046-4.024,14.154-10.035c2.109-6.011,0.19-12.699-4.784-16.678   l-150.004-120c-5.479-4.382-13.262-4.382-18.741,0l-149.996,120c-4.974,3.979-6.893,10.667-4.784,16.678   C2.955,145.977,8.631,150.001,15.001,150.001z" />
+</g>
+</defs>
+
+<g class="default">
+    <g id="gray"></g>
+
+    <use xlink:href="#main" />
+</g>
+</svg>

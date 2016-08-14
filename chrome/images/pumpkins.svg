@@ -2,38 +2,38 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 240.00000 145.00000" xml:space="preserve">
 <style>
-    #black:target ~ use,
-    #black:target ~ g {
-        fill: black !important;
-    }
+#black:target ~ use,
+#black:target ~ g {
+    fill: black !important;
+}
 
-    #white:target ~ use,
-    #white:target ~ g {
-        fill: white;
-    }
+#white:target ~ use,
+#white:target ~ g {
+    fill: white;
+}
 
-    #clear:target ~ use,
-    #clear:target ~ g {
-        fill: #ff9812;
-        fill-opacity: 0.09;
-    }
+#clear:target ~ use,
+#clear:target ~ g {
+    fill: #ff9812;
+    fill-opacity: 0.09;
+}
 
-    #light:target ~ use,
-    #light:target ~ g {
-        fill: #000000;
-        fill-opacity: 0.05;
-    }
+#light:target ~ use,
+#light:target ~ g {
+    fill: #000000;
+    fill-opacity: 0.05;
+}
 
-    #orange:target ~ use,
-    #orange:target ~ g {
-        fill: #ff9812;
-    }
+#orange:target ~ use,
+#orange:target ~ g {
+    fill: #ff9812;
+}
 
-    use {
-        -webkit-transition: 1s fill;
-        -moz-transition: 1s fill;
-        transition: 1s fill;
-    }
+use {
+    -webkit-transition: 1s fill;
+    -moz-transition: 1s fill;
+    transition: 1s fill;
+}
 </style>
 
 <defs>

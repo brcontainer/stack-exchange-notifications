@@ -129,14 +129,26 @@ window.onload = function()
         }
     }
 
+    var theme;
+
     function changeTheme()
     {
         if (StackExchangeNotifications.switchEnable("black_theme")) {
-            document.body.parentNode.className = "theme-black";
+            if (!theme) {
+                theme = document.createElement("link");
+
+                theme.href = "/css/themes/black/popup.css";
+                theme.type = "text/css";
+                theme.rel  = "stylesheet";
+
+                document.body.appendChild(theme);
+            } else {
+                theme.disabled = false;
+            }
 
             checkEvent();
-        } else {
-            document.body.parentNode.className = "";
+        } else if (theme) {
+            theme.disabled = true;
         }
     }
 
@@ -207,6 +219,8 @@ window.onload = function()
         if (key) {
 
             val = StackExchangeNotifications.switchEnable(key);
+
+            console.log(key, val);
 
             if (val === true) {
                 el.setAttribute("data-switch-value", "on");

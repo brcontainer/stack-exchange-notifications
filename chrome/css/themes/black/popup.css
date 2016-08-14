@@ -1,0 +1,80 @@
+body {
+    background-color: #353535 !important;
+    background-size: 90% auto !important;
+}
+
+body.halloween {
+    background: #353535 url(../../../images/pumpkins.svg#clear) center center fixed no-repeat !important;
+    background-size: 90% auto !important;
+}
+
+body,
+a,
+#about-content {
+    color: #fff !important;
+    text-shadow: none !important;
+}
+
+.tab-item .item-location,
+.tab-item .message-text h4 {
+    color: #fff !important;
+}
+
+hr,
+.utc-clock,
+.tab-item
+.modal-content li,
+.tab-item .modal-content div.date-group {
+    border-color: #1d1b1b !important;
+}
+
+.tab-item .modal-content li.inbox-se-link,
+.tab-item .modal-content li.inbox-se-link:hover,
+.utc-clock {
+    background-color: #646464 !important;
+}
+
+.tab-item .modal-content li.unread-item {
+    background-color: #2e5682 !important;
+}
+
+.tab-item .modal-content li:hover {
+    background-color: #333d48 !important;
+}
+
+.header {
+    background-color: #646464 !important;
+    color: #fff !important;
+}
+
+.btn,
+.field,
+.date-group-toggle-row {
+    background-color: #403b3b !important;
+}
+
+.btn,
+.field,
+.btn.first,
+.field.first,
+.tab-item .modal-content li {
+    border-color: #272525 !important;
+}
+
+
+.btn:focus {
+    background-color: #333d48 !important;
+    color: #cfcfcf !important;
+}
+
+.nav a {
+    border-color: transparent;
+}
+
+::-webkit-scrollbar {
+    background-color: #907979;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.85);
+}

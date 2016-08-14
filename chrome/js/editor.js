@@ -10,8 +10,10 @@
     "use strict";
 
     var
+        theme,
         rootDoc,
         done = false,
+        syncScroll = false,
         viewHTML,
         italicWithUnderScore = false,
         inverted = false,
@@ -25,8 +27,9 @@
         invertedRegExp = /(^|\s)sen\-editor\-inverted($|\s)/,
         noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/,
         getClassRegexp = /^([\s\S]+?\s|)(wmd\-[\S]+?\-button)([\s\S]+|)$/,
-        skipBtnRegexp  = /sen\-(preview|full|flip|italic|strikethrough)\-button/,
+        skipBtnRegexp  = /sen\-(preview|full|flip|italic|strikethrough|syncscroll)\-button/,
         isPostRegexp   = /(^|\s)(inline\-(editor|answer)|post\-form)($|\s)/,
+        activeRegexp   = /(^|\s)sen\-disabled($|\s)/,
         isMac          = /Mac/.test(navigator.platform)
     ;
 
@@ -173,7 +176,9 @@
         var o = btn.getAttribute("data-title");
         var n = o.replace("Ctrl", "\u2318").replace("Alt", "\u2325");
 
-        if (o !== n) { btn.setAttribute("data-title", n); }
+        if (o !== n) {
+            btn.setAttribute("data-title", n);
+        }
     }
 
     function bootMain(newEditor, realEditor)
@@ -188,7 +193,9 @@
             textField = realEditor.querySelector("textarea"),
 
             fullBtn = newEditor.querySelector("a.sen-full-button"),
-            previewBtn = newEditor.querySelector("a.sen-preview-button")
+            previewBtn = newEditor.querySelector("a.sen-preview-button"),
+            flipBtn = newEditor.querySelector("a.sen-flip-button"),
+            syncScrollBtn = newEditor.querySelector("a.sen-syncscroll-button")
         ;
 
         realEditor.className += " sen-editor-visible";
@@ -232,7 +239,39 @@
             realTextField.focus();
         });
 
+        var inScrollEvt, timerScroll;
+
+        function onScroll(type, from, to) {
+            from.addEventListener("scroll", function()
+            {
+                if (!syncScroll || (inScrollEvt && inScrollEvt !== type)) {
+                    return;
+                }
+
+                clearTimeout(timerScroll);
+
+                inScrollEvt = type;
+
+                var sf = from.scrollHeight - from.clientHeight,
+                    st = to.scrollHeight - to.clientHeight;
+
+                to.scrollTop = st * (from.scrollTop / sf);
+
+                timerScroll = setTimeout(function() {
+                    inScrollEvt = null;
+                }, 200);
+            });
+        }
+
+        onScroll("preview", previewTarget, realTextField);
+        onScroll("field", realTextField, previewTarget);
+
+        if (syncScroll) {
+
+        }
+
         previewTarget.appendChild(realPreview);
+
         textTarget.appendChild(realTextField);
 
         if (tabsBySpaces || italicWithUnderScore) {
@@ -306,7 +345,7 @@
             newEditor.className += " sen-editor-inverted";
         }
 
-        newEditor.querySelector("a.sen-flip-button").addEventListener("click", function() {
+        flipBtn.addEventListener("click", function() {
             if (invertedRegExp.test(newEditor.className)) {
                 newEditor.className = newEditor.className
                                         .replace(invertedRegExp, " ")
@@ -316,7 +355,21 @@
             }
         });
 
-        //realEditor.className += "";
+        syncScrollBtn.addEventListener("click", function() {
+            if (activeRegexp.test(syncScrollBtn.className)) {
+                syncScrollBtn.className = syncScrollBtn.className
+                                            .replace(activeRegexp, " ")
+                                                .replace(/\s\s/g, " ").trim();
+                syncScroll = true;
+            } else {
+                syncScrollBtn.className += " sen-disabled";
+                syncScroll = false;
+            }
+        });
+
+        if (!syncScroll) {
+            syncScrollBtn.className += " sen-disabled";
+        }
 
         realEditor.parentNode.insertBefore(newEditor, realEditor.nextSibling);
 
@@ -332,13 +385,13 @@
         hideRealEditor(realEditor);
     }
 
-    function loadCss()
+    function loadCss(url)
     {
         var style = doc.createElement("link");
 
         style.rel  = "stylesheet";
         style.type = "text/css";
-        style.href = chrome.extension.getURL("/css/editor.css");
+        style.href = chrome.extension.getURL("/css/" + url);
 
         doc.body.appendChild(style);
     }
@@ -427,7 +480,11 @@
 
     function initiate()
     {
-        loadCss();
+        loadCss("editor.css");
+
+        if (typeof theme === "string") {
+            loadCss("themes/" + theme + "/editor.css");
+        }
 
         if (/^(interactive|complete)$/i.test(doc.readyState)) {
             loadAll();
@@ -441,9 +498,11 @@
         chrome.runtime.sendMessage("editor", function(response) {
             if (response) {
                 preferPreviewInFull = !!response.preview;
-                tabsBySpaces = !!response.spaceindentation;
+                tabsBySpaces = !!response.indent;
                 inverted = !!response.inverted;
                 italicWithUnderScore = !!response.italic;
+                syncScroll = !!response.scroll;
+                theme = response.theme;
 
                 if (response.available === true) {
                     initiate();

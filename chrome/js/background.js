@@ -177,7 +177,10 @@
                     "preview":   StackExchangeNotifications.switchEnable("editor_preview"),
                     "inverted":  StackExchangeNotifications.switchEnable("editor_inverted"),
                     "italic":    StackExchangeNotifications.switchEnable("editor_italic"),
-                    "spaceindentation": StackExchangeNotifications.switchEnable("editor_tabs_by_spaces")
+                    "scroll":    StackExchangeNotifications.switchEnable("editor_sync_scroll"),
+                    "indent":    StackExchangeNotifications.switchEnable("editor_tabs_by_spaces"),
+                    "theme":     StackExchangeNotifications.switchEnable("black_theme") ?
+                                                                                "black" : null,
                 });
         } else if (request) {
             if (request.data && request.clear) {

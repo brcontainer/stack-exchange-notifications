@@ -1,0 +1,104 @@
+/*
+ * StackExchangeNotifications 0.1.4
+ * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Released under the MIT license
+ *
+ * https://github.com/brcontainer/stack-exchange-notification
+ */
+
+.sen-editor {
+    background-color: #3a4251 !important;
+    border-color: #263238 !important;
+}
+
+.sen-editor .sen-editor-toolbar {
+    border-color: #263238 !important;
+}
+
+.sen-editor .sen-editor-toolbar > span {
+    border-left: 1px #263238 solid !important;
+}
+
+.sen-editor .sen-textfield > textarea {
+    background-color: #272b33 !important;
+    color: #b7c2ce;
+}
+.sen-editor .sen-preview .wmd-preview {
+    color: #b7c2ce;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-btn:hover {
+    border-color: #263238 !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-bold-button i::before {
+    background-image: url(/images/editor/bold.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-italic-button i::before {
+    background-image: url(/images/editor/italic.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-link-button i::before {
+    background-image: url(/images/editor/link.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-quote-button i::before {
+    background-image: url(/images/editor/quote.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-code-button i::before {
+    background-image: url(/images/editor/code.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-image-button i::before {
+    background-image: url(/images/editor/image.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-snippet-button i::before {
+    background-image: url(/images/editor/snippet.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-olist-button i::before {
+    background-image: url(/images/editor/olist.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-ulist-button i::before {
+    background-image: url(/images/editor/ulist.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-heading-button i::before {
+    background-image: url(/images/editor/header.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-hr-button i::before {
+    background-image: url(/images/editor/hr.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-redo-button i::before {
+    background-image: url(/images/editor/redo.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.wmd-undo-button i::before {
+    background-image: url(/images/editor/redo.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-strikethrough-button i::before {
+    background-image: url(/images/editor/strikethrough.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-full-button i::before {
+    background-image: url(/images/editor/resize-max.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-preview-button i::before {
+    background-image: url(/images/editor/preview.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-flip-button i::before {
+    background-image: url(/images/editor/flip.svg#gray) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-syncscroll-button i::before {
+    background-image: url(/images/editor/scroll.svg#gray) !important;
+}

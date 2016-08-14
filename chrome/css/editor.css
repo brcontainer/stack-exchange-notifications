@@ -271,23 +271,20 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     background-image: url(../images/editor/flip.svg) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-flip-button {
+.sen-editor .sen-editor-toolbar > a.sen-syncscroll-button i::before {
+    background-image: url(../images/editor/scroll.svg) !important;
+}
+
+.sen-editor .sen-editor-toolbar > a.sen-flip-button,
+.sen-editor .sen-editor-toolbar > a.sen-syncscroll-button {
     display: none !important;
 }
 
-.sen-editor-full .sen-editor-toolbar > a.sen-flip-button {
+.sen-editor-full .sen-editor-toolbar > a.sen-flip-button,
+.sen-editor-full .sen-editor-toolbar > a.sen-syncscroll-button {
     display: inline-block !important;
 }
 
-/*
-.sen-editor .sen-editor-toolbar > a.wmd-undo-button i,
-.sen-editor .sen-editor-toolbar > a.wmd-redo-button i {
-    opacity: 0.3 !important;
-},
-.sen-editor .sen-editor-toolbar > a.enable i {
-    opacity: 1.0 !important;
-}
-*/
 /*tooltip*/
 .sen-editor .sen-editor-toolbar > a.sen-btn {
     position: relative !important;
@@ -343,6 +340,10 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 /*tooltip*/
 
+.sen-editor .sen-editor-toolbar > a.sen-disabled {
+    opacity: 0.5 !important;
+}
+
 .sen-editor .sen-editor-toolbar .sen-actions {
     display: none !important;
     float: right !important;
@@ -367,6 +368,13 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     background-color: #4CAF50 !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-btn.sen-hide {
+/*
+.sen-editor .sen-editor-toolbar > a.sen-btn:hover::before,
+.sen-editor .sen-editor-toolbar > a.sen-btn::after
+*/
+
+.sen-editor .sen-editor-toolbar > a.sen-btn.sen-hide,
+.sen-editor .sen-editor-toolbar > a.sen-disabled:hover::after,
+.sen-editor .sen-editor-toolbar > a.sen-disabled:hover::before {
     display: none !important;
 }
