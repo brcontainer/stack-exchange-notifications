@@ -1,13 +1,12 @@
 /*
- * StackExchangeNotifications 0.2.0
+ * StackExchangeNotifications 1.0.0
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-window.onload = function()
-{
+(function(browser) {
     "use strict";
 
     var
@@ -48,10 +47,10 @@ window.onload = function()
 
         headDOM             = document.head,
 
-        backgroundEngine    = chrome.extension.getBackgroundPage()
+        backgroundEngine    = browser.extension.getBackgroundPage()
     ;
 
-    if ("update_url" in chrome.runtime.getManifest()) {
+    if ("update_url" in browser.runtime.getManifest()) {
         debugMode = false;
     }
 
@@ -76,11 +75,11 @@ window.onload = function()
                 setTimeout(function() {
                     var id = StackExchangeNotifications.notificationsSession() + el.href;
 
-                    chrome.notifications.clear(id);
+                    browser.notifications.clear(id);
 
                     StackExchangeNotifications.removeNotificationFromCache(el.href);
 
-                    chrome.tabs.create({ "url": el.href });
+                    browser.tabs.create({ "url": el.href });
                 }, 1);
             };
         }
@@ -510,4 +509,4 @@ window.onload = function()
             achievementsButton.onclick();
         break;
     }
-};
+})(chrome||browser);

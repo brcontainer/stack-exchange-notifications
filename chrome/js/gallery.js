@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 0.2.0
+ * StackExchangeNotifications 1.0.0
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (doc) {
+(function(doc, browser) {
     "use strict";
 
     var setupKeyEsc,
@@ -31,7 +31,7 @@
 
         style.rel  = "stylesheet";
         style.type = "text/css";
-        style.href = chrome.extension.getURL(uri);
+        style.href = browser.extension.getURL(uri);
 
         mainBody.appendChild(style);
     }
@@ -85,7 +85,7 @@
     {
         var
             xhr = new XMLHttpRequest(),
-            uri = chrome.extension.getURL("/view/gallery.html")
+            uri = browser.extension.getURL("/view/gallery.html")
         ;
 
         xhr.open("GET", uri, true);
@@ -285,8 +285,8 @@
         }
     }
 
-    if (chrome.runtime && chrome.runtime.sendMessage) {
-        chrome.runtime.sendMessage("gallery", function(response) {
+    if (browser && browser.runtime && browser.runtime.sendMessage) {
+        browser.runtime.sendMessage("gallery", function(response) {
             if (response) {
                 if (response.available === true) {
                     initiate();
@@ -294,4 +294,4 @@
             }
         });
     }
-})(document);
+})(document, chrome||browser);

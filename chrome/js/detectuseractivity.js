@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 0.2.0
+ * StackExchangeNotifications 1.0.0
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function() {
+(function(browser) {
     "use strict";
 
     var DELAY = 5;
@@ -15,12 +15,12 @@
 
     function userIsActive(type)
     {
-        if (chrome.runtime && chrome.runtime.sendMessage) {
-            chrome.runtime.sendMessage({ "sleepMode": !type }, function(response) {});
+        if (browser && browser.runtime && browser.runtime.sendMessage) {
+            browser.runtime.sendMessage({ "sleepMode": !type }, function(response) {});
             return;
         }
 
-        //Try sending again if the chrome.runtime is not available
+        //Try sending again if the browser.runtime is not available
         if (type === false) {
             triggerInactive();
         }
@@ -45,4 +45,4 @@
 
     document.addEventListener("mousemove", detectUserActivity, true);
     document.addEventListener("keydown",   detectUserActivity, true);
-})();
+})(chrome||browser);

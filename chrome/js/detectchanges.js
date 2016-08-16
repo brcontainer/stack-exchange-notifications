@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 0.2.0
+ * StackExchangeNotifications 1.0.0
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (doc) {
+(function(doc, browser) {
     "use strict";
 
     var running = false;
@@ -38,8 +38,8 @@
 
                 var data = isHide(el) ? 0 : parseInt(el.textContent);
 
-                if (type && chrome.runtime && chrome.runtime.sendMessage) {
-                    chrome.runtime.sendMessage({
+                if (type && browser && browser.runtime && browser.runtime.sendMessage) {
+                    browser.runtime.sendMessage({
                         "data": data,
                         "clear": type
                     }, function(response) {});
@@ -77,4 +77,4 @@
         doc.addEventListener("DOMContentLoaded", applyEvents);
         window.addEventListener("onload", applyEvents);
     }
-})(document);
+})(document, chrome||browser);

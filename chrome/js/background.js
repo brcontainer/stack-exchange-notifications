@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 0.2.0
+ * StackExchangeNotifications 1.0.0
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function() {
+(function(browser) {
     "use strict";
 
     var caller = null;
@@ -115,7 +115,7 @@
 
         if (response.acquired > 0 && StackExchangeNotifications.switchEnable("acquired")) {
             ++updates;
-        } else if (response.score > 0 && StackExchangeNotifications.switchEnable("score")) {
+        } else if (response.score !== 0 && StackExchangeNotifications.switchEnable("score")) {
             ++updates;
         }
 
@@ -125,30 +125,30 @@
             setTimeout(getMessages, 200);
         }
 
-        chrome.browserAction.setBadgeText({
+        browser.browserAction.setBadgeText({
             "text": StackExchangeNotifications.utils.convertResult(updates)
         });
     });
 
-    chrome.notifications.onClicked.addListener(function(id, byUser) {
+    browser.notifications.onClicked.addListener(function(id, byUser) {
         var tryUri = id.substr(StackExchangeNotifications.notificationsSession().length);
 
         if (/^(http|https):\/\//.test(tryUri)) {
             setTimeout(function() {
-                chrome.tabs.create({ "url": tryUri });
+                browser.tabs.create({ "url": tryUri });
             }, 1);
         }
 
-        chrome.notifications.clear(id);
+        browser.notifications.clear(id);
         StackExchangeNotifications.removeNotificationFromCache(tryUri);
     });
 
-    chrome.windows.onFocusChanged.addListener(function(windowId) {
+    browser.windows.onFocusChanged.addListener(function(windowId) {
         if (windowId === -1) {
             StackExchangeNotifications.enableSleepMode(true);
         } else {
-            chrome.windows.get(windowId, function(chromeWindow) {
-                StackExchangeNotifications.enableSleepMode(chromeWindow.state === "minimized");
+            browser.windows.get(windowId, function(currentWindow) {
+                StackExchangeNotifications.enableSleepMode(currentWindow.state === "minimized");
             });
         }
     });
@@ -167,7 +167,9 @@
             break;
 
             case "achievements":
-                if (data !== StackExchangeNotifications.getAchievements()) {
+                var achievements = StackExchangeNotifications.getAchievements();
+
+                if (data !== achievements.score || data !== achievements.acquired) {
                     StackExchangeNotifications.setAchievements(data);
                 }
 
@@ -176,7 +178,7 @@
         }
     }
 
-    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (request === "gallery") {
                 sendResponse({
                     "available": StackExchangeNotifications.switchEnable("gallery_box")
@@ -200,4 +202,4 @@
             }
         }
     });
-})();
+})(chrome||browser);

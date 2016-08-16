@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 0.2.0
+ * StackExchangeNotifications 1.0.0
  * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function() {
+(function(browser) {
     "use strict";
 
     var delay = 60, //In seconds
@@ -90,8 +90,8 @@
     {
         var u;
 
-        if (chrome && chrome.runtime && chrome.runtime.getManifest) {
-            var meta = chrome.runtime.getManifest();
+        if (browser && browser.runtime && browser.runtime.getManifest) {
+            var meta = browser.runtime.getManifest();
 
             return {
                 "appname": meta.name,
@@ -269,7 +269,7 @@
                 inbox = data.UnreadInboxCount ? parseInt(data.UnreadInboxCount) : 0;
                 acquired = data.UnreadNonRepCount ? parseInt(data.UnreadNonRepCount) : 0;
 
-                if (score > 0 || acquired > 0) {
+                if (score !== 0 || acquired > 0) {
                     SimpleCache.set("achievements", null);
                 }
 
@@ -332,13 +332,13 @@
         var id = TokenNotifications + data.id;
 
         try {
-            chrome.notifications.create(id, props, function() {});
+            browser.notifications.create(id, props, function() {});
         } catch (ee) {
             //Firefox don't support requireInteraction and causes exception
 
             delete props.requireInteraction;
 
-            chrome.notifications.create(id, props, function() {});
+            browser.notifications.create(id, props, function() {});
         }
 
         setTimeout(showNotifications, 1000);
@@ -548,4 +548,4 @@
         "meta": metaData,
         "utils": Utils
     };
-})();
+})(chrome||browser);
