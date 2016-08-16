@@ -287,10 +287,8 @@
 
     if (browser && browser.runtime && browser.runtime.sendMessage) {
         browser.runtime.sendMessage("gallery", function(response) {
-            if (response) {
-                if (response.available === true) {
-                    initiate();
-                }
+            if (response && response.available) {
+                initiate();
             }
         });
     }

@@ -43,6 +43,12 @@
         triggerInactive();
     }
 
-    document.addEventListener("mousemove", detectUserActivity, true);
-    document.addEventListener("keydown",   detectUserActivity, true);
+    if (browser && browser.runtime && browser.runtime.sendMessage) {
+        browser.runtime.sendMessage("desktopnotification", function(response) {
+            if (response && response.available) {
+                document.addEventListener("mousemove", detectUserActivity, true);
+                document.addEventListener("keydown",   detectUserActivity, true);
+            }
+        });
+    }
 })(chrome||browser);

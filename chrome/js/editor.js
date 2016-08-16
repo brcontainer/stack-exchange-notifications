@@ -500,7 +500,7 @@
 
     if (browser && browser.runtime && browser.runtime.sendMessage) {
         browser.runtime.sendMessage("editor", function(response) {
-            if (response) {
+            if (response && response.available) {
                 preferPreviewInFull = !!response.preview;
                 tabsBySpaces = !!response.indent;
                 inverted = !!response.inverted;
@@ -508,9 +508,7 @@
                 syncScroll = !!response.scroll;
                 theme = response.theme;
 
-                if (response.available === true) {
-                    initiate();
-                }
+                initiate();
             }
         });
     }
