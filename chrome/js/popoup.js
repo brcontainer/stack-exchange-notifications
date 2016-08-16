@@ -6,46 +6,46 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(browser) {
+(function(doc, browser) {
     "use strict";
 
     var
         debugMode,
-        navgation           = document.querySelector(".nav"),
+        navgation           = doc.querySelector(".nav"),
 
-        inboxButton         = document.getElementById("inbox-button"),
-        inboxContent        = document.getElementById("inbox-content"),
+        inboxButton         = doc.getElementById("inbox-button"),
+        inboxContent        = doc.getElementById("inbox-content"),
         inboxData           = inboxButton.querySelector("span.push"),
         inboxXhr            = null,
         inboxActive         = false,
 
-        achievementsButton  = document.getElementById("achievements-button"),
-        achievementsContent = document.getElementById("achievements-content"),
+        achievementsButton  = doc.getElementById("achievements-button"),
+        achievementsContent = doc.getElementById("achievements-content"),
         achievementsData    = achievementsButton.querySelector("span.push"),
         achievementsXhr     = null,
         achievementsActive  = false,
 
-        aboutButton         = document.getElementById("about-button"),
-        aboutContent        = document.getElementById("about-content"),
+        aboutButton         = doc.getElementById("about-button"),
+        aboutContent        = doc.getElementById("about-content"),
 
-        setupButton         = document.getElementById("setup-button"),
-        setupContent        = document.getElementById("setup-content"),
+        setupButton         = doc.getElementById("setup-button"),
+        setupContent        = doc.getElementById("setup-content"),
 
-        switchs             = document.querySelectorAll("a[data-switch]"),
+        switchs             = doc.querySelectorAll("a[data-switch]"),
 
-        notificationSwitch  = document.getElementById("notification-switch"),
+        notificationSwitch  = doc.getElementById("notification-switch"),
 
-        editorSwitch        = document.getElementById("editor-switch"),
-        editorSwitchTabs    = document.getElementById("editor-switch-tabs"),
-        editorSwitchInvert  = document.getElementById("editor-switch-invert"),
-        editorSwitchPreview = document.getElementById("editor-switch-preview"),
+        editorSwitch        = doc.getElementById("editor-switch"),
+        editorSwitchTabs    = doc.getElementById("editor-switch-tabs"),
+        editorSwitchInvert  = doc.getElementById("editor-switch-invert"),
+        editorSwitchPreview = doc.getElementById("editor-switch-preview"),
 
-        btns                = document.querySelectorAll(".btn"),
+        btns                = doc.querySelectorAll(".btn"),
 
-        clearCache          = document.getElementById("clear-cache"),
-        clearAllData        = document.getElementById("clear-all-data"),
+        clearCache          = doc.getElementById("clear-cache"),
+        clearAllData        = doc.getElementById("clear-all-data"),
 
-        headDOM             = document.head,
+        headDOM             = doc.head,
 
         backgroundEngine    = browser.extension.getBackgroundPage()
     ;
@@ -93,7 +93,7 @@
     {
         var els, j, i = 0;
 
-        target = target||document;
+        target = target||doc;
 
         els = target.getElementsByTagName("a");
 
@@ -104,7 +104,7 @@
 
     window.StackExchangeNotifications = backgroundEngine.StackExchangeNotifications;
 
-    document.oncontextmenu = disableEvent;
+    doc.oncontextmenu = disableEvent;
 
     setDomEvents();
 
@@ -112,7 +112,7 @@
 
     var manifestData = StackExchangeNotifications.meta();
 
-    document.getElementById("about-title").innerHTML =
+    doc.getElementById("about-title").innerHTML =
                                             manifestData.appname + " " + manifestData.version;
 
     function checkEvent()
@@ -123,7 +123,7 @@
             var d = new Date(lastCheck);
 
             if (d.getDate() == 31 && d.getMonth() == 9) {
-                document.body.className += " halloween";
+                doc.body.className += " halloween";
             }
         }
     }
@@ -134,13 +134,13 @@
     {
         if (StackExchangeNotifications.switchEnable("black_theme")) {
             if (!theme) {
-                theme = document.createElement("link");
+                theme = doc.createElement("link");
 
                 theme.href = "/css/themes/black/popup.css";
                 theme.type = "text/css";
                 theme.rel  = "stylesheet";
 
-                document.body.appendChild(theme);
+                doc.body.appendChild(theme);
             } else {
                 theme.disabled = false;
             }
@@ -439,7 +439,7 @@
                     StackExchangeNotifications.utils.cleanDomString(data);
 
                 if (headers.Date) {
-                    dateContent = document.querySelector(".js-utc-time")
+                    dateContent = doc.querySelector(".js-utc-time")
 
                     if (dateContent) {
                         date = new Date(headers.Date);
@@ -452,7 +452,7 @@
                         dateContent.innerHTML = hour + ":" + min
                     }
                 } else {
-                    dateContent = document.querySelector(".utc-clock");
+                    dateContent = doc.querySelector(".utc-clock");
                     if (dateContent) {
                         dateContent.className += " hide";
                     }
@@ -480,7 +480,7 @@
         }
     };
 
-    document.querySelector("a[data-switch='black_theme']").addEventListener("click", changeTheme);
+    doc.querySelector("a[data-switch='black_theme']").addEventListener("click", changeTheme);
 
     changeTheme();
 
@@ -509,4 +509,4 @@
             achievementsButton.onclick();
         break;
     }
-})(chrome||browser);
+})(document, chrome||browser);
