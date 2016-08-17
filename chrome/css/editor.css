@@ -153,13 +153,14 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     display: block !important;
 }
 
+.post-form .wmd-container,
 .post-editor .wmd-container {
     visibility: hidden !important;
     position: absolute !important;
     left: -9988px !important;
     top: -9988px !important;
 }
-.post-editor .wmd-preview,
+.post-form .wmd-button-bar,
 .post-editor .wmd-button-bar {
     display: none !important;
 }

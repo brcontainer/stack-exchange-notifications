@@ -28,7 +28,7 @@
         noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/,
         getClassRegexp = /^([\s\S]+?\s|)(wmd\-[\S]+?\-button)([\s\S]+|)$/,
         skipBtnRegexp  = /sen\-(preview|full|flip|italic|strikethrough|syncscroll)\-button/,
-        isPostRegexp   = /(^|\s)(inline\-(editor|answer)|post\-form)($|\s)/,
+        isPostRegexp   = /(^|\s)(inline\-(editor|answer|post))($|\s)/,
         activeRegexp   = /(^|\s)sen\-disabled($|\s)/,
         isMac          = /Mac/.test(navigator.platform)
     ;
@@ -178,13 +178,13 @@
     function bootMain(newEditor, realEditor)
     {
         var
+            referenceTarget,
+
             realPreview = realEditor.querySelector(".wmd-preview"),
             realTextField = realEditor.querySelector(".wmd-input"),
 
             previewTarget = newEditor.querySelector(".sen-preview"),
             textTarget = newEditor.querySelector(".sen-textfield"),
-
-            textField = realEditor.querySelector("textarea"),
 
             fullBtn = newEditor.querySelector("a.sen-full-button"),
             previewBtn = newEditor.querySelector("a.sen-preview-button"),
@@ -194,10 +194,10 @@
 
         realEditor.className += " sen-editor-visible";
 
-        triggerEvent("click", textField);
-        triggerEvent("focus", textField);
+        triggerEvent("click", realTextField);
+        triggerEvent("focus", realTextField);
 
-        textField.addEventListener("focus", function() {
+        realTextField.addEventListener("focus", function() {
             newEditor.className += " sen-editor-focus";
         });
 
@@ -207,7 +207,7 @@
             previewTarget.className += " halloween";
         }
 
-        textField.addEventListener("blur", function() {
+        realTextField.addEventListener("blur", function() {
             newEditor.className
                 = newEditor.className
                     .replace(focusRegExp, " ")
@@ -216,7 +216,7 @@
         });
 
         doc.addEventListener("keydown", function(e) {
-            if (e.altKey && e.target === textField) {
+            if (e.altKey && e.target === realTextField) {
                 switch (e.keyCode) {
                     case 70: //Alt+F change to fullscreen or normal
                         e.preventDefault();
@@ -364,7 +364,20 @@
             syncScrollBtn.className += " sen-disabled";
         }
 
-        realEditor.parentNode.insertBefore(newEditor, realEditor.nextSibling);
+        //Ask new question
+        referenceTarget = realEditor.querySelector(".question-form");
+
+        //Edite wiki tags
+        if (!referenceTarget) {
+            referenceTarget = realEditor.querySelector(".input-section");
+        }
+
+        //Edite questions and answers or new anwsers
+        if (!referenceTarget) {
+            referenceTarget = realEditor.querySelector(".post-editor");
+        }
+
+        referenceTarget.parentNode.insertBefore(newEditor, referenceTarget.nextSibling);
 
         setTimeout(function () {
             var buttons = newEditor.querySelectorAll(".sen-editor-toolbar > a[class^='sen-btn ']");
@@ -443,32 +456,14 @@
         }
     }
 
-    function loadAll()
+    function triggerObserver()
     {
-        if (done) {
-            return;
-        }
-
-        rootDoc = doc.body.parentNode;
-
-        done = true;
-
-        setTimeout(function() {
-            var els = doc.querySelectorAll(".post-editor");
-
-            if (els.length > 0) {
-                for (var i = els.length - 1; i >= 0; i--) {
-                    setTimeout(createEditor, 1, els[i]);
-                }
-            }
-        }, 100);
-
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function (mutation) {
                 var el = mutation.target;
 
-                if (isPostRegexp.test(el.className)) {
-                    setTimeout(createEditor, 1, el.querySelector(".post-editor"));
+                if (el.tagName === "FORM" && isPostRegexp.test(el.className)) {
+                    setTimeout(createEditor, 1, el);
                 }
 
                 setTimeout(checkRemoveFullEditorOpts, 1);
@@ -480,6 +475,30 @@
             "childList": true,
             "attributes": true
         });
+    }
+
+    function loadAll()
+    {
+        if (done) {
+            return;
+        }
+
+        rootDoc = doc.body.parentNode;
+
+        done = true;
+
+        setTimeout(function() {
+            var els = doc.querySelectorAll("form.post-form");
+
+            if (els.length > 0) {
+
+                for (var i = els.length - 1; i >= 0; i--) {
+                    setTimeout(createEditor, 1, els[i]);
+                }
+            }
+        }, 100);
+
+        setTimeout(triggerObserver, 300);
     }
 
     function initiate()

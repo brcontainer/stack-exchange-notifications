@@ -199,25 +199,28 @@
         return false;
     }
 
+    function addLinkEvent(current)
+    {
+        if (
+            !current.senLightbox &&
+            validImages.test(current.href) &&
+            current.getElementsByTagName("img").length === 1
+        ) {
+            current.senLightbox = true;
+            current.addEventListener("click", eventPhoto);
+        }
+    }
+
     function setGallery(target)
     {
         if (!target) {
             return;
         }
 
-        var links = target.querySelectorAll("a[href]");
+        var current, links = target.querySelectorAll("a[href]");
 
         for (var i = links.length - 1, current; i >= 0; i--) {
-            current = links[i];
-
-            if (
-                !current.senLightbox &&
-                validImages.test(current.href) &&
-                current.getElementsByTagName("img").length === 1
-            ) {
-                current.senLightbox = true;
-                current.addEventListener("click", eventPhoto);
-            }
+            addLinkEvent(links[i]);
         }
     }
 
@@ -240,11 +243,7 @@
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function (mutation) {
                 if (checkTarget.test(mutation.target.className)) {
-                    if (timerObserver) {
-                        clearTimeout(timerObserver);
-                    }
-
-                    timerObserver = setTimeout(setGallery, 300, mutation.target);
+                    setGallery(mutation.target);
                 }
             });
         });
