@@ -517,6 +517,11 @@
         }
     }
 
+    //Disable functions in chat
+    if (window.location.hostname.indexOf("chat.") === 0) {
+        return;
+    }
+
     if (browser && browser.runtime && browser.runtime.sendMessage) {
         browser.runtime.sendMessage("editor", function(response) {
             if (response && response.available) {
