@@ -243,15 +243,19 @@
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function (mutation) {
                 if (checkTarget.test(mutation.target.className)) {
-                    setGallery(mutation.target);
+                    if (timerObserver) {
+                        clearTimeout(timerObserver);
+                    }
+
+                    timerObserver = setTimeout(setGallery, 800, mutation.target);
                 }
             });
         });
 
-        observer.observe(doc, {
+        observer.observe(mainBody, {
             "subtree": true,
             "childList": true,
-            "attributes": true
+            "attributes": false
         });
     }
 

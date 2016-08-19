@@ -456,6 +456,8 @@
         }
     }
 
+    var timerObserver;
+
     function triggerObserver()
     {
         var observer = new MutationObserver(function(mutations) {
@@ -466,11 +468,15 @@
                     setTimeout(createEditor, 1, el);
                 }
 
-                setTimeout(checkRemoveFullEditorOpts, 1);
+                if (timerObserver) {
+                    clearTimeout(timerObserver);
+                }
+
+                timerObserver = setTimeout(checkRemoveFullEditorOpts, 100);
             });
         });
 
-        observer.observe(doc, {
+        observer.observe(doc.body, {
             "subtree": true,
             "childList": true,
             "attributes": true
