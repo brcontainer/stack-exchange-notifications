@@ -13,15 +13,10 @@
 
     function isHide(elem)
     {
-        if (window.getComputedStyle(elem, null).getPropertyValue("visibility") === "hidden") {
-            return true;
-        }
+        var prop = window.getComputedStyle(elem, null);
 
-        if (window.getComputedStyle(elem, null).getPropertyValue("display") === "none") {
-            return true;
-        }
-
-        return false;
+        return prop.getPropertyValue("display") === "none" ||
+                prop.getPropertyValue("visibility") === "hidden";
     }
 
     function updateStates(mutations)

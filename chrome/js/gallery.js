@@ -15,6 +15,7 @@
         mainBody,
         photos,
         loader,
+        loaded = false,
         targetImg,
         maskPhoto,
         currentPhoto,
@@ -22,7 +23,7 @@
         errorRegExp  = /(^|\s)sen\-error(\s|$)/,
         loaderRegExp = /(^|\s)sen\-bg\-loader(\s|$)/,
         showRegExp   = /(^|\s)show(\s|$)/,
-        checkTarget  = /(^|\s)wmd\-preview|(inline|sen)\-editor($|\s)/
+        checkTarget  = /(^|\s)(wmd\-preview|(inline|sen)\-editor|message|collapsible)($|\s)/
     ;
 
     function loadCss(uri)
@@ -224,30 +225,25 @@
         }
     }
 
-    function findImageLinks()
-    {
-        var question = doc.querySelector(".question"),
-            answers = doc.querySelectorAll("#answers .post-text");
-
-        setGallery(question);
-
-        for (var i = answers.length - 1; i >= 0; i--) {
-            setGallery(answers[i]);
-        }
-    }
-
     var timerObserver;
 
     function triggerObserver()
     {
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function (mutation) {
-                if (checkTarget.test(mutation.target.className)) {
+                console.log(mutation.target);
+
+                if (mutation.target.tagName === "BODY" || checkTarget.test(mutation.target.className)) {
+
                     if (timerObserver) {
                         clearTimeout(timerObserver);
                     }
 
                     timerObserver = setTimeout(setGallery, 800, mutation.target);
+                } else {
+                    if (mutation.target.querySelectorAll("a > img").length > 0) {
+                        console.log(mutation.target);
+                    }
                 }
             });
         });
@@ -261,6 +257,12 @@
 
     function bootGallery()
     {
+        if (loaded) {
+            return;
+        }
+
+        loaded = false;
+
         mainBody = doc.body;
 
         if (!mainBody) {
@@ -273,7 +275,7 @@
 
         loadView();
 
-        setTimeout(findImageLinks, 1);
+        setTimeout(setGallery, 1, mainBody);
 
         setTimeout(triggerObserver, 100);
     }
@@ -286,11 +288,6 @@
             doc.addEventListener("DOMContentLoaded", bootGallery);
             window.addEventListener("load", bootGallery);
         }
-    }
-
-    //Disable functions in chat
-    if (window.location.hostname.indexOf("chat.") === 0) {
-        return;
     }
 
     if (browser && browser.runtime && browser.runtime.sendMessage) {
