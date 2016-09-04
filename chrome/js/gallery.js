@@ -19,11 +19,12 @@
         targetImg,
         maskPhoto,
         currentPhoto,
+        currentUrl,
+        isOpen = false,
         validImages  = /\.(png|jpeg|jpe|jpg|svg|gif)(|\?[\s\S]+)$/i,
         errorRegExp  = /(^|\s)sen\-error(\s|$)/,
         loaderRegExp = /(^|\s)sen\-bg\-loader(\s|$)/,
-        showRegExp   = /(^|\s)show(\s|$)/,
-        checkTarget  = /(^|\s)(wmd\-preview|(inline|sen)\-editor|message|collapsible)($|\s)/
+        showRegExp   = /(^|\s)show(\s|$)/
     ;
 
     function loadCss(uri)
@@ -73,6 +74,8 @@
         if (e && e.preventDefault) {
             e.preventDefault();
         }
+
+        isOpen = false;
 
         if (targetImg) {
             targetImg.onload = targetImg.onerror = null;
@@ -138,6 +141,14 @@
 
     function showPhoto(el)
     {
+        if (currentUrl === el.href && isOpen) {
+            return;
+        }
+
+        currentUrl = el.href;
+
+        isOpen = true;
+
         if (targetImg) {
             currentPhoto.removeChild(targetImg);
         }
@@ -231,19 +242,24 @@
     {
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function (mutation) {
-                console.log(mutation.target);
+                var c = mutation.target;
 
-                if (mutation.target.tagName === "BODY" || checkTarget.test(mutation.target.className)) {
+                if (c.tagName !== "A" && c.querySelector("a > img")) {
 
                     if (timerObserver) {
                         clearTimeout(timerObserver);
                     }
 
-                    timerObserver = setTimeout(setGallery, 800, mutation.target);
-                } else {
-                    if (mutation.target.querySelectorAll("a > img").length > 0) {
-                        console.log(mutation.target);
+                    timerObserver = setTimeout(setGallery, 200, mutation.target);
+
+                } else if (c.tagName === "A" && c.firstElementChild && c.firstElementChild.tagName === "IMG") {
+
+                    if (timerObserver) {
+                        clearTimeout(timerObserver);
                     }
+
+                    timerObserver = setTimeout(addLinkEvent, 100, mutation.target);
+
                 }
             });
         });

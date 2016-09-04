@@ -71,7 +71,7 @@
     border: 0 !important;
     outline: 0 !important;
     background-color: #fff !important;
-    transition: all 0.6s cubic-bezier(.25,.8,.25,1) !important;
+    transition: all 0.4s cubic-bezier(.25,.8,.25,1) !important;
 }
 
 .sen-gallery-footer {
