@@ -101,6 +101,7 @@
 
 .sen-gallery-close, .sen-gallery-left, .sen-gallery-right {
     display: block !important;
+    text-decoration: none !important;
 }
 
 .sen-gallery-left, .sen-gallery-right {
