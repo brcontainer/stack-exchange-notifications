@@ -203,6 +203,22 @@
                 updateChanges(request);
             } else if (typeof request.sleepMode === "boolean") {
                 StackExchangeNotifications.enableSleepMode(request.sleepMode);
+            } else if (request.storeimages) {
+                if (request.storeimages === true) {
+                    var cssBg = StackExchangeNotifications.restoreState("cssBg", false);
+
+                    if (cssBg) {
+                        sendResponse(cssBg);
+                        cssBg = null;
+                    }
+                } else {
+                    StackExchangeNotifications.utils.generateCssImages(request.storeimages, function(data) {
+                        StackExchangeNotifications.saveState("cssBg", data, false);
+                        sendResponse(data);
+                    });
+
+                    return true;
+                }
             }
         }
     });

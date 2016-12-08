@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    viewBox="0 0 136 244"
+>
+<defs>
+<filter id="drop-shadow">
+    <feGaussianBlur in="SourceAlpha" stdDeviation="0.7" />
+    <feOffset dx="0.01" dy="0.01" result="offsetblur" />
+    <feFlood flood-color="rgba(0,0,0,1)" />
+    <feComposite in2="offsetblur" operator="in" />
+    <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+    </feMerge>
+</filter>
+</defs>
+<path fill="#ffffff" filter="url(#drop-shadow)"
+    d="M 130.77775,113.405 22.480749,5.1440015 c -4.752,-4.74 -12.451,-4.74 -17.2150001,0 -4.75199998,4.74 -4.75199998,12.4390005 0,17.1790005 L 104.97275,121.994 5.2777489,221.665 c -4.75199998,4.74 -4.75199998,12.439 0,17.191 4.7520001,4.74 12.4630001,4.74 17.2150001,0 L 130.78975,130.595 c 4.68,-4.691 4.68,-12.511 -0.012,-17.19 z" />
+</svg>

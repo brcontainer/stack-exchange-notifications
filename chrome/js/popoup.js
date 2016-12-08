@@ -45,6 +45,8 @@
         clearCache          = doc.getElementById("clear-cache"),
         clearAllData        = doc.getElementById("clear-all-data"),
 
+        cssLoaded          = false,
+
         headDOM             = doc.head,
 
         backgroundEngine    = browser.extension.getBackgroundPage()
@@ -254,6 +256,73 @@
         switchEngine(switchs[i]);
     }
 
+    function setStyle(cssText)
+    {
+        cssLoaded = true;
+        var style = document.createElement("style");
+        style.textContent = cssText;
+        document.head.appendChild(style);
+    }
+
+    function bgCss()
+    {
+        if (cssLoaded) {
+            browser.runtime.sendMessage({ "storeimages": true }, function(response) {
+                if (response) {
+                    setStyle(response);
+                }
+            });
+
+            return;
+        }
+
+        var i, j, rules, image, imgUrl, allRulesBg = [],
+            isHttp = /^(http|https)\:\/\/[a-z0-1]/i,
+            reImg  = /url\(("|'|)([\s\S]+?\.(png|jpg|jpeg|gif)(\?|\?[\s\S]+?|))("|'|)\)/i,
+            styles = document.styleSheets;
+
+        for (var i = styles.length - 1; i >= 0; i--) {
+            if (false === isHttp.test(styles[i].href)) {
+                continue;
+            }
+
+            rules = styles[i].rules;
+
+            for (j = rules.length - 1; j >= 0; j--) {
+                if (
+                    rules[j].style &&
+                    rules[j].style.backgroundImage &&
+                    (image = rules[j].style.backgroundImage.match(reImg))
+                ) {
+                    imgUrl = image[2];
+
+                    if (!isHttp.test(imgUrl)) {
+                        imgUrl = styles[i].href.replace(/\/[^\/]+?$/, "/") + imgUrl;
+                    }
+
+                    allRulesBg.push({
+                        "selector": rules[j].selectorText,
+                        "url": imgUrl
+                    });
+                }
+            }
+        }
+
+        if (allRulesBg.length) {
+            browser.runtime.sendMessage({ "storeimages": allRulesBg }, function(response) {
+                if (response) {
+                    setStyle(response);
+                }
+            });
+        } else {
+            browser.runtime.sendMessage({ "storeimages": true }, function(response) {
+                if (response) {
+                    setStyle(response);
+                }
+            });
+        }
+    }
+
     setupButton.onclick = function()
     {
         if (inboxXhr) {
@@ -374,6 +443,8 @@
                 saveStateDetect("inbox");
             }
 
+            setTimeout(bgCss, 500);
+
             inboxContent.className =
                 inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim();
         });
@@ -461,6 +532,8 @@
                 setDomEvents(achievementsContent);
                 saveStateDetect("achievements");
             }
+
+            setTimeout(bgCss, 500);
 
             achievementsContent.className =
                 achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim();

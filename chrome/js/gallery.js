@@ -16,15 +16,21 @@
         photos,
         loader,
         loaded = false,
+        magnified = false,
+        magnifyPhoto = false,
         targetImg,
-        maskPhoto,
         currentPhoto,
+        currentPhotoToken,
         currentUrl,
         isOpen = false,
-        validImages  = /\.(png|jpeg|jpe|jpg|svg|gif)(|\?[\s\S]+)$/i,
-        errorRegExp  = /(^|\s)sen\-error(\s|$)/,
-        loaderRegExp = /(^|\s)sen\-bg\-loader(\s|$)/,
-        showRegExp   = /(^|\s)show(\s|$)/
+        validImages         = /\.(png|jpeg|jpe|jpg|svg|gif)(|\?[\s\S]+)$/i,
+        errorRegExp         = /(^|\s)sen\-error(\s|$)/,
+        loaderRegExp        = /(^|\s)sen\-bg\-loader(\s|$)/,
+        inLoadRegxp         = /(^|\s)in\-load(\s|$)/,
+        magnifiedRegExp     = /(^|\s)magnified(\s|$)/,
+        magnificationRegexp = /(^|\s)magnification(\s|$)/,
+        showRegExp          = /(^|\s)show(\s|$)/,
+        mainSelector        = ".message a[href], .answer a[href], .question a[href]"
     ;
 
     function loadCss(uri)
@@ -44,8 +50,6 @@
             return;
         }
 
-        //targetImg.className = "";
-
         var cw, ch,
             iw = targetImg.naturalWidth,
             ih = targetImg.naturalHeight;
@@ -54,18 +58,56 @@
             return;
         }
 
-        var vw = maskPhoto.clientWidth,
-            vh = maskPhoto.clientHeight;
+        var vw = photos.clientWidth,
+            vh = photos.clientHeight;
 
         cw = iw < vw ? iw : vw;
         ch = ih < vh ? ih : vh;
 
-        if (cw >= ch) {
-            targetImg.style.setProperty("height", ch + "px", "important");
-            targetImg.style.setProperty("width",  "auto",    "important");
+        magnifyPhoto = iw > vw || ih > vh;
+
+        if (magnifyPhoto) {
+            currentPhoto.className += " magnification";
         } else {
+            currentPhoto.className += " magnified";
+        }
+
+        currentPhoto.style.cssText = "";
+
+        if (cw >= ch) {
+            if (magnifyPhoto) {
+                ch = ch - 20;
+            }
+
+            targetImg.style.setProperty("height", ch + "px", "important");
+            targetImg.style.setProperty("width", "auto", "important");
+        } else {
+            if (magnifyPhoto) {
+                cw = cw - 20;
+            }
+
             targetImg.style.setProperty("width", cw + "px", "important");
-            targetImg.style.setProperty("height", "auto",    "important");
+            targetImg.style.setProperty("height", "auto", "important");
+        }
+
+        alignImage();
+    }
+
+    function alignImage()
+    {
+        var vw = photos.clientWidth, vh = photos.clientHeight,
+            cw = currentPhoto.clientWidth, ch = currentPhoto.clientHeight;
+
+        currentPhoto.style.left = Math.round( (vw / 2) - (cw / 2) ) + "px";
+        currentPhoto.style.top  = Math.round( (vh / 2) - (ch / 2) ) + "px";
+    }
+
+    function removeEvts()
+    {
+        isOpen = false;
+
+        if (targetImg) {
+            targetImg.onload = targetImg.onerror = null;
         }
     }
 
@@ -75,21 +117,215 @@
             e.preventDefault();
         }
 
-        isOpen = false;
-
-        if (targetImg) {
-            targetImg.onload = targetImg.onerror = null;
-        }
+        removeEvts();
 
         viewHTML.className = viewHTML.className
                                 .replace(showRegExp, " ").trim();
+    }
+
+    function navigateTo(navigate)
+    {
+        if (!showRegExp.test(viewHTML.className)) {
+            return;
+        }
+
+        var lnks = document.querySelectorAll(mainSelector);
+        var el, findNext = false;
+
+        if (lnks.length === 0) {
+            return;
+        }
+
+        lnks = Array.prototype.slice.call(lnks, 0);
+
+        if (navigate === "prev") {
+            lnks = lnks.reverse();
+        }
+
+        for (var i = 0, j = lnks.length; i < j; i++) {
+            var imgs = lnks[i].getElementsByTagName("img");
+            if (imgs.length) {
+                if (findNext && imgs[0].src === lnks[i].href) {
+                    el = lnks[i];
+                    break;
+                } else if (lnks[i].getAttribute("data-sen-gallery") === currentPhotoToken) {
+                    findNext = true;
+                }
+            }
+        }
+
+        if (el) {
+            removeEvts();
+            setTimeout(showPhoto, 1, el);
+        }
+    }
+
+    function dragablePhoto()
+    {
+        var isMove = false,
+            x = 0, y = 0,
+            xel = 0, yel = 0;
+
+        currentPhoto.addEventListener("mousedown", function() {
+            isMove = true;
+
+            x = window.event ? window.event.clientX : e.pageX;
+            y = window.event ? window.event.clientY : e.pageY;
+
+            xel = x - currentPhoto.offsetLeft;
+            yel = y - currentPhoto.offsetTop;
+        });
+
+        document.addEventListener("mousemove", function(e) {
+            if (isMove) {
+                e.preventDefault();
+
+                x = window.event ? window.event.clientX : e.pageX;
+                y = window.event ? window.event.clientY : e.pageY;
+
+                currentPhoto.style.left = (x - xel) + 'px';
+                currentPhoto.style.top  = (y - yel) + 'px';
+            }
+        });
+
+        document.addEventListener("mouseup", function() {
+            isMove = false;
+        });
+    }
+
+    function prepareDOM(sourcehtml)
+    {
+        var lastSize = {
+            "width": "auto",
+            "height": "auto"
+        };
+
+        viewHTML = doc.createElement("div");
+        viewHTML.innerHTML = sourcehtml;
+        viewHTML = viewHTML.firstElementChild;
+
+        sourcehtml = null;
+
+        mainBody.appendChild(viewHTML);
+
+        currentPhoto = viewHTML.querySelector(".sen-gallery-current");
+        photos = viewHTML.querySelector(".sen-gallery-photos");
+        loader = viewHTML.querySelector(".sen-gallery-loader");
+
+        dragablePhoto();
+
+        var currentZoom = 1;
+
+        function mouseWheel(e)
+        {
+            e.preventDefault();
+
+            if (currentZoom === 1) {
+                currentPhoto.click();
+            }
+
+            var rolled = 0;
+
+            if ("wheelDelta" in e) {
+                rolled = e.wheelDelta;
+            } else {
+                rolled = -40 * e.detail;
+            }
+
+            var zoom = currentZoom + (rolled / 1200);
+
+            if (zoom < 0.3 || zoom > 3) {
+                return;
+            }
+
+            currentZoom = zoom;
+
+            currentPhoto.style.transform = "scale(" + currentZoom + ")";
+        }
+
+        currentPhoto.addEventListener("DOMMouseScroll", mouseWheel);
+        currentPhoto.addEventListener("mousewheel", mouseWheel);
+
+        currentPhoto.addEventListener("dblclick", function() {
+            currentPhoto.style.transform = "scale(1)";
+        });
+
+        currentPhoto.addEventListener("click", function() {
+            if (!magnifyPhoto || magnified) {
+                return;
+            }
+
+            magnified = true;
+
+            currentPhoto.className += " magnified";
+
+            lastSize.height = String(targetImg.style.height).replace(/\!important$/i, "").trim();
+            lastSize.width  = String(targetImg.style.width).replace(/\!important$/i, "").trim();
+
+            targetImg.style.setProperty("height", "auto", "important");
+            targetImg.style.setProperty("width",  "auto", "important");
+
+            alignImage();
+        });
+
+        var closeBtn = viewHTML.querySelector(".sen-gallery-close");
+        var nextBtn = viewHTML.querySelector(".sen-gallery-right");
+        var prevBtn = viewHTML.querySelector(".sen-gallery-left");
+
+        if (closeBtn) {
+            closeBtn.addEventListener("click", hideView);
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+
+                navigateTo("prev");
+
+                return false;
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+
+                navigateTo("next");
+
+                return false;
+            });
+        }
+
+        viewHTML.addEventListener("mouseout", function(e) {
+            closeBtn.className = closeBtn.className
+                                    .replace(showRegExp, " ").trim();
+        });
+
+        viewHTML.addEventListener("mouseover", function(e) {
+            if (!showRegExp.test(closeBtn.className)) {
+                closeBtn.className += " show";
+            }
+        });
+
+        if (currentPhoto) {
+            viewHTML.addEventListener("click", function(e) {
+                if (e.target !== photos) {
+                    return;
+                }
+
+                hideView(e);
+            });
+        }
+
+        setTimeout(setGallery, 1, mainBody);
+        setTimeout(triggerObserver, 50);
     }
 
     function loadView()
     {
         var
             xhr = new XMLHttpRequest(),
-            uri = browser.extension.getURL("/view/gallery.html")
+            uri = browser.extension.getURL("/view/gallery.html");
         ;
 
         xhr.open("GET", uri, true);
@@ -100,32 +336,7 @@
                         return;
                     }
 
-                    viewHTML = doc.createElement("div");
-                    viewHTML.innerHTML = xhr.responseText;
-                    viewHTML = viewHTML.firstElementChild;
-
-                    mainBody.appendChild(viewHTML);
-
-                    currentPhoto = viewHTML.querySelector(".sen-gallery-current");
-                    maskPhoto = viewHTML.querySelector(".sen-gallery-image-mask");
-                    photos = viewHTML.querySelector(".sen-gallery-photos");
-                    loader = viewHTML.querySelector(".sen-gallery-loader");
-
-                    var closeBtn = viewHTML.querySelector(".sen-gallery-close");
-
-                    if (closeBtn) {
-                        closeBtn.addEventListener("click", hideView);
-                    }
-
-                    if (currentPhoto) {
-                        viewHTML.addEventListener("click", function(e) {
-                            if (e.target !== photos) {
-                                return;
-                            }
-
-                            hideView();
-                        });
-                    }
+                    prepareDOM(xhr.responseText);
                 }
             }
         };
@@ -137,6 +348,9 @@
     {
         loader.className = loader.className
                             .replace(loaderRegExp, " ").trim();
+
+        currentPhoto.className = currentPhoto.className
+                                    .replace(inLoadRegxp, " ").trim();
     }
 
     function showPhoto(el)
@@ -144,6 +358,19 @@
         if (currentUrl === el.href && isOpen) {
             return;
         }
+
+        currentPhotoToken = String(new Date().getTime());
+
+        el.setAttribute("data-sen-gallery", currentPhotoToken);
+
+        magnified = false;
+
+        var hasError = false;
+
+        currentPhoto.className = currentPhoto.className
+                                    .replace(magnificationRegexp, " ")
+                                        .replace(magnifiedRegExp, " ")
+                                            .trim();
 
         currentUrl = el.href;
 
@@ -155,13 +382,24 @@
 
         loader.className += " sen-bg-loader";
         currentPhoto.className = currentPhoto.className
-                                    .replace(errorRegExp, " ").trim();
+                                    .replace(errorRegExp, " ")
+                                        .replace(inLoadRegxp, " ").trim();
 
-        viewHTML.className += " show";
+        if (!inLoadRegxp.test(currentPhoto.className)) {
+            currentPhoto.className += " in-load";
+        }
+
+        if (!showRegExp.test(viewHTML.className)) {
+            viewHTML.className += " show";
+        }
 
         targetImg = new Image;
 
         targetImg.onload = function () {
+            if (hasError) {
+                return;
+            }
+
             removeLoader();
 
             setTimeout(resizeImage, 50);
@@ -170,9 +408,13 @@
         };
 
         targetImg.onerror = function () {
+            hasError = true;
+
             removeLoader();
 
-            currentPhoto.className += " sen-error";
+            if (!errorRegExp.test(currentPhoto.className)) {
+                currentPhoto.className += " sen-error";
+            }
 
             targetImg.onload = targetImg.onerror = null;
         };
@@ -181,14 +423,23 @@
 
         currentPhoto.appendChild(targetImg);
 
+        alignImage();
+
         if (!setupKeyEsc) {
             setupKeyEsc = true;
 
             doc.addEventListener("keydown", function (e) {
                 var code = typeof e.which === "undefined" ? e.keyCode : e.which;
 
-                if (code == 27) {
-                    hideView();
+                switch (typeof e.which === "undefined" ? e.keyCode : e.which) {
+                    case 27:
+                        hideView(e);
+                    break;
+                    case 37:
+                    case 39:
+                        e.preventDefault();
+                        navigateTo(code == 37 ? "prev" : "next");
+                    break;
                 }
             });
         }
@@ -218,6 +469,10 @@
             validImages.test(current.href) &&
             current.getElementsByTagName("img").length === 1
         ) {
+            if (current.getElementsByTagName("img")[0].src !== current.href) {
+                return;
+            }
+
             current.senLightbox = true;
             current.addEventListener("click", eventPhoto);
         }
@@ -229,7 +484,7 @@
             return;
         }
 
-        var current, links = target.querySelectorAll("a[href]");
+        var current, links = target.querySelectorAll(mainSelector);
 
         for (var i = links.length - 1, current; i >= 0; i--) {
             addLinkEvent(links[i]);
@@ -250,7 +505,7 @@
                         clearTimeout(timerObserver);
                     }
 
-                    timerObserver = setTimeout(setGallery, 200, mutation.target);
+                    timerObserver = setTimeout(setGallery, 50, c);
 
                 } else if (c.tagName === "A" && c.firstElementChild && c.firstElementChild.tagName === "IMG") {
 
@@ -258,7 +513,7 @@
                         clearTimeout(timerObserver);
                     }
 
-                    timerObserver = setTimeout(addLinkEvent, 100, mutation.target);
+                    timerObserver = setTimeout(addLinkEvent, 50, c);
 
                 }
             });
@@ -290,10 +545,6 @@
         loadCss("/css/animate.css");
 
         loadView();
-
-        setTimeout(setGallery, 1, mainBody);
-
-        setTimeout(triggerObserver, 100);
     }
 
     function initiate()

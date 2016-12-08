@@ -104,7 +104,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 
 .sen-editor .sen-preview.halloween {
-    background-image: url(../images/pumpkins.svg#light) !important;
+    background-image: url(../images/pumpkins.svg#white) !important;
     background-position: right bottom !important;
     background-repeat: no-repeat !important;
     background-size: 125px auto !important;

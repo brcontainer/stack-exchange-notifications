@@ -4,16 +4,11 @@
     version="1.1"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
-    width="130"
-    height="130"
     viewBox="0 0 130 130"
-    enable-background="new 0 0 130 130"
-    xml:space="preserve"
-    preserveAspectRatio="xMinYMax meet"
-    x="0px" 
-    y="0px"
 >
-    <rect x="10" y="40" fill="#FFFFFF" width="30" height="70"/>
-    <rect x="50" y="60" fill="#FFFFFF" width="30" height="50"/>
-    <rect x="90" y="0" fill="#FFFFFF" width="30" height="110"/>
+<g fill="#ffffff">
+    <rect x="10" y="40" width="30" height="70" />
+    <rect x="50" y="60" width="30" height="50" />
+    <rect x="90" y="0" width="30" height="110" />
+</g>
 </svg>

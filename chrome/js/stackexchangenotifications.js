@@ -83,8 +83,66 @@
             }
 
             return tmpDom.innerHTML;
+        },
+        "generateCssImages": function(resources, callback) {
+            var total = resources.length;
+
+            function trigger() {
+                if (total > 0) {
+                    return;
+                }
+
+                var tmpCss = "";
+
+                for (i = resources.length - 1; i >= 0; i--) {
+                    if (resources[i].bin) {
+                        tmpCss += resources[i].selector +
+                                    ' { background-image: url(' + resources[i].bin + ') !important; }';
+                    }
+                }
+
+                callback(tmpCss);
+            }
+
+            for (var c, i = resources.length - 1; i >= 0; i--) {
+                var current = i;
+                var img = new Image();
+
+                img.onload = function() {
+                    --total;
+                    resources[current].bin = img2base64(img);
+                    trigger();
+                };
+
+                img.onerror = function() {
+                    --total;
+                    resources[current] = null;
+                    trigger();
+                };
+
+                img.src = resources[i].url;
+            }
         }
     };
+
+    var tmpCanvas, canvasContext;
+
+    function img2base64(img)
+    {
+        if (!tmpCanvas) {
+            tmpCanvas = document.createElement("canvas");
+            canvasContext = tmpCanvas.getContext('2d');
+        }
+
+        canvasContext.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);
+
+        tmpCanvas.width  = img.naturalWidth;
+        tmpCanvas.height = img.naturalHeight;
+
+        canvasContext.drawImage(img, 0, 0);
+
+        return tmpCanvas.toDataURL();
+    }
 
     function metaData()
     {
