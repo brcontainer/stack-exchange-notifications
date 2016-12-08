@@ -30,7 +30,7 @@
         magnifiedRegExp     = /(^|\s)magnified(\s|$)/,
         magnificationRegexp = /(^|\s)magnification(\s|$)/,
         showRegExp          = /(^|\s)show(\s|$)/,
-        mainSelector        = ".message a[href], .answer a[href], .question a[href]"
+        mainSelector        = "a[href]"
     ;
 
     function loadCss(uri)
@@ -144,7 +144,7 @@
 
         for (var i = 0, j = lnks.length; i < j; i++) {
             var imgs = lnks[i].getElementsByTagName("img");
-            if (imgs.length) {
+            if (imgs.length === 1) {
                 if (findNext && imgs[0].src === lnks[i].href) {
                     el = lnks[i];
                     break;
@@ -429,6 +429,10 @@
             setupKeyEsc = true;
 
             doc.addEventListener("keydown", function (e) {
+                if (showRegExp.test(viewHTML.className)) {
+                    return;
+                }
+
                 var code = typeof e.which === "undefined" ? e.keyCode : e.which;
 
                 switch (typeof e.which === "undefined" ? e.keyCode : e.which) {
@@ -469,9 +473,11 @@
             validImages.test(current.href) &&
             current.getElementsByTagName("img").length === 1
         ) {
+            /*
             if (current.getElementsByTagName("img")[0].src !== current.href) {
                 return;
             }
+            */
 
             current.senLightbox = true;
             current.addEventListener("click", eventPhoto);
@@ -496,7 +502,7 @@
     function triggerObserver()
     {
         var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function (mutation) {
+            mutations.forEach(function(mutation) {
                 var c = mutation.target;
 
                 if (c.tagName !== "A" && c.querySelector("a img")) {
@@ -507,7 +513,7 @@
 
                     timerObserver = setTimeout(setGallery, 50, c);
 
-                } else if (c.tagName === "A" && c.getElementsByTagName("img").length) {
+                } else if (c.tagName === "A" && c.getElementsByTagName("img").length === 1) {
 
                     if (timerObserver) {
                         clearTimeout(timerObserver);
