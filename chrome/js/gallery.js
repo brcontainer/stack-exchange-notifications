@@ -499,7 +499,7 @@
             mutations.forEach(function (mutation) {
                 var c = mutation.target;
 
-                if (c.tagName !== "A" && c.querySelector("a > img")) {
+                if (c.tagName !== "A" && c.querySelector("a img")) {
 
                     if (timerObserver) {
                         clearTimeout(timerObserver);
@@ -507,7 +507,7 @@
 
                     timerObserver = setTimeout(setGallery, 50, c);
 
-                } else if (c.tagName === "A" && c.firstElementChild && c.firstElementChild.tagName === "IMG") {
+                } else if (c.tagName === "A" && c.getElementsByTagName("img").length) {
 
                     if (timerObserver) {
                         clearTimeout(timerObserver);
