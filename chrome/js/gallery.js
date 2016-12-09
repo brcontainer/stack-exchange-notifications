@@ -18,6 +18,7 @@
         loaded = false,
         magnified = false,
         magnifyPhoto = false,
+        currentZoom = null,
         targetImg,
         currentPhoto,
         currentPhotoToken,
@@ -68,8 +69,10 @@
 
         if (magnifyPhoto) {
             currentPhoto.className += " magnification";
+            magnified = false;
         } else {
             currentPhoto.className += " magnified";
+            magnified = true;
         }
 
         currentPhoto.style.cssText = "";
@@ -167,6 +170,10 @@
             xel = 0, yel = 0;
 
         currentPhoto.addEventListener("mousedown", function() {
+            if (!magnified) {
+                return;
+            }
+
             isMove = true;
 
             x = window.event ? window.event.clientX : e.pageX;
@@ -177,7 +184,7 @@
         });
 
         document.addEventListener("mousemove", function(e) {
-            if (isMove) {
+            if (isMove && magnified) {
                 e.preventDefault();
 
                 x = window.event ? window.event.clientX : e.pageX;
@@ -214,13 +221,16 @@
 
         dragablePhoto();
 
-        var currentZoom = 1;
-
         function mouseWheel(e)
         {
+            if (!magnified) {
+                return;
+            }
+
             e.preventDefault();
 
-            if (currentZoom === 1) {
+            if (currentZoom === null) {
+                currentZoom = 1;
                 currentPhoto.click();
             }
 
@@ -248,12 +258,15 @@
 
         currentPhoto.addEventListener("dblclick", function() {
             currentPhoto.style.transform = "scale(1)";
+            currentZoom = null;
         });
 
-        currentPhoto.addEventListener("click", function() {
+        currentPhoto.addEventListener("click", function(e) {
             if (!magnifyPhoto || magnified) {
                 return;
             }
+
+            e.preventDefault();
 
             magnified = true;
 
@@ -359,6 +372,8 @@
             return;
         }
 
+        currentZoom = 1;
+
         currentPhotoToken = String(new Date().getTime());
 
         el.setAttribute("data-sen-gallery", currentPhotoToken);
@@ -429,7 +444,7 @@
             setupKeyEsc = true;
 
             doc.addEventListener("keydown", function (e) {
-                if (showRegExp.test(viewHTML.className)) {
+                if (!showRegExp.test(viewHTML.className)) {
                     return;
                 }
 
