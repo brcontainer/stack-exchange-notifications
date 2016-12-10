@@ -550,7 +550,7 @@
         loadCss("editor.css");
 
         if (typeof theme === "string") {
-            loadCss("/themes/" + theme + "/editor.css");
+            loadCss("themes/" + theme + "/editor.css");
         }
 
         if (/^(interactive|complete)$/i.test(doc.readyState)) {
@@ -575,6 +575,7 @@
                 italicWithUnderScore = !!response.italic;
                 syncScroll = !!response.scroll;
                 lastcheck = response.lastcheck;
+                theme = response.theme;
 
                 initiate();
             }
