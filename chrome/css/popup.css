@@ -62,27 +62,6 @@ hr {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-@-moz-document url-prefix() {
-    html, body {
-        height: 600px;
-    }
-
-    body {
-        overflow-x: hidden;
-    }
-
-    .field {
-        padding-right: 24px !important;
-    }
-
-    @media (max-device-height: 600px)
-    {
-        html, body {
-            height: 480px;
-        }
-    }
-}
-
 .header {
     padding: 1.6em 1.1em;
     background-color: #fff;
@@ -195,7 +174,20 @@ hr {
     width: 70%;
 }
 
-.field, .btn {
+select.field {
+    background: url(../images/arrow.svg) 370px center no-repeat;
+    background-size: 16px 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    width: 100%;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+
+.field, select.field, .btn {
     margin: 0;
     border-bottom: 1px #e4e4e4 solid;
     background-color: #fff;
@@ -223,6 +215,7 @@ hr {
     display: block;
     clear: both;
 }
+
 .field.first, .btn.first {
     border-top: 1px #e4e4e4 solid;
 }
@@ -509,4 +502,29 @@ hr {
     font-size: 10pt;
     padding: 1.1em;
     text-transform: uppercase;
+}
+
+@-moz-document url-prefix() {
+    html, body {
+        height: 600px;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .field {
+        padding-right: 24px !important;
+    }
+
+    select.field {
+        background-position: 360px center !important;
+    }
+
+    @media (max-device-height: 600px)
+    {
+        html, body {
+            height: 480px;
+        }
+    }
 }

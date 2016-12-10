@@ -98,6 +98,8 @@
 
     function alignImage()
     {
+        currentZoom = null;
+
         var vw = photos.clientWidth, vh = photos.clientHeight,
             cw = currentPhoto.clientWidth, ch = currentPhoto.clientHeight;
 
@@ -223,7 +225,7 @@
 
         function mouseWheel(e)
         {
-            if (!magnified) {
+            if (!showRegExp.test(viewHTML.className)) {
                 return;
             }
 

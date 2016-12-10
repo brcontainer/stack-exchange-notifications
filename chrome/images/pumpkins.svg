@@ -20,7 +20,7 @@
 #clear:target ~ use,
 #clear:target ~ g {
     fill: #ff9812;
-    fill-opacity: 0.09;
+    fill-opacity: 0.19;
 }
 
 #light:target ~ use,

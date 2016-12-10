@@ -6,6 +6,29 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     viewBox="0 0 136 244"
 >
+<style>
+use {
+    display: none;
+}
+
+.default {
+    fill: #524847 !important;
+    display: block;
+}
+
+use:target ~ .default, use:target {
+    display: block;
+}
+
+#gray:target, #gray-shadow:target {
+    fill: #c1d1d0 !important;
+}
+
+#white:target, #white-shadow:target {
+    fill: #ffffff !important;
+}
+</style>
+
 <defs>
 <filter id="drop-shadow">
     <feGaussianBlur in="SourceAlpha" stdDeviation="0.7" />
@@ -17,7 +40,18 @@
         <feMergeNode in="SourceGraphic" />
     </feMerge>
 </filter>
+
+<g id="main">
+    <path
+        d="M 130.77775,113.405 22.480749,5.1440015 c -4.752,-4.74 -12.451,-4.74 -17.2150001,0 -4.75199998,4.74 -4.75199998,12.4390005 0,17.1790005 L 104.97275,121.994 5.2777489,221.665 c -4.75199998,4.74 -4.75199998,12.439 0,17.191 4.7520001,4.74 12.4630001,4.74 17.2150001,0 L 130.78975,130.595 c 4.68,-4.691 4.68,-12.511 -0.012,-17.19 z" />
+</g>
 </defs>
-<path fill="#ffffff" filter="url(#drop-shadow)"
-    d="M 130.77775,113.405 22.480749,5.1440015 c -4.752,-4.74 -12.451,-4.74 -17.2150001,0 -4.75199998,4.74 -4.75199998,12.4390005 0,17.1790005 L 104.97275,121.994 5.2777489,221.665 c -4.75199998,4.74 -4.75199998,12.439 0,17.191 4.7520001,4.74 12.4630001,4.74 17.2150001,0 L 130.78975,130.595 c 4.68,-4.691 4.68,-12.511 -0.012,-17.19 z" />
+
+<g>
+    <use xlink:href="#main" class="default"></use>
+    <use xlink:href="#main" id="gray"></use>
+    <use xlink:href="#main" id="white"></use>
+    <use xlink:href="#main" id="gray-shadow" filter="url(#drop-shadow)"></use>
+    <use xlink:href="#main" id="white-shadow" filter="url(#drop-shadow)"></use>
+</g>
 </svg>

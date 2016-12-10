@@ -15,6 +15,10 @@
     fill: #c1d1d0 !important;
 }
 
+#white:target ~ use {
+    fill: #c1d1d0 !important;
+}
+
 use {
     -webkit-transition: 1s fill;
     -moz-transition: 1s fill;
@@ -48,6 +52,7 @@ use {
 
 <g class="default">
     <g id="gray"></g>
+    <g id="white"></g>
 
     <use xlink:href="#main" />
 </g>

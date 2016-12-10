@@ -14,6 +14,7 @@
         rootDoc,
         done = false,
         syncScroll = false,
+        lastcheck,
         viewHTML,
         italicWithUnderScore = false,
         inverted = false,
@@ -175,6 +176,29 @@
         }
     }
 
+    var transparentRe = /rgba\(.*(,|,\s+)0\)/i;
+
+    function getBgColor(el)
+    {
+        var color = null;
+
+        if (el.style) {
+            var cs = window.getComputedStyle(el, null);
+
+            if (cs) {
+                color = cs.getPropertyValue("background-color");
+
+                if (color && (color === "transparent" || color === "" || transparentRe.test(color))) {
+                    color = el.parentNode ? getBgColor(el.parentNode) : null;
+                }
+            }
+
+            cs = null;
+        }
+
+        return color;
+    }
+
     function bootMain(newEditor, realEditor)
     {
         var
@@ -192,6 +216,18 @@
             syncScrollBtn = newEditor.querySelector("a.sen-syncscroll-button")
         ;
 
+        var realToolbar = realEditor.querySelector(".wmd-button-bar");
+
+        realToolbar = realToolbar ? realToolbar : realEditor.querySelector("#wmd-button-bar");
+
+        if (realToolbar) {
+            var bgColor = getBgColor(realToolbar);
+            var newToolbar = newEditor.querySelector(".sen-editor-toolbar");
+
+            newToolbar.style.backgroundColor = bgColor ? bgColor : "#fff";
+            previewTarget.style.backgroundColor = bgColor ? bgColor : "#fff";
+        }
+
         realEditor.className += " sen-editor-visible";
 
         triggerEvent("click", realTextField);
@@ -201,10 +237,12 @@
             newEditor.className += " sen-editor-focus";
         });
 
-        var d = new Date;
+        if (lastcheck) {
+            var d = new Date(lastcheck);
 
-        if (d.getDate() == 31 && d.getMonth() == 9) {
-            previewTarget.className += " halloween";
+            if (d.getDate() == 31 && d.getMonth() == 9) {
+                previewTarget.className += " halloween";
+            }
         }
 
         realTextField.addEventListener("blur", function() {
@@ -512,7 +550,7 @@
         loadCss("editor.css");
 
         if (typeof theme === "string") {
-            loadCss("themes/" + theme + "/editor.css");
+            loadCss("/themes/" + theme + "/editor.css");
         }
 
         if (/^(interactive|complete)$/i.test(doc.readyState)) {
@@ -536,7 +574,7 @@
                 inverted = !!response.inverted;
                 italicWithUnderScore = !!response.italic;
                 syncScroll = !!response.scroll;
-                theme = response.theme;
+                lastcheck = response.lastcheck;
 
                 initiate();
             }

@@ -189,6 +189,7 @@
             });
         } else if (request === "editor") {
             sendResponse({
+                "lastcheck": StackExchangeNotifications.restoreState("lastCheck"),
                 "available": StackExchangeNotifications.switchEnable("editor_actived"),
                 "preview":   StackExchangeNotifications.switchEnable("editor_preview"),
                 "inverted":  StackExchangeNotifications.switchEnable("editor_inverted"),
@@ -196,7 +197,7 @@
                 "scroll":    StackExchangeNotifications.switchEnable("editor_sync_scroll"),
                 "indent":    StackExchangeNotifications.switchEnable("editor_tabs_by_spaces"),
                 "theme":     StackExchangeNotifications.switchEnable("black_theme") ?
-                                                                            "black" : null,
+                                                                            "black" : null
             });
         } else if (request) {
             if (request.data && request.clear) {
