@@ -16,6 +16,9 @@
             <a title="Setup" id="setup-button" href="#setup-button">
                 <span class="icon">&nbsp;</span>
             </a>
+            <a title="Linked chat" id="chat-button" href="#chat-button" style="display: none;">
+                <span class="icon">&nbsp;</span>
+            </a>
             <a title="Show Achievements" id="achievements-button" href="#achievements-button">
                 <span class="push hide">0</span>
                 <span class="icon">&nbsp;</span>
@@ -28,8 +31,6 @@
 
         <div id="setup-content" class="tab-item hide">
             <div class="setup">
-                <!--h1>Options</h1-->
-
                 <h2>Pushs</h2>
                 <p class="field first">
                     <span class="label">New inbox messages</span>
@@ -65,12 +66,6 @@
                         <small>off</small>
                     </a>
                 </p>
-
-                <select data-switch="editor_icons" class="field">
-                    <option>Default editor icons</option>
-                    <option color="white">Gray editor icons</option>
-                    <option color="gray">White editor icons</option>
-                </select>
 
                 <h2>Desktop</h2>
                 <p class="field first">
@@ -154,8 +149,29 @@
             </div>
         </div>
 
+        <div class="tab-item hide" id="chat-content">
+            <div class="header">
+                <h3>
+                    chat rooms
+                </h3>
+            </div>
+            <div class="modal-content">
+                <div class="room">
+                    <a href="#">Test</a>
+                </div>
+                <div class="room">
+                    <a href="#">Test</a>
+                </div>
+                <div class="room">
+                    <a href="#">Test</a>
+                </div>
+            </div>
+        </div>
+
         <div class="tab-item hide" id="inbox-content"></div>
+
         <div class="tab-item hide" id="achievements-content"></div>
+
         <div class="tab-item xhide" id="about-content">
             <div class="about">
                 <div class="about-icon bg-sen">

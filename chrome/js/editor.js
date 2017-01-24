@@ -176,7 +176,10 @@
         }
     }
 
-    var transparentRe = /rgba\(.*(,|,\s+)0\)/i;
+    var
+        rgbaToRgb = /rgba\((.*)(,|,\s+)[\d.]+\)/i,
+        transparentRe = /rgba\(.*(,|,\s+)[0.]+\)/i
+    ;
 
     function getBgColor(el)
     {
@@ -190,6 +193,8 @@
 
                 if (color && (color === "transparent" || color === "" || transparentRe.test(color))) {
                     color = el.parentNode ? getBgColor(el.parentNode) : null;
+                } else {
+                    color = color.replace(rgbaToRgb, "rgb($1)");
                 }
             }
 
@@ -405,14 +410,19 @@
         //Ask new question
         referenceTarget = realEditor.querySelector(".question-form");
 
-        //Edite wiki tags
+        //Edit wiki tags
         if (!referenceTarget) {
             referenceTarget = realEditor.querySelector(".input-section");
         }
 
-        //Edite questions and answers or new anwsers
+        //Edit questions and answers or new anwsers
         if (!referenceTarget) {
             referenceTarget = realEditor.querySelector(".post-editor");
+        }
+
+        //Edit user profile
+        if (!referenceTarget) {
+            referenceTarget = realEditor.querySelector(".inner-container");
         }
 
         referenceTarget.parentNode.insertBefore(newEditor, referenceTarget.nextSibling);
@@ -535,7 +545,6 @@
             var els = doc.querySelectorAll("form.post-form");
 
             if (els.length > 0) {
-
                 for (var i = els.length - 1; i >= 0; i--) {
                     setTimeout(createEditor, 1, els[i]);
                 }

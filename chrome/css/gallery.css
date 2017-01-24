@@ -47,7 +47,7 @@
     position: absolute !important;
     background-color: #fff !important;
     box-shadow: 0 0 15px rgba(0,0,0,.9) !important;
-    transition: transform .4s;
+    transition: transform .3s;
 }
 .sen-gallery-loader {
     position: absolute !important;

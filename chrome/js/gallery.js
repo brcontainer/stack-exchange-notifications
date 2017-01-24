@@ -98,6 +98,7 @@
 
     function alignImage()
     {
+        currentPhoto.style.transform = "scale(1)";
         currentZoom = null;
 
         var vw = photos.clientWidth, vh = photos.clientHeight,
@@ -126,6 +127,9 @@
 
         viewHTML.className = viewHTML.className
                                 .replace(showRegExp, " ").trim();
+
+        currentPhoto.style.transform = "scale(1)";
+        currentZoom = null;
     }
 
     function navigateTo(navigate)

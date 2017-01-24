@@ -148,13 +148,18 @@ hr {
 
 .notice {
     position: absolute;
-    top: 40%;
+    top: 0;
     left: 0;
-    z-index: 900;
+    z-index: 98;
     width: 100%;
+    height: 100%;
     text-align: center;
     color: #ccc;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     text-shadow: 0 1px rgba(255, 255, 255, 1);
+
 }
 
 .bg-sen {
@@ -258,6 +263,11 @@ select.field {
     border-color: #3E84B3;
 }
 
+#chat-button {
+    background-color: #f5c816;
+    border-color: #c3a015;
+}
+
 #setup-button {
     background-color: #C5C5C5;
     border-color: #989897;
@@ -277,6 +287,10 @@ select.field {
     background-color: #68B0E0;
 }
 
+#chat-button:hover, #chat-button:target {
+    background-color: #e0b611;
+}
+
 #setup-button:hover, #setup-button:target {
     background-color: #ea5d5d;
 }
@@ -291,6 +305,10 @@ select.field {
 
 #achievements-button span.icon {
     background-image: url(../images/achievements.svg);
+}
+
+#chat-button span.icon {
+    background-image: url(../images/chat.svg);
 }
 
 #setup-button span.icon {
@@ -310,7 +328,8 @@ select.field {
 
 .utc-clock,
 .tab-item .modal-content li,
-.tab-item .modal-content div.date-group {
+.tab-item .modal-content div.date-group,
+.tab-item .modal-content .room {
     border-top: 1px #cfcfcf solid;
 }
 
@@ -331,6 +350,7 @@ select.field {
     border-top-color: #BECFE8;
     background-color: #D6E1ED;
 }
+.tab-item .modal-content .room a,
 .tab-item .modal-content li a {
     padding: 0.65em 0.25em 0.65em 0.55em;
     text-decoration: none;

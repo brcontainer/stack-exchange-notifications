@@ -28,6 +28,9 @@
         aboutButton         = doc.getElementById("about-button"),
         aboutContent        = doc.getElementById("about-content"),
 
+        chatButton         = doc.getElementById("chat-button"),
+        chatContent        = doc.getElementById("chat-content"),
+
         setupButton         = doc.getElementById("setup-button"),
         setupContent        = doc.getElementById("setup-content"),
 
@@ -119,10 +122,10 @@
 
     function checkEvent()
     {
-        var lastCheck = StackExchangeNotifications.restoreState("lastCheck");
+        var lastcheck = StackExchangeNotifications.restoreState("lastcheck");
 
-        if (lastCheck) {
-            var d = new Date(lastCheck);
+        if (lastcheck) {
+            var d = new Date(lastcheck);
 
             if (d.getDate() == 31 && d.getMonth() == 9) {
                 doc.body.className += " halloween";
@@ -349,8 +352,44 @@
         aboutContent.className =
             aboutContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
+        chatContent.className =
+            chatContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+
         setupContent.className =
             aboutContent.className.replace(/hide/g, "").trim();
+    };
+
+    chatButton.onclick = function()
+    {
+        if (inboxXhr) {
+            inboxXhr.abort();
+        }
+
+        if (achievementsXhr) {
+            achievementsXhr.abort();
+        }
+
+        inboxActive = false;
+        achievementsActive = false;
+
+        window.scrollTo(0, 0);
+
+        StackExchangeNotifications.saveState("lastTab", "chat");
+
+        achievementsContent.className =
+            achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+
+        inboxContent.className =
+            inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+
+        aboutContent.className =
+            aboutContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+
+        setupContent.className =
+            setupContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+
+        chatContent.className =
+            chatContent.className.replace(/hide/g, "").trim();
     };
 
     aboutButton.onclick = function()
@@ -378,6 +417,9 @@
 
         setupContent.className =
             setupContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+
+        chatContent.className =
+            chatContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
 
         aboutContent.className =
             aboutContent.className.replace(/hide/g, "").trim();
@@ -413,29 +455,33 @@
         inboxContent.className =
             inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " sen-bg-loader";
 
+        chatContent.className =
+            chatContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+
         inboxContent.innerHTML = "";
 
         inboxXhr = StackExchangeNotifications.inbox(function(data, code) {
             if (code !== 200 && code !== -1) {
                 inboxContent.innerHTML =
-                    '<span class="sen-error notice">HTTP error - status: ' +
-                        code + '</span>';
+                    '<div class="sen-error notice">HTTP error - status: ' +
+                        code + '</div>';
 
             } else if (code === -1) {
                 inboxContent.innerHTML = [
-                    '<span class="sen-error notice">',
+                    '<div class="sen-error notice">',
                     "Response error:<br>",
                     "You must be logged in to <br>",
                     "<a href=\"http://stackexchange.com\">http://stackexchange.com</a>",
-                    '</span>'
+                    '</div>'
                 ].join("");
 
                 setDomEvents(inboxContent);
             } else if (data.indexOf("<") !== -1) {
+                StackExchangeNotifications.setInbox(0);
+
                 setTimeout(function () {
-                    StackExchangeNotifications.setInbox(0);
                     StackExchangeNotifications.update();
-                }, 500);
+                }, 1500);
 
                 inboxContent.innerHTML = StackExchangeNotifications.utils.cleanDomString(data);
 
@@ -480,6 +526,9 @@
         achievementsContent.className =
             achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " sen-bg-loader";
 
+        chatContent.className =
+            chatContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+
         achievementsContent.innerHTML = "";
 
         achievementsXhr = StackExchangeNotifications.achievements(function(data, code, headers) {
@@ -487,16 +536,16 @@
 
             if (code !== 200 && code !== -1) {
                 achievementsContent.innerHTML =
-                    '<span class="sen-error notice">HTTP error - status: ' +
-                        code + '</span>';
+                    '<div class="sen-error notice">HTTP error - status: ' +
+                        code + '</div>';
 
             }  else if (code === -1) {
                 achievementsContent.innerHTML = [
-                    '<span class="sen-error notice">',
+                    '<div class="sen-error notice">',
                     "Response error:<br>",
                     "You must be logged in to <br>",
                     "<a href=\"http://stackexchange.com\">http://stackexchange.com</a>",
-                    '</span>'
+                    '</div>'
                 ].join("");
 
                 setDomEvents(achievementsContent);
@@ -571,6 +620,9 @@
     {
         case "setup":
             setupButton.onclick();
+        break;
+        case "chat":
+            chatButton.onclick();
         break;
         case "about":
             aboutButton.onclick();

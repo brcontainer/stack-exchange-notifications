@@ -26,7 +26,6 @@
             "*://superuser.com/*",
             "*://superuser.com/*",
             "*://serverfault.com/*",
-            "*://mathoverflow.com/*",
             "*://stackoverflow.com/*",
             "*://stackexchange.com/*",
 
@@ -35,9 +34,13 @@
             "*://*.superuser.com/*",
             "*://*.superuser.com/*",
             "*://*.serverfault.com/*",
-            "*://*.mathoverflow.com/*",
             "*://*.stackoverflow.com/*",
-            "*://*.stackexchange.com/*"
+            "*://*.stackexchange.com/*",
+
+            "*://mathoverflow.net/*",
+            "*://mathoverflow.com/*",
+            "*://*.mathoverflow.net/*",
+            "*://*.mathoverflow.com/*"
         ],
         "js": [
             "js/detectchanges.js",
@@ -51,14 +54,20 @@
         "js": [
             "js/detectuseractivity.js"
         ]
+    }, {
+        "matches": [
+            "*://chat.stackexchange.com/*",
+            "*://chat.stackoverflow.com/*",
+            "*://chat.meta.stackoverflow.com/*",
+            "*://chat.meta.stackexchange.com/*"
+        ],
+        "js": [
+            "js/pinchat.js"
+        ]
     }],
     "web_accessible_resources": [
-        "view/editor.html",
-        "css/editor.css",
-        "view/gallery.html",
-        "css/gallery.css",
-        "css/animate.css",
-        "css/themes/*",
+        "view/*",
+        "css/*",
         "images/*"
     ],
     "permissions": [

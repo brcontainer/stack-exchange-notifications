@@ -189,7 +189,7 @@
             });
         } else if (request === "editor") {
             sendResponse({
-                "lastcheck": StackExchangeNotifications.restoreState("lastCheck"),
+                "lastcheck": StackExchangeNotifications.restoreState("lastcheck"),
                 "available": StackExchangeNotifications.switchEnable("editor_actived"),
                 "preview":   StackExchangeNotifications.switchEnable("editor_preview"),
                 "inverted":  StackExchangeNotifications.switchEnable("editor_inverted"),
@@ -206,15 +206,15 @@
                 StackExchangeNotifications.enableSleepMode(request.sleepMode);
             } else if (request.storeimages) {
                 if (request.storeimages === true) {
-                    var cssBg = StackExchangeNotifications.restoreState("cssBg", false);
+                    var cssbg = StackExchangeNotifications.restoreState("cssbg", false);
 
-                    if (cssBg) {
-                        sendResponse(cssBg);
-                        cssBg = null;
+                    if (cssbg) {
+                        sendResponse(cssbg);
+                        cssbg = null;
                     }
                 } else {
                     StackExchangeNotifications.utils.generateCssImages(request.storeimages, function(data) {
-                        StackExchangeNotifications.saveState("cssBg", data, false);
+                        StackExchangeNotifications.saveState("cssbg", data, false);
                         sendResponse(data);
                     });
 

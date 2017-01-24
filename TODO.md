@@ -28,10 +28,12 @@
 - [ ] Strikethrough button
 - [ ] Use underscores (`_foo_`) in Italic button
 - [x] Use default site colors or themes installed with tools like "Stylish"
+- [ ] Bug in answer your owner question
 
 # Chat
 
 - [ ] Remove onebox
+- [ ] Save favorite rooms
 
 # Others
 

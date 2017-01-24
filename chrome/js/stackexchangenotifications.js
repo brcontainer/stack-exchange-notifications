@@ -320,7 +320,7 @@
             if (typeof data.UnreadRepCount !== "undefined") {
 
                 if (headers && headers.Date) {
-                    StackExchangeNotifications.saveState("lastCheck", headers.Date);
+                    StackExchangeNotifications.saveState("lastcheck", headers.Date);
                 }
 
                 score = parseInt(data.UnreadRepCount);
@@ -404,7 +404,7 @@
 
     window.StackExchangeNotifications = {
         "boot": function() {
-            //Improve perfomance in Opera and older machinesSW
+            //Improve perfomance in Opera and older machines
             setTimeout(function() { initiateDelay = 1; }, initiateDelay);
 
             if (SimpleCache.get("firstrun2", true)) {

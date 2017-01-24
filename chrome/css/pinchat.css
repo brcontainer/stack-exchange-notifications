@@ -1,0 +1,29 @@
+/*
+ * StackExchangeNotifications 1.0.0
+ * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Released under the MIT license
+ *
+ * https://github.com/brcontainer/stack-exchange-notification
+ */
+
+a.btn-pin > i.inroom-heart-icon {
+    background: url(../images/heart.svg) no-repeat;
+    background-size: contain;
+    vertical-align: middle;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    perspective: 1000;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform ease-out 1s;
+}
+
+a.btn-pin:hover > i.inroom-heart-icon {
+    transform: rotateY(-180deg);
+}
+
+a.btn-pin > i.inroom-heart-icon {
+    width: 10px;
+    height: 10px;
+}
