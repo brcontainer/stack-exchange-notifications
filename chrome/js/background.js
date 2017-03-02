@@ -13,6 +13,7 @@
 
     StackExchangeNotifications.boot();
 
+    /*
     var restoreMessages = StackExchangeNotifications.restoreState("notificationbackup", true);
 
     if (restoreMessages) {
@@ -28,6 +29,7 @@
             }
         }
     }
+    */
 
     window.detectUpdate = function(callback) {
         if (typeof callback === "function" || callback === null) {
@@ -42,6 +44,8 @@
         if (!StackExchangeNotifications.switchEnable("desktop_notification")) {
             return;
         }
+
+        return;
 
         StackExchangeNotifications.inbox(function(data, code) {
             if (code == 200 && data.indexOf("<") !== -1) {
@@ -119,11 +123,11 @@
             ++updates;
         }
 
-        if (response.inbox > 0 &&
+        /*if (response.inbox > 0 &&
               StackExchangeNotifications.switchEnable("desktop_notification")
         ) {
             setTimeout(getMessages, 200);
-        }
+        }*/
 
         browser.browserAction.setBadgeText({
             "text": StackExchangeNotifications.utils.convertResult(updates)

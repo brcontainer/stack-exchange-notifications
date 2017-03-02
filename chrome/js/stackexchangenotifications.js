@@ -466,7 +466,7 @@
             return TokenNotifications;
         },
         "notify": function(id, title, message) {
-            if (!StackExchangeNotifications.switchEnable("editor_actived")) {
+            if (!StackExchangeNotifications.switchEnable("desktop_notification")) {
                 return;
             }
 

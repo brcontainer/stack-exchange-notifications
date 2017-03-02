@@ -24,14 +24,12 @@
             "*://stackapps.com/*",
             "*://askubuntu.com/*",
             "*://superuser.com/*",
-            "*://superuser.com/*",
             "*://serverfault.com/*",
             "*://stackoverflow.com/*",
             "*://stackexchange.com/*",
 
             "*://*.stackapps.com/*",
             "*://*.askubuntu.com/*",
-            "*://*.superuser.com/*",
             "*://*.superuser.com/*",
             "*://*.serverfault.com/*",
             "*://*.stackoverflow.com/*",
@@ -46,13 +44,6 @@
             "js/detectchanges.js",
             "js/gallery.js",
             "js/editor.js"
-        ]
-    }, {
-        "matches": [
-            "<all_urls>"
-        ],
-        "js": [
-            "js/detectuseractivity.js"
         ]
     }, {
         "matches": [

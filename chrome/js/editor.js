@@ -21,16 +21,17 @@
         tabsBySpaces = false,
         preferPreviewInFull = false,
         italicRegExp   = /(^|\s|\*\*)\*([^*]+)\*(\s|\*\*|$)/g,
-        focusRegExp    = /(^|\s)sen\-editor\-focus($|\s)/,
-        visibleRegExp  = /(^|\s)sen\-editor\-visible($|\s)/,
-        fullRegExp     = /(^sen|\ssen)\-editor\-(full$|full\s)/,
-        readyRegExp    = /(^|\s)sen\-editor\-ready($|\s)/,
-        invertedRegExp = /(^|\s)sen\-editor\-inverted($|\s)/,
-        noscrollRegExp = /(^|\s)sen\-editor\-noscroll($|\s)/,
-        getClassRegexp = /^([\s\S]+?\s|)(wmd\-[\S]+?\-button)([\s\S]+|)$/,
-        skipBtnRegexp  = /sen\-(preview|full|flip|italic|strikethrough|syncscroll)\-button/,
-        isPostRegexp   = /(^|\s)(inline\-(editor|answer|post))($|\s)/,
-        activeRegexp   = /(^|\s)sen\-disabled($|\s)/,
+        focusRegExp    = /(^|\s)sen-editor-focus($|\s)/,
+        visibleRegExp  = /(^|\s)sen-editor-visible($|\s)/,
+        fullRegExp     = /(^sen|\ssen)-editor-(full$|full\s)/,
+        readyRegExp    = /(^|\s)sen-editor-ready($|\s)/,
+        invertedRegExp = /(^|\s)sen-editor-inverted($|\s)/,
+        noscrollRegExp = /(^|\s)sen-editor-noscroll($|\s)/,
+        getClassRegexp = /^([\s\S]+?\s|)(wmd-[\S]+?-button)([\s\S]+|)$/,
+        skipBtnRegexp  = /sen-(preview|full|flip|italic|strikethrough|syncscroll)-button/,
+        isPostRegexp   = /(^|\s)(inline-(editor|answer|post))($|\s)/,
+        isInput        = /(^|\s)wmd-input($|\s)/,
+        activeRegexp   = /(^|\s)sen-disabled($|\s)/,
         isMac          = /Mac/.test(navigator.platform)
     ;
 
@@ -52,7 +53,7 @@
     }
 
     //Fix bug in Firefox when on click in a button
-    function hideRealEditor(target)
+    function hideElement(target)
     {
         target.className
             = target.className
@@ -115,7 +116,7 @@
 
             event = null;
 
-            timerHideButtons = setTimeout(hideRealEditor, 200, realEditor);
+            timerHideButtons = setTimeout(hideElement, 200, realEditor);
         });
 
         return !!btn;
@@ -176,6 +177,32 @@
         }
     }
 
+    var inScrollEvt;
+
+    function onScroll(type, from, to) {
+        var timerScroll;
+
+        from.addEventListener("scroll", function()
+        {
+            if (!syncScroll || (inScrollEvt && inScrollEvt !== type)) {
+                return;
+            }
+
+            clearTimeout(timerScroll);
+
+            inScrollEvt = type;
+
+            var sf = from.scrollHeight - from.clientHeight,
+                st = to.scrollHeight - to.clientHeight;
+
+            to.scrollTop = st * (from.scrollTop / sf);
+
+            timerScroll = setTimeout(function() {
+                inScrollEvt = null;
+            }, 200);
+        });
+    }
+
     var
         rgbaToRgb = /rgba\((.*)(,|,\s+)[\d.]+\)/i,
         transparentRe = /rgba\(.*(,|,\s+)[0.]+\)/i
@@ -204,43 +231,49 @@
         return color;
     }
 
-    function bootMain(newEditor, realEditor)
+    function bootMain(navbar, realEditor)
     {
         var
-            referenceTarget,
+            container = realEditor.querySelector(".wmd-container"),
 
             realPreview = realEditor.querySelector(".wmd-preview"),
             realTextField = realEditor.querySelector(".wmd-input"),
 
-            previewTarget = newEditor.querySelector(".sen-preview"),
-            textTarget = newEditor.querySelector(".sen-textfield"),
-
-            fullBtn = newEditor.querySelector("a.sen-full-button"),
-            previewBtn = newEditor.querySelector("a.sen-preview-button"),
-            flipBtn = newEditor.querySelector("a.sen-flip-button"),
-            syncScrollBtn = newEditor.querySelector("a.sen-syncscroll-button")
+            fullBtn = navbar.querySelector("a.sen-full-button"),
+            previewBtn = navbar.querySelector("a.sen-preview-button"),
+            flipBtn = navbar.querySelector("a.sen-flip-button"),
+            syncScrollBtn = navbar.querySelector("a.sen-syncscroll-button")
         ;
 
-        var realToolbar = realEditor.querySelector(".wmd-button-bar");
+        container.insertBefore(navbar, container.firstChild);
+        container.appendChild(realPreview);
 
-        realToolbar = realToolbar ? realToolbar : realEditor.querySelector("#wmd-button-bar");
+        setTimeout(function() {
+            var buttons = navbar.querySelectorAll("a[class^='sen-btn ']");
 
-        if (realToolbar) {
-            var bgColor = getBgColor(realToolbar);
-            var newToolbar = newEditor.querySelector(".sen-editor-toolbar");
+            for (var i = buttons.length - 1; i >= 0; i--) {
+                addEventButton(buttons[i], realEditor, realTextField);
+                changeShorcutTitle(buttons[i]);
+            }
 
-            newToolbar.style.backgroundColor = bgColor ? bgColor : "#fff";
-            previewTarget.style.backgroundColor = bgColor ? bgColor : "#fff";
-        }
+            onScroll("preview", realPreview, realTextField);
+            onScroll("field", realTextField, realPreview);
 
-        realEditor.className += " sen-editor-visible";
+            realTextField.addEventListener("focus", function() {
+                realEditor.className += " sen-editor-focus";
+            });
 
-        triggerEvent("click", realTextField);
-        triggerEvent("focus", realTextField);
+            realTextField.addEventListener("blur", function() {
+                realEditor.className
+                    = realEditor.className
+                        .replace(focusRegExp, " ")
+                            .replace(/\s\s/g, " ")
+                                .trim();
+            });
 
-        realTextField.addEventListener("focus", function() {
-            newEditor.className += " sen-editor-focus";
-        });
+            var bgColor = getBgColor(container);
+            container.style.backgroundColor = bgColor ? bgColor : "#fff";
+        }, 600);
 
         if (lastcheck) {
             var d = new Date(lastcheck);
@@ -250,79 +283,11 @@
             }
         }
 
-        realTextField.addEventListener("blur", function() {
-            newEditor.className
-                = newEditor.className
-                    .replace(focusRegExp, " ")
-                        .replace(/\s\s/g, " ")
-                            .trim();
-        });
+        fullBtn.addEventListener("click", function() {
+            var inPreview = readyRegExp.test(realEditor.className);
 
-        doc.addEventListener("keydown", function(e) {
-            if (e.altKey && e.target === realTextField) {
-                switch (e.keyCode) {
-                    case 70: //Alt+F change to fullscreen or normal
-                        e.preventDefault();
-                        fullBtn.click();
-                    break;
-                    case 86: //Alt+V show/hide preview
-                        e.preventDefault();
-                        previewBtn.click();
-                    break;
-                }
-            }
-        });
-
-        var inScrollEvt, timerScroll;
-
-        function onScroll(type, from, to) {
-            from.addEventListener("scroll", function()
-            {
-                if (!syncScroll || (inScrollEvt && inScrollEvt !== type)) {
-                    return;
-                }
-
-                clearTimeout(timerScroll);
-
-                inScrollEvt = type;
-
-                var sf = from.scrollHeight - from.clientHeight,
-                    st = to.scrollHeight - to.clientHeight;
-
-                to.scrollTop = st * (from.scrollTop / sf);
-
-                timerScroll = setTimeout(function() {
-                    inScrollEvt = null;
-                }, 200);
-            });
-        }
-
-        onScroll("preview", previewTarget, realTextField);
-        onScroll("field", realTextField, previewTarget);
-
-        previewTarget.addEventListener("click", function() {
-            if (!fullRegExp.test(newEditor.className)) {
-                realTextField.focus();
-            }
-        });
-
-        previewTarget.appendChild(realPreview);
-
-        textTarget.appendChild(realTextField);
-
-        if (tabsBySpaces || italicWithUnderScore) {
-            realTextField.addEventListener("change", eventsInput);
-            realTextField.addEventListener("keyup",  eventsInput);
-            realTextField.addEventListener("paste",  eventsInput);
-            realTextField.addEventListener("input",  eventsInput);
-        }
-
-        fullBtn.addEventListener("click", function()
-        {
-            var inPreview = readyRegExp.test(newEditor.className);
-
-            if (fullRegExp.test(newEditor.className)) {
-                newEditor.className = newEditor.className
+            if (fullRegExp.test(realEditor.className)) {
+                realEditor.className = realEditor.className
                                         .replace(fullRegExp, " ")
                                             .replace(/\s\s/g, " ").trim();
 
@@ -331,18 +296,18 @@
                                             .replace(/\s\s/g, " ").trim();
 
                 if (preferPreviewInFull) {
-                    newEditor.className = newEditor.className
+                    realEditor.className = realEditor.className
                                             .replace(readyRegExp, " ")
                                                 .replace(/\s\s/g, " ").trim();
 
                     inPreview = false;
                 }
             } else {
-                newEditor.className += " sen-editor-full";
+                realEditor.className += " sen-editor-full";
                 rootDoc.className += " sen-editor-noscroll";
 
                 if (preferPreviewInFull) {
-                    newEditor.className += " sen-editor-ready";
+                    realEditor.className += " sen-editor-ready";
                     inPreview = true;
                 }
             }
@@ -355,12 +320,11 @@
 
         previewBtn.addEventListener("click", function()
         {
-            var ca = "" + newEditor.className;
+            var ca = "" + realEditor.className;
             var inFull = fullRegExp.test(ca);
 
             if (readyRegExp.test(ca)) {
-
-                newEditor.className = newEditor.className
+                realEditor.className = realEditor.className
                                         .replace(readyRegExp, " ")
                                             .replace(/\s\s/g, " ").trim();
 
@@ -368,8 +332,7 @@
                     realTextField.readOnly = false;
                 }
             } else {
-
-                newEditor.className += " sen-editor-ready";
+                realEditor.className += " sen-editor-ready";
 
                 if (!inFull) {
                     realTextField.readOnly = true;
@@ -377,19 +340,31 @@
             }
         });
 
+        realTextField.onSenFull = function() {
+            fullBtn.click();
+        };
+
+        realTextField.onSenPreview = function() {
+            previewBtn.click();
+        };
+
         if (inverted) {
-            newEditor.className += " sen-editor-inverted";
+            realEditor.className += " sen-editor-inverted";
         }
 
         flipBtn.addEventListener("click", function() {
-            if (invertedRegExp.test(newEditor.className)) {
-                newEditor.className = newEditor.className
+            if (invertedRegExp.test(realEditor.className)) {
+                realEditor.className = realEditor.className
                                         .replace(invertedRegExp, " ")
                                             .replace(/\s\s/g, " ").trim();
             } else {
-                newEditor.className += " sen-editor-inverted";
+                realEditor.className += " sen-editor-inverted";
             }
         });
+
+        if (!syncScroll) {
+            syncScrollBtn.className += " sen-disabled";
+        }
 
         syncScrollBtn.addEventListener("click", function() {
             if (activeRegexp.test(syncScrollBtn.className)) {
@@ -402,41 +377,6 @@
                 syncScroll = false;
             }
         });
-
-        if (!syncScroll) {
-            syncScrollBtn.className += " sen-disabled";
-        }
-
-        //Ask new question
-        referenceTarget = realEditor.querySelector(".question-form");
-
-        //Edit wiki tags
-        if (!referenceTarget) {
-            referenceTarget = realEditor.querySelector(".input-section");
-        }
-
-        //Edit questions and answers or new anwsers
-        if (!referenceTarget) {
-            referenceTarget = realEditor.querySelector(".post-editor");
-        }
-
-        //Edit user profile
-        if (!referenceTarget) {
-            referenceTarget = realEditor.querySelector(".inner-container");
-        }
-
-        referenceTarget.parentNode.insertBefore(newEditor, referenceTarget.nextSibling);
-
-        setTimeout(function () {
-            var buttons = newEditor.querySelectorAll(".sen-editor-toolbar > a[class^='sen-btn ']");
-
-            for (var i = buttons.length - 1; i >= 0; i--) {
-                addEventButton(buttons[i], realEditor, realTextField);
-                changeShorcutTitle(buttons[i]);
-            }
-        }, 600);
-
-        hideRealEditor(realEditor);
     }
 
     function loadCss(url)
@@ -506,8 +446,7 @@
 
     var timerObserver;
 
-    function triggerObserver()
-    {
+    function triggerObserver() {
         var observer = new MutationObserver(function(mutations) {
             mutations.forEach(function (mutation) {
                 var el = mutation.target;
@@ -531,8 +470,7 @@
         });
     }
 
-    function loadAll()
-    {
+    function loadAll() {
         if (done) {
             return;
         }
@@ -542,7 +480,7 @@
         done = true;
 
         setTimeout(function() {
-            var els = doc.querySelectorAll("form.post-form");
+            var els = doc.querySelectorAll("form.post-form, .edit-profile form");
 
             if (els.length > 0) {
                 for (var i = els.length - 1; i >= 0; i--) {
@@ -552,6 +490,25 @@
         }, 100);
 
         setTimeout(triggerObserver, 300);
+
+        doc.addEventListener("keydown", function(e) {
+            if (e.altKey && e.target && isInput.test(e.target.className)) {
+                switch (e.keyCode) {
+                    case 70: //Alt+F change to fullscreen or normal
+                        if (e.target.onSenFull) {
+                            e.preventDefault();
+                            e.target.onSenFull();
+                        }
+                    break;
+                    case 86: //Alt+V show/hide preview
+                        if (e.target.onSenPreview) {
+                            e.preventDefault();
+                            e.target.onSenPreview();
+                        }
+                    break;
+                }
+            }
+        });
     }
 
     function initiate()

@@ -36,7 +36,7 @@
 
         switchs             = doc.querySelectorAll("a[data-switch]"),
 
-        notificationSwitch  = doc.getElementById("notification-switch"),
+        //notificationSwitch  = doc.getElementById("notification-switch"),
 
         editorSwitch        = doc.getElementById("editor-switch"),
         editorSwitchTabs    = doc.getElementById("editor-switch-tabs"),
@@ -78,11 +78,11 @@
 
             el.onclick = function(evt) {
                 setTimeout(function() {
-                    var id = StackExchangeNotifications.notificationsSession() + el.href;
+                    //var id = StackExchangeNotifications.notificationsSession() + el.href;
 
-                    browser.notifications.clear(id);
+                    //browser.notifications.clear(id);
 
-                    StackExchangeNotifications.removeNotificationFromCache(el.href);
+                    //StackExchangeNotifications.removeNotificationFromCache(el.href);
 
                     browser.tabs.create({ "url": el.href });
                 }, 1);

@@ -10,42 +10,50 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     overflow: hidden !important;
 }
 
-.sen-editor, .sen-editor * {
-       -moz-box-sizing: border-box !important;
-    -webkit-box-sizing: border-box !important;
-            box-sizing: border-box !important;
+.post-editor [style*="position:"] {
+    position: static !important;
 }
-.sen-editor {
-    border: 1px solid #c8ccd0;
-    clear: both !important;
+
+.wmd-container {
+    border: 1px #c0c0c0 solid !important;
     transition: border-color .2s, box-shadow .2s !important;
 }
-
-.sen-editor.sen-editor-focus:not(.sen-editor-ready) {
-    border-color: #51a7e8;
-    box-shadow: 0 0 5px rgba(81, 167, 232, 0.5) !important;
+.wmd-container, .wmd-container * {
+    box-sizing: border-box !important;
 }
 
-.sen-editor .sen-textfield > textarea {
-    word-wrap: break-word !important;
-}
-
-.sen-editor .sen-textfield > :not(textarea) {
+.wmd-container .grippie, .wmd-button-bar {
     display: none !important;
 }
 
-.sen-editor .sen-preview,
-.sen-editor .sen-textfield > textarea {
-    padding: 10px !important;
-    min-height: 300px !important;
+.wmd-preview, .wmd-input {
+    padding: 8px !important;
+    border: none !important;
+    width: 100% !important;
+}
+.wmd-input {
+    display: block !important;
+    resize: vertical !important;
+    margin: 0 !important;
+    outline: 0 !important;
+    height: 400px !important;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .08) inset !important;
+    -moz-tab-size: 4 !important;
+         tab-size: 4 !important;
+}
+.wmd-preview {
+    clear: none !important;
+    margin: 0 !important;
+    display: none !important;
 }
 
-.sen-editor .sen-editor-toolbar {
-    border-bottom: 1px solid #c8ccd0;
+.sen-editor-toolbar {
+    border-bottom: 1px solid #c8ccd0 !important;
     padding: 4px 6px !important;
+    height: 41px !important;
 }
 
-.sen-editor .sen-editor-toolbar > span {
+.sen-editor-toolbar > span {
     border-left: 1px #e2e2e2 solid;
     margin: 0 4px !important;
     padding: 13px 0 !important;
@@ -54,122 +62,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     font-size: 0 !important;
 }
 
-.sen-editor .sen-textfield > textarea {
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.08) inset !important;
-    width: 100% !important;
-    resize: vertical !important;
-    display: block !important;
-    margin: 0 !important;
-    outline: 0 !important;
-    border: none !important;
-    -moz-tab-size: 4 !important;
-         tab-size: 4 !important;
-}
-
-.sen-editor .sen-textfield {
-    width: 100% !important;
-}
-
-form .sen-editor {
-    width: 660px !important;
-}
-
-#user-edit-form .sen-editor {
-    width: 100% !important;
-}
-
-form .sen-editor-full, #user-edit-form .sen-editor-full {
-    width: 100% !important;
-    position: fixed !important;
-    z-index: 995 !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    border: none !important;
-    display: flex !important;
-    flex-direction: column !important;
-}
-
-.sen-editor-full .sen-container {
-    height: 100% !important;
-    display: flex !important;
-    flex-direction: row !important;
-}
-
-.sen-editor-full.sen-editor-inverted .sen-container {
-    flex-direction: row-reverse !important;
-}
-
-.sen-editor .sen-preview {
-    display: none !important;
-}
-
-.sen-editor .sen-preview .wmd-preview {
-    background: transparent !important;
-    width: auto !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: none !important;
-}
-
-.sen-editor-full .sen-textfield > textarea {
-    resize: none !important;
-    padding-bottom: 40% !important;
-}
-.sen-editor-full .sen-preview .wmd-preview {
-    padding-bottom: 40% !important;
-}
-
-.sen-editor-full .sen-textfield > textarea,
-.sen-editor-full .sen-textfield,
-.sen-editor-full .sen-preview {
-    height: 100% !important;
-}
-
-.sen-editor-ready .sen-textfield {
-    overflow: hidden !important;
-    height: 0 !important;
-}
-
-.sen-editor-full.sen-editor-ready .sen-textfield {
-    overflow: initial !important;
-    height: 100% !important;
-}
-.sen-editor-full.sen-editor-ready .sen-textfield {
-    width: 50% !important;
-}
-.sen-editor-full.sen-editor-ready .sen-preview {
-    width: 50% !important;
-    overflow: auto !important;
-}
-
-.sen-editor-ready .sen-preview {
-    display: block !important;
-}
-
-.post-form .wmd-container,
-.post-editor .wmd-container {
-    visibility: hidden !important;
-    position: absolute !important;
-    left: -9988px !important;
-    top: -9988px !important;
-}
-.post-form .wmd-button-bar,
-.post-editor .wmd-button-bar,
-.inner-container .wmd-button-bar {
-    display: none !important;
-}
-
-.sen-editor-visible .wmd-container {
-    display: block !important;
-}
-
-.grippie, .hide-preview {
-    display: none !important;
-}
-
-.sen-editor .sen-editor-toolbar > a.sen-btn {
+.sen-editor-toolbar > a.sen-btn {
     display: inline-block !important;
     background-color: transparent !important;
     vertical-align: middle !important;
@@ -180,12 +73,12 @@ form .sen-editor-full, #user-edit-form .sen-editor-full {
     outline: none !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-btn i {
+.sen-editor-toolbar > a.sen-btn i {
     display: block !important;
-    padding: 3px;
+    padding: 3px 2px !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-btn i::before {
+.sen-editor-toolbar > a.sen-btn i::before {
     background: url(../images/editor.svg) no-repeat !important;
     content: " " !important;
     display: block !important;
@@ -193,66 +86,117 @@ form .sen-editor-full, #user-edit-form .sen-editor-full {
     height: 24px;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-btn:hover {
+.sen-editor-toolbar > a.sen-btn:hover {
     border-color: #cfcfcf !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.wmd-bold-button i::before {          background-position: 0 0 !important; }
-.sen-editor .sen-editor-toolbar > a.wmd-italic-button i::before {        background-position: -24px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.sen-strikethrough-button i::before { background-position: -48px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.wmd-link-button i::before {          background-position: -72px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.wmd-quote-button i::before {         background-position: -96px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.wmd-code-button i::before {          background-position: -120px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.wmd-image-button i::before {         background-position: -144px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.wmd-snippet-button i::before {       background-position: -168px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.wmd-olist-button i::before {         background-position: -192px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.wmd-ulist-button i::before {         background-position: -216px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.wmd-heading-button i::before {       background-position: -240px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.wmd-hr-button i::before {            background-position: -264px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.wmd-undo-button i::before,
-.sen-editor .sen-editor-toolbar > a.wmd-redo-button i::before {          background-position: -288px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.sen-full-button i::before {          background-position: -312px 0 !important; }
-.sen-editor-full .sen-editor-toolbar > a.sen-full-button i::before {     background-position: -336px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.sen-preview-button i::before {       background-position: -360px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.sen-flip-button i::before {          background-position: -384px 0 !important; }
-.sen-editor .sen-editor-toolbar > a.sen-syncscroll-button i::before {    background-position: -408px 0 !important; }
+.sen-editor-full .wmd-container {
+    top: 0px !important;
+    left: 0px !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1031 !important;
+    position: fixed !important;
+    border: none !important;
+}
+.sen-editor-full .wmd-input {
+    float: left !important;
+    width: 50% !important;
+}
+.sen-editor-full .wmd-preview {
+    float: right !important;
+    width: 50% !important;
+    overflow: auto !important;
+    display: block !important;
+}
 
-.sen-editor .sen-editor-toolbar > a.wmd-undo-button i::before {
+.sen-editor-full .wmd-input, .sen-editor-full .wmd-preview {
+    padding-bottom: 40% !important;
+    height: calc(100% - 41px) !important;
+    height: -webkit-calc(100% - 41px) !important;
+}
+.sen-editor-full.sen-editor-inverted .wmd-input {
+    float: right !important;
+}
+.sen-editor-full.sen-editor-inverted .wmd-preview {
+    float: left !important;
+}
+
+.sen-editor-focus:not(.sen-editor-ready) .wmd-container {
+    border-color: #51a7e8 !important;
+    box-shadow: 0 0 5px rgba(81, 167, 232, 0.5) !important;
+}
+
+.sen-editor-ready:not(.sen-editor-full) .wmd-input {
+    overflow: hidden !important;
+    padding: 0 !important;
+    height: 0 !important;
+}
+
+.sen-editor-ready:not(.sen-editor-full) .wmd-preview {
+    display: block !important;
+}
+
+.sen-editor-full:not(.sen-editor-ready) .wmd-input {
+    float: none !important;
+    width: 100% !important;
+}
+
+.sen-editor-full:not(.sen-editor-ready) .wmd-preview {
+    display: block !important;
+}
+
+.sen-editor-toolbar > a.wmd-bold-button i::before {          background-position: 0 0 !important; }
+.sen-editor-toolbar > a.wmd-italic-button i::before {        background-position: -24px 0 !important; }
+.sen-editor-toolbar > a.sen-strikethrough-button i::before { background-position: -48px 0 !important; }
+.sen-editor-toolbar > a.wmd-link-button i::before {          background-position: -72px 0 !important; }
+.sen-editor-toolbar > a.wmd-quote-button i::before {         background-position: -96px 0 !important; }
+.sen-editor-toolbar > a.wmd-code-button i::before {          background-position: -120px 0 !important; }
+.sen-editor-toolbar > a.wmd-image-button i::before {         background-position: -144px 0 !important; }
+.sen-editor-toolbar > a.wmd-snippet-button i::before {       background-position: -168px 0 !important; }
+.sen-editor-toolbar > a.wmd-olist-button i::before {         background-position: -192px 0 !important; }
+.sen-editor-toolbar > a.wmd-ulist-button i::before {         background-position: -216px 0 !important; }
+.sen-editor-toolbar > a.wmd-heading-button i::before {       background-position: -240px 0 !important; }
+.sen-editor-toolbar > a.wmd-hr-button i::before {            background-position: -264px 0 !important; }
+.sen-editor-toolbar > a.wmd-undo-button i::before,
+.sen-editor-toolbar > a.wmd-redo-button i::before {          background-position: -288px 0 !important; }
+.sen-editor-toolbar > a.sen-full-button i::before {          background-position: -312px 0 !important; }
+.sen-editor-full .sen-editor-toolbar > a.sen-full-button i::before {     background-position: -336px 0 !important; }
+.sen-editor-toolbar > a.sen-preview-button i::before {       background-position: -360px 0 !important; }
+.sen-editor-toolbar > a.sen-flip-button i::before {          background-position: -384px 0 !important; }
+.sen-editor-toolbar > a.sen-syncscroll-button i::before {    background-position: -408px 0 !important; }
+
+.sen-editor-toolbar > a.wmd-undo-button i::before {
     -webkit-transform: scaleX(-1) !important;
        -moz-transform: scaleX(-1) !important;
             transform: scaleX(-1) !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-flip-button,
-.sen-editor .sen-editor-toolbar > a.sen-syncscroll-button {
+.sen-editor-toolbar > a.sen-flip-button,
+.sen-editor-toolbar > a.sen-syncscroll-button {
     display: none !important;
 }
 
-.sen-editor-full .sen-editor-toolbar > a.sen-flip-button,
-.sen-editor-full .sen-editor-toolbar > a.sen-syncscroll-button {
-    display: inline-block !important;
-}
-
 /*tooltip*/
-.sen-editor .sen-editor-toolbar > a.sen-btn {
+.sen-editor-toolbar > a.sen-btn {
     position: relative !important;
     font-size: 0 !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-btn::before,
-.sen-editor .sen-editor-toolbar > a.sen-btn::after {
+.sen-editor-toolbar > a.sen-btn::before,
+.sen-editor-toolbar > a.sen-btn::after {
     position: absolute !important;
     left: 50% !important;
     display: none !important;
     z-index: 100 !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-btn:hover::before,
-.sen-editor .sen-editor-toolbar > a.sen-btn:hover::after {
+.sen-editor-toolbar > a.sen-btn:hover::before,
+.sen-editor-toolbar > a.sen-btn:hover::after {
     display: block !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-btn::before {
+.sen-editor-toolbar > a.sen-btn::before {
     border-style: solid !important;
     border-width: 0 6px 8px 6px !important;
     border-color: transparent transparent rgba(82, 72, 71, .90) transparent !important;
@@ -261,7 +205,7 @@ form .sen-editor-full, #user-edit-form .sen-editor-full {
     content: " " !important;
 }
 
-.sen-editor .sen-editor-toolbar > a.sen-btn::after {
+.sen-editor-toolbar > a.sen-btn::after {
     background: rgba(82, 72, 71, .90) !important;
     border-radius: 0.25em !important;
     top: 35px !important;
@@ -284,41 +228,8 @@ form .sen-editor-full, #user-edit-form .sen-editor-full {
 }
 /*tooltip*/
 
-.sen-editor .sen-editor-toolbar > a.sen-disabled {
-    opacity: 0.5 !important;
-}
-
-.sen-editor .sen-editor-toolbar .sen-actions {
-    display: none !important;
-    float: right !important;
-}
-
-.sen-editor-full .sen-editor-toolbar .sen-actions {
-    display: inline-block !important;
-}
-
-.sen-editor .sen-editor-toolbar .sen-save-button,
-.sen-editor .sen-editor-toolbar .sen-cancel-button {
-    background-color: #f44336 !important;
-    border-radius: 500px !important;
-    text-align: center !important;
-    padding: 6px 20px !important;
-    display: inline-block !important;
-    font-size: 13px !important;
-    color: #fff !important;
-}
-
-.sen-editor .sen-editor-toolbar .sen-save-button {
-    background-color: #4CAF50 !important;
-}
-
-/*
-.sen-editor .sen-editor-toolbar > a.sen-btn:hover::before,
-.sen-editor .sen-editor-toolbar > a.sen-btn::after
-*/
-
-.sen-editor .sen-editor-toolbar > a.sen-btn.sen-hide,
-.sen-editor .sen-editor-toolbar > a.sen-disabled:hover::after,
-.sen-editor .sen-editor-toolbar > a.sen-disabled:hover::before {
+.sen-editor-toolbar > a.sen-btn.sen-hide,
+.sen-editor-toolbar > a.sen-disabled:hover::after,
+.sen-editor-toolbar > a.sen-disabled:hover::before {
     display: none !important;
 }
