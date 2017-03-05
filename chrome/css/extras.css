@@ -1,0 +1,48 @@
+/*
+ * StackExchangeNotifications 1.0.0
+ * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Released under the MIT license
+ *
+ * https://github.com/brcontainer
+ */
+
+pre[class*=lang-] {
+    margin-bottom: 0 !important;
+}
+
+.sen-tools-clipboard {
+    border-top: 1px #ccc solid !important;
+    margin: 0 0 1.2em 0 !important;
+    text-align: right !important;
+    padding: 0 2px !important;
+}
+.sen-tools-clipboard > a {
+    color: #7b7676 !important;
+    padding: 5px 10px !important;
+    background-color: #fff !important;
+    border: 1px #ccc solid !important;
+    border-top: 0 !important;
+    border-radius: 4px !important;
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+    display: inline-block !important;
+}
+
+.sen-tools-popup {
+    border-radius: 4px !important;
+    position: fixed !important;
+    left: 50% !important;
+    top: 50% !important;
+    margin: -31px -150px !important;
+    background-color: rgba(0, 0, 0, .8) !important;
+    color: #fff !important;
+    width: 300px !important;
+    height: 62px !important;
+    text-align: center !important;
+    line-height: 62px !important;
+    font-size: 18pt !important;
+}
+
+.sen-tools-hide {
+    display: none !important;
+}

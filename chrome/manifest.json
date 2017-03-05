@@ -43,7 +43,8 @@
         "js": [
             "js/detectchanges.js",
             "js/gallery.js",
-            "js/editor.js"
+            "js/editor.js",
+            "js/extras.js"
         ]
     }, {
         "matches": [

@@ -9,6 +9,8 @@
 (function(doc, browser) {
     "use strict";
 
+    return;
+
     var inprogress = false;
 
     function bgData(data, callback)

@@ -41,11 +41,11 @@
 
     function getMessages()
     {
+        return;
+
         if (!StackExchangeNotifications.switchEnable("desktop_notification")) {
             return;
         }
-
-        return;
 
         StackExchangeNotifications.inbox(function(data, code) {
             if (code == 200 && data.indexOf("<") !== -1) {
@@ -202,6 +202,10 @@
                 "indent":    StackExchangeNotifications.switchEnable("editor_tabs_by_spaces"),
                 "theme":     StackExchangeNotifications.switchEnable("black_theme") ?
                                                                             "black" : null
+            });
+        } else if (request === "extras") {
+            sendResponse({
+                "copycode": StackExchangeNotifications.switchEnable("copy_code")
             });
         } else if (request) {
             if (request.data && request.clear) {

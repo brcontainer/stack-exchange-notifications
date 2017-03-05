@@ -422,6 +422,7 @@
             StackExchangeNotifications.switchEnable("acquired", true);
 
             StackExchangeNotifications.switchEnable("gallery_box", true);
+            StackExchangeNotifications.switchEnable("copy_code", true);
 
             SimpleCache.set("firstrun2", 1, true);
 
