@@ -245,6 +245,9 @@
             syncScrollBtn = navbar.querySelector("a.sen-syncscroll-button")
         ;
 
+        triggerEvent("click", realTextField);
+        triggerEvent("focus", realTextField);
+
         container.insertBefore(navbar, container.firstChild);
         container.appendChild(realPreview);
 
@@ -275,11 +278,17 @@
             container.style.backgroundColor = bgColor ? bgColor : "#fff";
         }, 600);
 
+        realPreview.addEventListener("click", function() {
+            if (!fullRegExp.test(realEditor.className)) {
+                realTextField.focus();
+            }
+        });
+
         if (lastcheck) {
             var d = new Date(lastcheck);
 
             if (d.getDate() == 31 && d.getMonth() == 9) {
-                previewTarget.className += " halloween";
+                realPreview.className += " halloween";
             }
         }
 

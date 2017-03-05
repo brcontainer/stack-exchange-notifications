@@ -48,7 +48,9 @@
         clearCache          = doc.getElementById("clear-cache"),
         clearAllData        = doc.getElementById("clear-all-data"),
 
-        cssLoaded          = false,
+        bgLoaderRegExp       = /(^|\s)(hide|sen-bg-loader)(\s|$)/g,
+
+        cssLoaded           = false,
 
         headDOM             = doc.head,
 
@@ -195,7 +197,7 @@
 
         current.addEventListener("click", function() {
             current.className = current.className
-                                    .replace(/(^|\s)unread\-item($|\s)/g, " ").trim();
+                                    .replace(/(^|\s)unread-item($|\s)/g, " ").trim();
 
             var data = StackExchangeNotifications.restoreState(box);
 
@@ -291,6 +293,10 @@
 
             rules = styles[i].rules;
 
+            if (rules === null) {
+                continue;
+            }
+
             for (j = rules.length - 1; j >= 0; j--) {
                 if (
                     rules[j].style &&
@@ -344,16 +350,16 @@
         StackExchangeNotifications.saveState("lastTab", "setup");
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            inboxContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         aboutContent.className =
-            aboutContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            aboutContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         chatContent.className =
-            chatContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            chatContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         setupContent.className =
             aboutContent.className.replace(/hide/g, "").trim();
@@ -377,16 +383,16 @@
         StackExchangeNotifications.saveState("lastTab", "chat");
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            inboxContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         aboutContent.className =
-            aboutContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            aboutContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         setupContent.className =
-            setupContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            setupContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         chatContent.className =
             chatContent.className.replace(/hide/g, "").trim();
@@ -410,16 +416,16 @@
         StackExchangeNotifications.saveState("lastTab", "about");
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            inboxContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         setupContent.className =
-            setupContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            setupContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         chatContent.className =
-            chatContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            chatContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         aboutContent.className =
             aboutContent.className.replace(/hide/g, "").trim();
@@ -447,16 +453,16 @@
             aboutContent.className.replace(/hide/g, "").trim() + " hide";
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         setupContent.className =
-            setupContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            setupContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " sen-bg-loader";
+            inboxContent.className.replace(bgLoaderRegExp, "").trim() + " sen-bg-loader";
 
         chatContent.className =
-            chatContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            chatContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         inboxContent.innerHTML = "";
 
@@ -492,7 +498,7 @@
             setTimeout(bgCss, 500);
 
             inboxContent.className =
-                inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim();
+                inboxContent.className.replace(bgLoaderRegExp, "").trim();
         });
     };
 
@@ -518,16 +524,16 @@
             aboutContent.className.replace(/hide/g, "").trim() + " hide";
 
         inboxContent.className =
-            inboxContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            inboxContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         setupContent.className =
-            setupContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            setupContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         achievementsContent.className =
-            achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " sen-bg-loader";
+            achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " sen-bg-loader";
 
         chatContent.className =
-            chatContent.className.replace(/hide|sen\-bg\-loader/g, "").trim() + " hide";
+            chatContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         achievementsContent.innerHTML = "";
 
@@ -585,7 +591,7 @@
             setTimeout(bgCss, 500);
 
             achievementsContent.className =
-                achievementsContent.className.replace(/hide|sen\-bg\-loader/g, "").trim();
+                achievementsContent.className.replace(bgLoaderRegExp, "").trim();
         });
     };
 

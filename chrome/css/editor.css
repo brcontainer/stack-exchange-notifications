@@ -10,8 +10,8 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     overflow: hidden !important;
 }
 
-.post-editor [style*="position:"] {
-    position: static !important;
+.wmd-container [style*="clear:"] {
+    display: none !important;
 }
 
 .wmd-container {
@@ -30,6 +30,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     padding: 8px !important;
     border: none !important;
     width: 100% !important;
+    min-height: 400px !important;
 }
 .wmd-input {
     display: block !important;
@@ -131,6 +132,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     overflow: hidden !important;
     padding: 0 !important;
     height: 0 !important;
+    min-height: 0 !important;
 }
 
 .sen-editor-ready:not(.sen-editor-full) .wmd-preview {

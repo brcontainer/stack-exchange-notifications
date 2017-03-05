@@ -6,7 +6,6 @@
 - [x] Push notification for change score
 - [x] Push notification for new achivements
 - [x] Desktop notification for inbox messages
-- [ ] Fix: Desktop notifications continue to appear, even when they should not
 
 ## Lightbox
 
@@ -28,7 +27,7 @@
 - [ ] Strikethrough button
 - [ ] Use underscores (`_foo_`) in Italic button
 - [x] Use default site colors or themes installed with tools like "Stylish"
-- [ ] Bug in answer your owner question
+- [x] Bug in answer your owner question
 
 # Chat
 
@@ -41,4 +40,4 @@
 - [x] Config preferences
 - [x] Clear inbox cache and achivements cache
 - [x] Reset all data
-- [ ] Change color icons
+- [x] Change color icons (3 colors, use background-position with Stylish)

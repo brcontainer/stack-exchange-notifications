@@ -24,16 +24,16 @@
         mutations.forEach(function (mutation) {
             var type, checkTab, el = mutation.target;
 
-            if (/(^|\s)unread\-count($|\s)/.test(el.className)) {
-                if (/(^|\s)icon\-achievements($|\s)/.test(el.parentNode.className)) {
+            if (/(^|\s)unread-count($|\s)/.test(el.className)) {
+                if (/(^|\s)icon-achievements($|\s)/.test(el.parentNode.className)) {
                     type = "achievements";
-                } else if (/(^|\s)icon\-inbox($|\s)/.test(el.parentNode.className)) {
+                } else if (/(^|\s)icon-inbox($|\s)/.test(el.parentNode.className)) {
                     type = "inbox";
                 }
 
-                var data = isHide(el) ? 0 : parseInt(el.textContent);
-
                 if (type && browser && browser.runtime && browser.runtime.sendMessage) {
+                    var data = isHide(el) ? 0 : parseInt(el.textContent);
+
                     browser.runtime.sendMessage({
                         "data": data,
                         "clear": type
