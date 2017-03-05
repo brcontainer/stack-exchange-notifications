@@ -1,6 +1,6 @@
 /*
  * StackExchangeNotifications 1.0.0
- * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
@@ -40,7 +40,7 @@
 
         style.rel  = "stylesheet";
         style.type = "text/css";
-        style.href = browser.extension.getURL(uri);
+        style.href = browser.extension.getURL("/css/" + uri);
 
         mainBody.appendChild(style);
     }
@@ -568,8 +568,8 @@
             return;
         }
 
-        loadCss("/css/gallery.css");
-        loadCss("/css/animate.css");
+        loadCss("gallery.css");
+        loadCss("animate.css");
 
         loadView();
     }

@@ -57,21 +57,20 @@
 
         style.rel  = "stylesheet";
         style.type = "text/css";
-        style.href = browser.extension.getURL(uri);
+        style.href = browser.extension.getURL("/css/" + uri);
 
         mainBody.appendChild(style);
     }
 
     function applyEvents(el)
     {
-        if (el.tagName === "PRE" && /(^|\s)lang-/.test(el.className)) {
-            var space, tools, button, code, codes = el.getElementsByTagName("code");
+        if (el.tagName === "PRE") {
+            var space, tools, button, code = el.firstElementChild;
 
-            if (codes.length !== 1) {
+            if (!code || code.tagName !== "CODE") {
+                console.log(el.firstElementChild);
                 return;
             }
-
-            code = codes[0];
 
             tools = d.createElement("div");
             tools.className = "sen-tools-clipboard";
@@ -95,12 +94,12 @@
             return;
         }
 
-        loadCss("/css/extras.css");
+        loadCss("extras.css");
 
-        var pres = d.querySelectorAll("pre[class*=lang-]");
+        var pres = d.querySelectorAll("pre > code");
 
         for (var i = pres.length - 1; i >= 0; i--) {
-            applyEvents(pres[i]);
+            applyEvents(pres[i].parentNode);
         }
 
         var observer = new MutationObserver(function (mutations) {

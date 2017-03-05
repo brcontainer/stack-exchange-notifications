@@ -1,6 +1,6 @@
 /*
  * StackExchangeNotifications 1.0.0
- * Copyright (c) 2016 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
@@ -45,7 +45,7 @@
 
     function createLink(el)
     {
-        if (el.querySelectorAll(".inroom-heart-icon").length) {
+        if (el.getElementsByClassName(".inroom-heart-icon").length) {
             return;
         }
 
@@ -83,6 +83,7 @@
         for (var i = els.length - 1; i >= 0; i--) {
             if (els[i].id === "sidebar-menu") {
                 createLink(els[i]);
+                break;
             }
         }
     }
