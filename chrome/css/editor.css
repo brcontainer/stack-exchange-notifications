@@ -239,3 +239,10 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 .sen-editor-toolbar > a.sen-disabled:hover::before {
     display: none !important;
 }
+
+@-moz-document url-prefix() {
+    .sen-editor-full .wmd-input, .sen-editor-full .wmd-preview {
+        padding-bottom: 8px !important;
+    }
+}
+
