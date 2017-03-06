@@ -10,7 +10,7 @@
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
-    z-index: 1001 !important;
+    z-index: 1032 !important;
     width: 100% !important;
     height: 100% !important;
     background-color: rgba(0,0,0,.8) !important;
@@ -80,7 +80,7 @@
 
 .sen-gallery-footer {
     position: fixed !important;
-    z-index: 1002 !important;
+    z-index: 1033 !important;
     left: 0 !important;
     bottom: 0 !important;
     height: 80px !important;
@@ -90,7 +90,7 @@
 .sen-gallery-close {
     border-radius: 100% !important;
     position: fixed !important;
-    z-index: 1003 !important;
+    z-index: 1034 !important;
     right: 8px !important;
     top: 8px !important;
     padding: 14px !important;
@@ -124,7 +124,7 @@
 
 .sen-gallery-left, .sen-gallery-right {
     position: fixed !important;
-    z-index: 1002 !important;
+    z-index: 1033 !important;
     left: 0 !important;
     top: 0 !important;
     min-width: 42px !important;

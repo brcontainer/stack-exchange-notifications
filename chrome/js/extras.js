@@ -4,6 +4,7 @@
     var
         validValueRegEx = /^[\d.]+(px|em|pt)$/,
         hideRegEx = /(^|\s)sen-tools-hide(\s|$)/,
+        ignorePreviewRegEx = /(^|\s)wmd-preview(\s|$)/,
         mainBody,
         notification,
         hideTimer,
@@ -62,50 +63,73 @@
         mainBody.appendChild(style);
     }
 
-    function applyEvents(el)
-    {
-        if (el.tagName === "PRE") {
-            var space, tools, button, code = el.firstElementChild;
-
-            if (!code || code.tagName !== "CODE") {
-                console.log(el.firstElementChild);
-                return;
-            }
-
-            tools = d.createElement("div");
-            tools.className = "sen-tools-clipboard";
-
-            button = d.createElement("a");
-
-            button.textContent = "Copy code";
-            button.onclick = function () {
-                copyFromDOM(code);
-                showNotification("Copied to clipboard!");
-            };
-
-            tools.appendChild(button);
-            el.parentNode.insertBefore(tools, el.nextSibling);
-        }
-    }
-
     function bootCopyCode()
     {
         if (!copyCodeEnabled) {
             return;
         }
 
-        loadCss("extras.css");
+        function applyEvents(el)
+        {
+            if (el.tagName === "PRE" && !el.senCopyCode) {
+                var space, tools, button, code = el.firstElementChild;
 
-        var pres = d.querySelectorAll("pre > code");
+                if (!code || code.tagName !== "CODE") {
+                    return;
+                }
 
-        for (var i = pres.length - 1; i >= 0; i--) {
-            applyEvents(pres[i].parentNode);
+                el.senCopyCode = true;
+
+                tools = d.createElement("div");
+                tools.className = "sen-tools-clipboard";
+
+                button = d.createElement("a");
+
+                button.textContent = "Copy code";
+                button.onclick = function () {
+                    copyFromDOM(code);
+                    showNotification("Copied to clipboard!");
+                };
+
+                tools.appendChild(button);
+                el.parentNode.insertBefore(tools, el.nextSibling);
+            }
         }
 
+        function findPreCodes(target)
+        {
+            var pres = target.querySelectorAll("pre > code");
+
+            for (var i = pres.length - 1; i >= 0; i--) {
+                applyEvents(pres[i].parentNode);
+            }
+        }
+
+        loadCss("extras.css");
+
+        findPreCodes(d);
+
+        notification = d.createElement("div");
+        notification.className = "sen-tools-popup sen-tools-hide";
+
+        mainBody.appendChild(notification);
+
+        var inprogress = false;
+
         var observer = new MutationObserver(function (mutations) {
+            if (inprogress) {
+                return;
+            }
+
+            inprogress = true;
+
             mutations.forEach(function (mutation) {
-                applyEvents(mutation.target);
+                if (ignorePreviewRegEx.test(mutation.target.className) === false) {
+                    findPreCodes(mutation.target);
+                }
             });
+
+            inprogress = false;
         });
 
         observer.observe(d.body, {
@@ -113,11 +137,6 @@
             "childList": true,
             "attributes": false
         });
-
-        notification = d.createElement("div");
-        notification.className = "sen-tools-popup sen-tools-hide";
-
-        mainBody.appendChild(notification);
     }
 
     function init()

@@ -24,6 +24,7 @@
         currentPhotoToken,
         currentUrl,
         isOpen = false,
+        ignorePreviewRegEx  = /(^|\s)wmd-preview(\s|$)/,
         validImages         = /\.(png|jpeg|jpe|jpg|svg|gif)(|\?[\s\S]+)$/i,
         errorRegExp         = /(^|\s)sen-error(\s|$)/,
         loaderRegExp        = /(^|\s)sen-bg-loader(\s|$)/,
@@ -522,9 +523,13 @@
 
     function triggerObserver()
     {
-        var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
                 var c = mutation.target;
+
+                if (ignorePreviewRegEx.test(c.className)) {
+                    return;
+                }
 
                 if (c.tagName !== "A" && c.querySelector("a img")) {
 

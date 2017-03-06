@@ -48,6 +48,10 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     display: none !important;
 }
 
+.wmd-preview a {
+    pointer-events: none !important;
+}
+
 .sen-editor-toolbar {
     border-bottom: 1px solid #c8ccd0 !important;
     padding: 4px 6px !important;
@@ -112,7 +116,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 
 .sen-editor-full .wmd-input, .sen-editor-full .wmd-preview {
-    padding-bottom: 40% !important;
+    padding-bottom: 20% !important;
     height: calc(100% - 41px) !important;
     height: -webkit-calc(100% - 41px) !important;
 }
