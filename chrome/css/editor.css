@@ -33,6 +33,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     min-height: 400px !important;
 }
 .wmd-input {
+    padding-bottom: 20% !important;
     display: block !important;
     resize: vertical !important;
     margin: 0 !important;
@@ -183,6 +184,11 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     display: none !important;
 }
 
+.sen-editor-full .sen-editor-toolbar > a.sen-flip-button,
+.sen-editor-full .sen-editor-toolbar > a.sen-syncscroll-button {
+    display: inline-block !important;
+}
+
 /*tooltip*/
 .sen-editor-toolbar > a.sen-btn {
     position: relative !important;
@@ -234,9 +240,13 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 /*tooltip*/
 
+.sen-editor-toolbar > a.sen-btn.sen-disabled {
+    opacity: .5;
+}
+
 .sen-editor-toolbar > a.sen-btn.sen-hide,
-.sen-editor-toolbar > a.sen-disabled:hover::after,
-.sen-editor-toolbar > a.sen-disabled:hover::before {
+.sen-editor-toolbar > a.sen-btn.sen-disabled:hover::after,
+.sen-editor-toolbar > a.sen-btn.sen-disabled:hover::before {
     display: none !important;
 }
 
@@ -245,4 +255,3 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
         padding-bottom: 8px !important;
     }
 }
-
