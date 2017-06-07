@@ -264,9 +264,9 @@
     function setStyle(cssText)
     {
         cssLoaded = true;
-        var style = document.createElement("style");
+        var style = doc.createElement("style");
         style.textContent = cssText;
-        document.head.appendChild(style);
+        doc.head.appendChild(style);
     }
 
     function bgCss()
@@ -284,7 +284,7 @@
         var i, j, rules, image, imgUrl, allRulesBg = [],
             isHttp = /^(http|https)\:\/\/[a-z0-1]/i,
             reImg  = /url\(("|'|)([\s\S]+?\.(png|jpg|jpeg|gif)(\?|\?[\s\S]+?|))("|'|)\)/i,
-            styles = document.styleSheets;
+            styles = doc.styleSheets;
 
         for (var i = styles.length - 1; i >= 0; i--) {
             if (false === isHttp.test(styles[i].href)) {

@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(browser) {
+(function(doc, browser) {
     "use strict";
 
     var delay = 60, //In seconds
@@ -26,7 +26,7 @@
         inSleepMode = false
     ;
 
-    var tmpDom     = document.createElement("div"),
+    var tmpDom     = doc.createElement("div"),
         validAttrs = [ "class", "id", "href" ];
 
     var Utils = {
@@ -130,7 +130,7 @@
     function img2base64(img)
     {
         if (!tmpCanvas) {
-            tmpCanvas = document.createElement("canvas");
+            tmpCanvas = doc.createElement("canvas");
             canvasContext = tmpCanvas.getContext('2d');
         }
 
@@ -607,4 +607,4 @@
         "meta": metaData,
         "utils": Utils
     };
-})(chrome||browser);
+})(document, chrome||browser);

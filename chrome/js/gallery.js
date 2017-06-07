@@ -139,7 +139,7 @@
             return;
         }
 
-        var lnks = document.querySelectorAll(mainSelector);
+        var lnks = doc.querySelectorAll(mainSelector);
         var el, findNext = false;
 
         if (lnks.length === 0) {
@@ -190,7 +190,7 @@
             yel = y - currentPhoto.offsetTop;
         });
 
-        document.addEventListener("mousemove", function(e) {
+        doc.addEventListener("mousemove", function(e) {
             if (isMove && magnified) {
                 e.preventDefault();
 
@@ -202,7 +202,7 @@
             }
         });
 
-        document.addEventListener("mouseup", function() {
+        doc.addEventListener("mouseup", function() {
             isMove = false;
         });
     }

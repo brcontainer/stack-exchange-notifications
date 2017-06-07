@@ -50,12 +50,12 @@
         }
 
         var
-            link = document.createElement("a"),
-            icon = document.createElement("i"),
-            text = document.createTextNode("save room"),
-            division = document.createTextNode("|"),
-            space1 = document.createTextNode(" "),
-            space2 = document.createTextNode(" ")
+            link = doc.createElement("a"),
+            icon = doc.createElement("i"),
+            text = doc.createTextNode("save room"),
+            division = doc.createTextNode("|"),
+            space1 = doc.createTextNode(" "),
+            space2 = doc.createTextNode(" ")
         ;
 
         link.href = "javascript:void(0);";
@@ -78,7 +78,7 @@
 
     function appendLinks()
     {
-        var els = document.querySelectorAll(".roomcard, [id^=room-], #sidebar-menu");
+        var els = doc.querySelectorAll(".roomcard, [id^=room-], #sidebar-menu");
 
         for (var i = els.length - 1; i >= 0; i--) {
             if (els[i].id === "sidebar-menu") {
