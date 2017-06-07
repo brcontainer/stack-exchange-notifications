@@ -72,19 +72,19 @@
         function applyEvents(el)
         {
             if (el.tagName === "PRE" && !el.senCopyCode) {
-                var space, tools, button, nextEl = el.nextSibling, code = el.firstElementChild;
+                var space, tools, button, nextEl = el.nextElementSibling, code = el.firstElementChild;
 
                 if (!code || code.tagName !== "CODE" || nextEl.senCopyCode) {
                     return;
                 }
 
-                el.senCopyCode = true;
-                nextEl.senCopyCode = true;
-
                 tools = d.createElement("div");
                 tools.className = "sen-tools-clipboard";
 
                 button = d.createElement("a");
+
+                el.senCopyCode = true;
+                button.senCopyCode = true;
 
                 button.textContent = "Copy code";
                 button.onclick = function () {
