@@ -72,13 +72,14 @@
         function applyEvents(el)
         {
             if (el.tagName === "PRE" && !el.senCopyCode) {
-                var space, tools, button, code = el.firstElementChild;
+                var space, tools, button, nextEl = el.nextSibling, code = el.firstElementChild;
 
-                if (!code || code.tagName !== "CODE") {
+                if (!code || code.tagName !== "CODE" || nextEl.senCopyCode) {
                     return;
                 }
 
                 el.senCopyCode = true;
+                nextEl.senCopyCode = true;
 
                 tools = d.createElement("div");
                 tools.className = "sen-tools-clipboard";
@@ -90,9 +91,10 @@
                     copyFromDOM(code);
                     showNotification("Copied to clipboard!");
                 };
+                button.href = "javascript:void(0);";
 
                 tools.appendChild(button);
-                el.parentNode.insertBefore(tools, el.nextSibling);
+                el.parentNode.insertBefore(tools, nextEl);
             }
         }
 

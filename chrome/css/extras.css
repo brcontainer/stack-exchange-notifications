@@ -10,26 +10,27 @@ pre {
     margin-bottom: 0 !important;
 }
 
-pre ~ :not(.sen-tools-clipboard) {
+pre + :not(.sen-tools-clipboard) {
     margin-top: 1.2em !important;
 }
 
 .sen-tools-clipboard {
-    border-top: 1px #ccc solid !important;
     margin: 0 0 1.2em 0 !important;
-    text-align: right !important;
-    padding: 0 2px !important;
+    padding-left: 2px !important;
 }
 .sen-tools-clipboard > a {
-    color: #7b7676 !important;
-    padding: 5px 10px !important;
-    background-color: #fff !important;
     border: 1px #ccc solid !important;
-    border-top: 0 !important;
+    border-top: none !important;
+    color: #7b7676 !important;
+    padding: 0 5px !important;
+    background-color: #fff !important;
     border-radius: 4px !important;
-    border-top-right-radius: 0 !important;
     border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
     display: inline-block !important;
+    text-align: center !important;
+    line-height: 32px !important;
+    height: 32px !important;
 }
 
 .sen-tools-popup {
@@ -49,4 +50,12 @@ pre ~ :not(.sen-tools-clipboard) {
 
 .sen-tools-hide {
     display: none !important;
+}
+
+.sen-tools-popup, .sen-tools-clipboard {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+  -webkit-touch-callout: none;
+            user-select: none;
 }

@@ -101,7 +101,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     left: 0px !important;
     width: 100% !important;
     height: 100% !important;
-    z-index: 1031 !important;
+    z-index: 1051 !important;
     position: fixed !important;
     border: none !important;
 }

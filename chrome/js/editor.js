@@ -31,6 +31,7 @@
         skipBtnRegexp  = /sen-(preview|full|flip|italic|strikethrough|syncscroll)-button/,
         isPostRegexp   = /(^|\s)(inline-(editor|answer|post))($|\s)/,
         isInput        = /(^|\s)wmd-input($|\s)/,
+        isContainer    = /(^|\s)wmd-container($|\s)/,
         activeRegexp   = /(^|\s)sen-disabled($|\s)/,
         isMac          = /Mac/.test(navigator.platform)
     ;
@@ -234,9 +235,19 @@
     function bootMain(navbar, realEditor)
     {
         var
-            container = realEditor.querySelector(".wmd-container"),
+            container = isContainer.test(realEditor.className) ?
+                            realEditor : realEditor.querySelector(".wmd-container");
 
-            realPreview = realEditor.querySelector(".wmd-preview"),
+        var
+            realPreview = realEditor.querySelector(".wmd-preview");
+
+        if (container.senEditorAtived || !realPreview) {
+            return;
+        }
+
+        container.senEditorAtived = true;
+
+        var
             realTextField = realEditor.querySelector(".wmd-input"),
 
             fullBtn = navbar.querySelector("a.sen-full-button"),
@@ -248,7 +259,7 @@
         triggerEvent("click", realTextField);
         triggerEvent("focus", realTextField);
 
-        container.insertBefore(navbar, container.firstChild);
+        container.insertBefore(navbar, container.firstElementChild);
         container.appendChild(realPreview);
 
         setTimeout(function() {
@@ -439,8 +450,6 @@
             return;
         }
 
-        target.senEditorAtived = true;
-
         loadView(target);
     }
 
@@ -455,21 +464,20 @@
 
     var timerObserver;
 
-    function triggerObserver() {
+    function triggerObserver()
+    {
         var observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function (mutation) {
-                var el = mutation.target;
+            var all = doc.querySelectorAll(".post-editor, .wmd-container");
 
-                if (el.tagName === "FORM" && isPostRegexp.test(el.className)) {
-                    setTimeout(createEditor, 1, el);
-                }
+            for (var i = all.length - 1; i >= 0; i--) {
+                setTimeout(createEditor, 1, all[i]);
+            }
 
-                if (timerObserver) {
-                    clearTimeout(timerObserver);
-                }
+            if (timerObserver) {
+                clearTimeout(timerObserver);
+            }
 
-                timerObserver = setTimeout(checkRemoveFullEditorOpts, 100);
-            });
+            timerObserver = setTimeout(checkRemoveFullEditorOpts, 100);
         });
 
         observer.observe(doc.body, {
