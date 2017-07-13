@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 1.0.0
+ * StackExchangeNotifications 1.0.1
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(doc, browser) {
+(function(w, d, browser) {
     "use strict";
 
     var setupKeyEsc,
@@ -37,7 +37,7 @@
 
     function loadCss(uri)
     {
-        var style = doc.createElement("link");
+        var style = d.createElement("link");
 
         style.rel  = "stylesheet";
         style.type = "text/css";
@@ -139,7 +139,7 @@
             return;
         }
 
-        var lnks = doc.querySelectorAll(mainSelector);
+        var lnks = d.querySelectorAll(mainSelector);
         var el, findNext = false;
 
         if (lnks.length === 0) {
@@ -183,26 +183,26 @@
 
             isMove = true;
 
-            x = window.event ? window.event.clientX : e.pageX;
-            y = window.event ? window.event.clientY : e.pageY;
+            x = w.event ? w.event.clientX : e.pageX;
+            y = w.event ? w.event.clientY : e.pageY;
 
             xel = x - currentPhoto.offsetLeft;
             yel = y - currentPhoto.offsetTop;
         });
 
-        doc.addEventListener("mousemove", function(e) {
+        d.addEventListener("mousemove", function(e) {
             if (isMove && magnified) {
                 e.preventDefault();
 
-                x = window.event ? window.event.clientX : e.pageX;
-                y = window.event ? window.event.clientY : e.pageY;
+                x = w.event ? w.event.clientX : e.pageX;
+                y = w.event ? w.event.clientY : e.pageY;
 
                 currentPhoto.style.left = (x - xel) + 'px';
                 currentPhoto.style.top  = (y - yel) + 'px';
             }
         });
 
-        doc.addEventListener("mouseup", function() {
+        d.addEventListener("mouseup", function() {
             isMove = false;
         });
     }
@@ -214,7 +214,7 @@
             "height": "auto"
         };
 
-        viewHTML = doc.createElement("div");
+        viewHTML = d.createElement("div");
         viewHTML.innerHTML = sourcehtml;
         viewHTML = viewHTML.firstElementChild;
 
@@ -450,7 +450,7 @@
         if (!setupKeyEsc) {
             setupKeyEsc = true;
 
-            doc.addEventListener("keydown", function (e) {
+            d.addEventListener("keydown", function (e) {
                 if (!showRegExp.test(viewHTML.className)) {
                     return;
                 }
@@ -473,7 +473,7 @@
         if (!setupResize) {
             setupResize = true;
 
-            window.addEventListener("resize", resizeImage);
+            w.addEventListener("resize", resizeImage);
         }
     }
 
@@ -566,7 +566,7 @@
 
         loaded = false;
 
-        mainBody = doc.body;
+        mainBody = d.body;
 
         if (!mainBody) {
             setTimeout(bootGallery, 2000);
@@ -581,11 +581,11 @@
 
     function initiate()
     {
-        if (/^(interactive|complete)$/i.test(doc.readyState)) {
+        if (/^(interactive|complete)$/i.test(d.readyState)) {
             bootGallery();
         } else {
-            doc.addEventListener("DOMContentLoaded", bootGallery);
-            window.addEventListener("load", bootGallery);
+            d.addEventListener("DOMContentLoaded", bootGallery);
+            w.addEventListener("load", bootGallery);
         }
     }
 
@@ -596,4 +596,4 @@
             }
         });
     }
-})(document, chrome||browser);
+})(window, document, chrome||browser);

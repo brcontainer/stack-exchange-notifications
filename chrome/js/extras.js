@@ -72,9 +72,9 @@
         function applyEvents(el)
         {
             if (el.tagName === "PRE" && !el.senCopyCode) {
-                var space, tools, button, nextEl = el.nextElementSibling, code = el.firstElementChild;
+                var space, tools, button, nextEl = el.nextSibling, code = el.firstElementChild;
 
-                if (!code || code.tagName !== "CODE" || nextEl.senCopyCode) {
+                if (!code || !nextEl || code.tagName !== "CODE" || nextEl.senCopyCode) {
                     return;
                 }
 
@@ -157,7 +157,7 @@
                     init();
                 } else {
                     d.addEventListener("DOMContentLoaded", init);
-                    window.addEventListener("onload", init);
+                    w.addEventListener("onload", init);
                 }
             }
         });

@@ -1,58 +1,58 @@
 /*
- * StackExchangeNotifications 1.0.0
+ * StackExchangeNotifications 1.0.1
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(doc, browser) {
+(function(w, d, browser) {
     "use strict";
 
     var
         debugMode,
-        navgation           = doc.querySelector(".nav"),
+        navgation           = d.querySelector(".nav"),
 
-        inboxButton         = doc.getElementById("inbox-button"),
-        inboxContent        = doc.getElementById("inbox-content"),
+        inboxButton         = d.getElementById("inbox-button"),
+        inboxContent        = d.getElementById("inbox-content"),
         inboxData           = inboxButton.querySelector("span.push"),
         inboxXhr            = null,
         inboxActive         = false,
 
-        achievementsButton  = doc.getElementById("achievements-button"),
-        achievementsContent = doc.getElementById("achievements-content"),
+        achievementsButton  = d.getElementById("achievements-button"),
+        achievementsContent = d.getElementById("achievements-content"),
         achievementsData    = achievementsButton.querySelector("span.push"),
         achievementsXhr     = null,
         achievementsActive  = false,
 
-        aboutButton         = doc.getElementById("about-button"),
-        aboutContent        = doc.getElementById("about-content"),
+        aboutButton         = d.getElementById("about-button"),
+        aboutContent        = d.getElementById("about-content"),
 
-        chatButton         = doc.getElementById("chat-button"),
-        chatContent        = doc.getElementById("chat-content"),
+        chatButton         = d.getElementById("chat-button"),
+        chatContent        = d.getElementById("chat-content"),
 
-        setupButton         = doc.getElementById("setup-button"),
-        setupContent        = doc.getElementById("setup-content"),
+        setupButton         = d.getElementById("setup-button"),
+        setupContent        = d.getElementById("setup-content"),
 
-        switchs             = doc.querySelectorAll("a[data-switch]"),
+        switchs             = d.querySelectorAll("a[data-switch]"),
 
-        //notificationSwitch  = doc.getElementById("notification-switch"),
+        //notificationSwitch  = d.getElementById("notification-switch"),
 
-        editorSwitch        = doc.getElementById("editor-switch"),
-        editorSwitchTabs    = doc.getElementById("editor-switch-tabs"),
-        editorSwitchInvert  = doc.getElementById("editor-switch-invert"),
-        editorSwitchPreview = doc.getElementById("editor-switch-preview"),
+        editorSwitch        = d.getElementById("editor-switch"),
+        editorSwitchTabs    = d.getElementById("editor-switch-tabs"),
+        editorSwitchInvert  = d.getElementById("editor-switch-invert"),
+        editorSwitchPreview = d.getElementById("editor-switch-preview"),
 
-        btns                = doc.querySelectorAll(".btn"),
+        btns                = d.querySelectorAll(".btn"),
 
-        clearCache          = doc.getElementById("clear-cache"),
-        clearAllData        = doc.getElementById("clear-all-data"),
+        clearCache          = d.getElementById("clear-cache"),
+        clearAllData        = d.getElementById("clear-all-data"),
 
         bgLoaderRegExp       = /(^|\s)(hide|sen-bg-loader)(\s|$)/g,
 
         cssLoaded           = false,
 
-        headDOM             = doc.head,
+        headDOM             = d.head,
 
         backgroundEngine    = browser.extension.getBackgroundPage()
     ;
@@ -69,7 +69,7 @@
     function linkPrevent(el)
     {
         el.addEventListener("click", function(evt) {
-            (evt || window.event).preventDefault();
+            (evt || w.event).preventDefault();
         });
     }
 
@@ -100,7 +100,7 @@
     {
         var els, j, i = 0;
 
-        target = target||doc;
+        target = target || d;
 
         els = target.getElementsByTagName("a");
 
@@ -109,9 +109,9 @@
         }
     }
 
-    window.StackExchangeNotifications = backgroundEngine.StackExchangeNotifications;
+    w.StackExchangeNotifications = backgroundEngine.StackExchangeNotifications;
 
-    doc.oncontextmenu = disableEvent;
+    d.oncontextmenu = disableEvent;
 
     setDomEvents();
 
@@ -119,7 +119,7 @@
 
     var manifestData = StackExchangeNotifications.meta();
 
-    doc.getElementById("about-title").innerHTML =
+    d.getElementById("about-title").innerHTML =
                                             manifestData.appname + " " + manifestData.version;
 
     function checkEvent()
@@ -130,7 +130,7 @@
             var d = new Date(lastcheck);
 
             if (d.getDate() == 31 && d.getMonth() == 9) {
-                doc.body.className += " halloween";
+                d.body.className += " halloween";
             }
         }
     }
@@ -141,13 +141,13 @@
     {
         if (StackExchangeNotifications.switchEnable("black_theme")) {
             if (!theme) {
-                theme = doc.createElement("link");
+                theme = d.createElement("link");
 
                 theme.href = "/css/themes/black/popup.css";
                 theme.type = "text/css";
                 theme.rel  = "stylesheet";
 
-                doc.body.appendChild(theme);
+                d.body.appendChild(theme);
             } else {
                 theme.disabled = false;
             }
@@ -264,9 +264,9 @@
     function setStyle(cssText)
     {
         cssLoaded = true;
-        var style = doc.createElement("style");
+        var style = d.createElement("style");
         style.textContent = cssText;
-        doc.head.appendChild(style);
+        d.head.appendChild(style);
     }
 
     function bgCss()
@@ -284,7 +284,7 @@
         var i, j, rules, image, imgUrl, allRulesBg = [],
             isHttp = /^(http|https)\:\/\/[a-z0-1]/i,
             reImg  = /url\(("|'|)([\s\S]+?\.(png|jpg|jpeg|gif)(\?|\?[\s\S]+?|))("|'|)\)/i,
-            styles = doc.styleSheets;
+            styles = d.styleSheets;
 
         for (var i = styles.length - 1; i >= 0; i--) {
             if (false === isHttp.test(styles[i].href)) {
@@ -345,7 +345,7 @@
         inboxActive = false;
         achievementsActive = false;
 
-        window.scrollTo(0, 0);
+        w.scrollTo(0, 0);
 
         StackExchangeNotifications.saveState("lastTab", "setup");
 
@@ -378,7 +378,7 @@
         inboxActive = false;
         achievementsActive = false;
 
-        window.scrollTo(0, 0);
+        w.scrollTo(0, 0);
 
         StackExchangeNotifications.saveState("lastTab", "chat");
 
@@ -411,7 +411,7 @@
         inboxActive = false;
         achievementsActive = false;
 
-        window.scrollTo(0, 0);
+        w.scrollTo(0, 0);
 
         StackExchangeNotifications.saveState("lastTab", "about");
 
@@ -439,7 +439,7 @@
 
         achievementsActive = false;
 
-        window.scrollTo(0, 0);
+        w.scrollTo(0, 0);
 
         if (inboxActive && StackExchangeNotifications.hasCache("inbox")) {
             return false;
@@ -510,7 +510,7 @@
 
         inboxActive = false;
 
-        window.scrollTo(0, 0);
+        w.scrollTo(0, 0);
 
         if (achievementsActive && StackExchangeNotifications.hasCache("achievements")) {
             return false;
@@ -565,7 +565,7 @@
                     StackExchangeNotifications.utils.cleanDomString(data);
 
                 if (headers.Date) {
-                    dateContent = doc.querySelector(".js-utc-time")
+                    dateContent = d.querySelector(".js-utc-time")
 
                     if (dateContent) {
                         date = new Date(headers.Date);
@@ -578,7 +578,7 @@
                         dateContent.innerHTML = hour + ":" + min
                     }
                 } else {
-                    dateContent = doc.querySelector(".utc-clock");
+                    dateContent = d.querySelector(".utc-clock");
                     if (dateContent) {
                         dateContent.className += " hide";
                     }
@@ -602,13 +602,13 @@
 
     clearAllData.onclick = function()
     {
-        if (window.confirm("Realy? Delete all data?")) {
+        if (w.confirm("Realy? Delete all data?")) {
             localStorage.clear();
-            window.location.reload();
+            w.location.reload();
         }
     };
 
-    doc.querySelector("a[data-switch='black_theme']").addEventListener("click", changeTheme);
+    d.querySelector("a[data-switch='black_theme']").addEventListener("click", changeTheme);
 
     changeTheme();
 
@@ -640,4 +640,4 @@
             achievementsButton.onclick();
         break;
     }
-})(document, chrome||browser);
+})(window, document, chrome||browser);

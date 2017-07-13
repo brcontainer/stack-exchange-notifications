@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 1.0.0
+ * StackExchangeNotifications 1.0.1
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(doc, browser) {
+(function(d, browser) {
     "use strict";
 
     return;
@@ -34,13 +34,13 @@
 
     function loadCss(url)
     {
-        var style = doc.createElement("link");
+        var style = d.createElement("link");
 
         style.rel  = "stylesheet";
         style.type = "text/css";
         style.href = browser.extension.getURL("/css/" + url);
 
-        doc.body.appendChild(style);
+        d.body.appendChild(style);
     }
 
     function createLink(el)
@@ -50,12 +50,12 @@
         }
 
         var
-            link = doc.createElement("a"),
-            icon = doc.createElement("i"),
-            text = doc.createTextNode("save room"),
-            division = doc.createTextNode("|"),
-            space1 = doc.createTextNode(" "),
-            space2 = doc.createTextNode(" ")
+            link = d.createElement("a"),
+            icon = d.createElement("i"),
+            text = d.createTextNode("save room"),
+            division = d.createTextNode("|"),
+            space1 = d.createTextNode(" "),
+            space2 = d.createTextNode(" ")
         ;
 
         link.href = "javascript:void(0);";
@@ -78,7 +78,7 @@
 
     function appendLinks()
     {
-        var els = doc.querySelectorAll(".roomcard, [id^=room-], #sidebar-menu");
+        var els = d.querySelectorAll(".roomcard, [id^=room-], #sidebar-menu");
 
         for (var i = els.length - 1; i >= 0; i--) {
             if (els[i].id === "sidebar-menu") {
@@ -95,10 +95,10 @@
         appendLinks();
     }
 
-    if (/^(interactive|complete)$/i.test(doc.readyState)) {
+    if (/^(interactive|complete)$/i.test(d.readyState)) {
         bootPinChat();
     } else {
-        doc.addEventListener("DOMContentLoaded", bootPinChat);
+        d.addEventListener("DOMContentLoaded", bootPinChat);
         window.addEventListener("load", bootPinChat);
     }
 })(document, chrome||browser);

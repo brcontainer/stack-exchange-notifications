@@ -1,8 +1,8 @@
 {
     "name": "StackExchangeNotifications",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "manifest_version": 2,
-    "description": "Show recent achievements and inbox messages from StackExchange",
+    "description": "Show recent achievements and inbox messages from Stack Exchange",
     "icons": {
         "128": "images/icon-128px.png",
         "48":  "images/icon-48px.png",
@@ -63,7 +63,6 @@
         "images/*"
     ],
     "permissions": [
-        "*://stackexchange.com/*",
-        "notifications"
+        "*://stackexchange.com/*"
     ]
 }

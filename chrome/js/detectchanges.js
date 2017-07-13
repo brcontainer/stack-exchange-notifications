@@ -1,19 +1,19 @@
 /*
- * StackExchangeNotifications 1.0.0
+ * StackExchangeNotifications 1.0.1
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(doc, browser) {
+(function(w, d, browser) {
     "use strict";
 
     var running = false;
 
     function isHide(elem)
     {
-        var prop = window.getComputedStyle(elem, null);
+        var prop = w.getComputedStyle(elem, null);
 
         return prop.getPropertyValue("display") === "none" ||
                 prop.getPropertyValue("visibility") === "hidden";
@@ -49,7 +49,7 @@
             return;
         }
 
-        var networkSE = doc.querySelector(".network-items");
+        var networkSE = d.querySelector(".network-items");
 
         if (!networkSE) {
             return;
@@ -66,10 +66,10 @@
         });
     }
 
-    if (/interactive|complete/i.test(doc.readyState)) {
+    if (/interactive|complete/i.test(d.readyState)) {
         applyEvents();
     } else {
-        doc.addEventListener("DOMContentLoaded", applyEvents);
-        window.addEventListener("onload", applyEvents);
+        d.addEventListener("DOMContentLoaded", applyEvents);
+        w.addEventListener("onload", applyEvents);
     }
-})(document, chrome||browser);
+})(window, document, chrome||browser);

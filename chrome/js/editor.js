@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 1.0.0
+ * StackExchangeNotifications 1.0.1
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(doc, browser) {
+(function(w, d, browser) {
     "use strict";
 
     var
@@ -43,7 +43,7 @@
         }
 
         var evt = new MouseEvent(type, {
-            "view": window,
+            "view": w,
             "bubbles": true,
             "cancelable": true
         });
@@ -103,19 +103,19 @@
 
             realEditor.className += " sen-editor-visible";
 
-            var event = new MouseEvent("click", {
-                "view": window,
+            var evt = new MouseEvent("click", {
+                "view": w,
                 "bubbles": true,
                 "cancelable": true
             });
 
             if (innerBtn) {
-                innerBtn.dispatchEvent(event);
+                innerBtn.dispatchEvent(evt);
             } else {
-                btn.dispatchEvent(event);
+                btn.dispatchEvent(evt);
             }
 
-            event = null;
+            evt = null;
 
             timerHideButtons = setTimeout(hideElement, 200, realEditor);
         });
@@ -214,7 +214,7 @@
         var color = null;
 
         if (el.style) {
-            var cs = window.getComputedStyle(el, null);
+            var cs = w.getComputedStyle(el, null);
 
             if (cs) {
                 color = cs.getPropertyValue("background-color");
@@ -401,13 +401,13 @@
 
     function loadCss(url)
     {
-        var style = doc.createElement("link");
+        var style = d.createElement("link");
 
         style.rel  = "stylesheet";
         style.type = "text/css";
         style.href = browser.extension.getURL("/css/" + url);
 
-        doc.body.appendChild(style);
+        d.body.appendChild(style);
     }
 
     function loadView(realEditor)
@@ -427,7 +427,7 @@
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
-                    viewHTML = doc.createElement("div");
+                    viewHTML = d.createElement("div");
                     viewHTML.innerHTML = xhr.responseText;
                     viewHTML = viewHTML.firstElementChild;
 
@@ -455,7 +455,7 @@
 
     function checkRemoveFullEditorOpts()
     {
-        if (doc.getElementsByClassName("sen-editor-full").length === 0) {
+        if (d.getElementsByClassName("sen-editor-full").length === 0) {
             rootDoc.className = rootDoc.className
                                     .replace(noscrollRegExp, " ")
                                         .replace(/\s\s/g, " ").trim();
@@ -467,7 +467,7 @@
     function triggerObserver()
     {
         var observer = new MutationObserver(function(mutations) {
-            var all = doc.querySelectorAll(".post-editor, .wmd-container");
+            var all = d.querySelectorAll(".post-editor, .wmd-container");
 
             for (var i = all.length - 1; i >= 0; i--) {
                 setTimeout(createEditor, 1, all[i]);
@@ -480,7 +480,7 @@
             timerObserver = setTimeout(checkRemoveFullEditorOpts, 100);
         });
 
-        observer.observe(doc.body, {
+        observer.observe(d.body, {
             "subtree": true,
             "childList": true,
             "attributes": true
@@ -492,12 +492,12 @@
             return;
         }
 
-        rootDoc = doc.body.parentNode;
+        rootDoc = d.body.parentNode;
 
         done = true;
 
         setTimeout(function() {
-            var els = doc.querySelectorAll("form.post-form, .edit-profile form");
+            var els = d.querySelectorAll("form.post-form, .edit-profile form");
 
             if (els.length > 0) {
                 for (var i = els.length - 1; i >= 0; i--) {
@@ -508,7 +508,7 @@
 
         setTimeout(triggerObserver, 300);
 
-        doc.addEventListener("keydown", function(e) {
+        d.addEventListener("keydown", function(e) {
             if (e.altKey && e.target && isInput.test(e.target.className)) {
                 switch (e.keyCode) {
                     case 70: //Alt+F change to fullscreen or normal
@@ -536,16 +536,16 @@
             loadCss("themes/" + theme + "/editor.css");
         }
 
-        if (/^(interactive|complete)$/i.test(doc.readyState)) {
+        if (/^(interactive|complete)$/i.test(d.readyState)) {
             loadAll();
         } else {
-            doc.addEventListener("DOMContentLoaded", loadAll);
-            window.addEventListener("load", loadAll);
+            d.addEventListener("DOMContentLoaded", loadAll);
+            w.addEventListener("load", loadAll);
         }
     }
 
     //Disable functions in chat
-    if (window.location.hostname.indexOf("chat.") === 0) {
+    if (w.location.hostname.indexOf("chat.") === 0) {
         return;
     }
 
@@ -564,4 +564,4 @@
             }
         });
     }
-})(document, chrome||browser);
+})(window, document, chrome||browser);

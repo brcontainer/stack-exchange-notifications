@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 1.0.0
+ * StackExchangeNotifications 1.0.1
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(doc, browser) {
+(function(d, browser) {
     "use strict";
 
     var delay = 60, //In seconds
@@ -22,11 +22,10 @@
 
     var doneCallback = null,
         isRunning = false,
-        timer = null,
-        inSleepMode = false
+        timer = null
     ;
 
-    var tmpDom     = doc.createElement("div"),
+    var tmpDom     = d.createElement("div"),
         validAttrs = [ "class", "id", "href" ];
 
     var Utils = {
@@ -130,7 +129,7 @@
     function img2base64(img)
     {
         if (!tmpCanvas) {
-            tmpCanvas = doc.createElement("canvas");
+            tmpCanvas = d.createElement("canvas");
             canvasContext = tmpCanvas.getContext('2d');
         }
 
@@ -348,60 +347,6 @@
         timer = setTimeout(retrieveData, currentDelay);
     }
 
-    var
-        RunnigNotifications = false,
-        ListNotifications = [],
-        UsedNotificationsSession = [],
-        CurrentNotification = 0,
-        TokenNotifications = String(new Date().getTime() / 1000) + "_"
-    ;
-
-    function saveNotifications()
-    {
-        SimpleCache.set("notificationbackup", ListNotifications, true);
-    }
-
-    function showNotifications()
-    {
-        RunnigNotifications = true;
-
-        var data = ListNotifications[CurrentNotification];
-
-        CurrentNotification++;
-
-        if (!data) {
-            CurrentNotification--;
-            RunnigNotifications = false;
-            return;
-        } else if (data === 1) {
-            setTimeout(showNotifications, 1000);
-            return;
-        }
-
-        var props = {
-            "type":    "basic",
-            "title":   data.title,
-            "iconUrl": "images/icon-128px.png",
-            "message": data.message,
-            "requireInteraction": true
-        };
-
-        //Prevent not show in Opera
-        var id = TokenNotifications + data.id;
-
-        try {
-            browser.notifications.create(id, props, function() {});
-        } catch (ee) {
-            //Firefox don't support requireInteraction and causes exception
-
-            delete props.requireInteraction;
-
-            browser.notifications.create(id, props, function() {});
-        }
-
-        setTimeout(showNotifications, 1000);
-    }
-
     window.StackExchangeNotifications = {
         "boot": function() {
             //Improve perfomance in Opera and older machines
@@ -428,19 +373,6 @@
 
             return true;
         },
-        "enableSleepMode": function(enable) {
-            if (typeof enable === "boolean") {
-                inSleepMode = !!enable;
-            }
-
-            if (!inSleepMode && !RunnigNotifications) {
-                RunnigNotifications = true;
-
-                setTimeout(showNotifications, initiateDelay);
-            }
-
-            return inSleepMode;
-        },
         "switchEnable": function(key, enable) {
             var kn = "switch_" + key;
 
@@ -450,42 +382,6 @@
             }
 
             return !!SimpleCache.get(kn, true);
-        },
-        "removeNotificationFromCache": function(id) {
-            for (var i = ListNotifications.length - 1; i >= 0; i--) {
-                var c = ListNotifications[i];
-
-                if (c && c.id === id) {
-                    ListNotifications[i] = true;
-                    break;
-                }
-            }
-
-            saveNotifications();
-        },
-        "notificationsSession": function() {
-            return TokenNotifications;
-        },
-        "notify": function(id, title, message) {
-            if (!StackExchangeNotifications.switchEnable("desktop_notification")) {
-                return;
-            }
-
-            if (UsedNotificationsSession.indexOf(id) !== -1) {
-                return;
-            }
-
-            UsedNotificationsSession.push(id);
-
-            ListNotifications.push({ "id": id, "title": title, "message": message });
-
-            saveNotifications();
-
-            if (!inSleepMode && !RunnigNotifications) {
-                RunnigNotifications = true;
-
-                setTimeout(showNotifications, initiateDelay);
-            }
         },
         "pushs": function(callback) {
             if (false === isRunning && typeof callback === "function") {

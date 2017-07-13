@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.0
+ * StackExchangeNotifications 1.0.1
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -134,29 +134,6 @@
         });
     });
 
-    browser.notifications.onClicked.addListener(function(id, byUser) {
-        var tryUri = id.substr(StackExchangeNotifications.notificationsSession().length);
-
-        if (/^(http|https):\/\//.test(tryUri)) {
-            setTimeout(function() {
-                browser.tabs.create({ "url": tryUri });
-            }, 1);
-        }
-
-        browser.notifications.clear(id);
-        StackExchangeNotifications.removeNotificationFromCache(tryUri);
-    });
-
-    browser.windows.onFocusChanged.addListener(function(windowId) {
-        if (windowId === -1) {
-            StackExchangeNotifications.enableSleepMode(true);
-        } else {
-            browser.windows.get(windowId, function(currentWindow) {
-                StackExchangeNotifications.enableSleepMode(currentWindow.state === "minimized");
-            });
-        }
-    });
-
     function updateChanges(request)
     {
         var data = request.data;
@@ -210,8 +187,6 @@
         } else if (request) {
             if (request.data && request.clear) {
                 updateChanges(request);
-            } else if (typeof request.sleepMode === "boolean") {
-                StackExchangeNotifications.enableSleepMode(request.sleepMode);
             } else if (request.storeimages) {
                 if (request.storeimages === true) {
                     var cssbg = StackExchangeNotifications.restoreState("cssbg", false);
