@@ -9,7 +9,10 @@
 (function(w, d, browser) {
     "use strict";
 
-    var running = false;
+    var running = false,
+        unreadRegEx = /(^|\s)(js-unread-count|unread-count)($|\s)/,
+        inboxRegEx = /(^|\s)(js-inbox-button|icon-inbox)($|\s)/,
+        achievementsRegEx = /(^|\s)(js-achievements-button|icon-achievements)($|\s)/;
 
     function isHide(elem)
     {
@@ -24,15 +27,15 @@
         mutations.forEach(function (mutation) {
             var type, checkTab, el = mutation.target;
 
-            if (/(^|\s)unread-count($|\s)/.test(el.className)) {
-                if (/(^|\s)icon-achievements($|\s)/.test(el.parentNode.className)) {
+            if (unreadRegEx.test(el.className)) {
+                if (achievementsRegEx.test(el.parentNode.className)) {
                     type = "achievements";
-                } else if (/(^|\s)icon-inbox($|\s)/.test(el.parentNode.className)) {
+                } else if (inboxRegEx.test(el.parentNode.className)) {
                     type = "inbox";
                 }
 
                 if (type && browser && browser.runtime && browser.runtime.sendMessage) {
-                    var data = isHide(el) ? 0 : parseInt(el.textContent);
+                    var data = isHide(el) ? 0 : (el.textContent ? parseInt(el.textContent) : 0);
 
                     browser.runtime.sendMessage({
                         "data": data,
@@ -49,9 +52,10 @@
             return;
         }
 
-        var networkSE = d.querySelector(".network-items");
+        var networkSE = d.querySelector(".network-items, .so-header .secondary-nav");
 
         if (!networkSE) {
+            setTimeout(applyEvents, 1000);
             return;
         }
 

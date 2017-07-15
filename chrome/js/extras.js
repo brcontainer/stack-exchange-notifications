@@ -74,7 +74,7 @@
             if (el.tagName === "PRE" && !el.senCopyCode) {
                 var space, tools, button, nextEl = el.nextSibling, code = el.firstElementChild;
 
-                if (!code || !nextEl || code.tagName !== "CODE" || nextEl.senCopyCode) {
+                if (!code || !nextEl || code.tagName !== "CODE" || code.senCopyCode) {
                     return;
                 }
 
@@ -84,7 +84,7 @@
                 button = d.createElement("a");
 
                 el.senCopyCode = true;
-                button.senCopyCode = true;
+                code.senCopyCode = true;
 
                 button.textContent = "Copy code";
                 button.onclick = function () {

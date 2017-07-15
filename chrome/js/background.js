@@ -134,29 +134,25 @@
         });
     });
 
-    function updateChanges(request)
+    function updateChanges(type, value)
     {
-        var data = request.data;
-
-        switch (request.clear) {
+        switch (type) {
             case "inbox":
                 if (data !== StackExchangeNotifications.getInbox()) {
-                    StackExchangeNotifications.setInbox(data);
+                    StackExchangeNotifications.setInbox(value);
                 }
-
-                StackExchangeNotifications.update();
             break;
 
             case "achievements":
                 var achievements = StackExchangeNotifications.getAchievements();
 
-                if (data !== achievements.score || data !== achievements.acquired) {
-                    StackExchangeNotifications.setAchievements(data);
+                if (value !== achievements.score || value !== achievements.acquired) {
+                    StackExchangeNotifications.setAchievements(value);
                 }
-
-                StackExchangeNotifications.update();
             break;
         }
+
+        StackExchangeNotifications.update();
     }
 
     browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -184,25 +180,23 @@
             sendResponse({
                 "copycode": StackExchangeNotifications.switchEnable("copy_code")
             });
-        } else if (request) {
-            if (request.data && request.clear) {
-                updateChanges(request);
-            } else if (request.storeimages) {
-                if (request.storeimages === true) {
-                    var cssbg = StackExchangeNotifications.restoreState("cssbg", false);
+        } else if (request.clear) {
+            updateChanges(request.clear, request.data);
+        } else if (request.storeimages) {
+            if (request.storeimages === true) {
+                var cssbg = StackExchangeNotifications.restoreState("cssbg", false);
 
-                    if (cssbg) {
-                        sendResponse(cssbg);
-                        cssbg = null;
-                    }
-                } else {
-                    StackExchangeNotifications.utils.generateCssImages(request.storeimages, function(data) {
-                        StackExchangeNotifications.saveState("cssbg", data, false);
-                        sendResponse(data);
-                    });
-
-                    return true;
+                if (cssbg) {
+                    sendResponse(cssbg);
+                    cssbg = null;
                 }
+            } else {
+                StackExchangeNotifications.utils.generateCssImages(request.storeimages, function(data) {
+                    StackExchangeNotifications.saveState("cssbg", data, false);
+                    sendResponse(data);
+                });
+
+                return true;
             }
         }
     });
