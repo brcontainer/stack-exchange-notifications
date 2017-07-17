@@ -49,7 +49,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     display: none !important;
 }
 
-.wmd-preview a {
+.wmd-preview a:not([class*=snippet]) {
     pointer-events: none !important;
 }
 
