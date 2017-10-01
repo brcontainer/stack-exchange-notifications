@@ -28,11 +28,12 @@
 - [ ] Use underscores (`_foo_`) in Italic button
 - [x] Use default site colors or themes installed with tools like "Stylish"
 - [x] Bug in answer your owner question
+- [x] "Help button" with tips
 
 # Chat
 
 - [ ] Remove onebox
-- [ ] Save favorite rooms
+- [ ] "Pin" favorite chat rooms
 
 # Others
 
@@ -41,3 +42,7 @@
 - [x] Clear inbox cache and achivements cache
 - [x] Reset all data
 - [x] Change color icons (3 colors, use background-position with Stylish)
+- Shortcut for transform selected text in all fields:
+    - [ ] Ctrl+K+U for uppercase
+    - [ ] Ctrl+K+L for lowercase
+    - [ ] Ctrl+K+C for camelcase

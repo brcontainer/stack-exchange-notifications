@@ -48,7 +48,8 @@
         clearCache          = d.getElementById("clear-cache"),
         clearAllData        = d.getElementById("clear-all-data"),
 
-        bgLoaderRegExp       = /(^|\s)(hide|sen-bg-loader)(\s|$)/g,
+        bgLoaderRegExp      = /(^|\s)(hide|sen-bg-loader)(\s|$)/g,
+        hideRegExp          = /(^|\s)hide(\s|$)/g,
 
         cssLoaded           = false,
 
@@ -197,7 +198,7 @@
 
         current.addEventListener("click", function() {
             current.className = current.className
-                                    .replace(/(^|\s)unread-item($|\s)/g, " ").trim();
+                                    .replace(/(^|\s)unread-item(\s|$)/g, " ").trim();
 
             var data = StackExchangeNotifications.restoreState(box);
 
@@ -362,7 +363,7 @@
             chatContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         setupContent.className =
-            aboutContent.className.replace(/hide/g, "").trim();
+            aboutContent.className.replace(hideRegExp, "").trim();
     };
 
     chatButton.onclick = function()
@@ -395,7 +396,7 @@
             setupContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         chatContent.className =
-            chatContent.className.replace(/hide/g, "").trim();
+            chatContent.className.replace(hideRegExp, "").trim();
     };
 
     aboutButton.onclick = function()
@@ -428,7 +429,7 @@
             chatContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
 
         aboutContent.className =
-            aboutContent.className.replace(/hide/g, "").trim();
+            aboutContent.className.replace(hideRegExp, "").trim();
     };
 
     inboxButton.onclick = function()
@@ -450,7 +451,7 @@
         StackExchangeNotifications.saveState("lastTab", "inbox");
 
         aboutContent.className =
-            aboutContent.className.replace(/hide/g, "").trim() + " hide";
+            aboutContent.className.replace(hideRegExp, "").trim() + " hide";
 
         achievementsContent.className =
             achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
@@ -489,7 +490,7 @@
                     StackExchangeNotifications.update();
                 }, 1500);
 
-                inboxContent.innerHTML = StackExchangeNotifications.utils.cleanDomString(data);
+                inboxContent.innerHTML = StackExchangeNotifications.utils.clearDomString(data);
 
                 setDomEvents(inboxContent);
                 saveStateDetect("inbox");
@@ -521,7 +522,7 @@
         StackExchangeNotifications.saveState("lastTab", "achievements");
 
         aboutContent.className =
-            aboutContent.className.replace(/hide/g, "").trim() + " hide";
+            aboutContent.className.replace(hideRegExp, "").trim() + " hide";
 
         inboxContent.className =
             inboxContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
@@ -562,7 +563,7 @@
                 }, 500);
 
                 achievementsContent.innerHTML =
-                    StackExchangeNotifications.utils.cleanDomString(data);
+                    StackExchangeNotifications.utils.clearDomString(data);
 
                 if (headers.Date) {
                     dateContent = d.querySelector(".js-utc-time")

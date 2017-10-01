@@ -10,9 +10,10 @@
     "use strict";
 
     var running = false,
-        unreadRegEx = /(^|\s)(js-unread-count|unread-count)($|\s)/,
-        inboxRegEx = /(^|\s)(js-inbox-button|icon-inbox)($|\s)/,
-        achievementsRegEx = /(^|\s)(js-achievements-button|icon-achievements)($|\s)/;
+        unreadRegExp       = /(^|\s)(js-unread-count|unread-count)(\s|$)/,
+        inboxRegExp        = /(^|\s)(js-inbox-button|icon-inbox)(\s|$)/,
+        achievementsRegExp = /(^|\s)(js-achievements-button|icon-achievements)(\s|$)/
+    ;
 
     function isHide(elem)
     {
@@ -27,10 +28,10 @@
         mutations.forEach(function (mutation) {
             var type, checkTab, el = mutation.target;
 
-            if (unreadRegEx.test(el.className)) {
-                if (achievementsRegEx.test(el.parentNode.className)) {
+            if (unreadRegExp.test(el.className)) {
+                if (achievementsRegExp.test(el.parentNode.className)) {
                     type = "achievements";
-                } else if (inboxRegEx.test(el.parentNode.className)) {
+                } else if (inboxRegExp.test(el.parentNode.className)) {
                     type = "inbox";
                 }
 
@@ -52,7 +53,7 @@
             return;
         }
 
-        var networkSE = d.querySelector(".network-items, .so-header .secondary-nav");
+        var networkSE = d.querySelector(".network-items, body > header .secondary-nav");
 
         if (!networkSE) {
             setTimeout(applyEvents, 1000);

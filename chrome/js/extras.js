@@ -2,9 +2,9 @@
     "use strict";
 
     var
-        validValueRegEx = /^[\d.]+(px|em|pt)$/,
-        hideRegEx = /(^|\s)sen-tools-hide(\s|$)/,
-        ignorePreviewRegEx = /(^|\s)wmd-preview(\s|$)/,
+        validValueRegExp    = /^[\d.]+(px|em|pt)$/,
+        hideRegExp          = /(^|\s)sen-tools-hide(\s|$)/g,
+        ignorePreviewRegExp = /(^|\s)wmd-preview(\s|$)/g,
         mainBody,
         notification,
         hideTimer,
@@ -45,7 +45,7 @@
         notification.textContent = label;
         notification.className =
             notification.className
-                .replace(hideRegEx, " ")
+                .replace(hideRegExp, " ")
                     .replace(/\s\s/g, " ")
                         .trim();
 
@@ -126,7 +126,7 @@
             inprogress = true;
 
             mutations.forEach(function (mutation) {
-                if (ignorePreviewRegEx.test(mutation.target.className) === false) {
+                if (ignorePreviewRegExp.test(mutation.target.className) === false) {
                     findPreCodes(mutation.target);
                 }
             });

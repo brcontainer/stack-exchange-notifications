@@ -10,7 +10,7 @@
     "use strict";
 
     var delay = 60, //In seconds
-        initiateDelay = 5000; //Milesec
+        initiateDelay = 5000; //Milliseconds
 
     var unreadCountsURI = "http://stackexchange.com/topbar/get-unread-counts",
         achievementsURI = "http://stackexchange.com/topbar/achievements",
@@ -56,7 +56,7 @@
                 }
             }
         },
-        "cleanDomString": function(data) {
+        "clearDomString": function(data) {
             tmpDom = (new DOMParser).parseFromString(data, "text/html").body;
 
             var list, current, currentHref;
@@ -142,6 +142,19 @@
 
         return tmpCanvas.toDataURL();
     }
+
+    function getMatches(value)
+    {
+        if (browser && browser.runtime && browser.runtime.getManifest) {
+            var data = browser.runtime.getManifest();
+
+            return data.content_scripts[value].matches;
+        }
+    }
+
+    var sitesRE = new RegExp('^(' + getMatches(0).join("|")
+                                    .replace(/(\.|\/)/g, "\\$1")
+                                        .replace(/\*/g, ".*?") + ')$', 'i');
 
     function metaData()
     {
@@ -282,7 +295,22 @@
 
     function retrieveData()
     {
-        quickXhr(unreadCountsURI, triggerEvt);
+        var noneed = false;
+
+        browser.tabs.query({ url: "https://*/*" }, function (tabs) {
+            for (var i = tabs.length - 1; i >= 0; i--) {
+                if (sitesRE.test(tabs[i].url)) {
+                    noneed = true;
+                    break;
+                }
+            }
+
+            if (noneed) {
+                setTimeout(retrieveData, 1000);
+            } else {
+                quickXhr(unreadCountsURI, triggerEvt);
+            }
+        });
     }
 
     function getResult(target)

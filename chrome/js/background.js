@@ -138,7 +138,7 @@
     {
         switch (type) {
             case "inbox":
-                if (data !== StackExchangeNotifications.getInbox()) {
+                if (value !== StackExchangeNotifications.getInbox()) {
                     StackExchangeNotifications.setInbox(value);
                 }
             break;
@@ -182,7 +182,7 @@
             });
         } else if (request.clear) {
             updateChanges(request.clear, request.data);
-        } else if (request.storeimages) {
+        } else if (request.hasOwnProperty("storeimages")) {
             if (request.storeimages === true) {
                 var cssbg = StackExchangeNotifications.restoreState("cssbg", false);
 

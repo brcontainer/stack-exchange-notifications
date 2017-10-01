@@ -24,14 +24,14 @@
         currentPhotoToken,
         currentUrl,
         isOpen = false,
-        ignorePreviewRegEx  = /(^|\s)wmd-preview(\s|$)/,
+        ignorePreviewRegExp = /(^|\s)wmd-preview(\s|$)/,
         validImages         = /\.(png|jpeg|jpe|jpg|svg|gif)(|\?[\s\S]+)$/i,
-        errorRegExp         = /(^|\s)sen-error(\s|$)/,
-        loaderRegExp        = /(^|\s)sen-bg-loader(\s|$)/,
+        errorRegExp        = /(^|\s)sen-error(\s|$)/,
+        loaderRegExp       = /(^|\s)sen-bg-loader(\s|$)/,
         inLoadRegxp         = /(^|\s)in-load(\s|$)/,
-        magnifiedRegExp     = /(^|\s)magnified(\s|$)/,
+        magnifiedRegExp    = /(^|\s)magnified(\s|$)/,
         magnificationRegexp = /(^|\s)magnification(\s|$)/,
-        showRegExp          = /(^|\s)show(\s|$)/,
+        showRegExp         = /(^|\s)show(\s|$)/,
         mainSelector        = "a[href]"
     ;
 
@@ -527,7 +527,7 @@
             mutations.forEach(function (mutation) {
                 var c = mutation.target;
 
-                if (ignorePreviewRegEx.test(c.className)) {
+                if (ignorePreviewRegExp.test(c.className)) {
                     return;
                 }
 

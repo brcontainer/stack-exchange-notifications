@@ -20,20 +20,20 @@
         inverted = false,
         tabsBySpaces = false,
         preferPreviewInFull = false,
-        italicRegExp   = /(^|\s|\*\*)\*([^*]+)\*(\s|\*\*|$)/g,
-        focusRegExp    = /(^|\s)sen-editor-focus($|\s)/,
-        visibleRegExp  = /(^|\s)sen-editor-visible($|\s)/,
+        focusRegExp    = /(^|\s)sen-editor-focus(\s|$)/,
+        visibleRegExp  = /(^|\s)sen-editor-visible(\s|$)/,
         fullRegExp     = /(^sen|\ssen)-editor-(full$|full\s)/,
-        readyRegExp    = /(^|\s)sen-editor-ready($|\s)/,
-        invertedRegExp = /(^|\s)sen-editor-inverted($|\s)/,
-        noscrollRegExp = /(^|\s)sen-editor-noscroll($|\s)/,
-        getClassRegexp = /^([\s\S]+?\s|)(wmd-[\S]+?-button)([\s\S]+|)$/,
-        skipBtnRegexp  = /sen-(preview|full|flip|italic|strikethrough|syncscroll)-button/,
-        isPostRegexp   = /(^|\s)(inline-(editor|answer|post))($|\s)/,
-        isInput        = /(^|\s)wmd-input($|\s)/,
-        isContainer    = /(^|\s)wmd-container($|\s)/,
-        activeRegexp   = /(^|\s)sen-disabled($|\s)/,
-        isMac          = /Mac/.test(navigator.platform)
+        readyRegExp    = /(^|\s)sen-editor-ready(\s|$)/,
+        invertedRegExp = /(^|\s)sen-editor-inverted(\s|$)/,
+        noscrollRegExp = /(^|\s)sen-editor-noscroll(\s|$)/,
+        getClassRegExp = /^([\s\S]+?\s|)(wmd-[\S]+?-button)([\s\S]+|)$/,
+        skipBtnRegExp  = /sen-(preview|full|flip|italic|strikethrough|syncscroll)-button/,
+        isPostRegExp   = /(^|\s)(inline-(editor|answer|post))(\s|$)/,
+        isInput        = /(^|\s)wmd-input(\s|$)/,
+        isContainer    = /(^|\s)wmd-container(\s|$)/,
+        activeRegExp   = /(^|\s)sen-disabled(\s|$)/,
+        isMetaDomain   = /(^|\.)meta\./,
+        isMac          = /(\s|\()Mac\s/.test(navigator.platform)
     ;
 
     function triggerEvent(type, target)
@@ -67,11 +67,11 @@
     {
         var timerHideButtons, innerBtn;
 
-        if (skipBtnRegexp.test(button.className)) {
+        if (skipBtnRegExp.test(button.className)) {
             return;
         }
 
-        var c = button.className.replace(getClassRegexp, "$2").trim();
+        var c = button.className.replace(getClassRegExp, "$2").trim();
 
         var btn = realEditor.querySelector("[id=" + c + "]");
 
@@ -103,19 +103,7 @@
 
             realEditor.className += " sen-editor-visible";
 
-            var evt = new MouseEvent("click", {
-                "view": w,
-                "bubbles": true,
-                "cancelable": true
-            });
-
-            if (innerBtn) {
-                innerBtn.dispatchEvent(evt);
-            } else {
-                btn.dispatchEvent(evt);
-            }
-
-            evt = null;
+            (innerBtn ? innerBtn : btn).click();
 
             timerHideButtons = setTimeout(hideElement, 200, realEditor);
         });
@@ -123,45 +111,29 @@
         return !!btn;
     }
 
-    var rtsTimer;
-
-    function eventsInput()
+    function eventsInput(el)
     {
-        var el = this;
+        var rtsTimer;
 
-        if (rtsTimer) {
-            clearTimeout(rtsTimer);
-        }
-
-        rtsTimer = setTimeout(function(obj) {
-            var val = el.value;
-            /*var ss = val.selectionStart,
-                se = val.selectionEnd;*/
-
-            if (val && tabsBySpaces) {
-                val = val.replace(/\t/g, "    ");
+        el.addEventListener("change", function () {
+            if (rtsTimer) {
+                clearTimeout(rtsTimer);
             }
 
-            /*if (val && italicWithUnderScore) {
-                val = val.replace(italicRegExp, "$1_$2_$3");
-            }*/
+            rtsTimer = setTimeout(function() {
+                var val = el.value;
 
-            if (el.value !== val) {
-                el.value = val;
-            }
+                if (val && tabsBySpaces) {
+                    val = val.replace(/\t/g, "    ");
+                }
 
-            el = null;
+                if (el.value !== val) {
+                    el.value = val;
+                }
 
-            /*
-            if (ss !== se) {
-                console.log(ss, se);
-                val.selectionStart = ss;
-                val.selectionEnd = se;
-                val.focus();
-            }*/
-
-            triggerEvent("scroll", el);
-        }, 100);
+                triggerEvent("scroll", el);
+            }, 100);
+        });
     }
 
     function changeShorcutTitle(btn)
@@ -180,8 +152,13 @@
 
     var inScrollEvt;
 
-    function onScroll(type, from, to) {
+    function onScroll(type, from, to)
+    {
         var timerScroll;
+
+        if (type === "field") {
+            eventsInput(from);
+        }
 
         from.addEventListener("scroll", function()
         {
@@ -243,6 +220,10 @@
 
         if (container.senEditorAtived || !realPreview) {
             return;
+        }
+
+        if (isMetaDomain.test(w.location.hostname)) {
+            navbar.className += " sen-is-meta";
         }
 
         container.senEditorAtived = true;
@@ -387,9 +368,9 @@
         }
 
         syncScrollBtn.addEventListener("click", function() {
-            if (activeRegexp.test(syncScrollBtn.className)) {
+            if (activeRegExp.test(syncScrollBtn.className)) {
                 syncScrollBtn.className = syncScrollBtn.className
-                                            .replace(activeRegexp, " ")
+                                            .replace(activeRegExp, " ")
                                                 .replace(/\s\s/g, " ").trim();
                 syncScroll = true;
             } else {
@@ -491,6 +472,12 @@
         if (done) {
             return;
         }
+
+        d.addEventListener("click", function(e) {
+            if (e.target.matches(".wmd-preview a:not([class*=snippet])")) {
+                e.preventDefault();
+            }
+        });
 
         rootDoc = d.body.parentNode;
 

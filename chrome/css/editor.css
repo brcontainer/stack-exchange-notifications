@@ -22,8 +22,27 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     box-sizing: border-box !important;
 }
 
-.wmd-container .grippie, .wmd-button-bar {
+.wmd-container .grippie, .xwmd-button-bar, .wmd-button-row > li {
     display: none !important;
+}
+.wmd-button-row .mdhelp {
+    top: 0 !important;
+    right: auto !important;
+    left: 0 !important;
+    width: calc(100% - 2px) !important;
+    width: -webkit-calc(100% - 2px) !important;
+}
+.wmd-button-row .mdhelp .mdhelp-tabs {
+    border-width: 0 !important;
+    border-bottom-width: 1px !important;
+}
+
+.wmd-button-bar {
+    border: none !important;
+    float: none !important;
+    margin: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
 }
 
 .wmd-preview, .wmd-input {
@@ -49,14 +68,32 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     display: none !important;
 }
 
+/*
 .wmd-preview a:not([class*=snippet]) {
     pointer-events: none !important;
 }
+*/
 
 .sen-editor-toolbar {
+    position: relative !important;
     border-bottom: 1px solid #c8ccd0 !important;
     padding: 4px 6px !important;
     height: 41px !important;
+}
+.sen-editor-toolbar > .sen-meta-flag {
+    display: none !important;
+    background-color: #f48024 !important;
+    font-weight: bold !important;
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    color: #fff !important;
+    font-size: 7pt !important;
+    padding: 2px 4px !important;
+    border-radius: 2px !important;
+}
+.sen-editor-toolbar.sen-is-meta > .sen-meta-flag {
+    display: block !important;
 }
 
 .sen-editor-toolbar > span {
@@ -187,6 +224,12 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 .sen-editor-full .sen-editor-toolbar > a.sen-flip-button,
 .sen-editor-full .sen-editor-toolbar > a.sen-syncscroll-button {
     display: inline-block !important;
+}
+
+.sen-editor-toolbar > a.wmd-help-button i::before {
+    background-image: url(../images/about.svg#gray) !important;
+    background-position: center center !important;
+    background-size: 18px 18px !important;
 }
 
 /*tooltip*/
