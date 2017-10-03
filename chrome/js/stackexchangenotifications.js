@@ -96,7 +96,7 @@
                 for (i = resources.length - 1; i >= 0; i--) {
                     if (resources[i].bin) {
                         tmpCss += resources[i].selector +
-                                    ' { background-image: url(' + resources[i].bin + ') !important; }';
+                                    ' { background-image: url(' + resources[i].bin + '); }';
                     }
                 }
 

@@ -1,2 +1,6 @@
 build/
 README.HTML
+/*.crx
+/*.pem
+/*.nex
+.phpintel

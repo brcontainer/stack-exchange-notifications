@@ -264,6 +264,10 @@
 
     function setStyle(cssText)
     {
+        if (cssLoaded) {
+            return;
+        }
+
         cssLoaded = true;
         var style = d.createElement("style");
         style.textContent = cssText;
@@ -273,17 +277,17 @@
     function bgCss()
     {
         if (cssLoaded) {
-            browser.runtime.sendMessage({ "storeimages": true }, function(response) {
+            /*browser.runtime.sendMessage({ "storeimages": true }, function(response) {
                 if (response) {
                     setStyle(response);
                 }
-            });
+            });*/
 
             return;
         }
 
         var i, j, rules, image, imgUrl, allRulesBg = [],
-            isHttp = /^(http|https)\:\/\/[a-z0-1]/i,
+            isHttp = /^(http|https)\:\/\/[^/]/i,
             reImg  = /url\(("|'|)([\s\S]+?\.(png|jpg|jpeg|gif)(\?|\?[\s\S]+?|))("|'|)\)/i,
             styles = d.styleSheets;
 

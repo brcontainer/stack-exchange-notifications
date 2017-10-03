@@ -25,6 +25,10 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 .wmd-container .grippie, .xwmd-button-bar, .wmd-button-row > li {
     display: none !important;
 }
+.wmd-button-row {
+    height: auto !important;
+    min-height: 0 !important;
+}
 .wmd-button-row .mdhelp {
     top: 0 !important;
     right: auto !important;
