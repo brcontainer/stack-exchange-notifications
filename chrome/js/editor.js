@@ -166,6 +166,10 @@
                 return;
             }
 
+            if (type !== "field" && to === d.activeElement) {
+                return;
+            }
+
             clearTimeout(timerScroll);
 
             inScrollEvt = type;

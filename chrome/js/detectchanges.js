@@ -23,6 +23,22 @@
                 prop.getPropertyValue("visibility") === "hidden";
     }
 
+    function sendNotification(type, el, froload)
+    {
+        if (type && el && browser && browser.runtime && browser.runtime.sendMessage) {
+            var data = isHide(el) ? 0 : (el.textContent ? parseInt(el.textContent) : 0);
+
+            if (froload && data < 1) {
+                return;
+            }
+
+            browser.runtime.sendMessage({
+                "data": data,
+                "clear": type
+            }, function(response) {});
+        }
+    }
+
     function updateStates(mutations)
     {
         mutations.forEach(function (mutation) {
@@ -35,14 +51,7 @@
                     type = "inbox";
                 }
 
-                if (type && browser && browser.runtime && browser.runtime.sendMessage) {
-                    var data = isHide(el) ? 0 : (el.textContent ? parseInt(el.textContent) : 0);
-
-                    browser.runtime.sendMessage({
-                        "data": data,
-                        "clear": type
-                    }, function(response) {});
-                }
+                sendNotification(type, el, false);
             }
         });
     }
@@ -61,6 +70,19 @@
         }
 
         running = true;
+
+        var inboxUnred = ".js-inbox-button > .js-unread-count," +
+                         ".icon-inbox > .js-unread-count," +
+                         ".js-inbox-button > .unread-count," +
+                         ".icon-inbox > .unread-count";
+
+        var achievementsUnred = ".js-achievements-button > .js-unread-count," +
+                                ".icon-achievements > .js-unread-count," +
+                                ".js-achievements-button > .unread-count," +
+                                ".icon-achievements > .unread-count";
+
+        sendNotification("inbox", networkSE.querySelector(inboxUnred), true);
+        sendNotification("achievements", networkSE.querySelector(achievementsUnred), true);
 
         var observer = new MutationObserver(updateStates);
 
