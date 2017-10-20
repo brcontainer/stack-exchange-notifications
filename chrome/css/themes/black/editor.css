@@ -1,4 +1,12 @@
-.sen-editor .sen-preview.halloween {
+/*
+ * StackExchangeNotifications 1.0.3
+ * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Released under the MIT license
+ *
+ * https://github.com/brcontainer/stack-exchange-notification
+ */
+
+.sen-editor .sen-preview.horror {
     background-image: url(../../../images/pumpkins.svg#clear) !important;
     background-position: right bottom !important;
     background-repeat: no-repeat !important;

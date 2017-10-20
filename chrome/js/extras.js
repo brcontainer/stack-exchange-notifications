@@ -1,3 +1,11 @@
+/*
+ * StackExchangeNotifications 1.0.3
+ * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Released under the MIT license
+ *
+ * https://github.com/brcontainer/stack-exchange-notification
+ */
+
 (function (w, d, browser) {
     "use strict";
 

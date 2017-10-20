@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.1
+ * StackExchangeNotifications 1.0.3
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -81,7 +81,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 .sen-editor-toolbar {
     position: relative !important;
     border-bottom: 1px solid #c8ccd0 !important;
-    padding: 4px 6px !important;
+    padding: 4px !important;
     height: 41px !important;
 }
 .sen-editor-toolbar > .sen-meta-flag {
@@ -90,7 +90,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     font-weight: bold !important;
     position: absolute !important;
     top: 10px !important;
-    right: 10px !important;
+    right: 6px !important;
     color: #fff !important;
     font-size: 7pt !important;
     padding: 2px 4px !important;
@@ -102,7 +102,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .sen-editor-toolbar > span {
     border-left: 1px #e2e2e2 solid;
-    margin: 0 4px !important;
+    margin: 0 1px !important;
     padding: 13px 0 !important;
     display: inline-block !important;
     vertical-align: middle !important;

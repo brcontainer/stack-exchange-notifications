@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.1
+ * StackExchangeNotifications 1.0.3
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -22,7 +22,8 @@
 
     var doneCallback = null,
         isRunning = false,
-        timer = null
+        timer = null,
+        noNeedRequestXhr = false
     ;
 
     var tmpDom     = d.createElement("div"),
@@ -295,18 +296,29 @@
 
     function retrieveData()
     {
-        var noneed = false;
+        var total = 0;
 
+        //If updateByInjected = true retest if closed
         browser.tabs.query({ url: "https://*/*" }, function (tabs) {
             for (var i = tabs.length - 1; i >= 0; i--) {
                 if (sitesRE.test(tabs[i].url)) {
-                    noneed = true;
+                    total++;
                     break;
                 }
             }
 
-            if (noneed) {
-                setTimeout(retrieveData, 1000);
+            if (total === 0) {
+                /*
+                 * Disable StackExchangeNotifications.detectDOM if there are
+                 * no more tabs of sites in the SE network
+                 */
+                noNeedRequestXhr = false;
+            }
+
+            console.log("No need XHR", noNeedRequestXhr);
+
+            if (noNeedRequestXhr) {
+                timer = setTimeout(retrieveData, 1000);
             } else {
                 quickXhr(unreadCountsURI, triggerEvt);
             }
@@ -333,9 +345,7 @@
         var currentDelay = 1000 * delay;
 
         if (code !== 200) {
-            /*
-             * If the internet access fails uses a smaller delay
-             */
+            //If the internet access fails uses a smaller delay
             currentDelay = 1000;
         } else if (typeof response === "string") {
             var data;
@@ -527,6 +537,9 @@
             }
 
             return false;
+        },
+        "detectDOM": function(detect) {
+            noNeedRequestXhr = detect;
         },
         "meta": metaData,
         "utils": Utils

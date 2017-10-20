@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.1
+ * StackExchangeNotifications 1.0.3
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -130,8 +130,8 @@
         if (lastcheck) {
             var d = new Date(lastcheck);
 
-            if (d.getDate() == 31 && d.getMonth() == 9) {
-                d.body.className += " halloween";
+            if ((d.getDate() == 31 && d.getMonth() == 9) || (d.getDate() == 31 && d.getDay() == 5)) {
+                d.body.className += " horror";
             }
         }
     }

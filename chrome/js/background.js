@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.1
+ * StackExchangeNotifications 1.0.3
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -37,12 +37,11 @@
         }
     };
 
+    /*
     var idMessages = [];
 
     function getMessages()
     {
-        return;
-
         if (!StackExchangeNotifications.switchEnable("desktop_notification")) {
             return;
         }
@@ -105,6 +104,7 @@
             }
         });
     }
+    */
 
     StackExchangeNotifications.pushs(function(response) {
         if (caller) {
@@ -180,8 +180,10 @@
             sendResponse({
                 "copycode": StackExchangeNotifications.switchEnable("copy_code")
             });
-        } else if (request.clear) {
-            updateChanges(request.clear, request.data);
+        } else if (request === "changebydom") {
+            StackExchangeNotifications.detectDOM(true);
+        } else if (request.type) {
+            updateChanges(request.type, request.data);
         } else if (request.hasOwnProperty("storeimages")) {
             if (request.storeimages === true) {
                 var cssbg = StackExchangeNotifications.restoreState("cssbg", false);

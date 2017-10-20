@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.1
+ * StackExchangeNotifications 1.0.3
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -35,6 +35,16 @@
         isMetaDomain   = /(^|\.)meta\./,
         isMac          = /(\s|\()Mac\s/.test(navigator.platform)
     ;
+
+    function getSelection(target)
+    {
+        var start = target.selectionStart, end = target.selectionEnd;
+        return start === end ? false : target.value.substr(start, end);
+    }
+
+    function getSelection(target)
+    {
+    }
 
     function triggerEvent(type, target)
     {
@@ -283,8 +293,8 @@
         if (lastcheck) {
             var d = new Date(lastcheck);
 
-            if (d.getDate() == 31 && d.getMonth() == 9) {
-                realPreview.className += " halloween";
+            if ((d.getDate() == 31 && d.getMonth() == 9) || (d.getDate() == 31 && d.getDay() == 5)) {
+                realPreview.className += " horror";
             }
         }
 
