@@ -1,10 +1,10 @@
-#TODO
+# TODO
 
-# Notifications
+## Notifications
 
 - [x] Push notification for inbox
 - [x] Push notification for change score
-- [x] Push notification for new achivements
+- [x] Push notification for new achievements
 - [x] Desktop notification for inbox messages
 
 ## Lightbox
@@ -22,27 +22,27 @@
 - [x] Fullscreen
 - [x] Invert editor and previewer positions
 - [x] Preview in normal-mode
-- [x] Shortcuts (<kbd>Alt</kbd>+<kbd>v</kbd> for preview, <kbd>Alt</kbd>+<kbd>f</kbd> for fullscreen)
+- [x] Short-cuts (<kbd>Alt</kbd>+<kbd>v</kbd> for preview, <kbd>Alt</kbd>+<kbd>f</kbd> for full-screen)
 - [x] Replace tabs by spaces
-- [ ] Strikethrough button
+- [ ] Strike-through button
 - [ ] Use underscores (`_foo_`) in Italic button
 - [x] Use default site colors or themes installed with tools like "Stylish"
 - [x] Bug in answer your owner question
 - [x] "Help button" with tips
 
-# Chat
+## Chat
 
 - [ ] Remove onebox
 - [ ] "Pin" favorite chat rooms
 
-# Others
+## Others
 
 - [x] Black theme
-- [x] Config preferences
-- [x] Clear inbox cache and achivements cache
+- [x] Configure preferences
+- [x] Clear inbox cache and achievements cache
 - [x] Reset all data
-- [x] Change color icons (3 colors, use background-position with Stylish)
+- [x] Change color icons (3 colors, use `background-position` with Stylish)
 - Shortcut for transform selected text in all fields:
-    - [ ] Ctrl+K+U for uppercase
-    - [ ] Ctrl+K+L for lowercase
-    - [ ] Ctrl+K+C for camelcase
+    - [ ] <kbd>Ctrl</kbd>+<kbd>K</kbd>+<kbd>U</kbd> for upper-case
+    - [ ] <kbd>Ctrl</kbd>+<kbd>K</kbd>+<kbd>L</kbd> for lower-case
+    - [ ] <kbd>Ctrl</kbd>+<kbd>K</kbd>+<kbd>C</kbd> for camel-case
