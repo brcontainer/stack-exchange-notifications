@@ -32,7 +32,8 @@
         magnifiedRegExp    = /(^|\s)magnified(\s|$)/,
         magnificationRegexp = /(^|\s)magnification(\s|$)/,
         showRegExp         = /(^|\s)show(\s|$)/,
-        mainSelector        = "a[href]"
+        mainSelector        = "a[href]",
+        imagesCount         = 0
     ;
 
     function loadCss(uri)
@@ -495,6 +496,16 @@
             validImages.test(current.href) &&
             current.getElementsByTagName("img").length === 1
         ) {
+            var left = document.querySelector('a.sen-gallery-left'),
+                right = document.querySelector('a.sen-gallery-right');
+            imagesCount++;
+            if (imagesCount < 2) {
+                left.style.visibility = "hidden";
+                right.style.visibility = "hidden";
+            } else {
+                left.style.visibility = "initial";
+                right.style.visibility = "initial";
+            }
             /*
             if (current.getElementsByTagName("img")[0].src !== current.href) {
                 return;
