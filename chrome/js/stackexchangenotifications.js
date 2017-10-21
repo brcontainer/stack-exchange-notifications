@@ -315,8 +315,6 @@
                 noNeedRequestXhr = false;
             }
 
-            console.log("No need XHR", noNeedRequestXhr);
-
             if (noNeedRequestXhr) {
                 timer = setTimeout(retrieveData, 1000);
             } else {
