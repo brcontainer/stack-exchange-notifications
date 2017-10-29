@@ -157,12 +157,11 @@ hr {
     width: 100%;
     height: 100%;
     text-align: center;
-    color: #ccc;
+    color: #bdb9b9;
     display: flex;
     justify-content: center;
     flex-direction: column;
     text-shadow: 0 1px rgba(255, 255, 255, 1);
-
 }
 
 .bg-sen {
@@ -359,6 +358,36 @@ select.field {
     padding: 0.65em 0.25em 0.65em 0.55em;
     text-decoration: none;
     display: block;
+}
+
+.tab-item .modal-content .more-rooms {
+    padding: 20px 0;
+    white-space: nowrap;
+    font-size: 0;
+}
+.tab-item .modal-content .more-rooms > a {
+    border: 1px #bdb9b9 solid;
+    color: #bdb9b9;
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    min-width: 100px;
+    font-size: 9pt;
+    text-decoration: none;
+    text-shadow: none;
+}
+.tab-item .modal-content .more-rooms > a:first-child {
+    border-right: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.tab-item .modal-content .more-rooms > a:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.tab-item .modal-content .more-rooms > a:hover {
+    background-color: #bdb9b9;
+    color: #fff;
 }
 
 .tab-item .modal-content li.inbox-se-link, .utc-clock {
