@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.3
+ * StackExchangeNotifications 1.0.5
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -554,15 +554,14 @@
         inboxXhr = StackExchangeNotifications.inbox(function(data, code) {
             if (code !== 200 && code !== -1) {
                 inboxContent.innerHTML =
-                    '<div class="sen-error notice">HTTP error - status: ' +
-                        code + '</div>';
+                    '<div class="sen-error notice">HTTP error - status: ' + code + '</div>';
 
             } else if (code === -1) {
                 inboxContent.innerHTML = [
                     '<div class="sen-error notice">',
-                    "Response error:<br>",
-                    "You must be logged in to <br>",
-                    "<a href=\"http://stackexchange.com\">http://stackexchange.com</a>",
+                    'Response error:<br>',
+                    'You must be logged in to <br>',
+                    '<a href="https://stackexchange.com">https://stackexchange.com</a>',
                     '</div>'
                 ].join("");
 
@@ -635,7 +634,7 @@
                     '<div class="sen-error notice">',
                     'Response error:<br>',
                     'You must be logged in to <br>',
-                    '<a href="http://stackexchange.com">http://stackexchange.com</a>',
+                    '<a href="https://stackexchange.com">https://stackexchange.com</a>',
                     '</div>'
                 ].join("");
 

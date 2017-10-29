@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.3
+ * StackExchangeNotifications 1.0.5
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -12,9 +12,9 @@
     var delay = 60, //In seconds
         initiateDelay = 5000; //Milliseconds
 
-    var unreadCountsURI = "http://stackexchange.com/topbar/get-unread-counts",
-        achievementsURI = "http://stackexchange.com/topbar/achievements",
-        inboxURI        = "http://stackexchange.com/topbar/inbox";
+    var unreadCountsURI = "https://stackexchange.com/topbar/get-unread-counts",
+        achievementsURI = "https://stackexchange.com/topbar/achievements",
+        inboxURI        = "https://stackexchange.com/topbar/inbox";
 
     var inbox = 0,
         score = 0,
