@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.5
+ * StackExchangeNotifications 1.0.6
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -7,7 +7,7 @@
  */
 
 a.btn-pin > i.inroom-heart-icon {
-    background: url(../images/heart.svg) no-repeat;
+    background: url(../images/heart.svg#red) no-repeat;
     background-size: contain;
     vertical-align: middle;
     display: inline-block;

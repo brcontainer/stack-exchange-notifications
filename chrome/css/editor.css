@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.5
+ * StackExchangeNotifications 1.0.6
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -64,7 +64,6 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     display: none !important;
 }
 .wmd-input {
-    padding-bottom: 20% !important;
     display: block !important;
     margin: 0 !important;
     outline: 0 !important;

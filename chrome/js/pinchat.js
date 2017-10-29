@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.5
+ * StackExchangeNotifications 1.0.6
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -89,7 +89,8 @@
             link.className += " added";
         }
 
-        link.onclick = function() {
+        link.onclick = function(e) {
+            e.preventDefault();
             pinchat(!addedRegExp.test(link.className));
         };
 

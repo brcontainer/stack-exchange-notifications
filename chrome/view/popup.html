@@ -7,6 +7,7 @@
         <link rel="stylesheet" type="text/css" href="../css/popup.css">
         <link rel="stylesheet" type="text/css" href="../css/switch.css">
         <link rel="stylesheet" type="text/css" href="../css/animate.css">
+        <link rel="stylesheet" type="text/css" href="../css/dialog.css">
     </head>
     <body class="topbar top-bar">
         <div class="nav">
@@ -173,7 +174,11 @@
             </div>
             <div class="modal-content rooms">
                 <div class="notice hide">
-                    You have no rooms added, see more rooms from:
+                    You have no rooms added<br>
+                    <div class="room-fav-icon">
+                        <img src="../images/heart.svg#gray">
+                    </div>
+                    see more rooms from:
                     <div class="more-rooms">
                         <a href="https://chat.stackoverflow.com/?tab=all&amp;sort=people">
                             stack overflow
@@ -238,6 +243,20 @@
             </div>
         </div>
 
-        <script async type="text/javascript" src="../js/popoup.js"></script>
+        <div class="dialog hide">
+            <div class="modal">
+                <div class="content"></div>
+                <div class="act alert hide">
+                    <button>Ok</button>
+                </div>
+                <div class="act confirm hide">
+                    <button>Confirm</button>
+                    <button>Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="../js/popoup.js"></script>
+        <script type="text/javascript" src="../js/dialog.js"></script>
     </body>
 </html>

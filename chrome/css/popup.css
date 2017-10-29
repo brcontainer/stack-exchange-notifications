@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.5
+ * StackExchangeNotifications 1.0.6
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -561,6 +561,14 @@ select.field {
 }
 .tab-item .modal-content .room {
     min-height: 42px;
+}
+.tab-item .modal-content .room-fav-icon {
+    display: block;
+    padding: 15px 0;
+}
+.tab-item .modal-content .room-fav-icon > img {
+    width: 48px;
+    height: 48px;
 }
 .tab-item .modal-content .room::after {
     clear: both;

@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.5
+ * StackExchangeNotifications 1.0.6
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -89,7 +89,9 @@
 
             var cUrl = el.href;
 
-            el.onclick = function(evt) {
+            el.onclick = function(e) {
+                e.preventDefault();
+
                 setTimeout(function() {
                     //var id = StackExchangeNotifications.notificationsSession() + el.href;
 
@@ -161,8 +163,11 @@
         setActionAnchor(el.querySelector(".lnk"));
 
         el.querySelector(".close > a").onclick = function () {
+            StackExchangeNotifications.utils.dialog.confirm("Do you really want to remove?", function (ok) {
+                if (!ok) {
+                    return;
+                }
 
-            if (w.confirm("Do you really want to remove?")) {
                 browser.runtime.sendMessage({ "chat": 2, "url": url }, function(response) {
                     if (!response) {
                         return;
@@ -174,7 +179,7 @@
                         showNoticeRoom(true);
                     }
                 });
-            }
+            });
         }
 
         chatRooms.appendChild(el);
@@ -362,7 +367,7 @@
 
             rules = styles[i].rules;
 
-            if (rules === null) {
+            if (!rules) {
                 continue;
             }
 
@@ -681,10 +686,12 @@
 
     clearAllData.onclick = function()
     {
-        if (w.confirm("Realy? Delete all data?")) {
-            localStorage.clear();
-            w.location.reload();
-        }
+        StackExchangeNotifications.utils.dialog.confirm("Do you really want to remove?", function (ok) {
+            if (ok) {
+                localStorage.clear();
+                w.location.reload();
+            }
+        });
     };
 
     d.querySelector("a[data-switch='black_theme']").addEventListener("click", changeTheme);
