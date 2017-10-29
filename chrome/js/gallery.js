@@ -154,6 +154,7 @@
 
         for (var i = 0, j = lnks.length; i < j; i++) {
             var imgs = lnks[i].getElementsByTagName("img");
+
             if (imgs.length === 1) {
                 if (findNext && imgs[0].src === lnks[i].href) {
                     el = lnks[i];

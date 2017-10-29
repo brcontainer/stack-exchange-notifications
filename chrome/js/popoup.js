@@ -28,8 +28,11 @@
         aboutButton         = d.getElementById("about-button"),
         aboutContent        = d.getElementById("about-content"),
 
-        chatButton         = d.getElementById("chat-button"),
-        chatContent        = d.getElementById("chat-content"),
+        chatButton          = d.getElementById("chat-button"),
+        chatContent         = d.getElementById("chat-content"),
+        chatRooms           = d.querySelector(".rooms"),
+        chatNotice          = chatRooms.querySelector(".rooms > .notice"),
+        chatActived         = false,
 
         setupButton         = d.getElementById("setup-button"),
         setupContent        = d.getElementById("setup-content"),
@@ -74,10 +77,17 @@
         });
     }
 
+    function removeQuerystringAndHash(url)
+    {
+        return url.replace(/(\?|#)[\s\S]+$/, "");
+    }
+
     function setActionAnchor(el)
     {
         if (el && el.senLink !== true && el.href && /^(http|https)\:\/\//.test(el.href)) {
             el.senLink = true;
+
+            var cUrl = el.href;
 
             el.onclick = function(evt) {
                 setTimeout(function() {
@@ -87,7 +97,28 @@
 
                     //StackExchangeNotifications.removeNotificationFromCache(el.href);
 
-                    browser.tabs.create({ "url": el.href });
+                    if (!StackExchangeNotifications.switchEnable("prevent_duplicate")) {
+                        browser.tabs.create({ "url": cUrl });
+                        return;
+                    }
+
+                    browser.tabs.query({ url: "https://*/*" }, function (tabs) {
+                        var tabId, checkUrl = removeQuerystringAndHash(cUrl);
+
+                        for (var i = 0, j = tabs.length; i < j; i++) {
+                            if (removeQuerystringAndHash(tabs[i].url) === checkUrl) {
+                                tabId = tabs[i].id;
+                                break;
+                            }
+                        }
+
+                        if (tabId) {
+                            browser.tabs.update(tabId, { "active": true }, function () {});
+                            //browser.tabs.executeScript(tabId, { "code": "foobar" });
+                        } else {
+                            browser.tabs.create({ "url": cUrl });
+                        }
+                    });
                 }, 1);
             };
         }
@@ -110,6 +141,54 @@
         }
     }
 
+    function createRoom(url, data)
+    {
+        var el = d.createElement("div");
+
+        if (!data.icon) {
+            data.icon = "../images/chat.svg";
+        }
+
+        el.innerHTML = '<div class="room">' +
+            '<a class="lnk" href="' + url + '">' +
+            '<div class="icon"><img src="' + data.icon + '"></div>' +
+            '<div class="content">' +
+            '<p>' + data.title + '</p>' +
+            '</div></a>' +
+            '<div class="close"><a class="icon" href="#"></a></div>' +
+            '</div>';
+
+        setActionAnchor(el.querySelector(".lnk"));
+
+        el.querySelector(".close > a").onclick = function () {
+
+            if (w.confirm("Do you really want to remove?")) {
+                browser.runtime.sendMessage({ "chat": 2, "url": url }, function(response) {
+                    if (!response) {
+                        return;
+                    }
+
+                    el.parentNode.removeChild(el);
+
+                    if (!chatRooms.querySelector(".room")) {
+                        showNoticeRoom(true);
+                    }
+                });
+            }
+        }
+
+        chatRooms.appendChild(el);
+    }
+
+    function showNoticeRoom(show)
+    {
+        if (show) {
+            chatNotice.className = chatNotice.className.replace(hideRegExp, "").trim();
+        } else if (!hideRegExp.test(chatNotice.className)) {
+            chatNotice.className += " hide";
+        }
+    }
+
     w.StackExchangeNotifications = backgroundEngine.StackExchangeNotifications;
 
     d.oncontextmenu = disableEvent;
@@ -120,8 +199,7 @@
 
     var manifestData = StackExchangeNotifications.meta();
 
-    d.getElementById("about-title").innerHTML =
-                                            manifestData.appname + " " + manifestData.version;
+    d.getElementById("about-title").innerHTML = manifestData.appname + " " + manifestData.version;
 
     function checkEvent()
     {
@@ -197,8 +275,7 @@
         var target = box === "inbox" ? inboxContent : achievementsContent;
 
         current.addEventListener("click", function() {
-            current.className = current.className
-                                    .replace(/(^|\s)unread-item(\s|$)/g, " ").trim();
+            current.className = current.className.replace(/(^|\s)unread-item(\s|$)/g, " ").trim();
 
             var data = StackExchangeNotifications.restoreState(box);
 
@@ -212,11 +289,7 @@
 
     function saveStateDetect(box)
     {
-        var
-            j,
-            i = 0,
-            els,
-            current,
+        var j, i = 0, els, current,
             target = box === "inbox" ? inboxContent : achievementsContent;
 
         els = target.querySelectorAll("li");
@@ -228,12 +301,9 @@
 
     function switchEngine(el)
     {
-        var
-            val,
-            key = el.getAttribute("data-switch");
+        var val, key = el.getAttribute("data-switch");
 
         if (key) {
-
             val = StackExchangeNotifications.switchEnable(key);
 
             if (val === true) {
@@ -242,18 +312,12 @@
         }
 
         el.addEventListener("click", function() {
-            var nval;
+            var nval = el.getAttribute("data-switch-value") === "on";
 
-            if (el.getAttribute("data-switch-value") === "on") {
-                nval = "off";
-            } else {
-                nval = "on";
-            }
-
-            el.setAttribute("data-switch-value", nval);
+            el.setAttribute("data-switch-value", nval ? "off" : "on");
 
             if (key) {
-                StackExchangeNotifications.switchEnable(key, nval === "on");
+                StackExchangeNotifications.switchEnable(key, !nval);
             }
         });
     }
@@ -401,6 +465,22 @@
 
         chatContent.className =
             chatContent.className.replace(hideRegExp, "").trim();
+
+        if (chatActived) {
+            return;
+        }
+
+        chatActived = true;
+
+        var has = false,
+            savedRooms = StackExchangeNotifications.restoreState("saved_rooms", true);
+
+        for (var k in savedRooms) {
+            createRoom(k, savedRooms[k]);
+            has = true;
+        }
+
+        showNoticeRoom(!has);
     };
 
     aboutButton.onclick = function()
@@ -553,9 +633,9 @@
             }  else if (code === -1) {
                 achievementsContent.innerHTML = [
                     '<div class="sen-error notice">',
-                    "Response error:<br>",
-                    "You must be logged in to <br>",
-                    "<a href=\"http://stackexchange.com\">http://stackexchange.com</a>",
+                    'Response error:<br>',
+                    'You must be logged in to <br>',
+                    '<a href="http://stackexchange.com">http://stackexchange.com</a>',
                     '</div>'
                 ].join("");
 
@@ -569,11 +649,11 @@
                 achievementsContent.innerHTML =
                     StackExchangeNotifications.utils.clearDomString(data);
 
-                if (headers.Date) {
+                if (headers.date) {
                     dateContent = d.querySelector(".js-utc-time")
 
                     if (dateContent) {
-                        date = new Date(headers.Date);
+                        date = new Date(headers.date);
                         hour = date.getUTCHours();
                         min  = date.getUTCMinutes();
 
@@ -581,11 +661,6 @@
                         min  = min  > 9 ? min  : ("0" + "" + min );
 
                         dateContent.innerHTML = hour + ":" + min
-                    }
-                } else {
-                    dateContent = d.querySelector(".utc-clock");
-                    if (dateContent) {
-                        dateContent.className += " hide";
                     }
                 }
 

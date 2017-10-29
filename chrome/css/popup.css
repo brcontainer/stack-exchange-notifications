@@ -349,12 +349,13 @@ select.field {
     border-top-color: #BECFE8;
     background-color: #E7EFF9;
 }
-.tab-item .modal-content li:hover {
+.tab-item .modal-content li:hover,
+.tab-item .modal-content .room:hover {
     border-top-color: #BECFE8;
     background-color: #D6E1ED;
 }
-.tab-item .modal-content .room a,
-.tab-item .modal-content li a {
+.tab-item .modal-content li a,
+.tab-item .modal-content .room > a {
     padding: 0.65em 0.25em 0.65em 0.55em;
     text-decoration: none;
     display: block;
@@ -386,14 +387,17 @@ select.field {
 }
 
 .utc-clock {
-    font-variant: small-caps;
-    text-transform: lowercase;
-    font-size: 8pt;
+    letter-spacing: normal;
+    font-weight: normal;
+    font-size: 7pt;
 }
 
 .date-group-toggle-row {
     padding: 0.8em 0.5em;
     background-color: #fafafa;
+}
+.date-group:first-child .date-group-toggle-row {
+    padding-top: 2em;
 }
 
 .tab-item .site-icon {
@@ -525,6 +529,62 @@ select.field {
     font-size: 10pt;
     padding: 1.1em;
     text-transform: uppercase;
+}
+.tab-item .modal-content .room {
+    min-height: 42px;
+}
+.tab-item .modal-content .room::after {
+    clear: both;
+    content: "";
+    display: block;
+}
+.tab-item .modal-content .room > a {
+    box-sizing: border-box;
+    float: left;
+    width: 360px;
+}
+.tab-item .modal-content .room > a > .icon {
+    float: left;
+    width: 32px;
+}
+.tab-item .modal-content .room .content {
+    margin-left: 36px;
+}
+.tab-item .modal-content .room .icon,
+.tab-item .modal-content .room .close,
+.tab-item .modal-content .room .content p {
+    justify-content: center;
+    flex-direction: column;
+    display: flex;
+    height: 36px;
+}
+.tab-item .modal-content .room .close {
+    margin-top: 0.65em;
+    float: right;
+    width: 38px;
+    text-align: center;
+    display: none;
+}
+.tab-item .modal-content .room:hover .close {
+    display: flex;
+}
+.tab-item .modal-content .room .close > .icon {
+    background-color: #b7b5ad;
+    border-radius: 100%;
+    width: 24px;
+    height: 24px;
+}
+
+.tab-item .modal-content .room .close > .icon::before {
+    border-radius: 100%;
+    display: inline-block;
+    content: "Remove chat";
+    width: 24px;
+    height: 12px;
+    background: url(../images/close.svg) center center no-repeat;
+    background-size: contain;
+    overflow: hidden;
+    text-indent: -1000px;
 }
 
 @-moz-document url-prefix() {

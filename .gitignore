@@ -1,5 +1,5 @@
 build/
-README.HTML
+/*.html
 /*.crx
 /*.pem
 /*.nex

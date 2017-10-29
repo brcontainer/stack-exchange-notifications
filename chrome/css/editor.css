@@ -22,7 +22,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     box-sizing: border-box !important;
 }
 
-.wmd-container .grippie, .xwmd-button-bar, .wmd-button-row > li {
+.wmd-button-row > li {
     display: none !important;
 }
 .wmd-button-row {
@@ -53,15 +53,22 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     padding: 8px !important;
     border: none !important;
     width: 100% !important;
-    min-height: 400px !important;
+}
+.wmd-container .grippie {
+    border: none !important;
+    border-top: 1px #dfdfdf solid !important;
+    margin: 0 !important;
+    height: 12px !important;
+}
+.sen-editor-ready .wmd-container .grippie, .sen-editor-full .wmd-container .grippie {
+    display: none !important;
 }
 .wmd-input {
     padding-bottom: 20% !important;
     display: block !important;
-    resize: vertical !important;
     margin: 0 !important;
     outline: 0 !important;
-    height: 400px !important;
+    height: 400px;
     box-shadow: 0 0 4px rgba(0, 0, 0, .08) inset !important;
     -moz-tab-size: 4 !important;
          tab-size: 4 !important;

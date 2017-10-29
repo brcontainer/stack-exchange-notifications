@@ -86,6 +86,7 @@
                     return;
                 }
 
+                space = d.createTextNode(" \n ");
                 tools = d.createElement("div");
                 tools.className = "sen-tools-clipboard";
 
@@ -102,6 +103,7 @@
                 button.href = "javascript:void(0);";
 
                 tools.appendChild(button);
+                el.parentNode.insertBefore(space, nextEl);
                 el.parentNode.insertBefore(tools, nextEl);
             }
         }

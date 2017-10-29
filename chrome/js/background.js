@@ -184,9 +184,27 @@
             StackExchangeNotifications.detectDOM(true);
         } else if (request.type) {
             updateChanges(request.type, request.data);
+        } else if (request.chat) {
+            var url = request.url,
+                type = request.chat,
+                rooms = StackExchangeNotifications.restoreState("saved_rooms", true) || {};
+
+            if (type === 1) {
+                delete request.url;
+                rooms[url] = request;
+            } else if (type === 2) {
+                delete rooms[url];
+            } else if (type === 3) {
+                sendResponse({ "added": !!rooms[url] });
+            }
+
+            if (type > 0 && type < 3) {
+                StackExchangeNotifications.saveState("saved_rooms", rooms, true);
+                sendResponse(true);
+            }
         } else if (request.hasOwnProperty("storeimages")) {
             if (request.storeimages === true) {
-                var cssbg = StackExchangeNotifications.restoreState("cssbg", false);
+                var cssbg = StackExchangeNotifications.restoreState("cssbg");
 
                 if (cssbg) {
                     sendResponse(cssbg);
@@ -194,7 +212,7 @@
                 }
             } else {
                 StackExchangeNotifications.utils.generateCssImages(request.storeimages, function(data) {
-                    StackExchangeNotifications.saveState("cssbg", data, false);
+                    StackExchangeNotifications.saveState("cssbg", data);
                     sendResponse(data);
                 });
 

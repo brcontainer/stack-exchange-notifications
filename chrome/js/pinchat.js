@@ -6,29 +6,56 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(d, browser) {
+(function(w, d, browser) {
     "use strict";
 
-    return;
+    var link,
+        added = true,
+        addedRegExp = /(^|\s)added($|\s)/g,
+        removeMsg = "Do you really want to remove this room?";
 
-    var inprogress = false;
+    function toggleClass(add)
+    {
+        if (!link) {
+            return;
+        }
+
+        link.className = link.className.replace(addedRegExp, "").trim();
+
+        if (add) {
+            link.className += " added";
+        }
+    }
 
     function bgData(data, callback)
     {
         if (browser && browser.runtime && browser.runtime.sendMessage) {
+            data.url = String(w.location.href).replace(/(#|\?)[\s\S]/, "");
             browser.runtime.sendMessage(data, callback);
         }
     }
 
-    function pinchat(add)
+    function pinchat(pinned)
     {
-        if (add) {
+        if (pinned) {
+            var roomIco = d.querySelector(".small-site-logo"),
+                roomName = d.getElementById("roomname");
+
             bgData({
-                "id": "xxxxx",
-                "name": "xxxxx",
-                "append": true
-            }, callback);
-        } else {
+                "chat": 1,
+                "icon": roomIco ? roomIco.src : "",
+                "title": roomName ? roomName.textContent : ""
+            }, function (response) {
+                if (response) {
+                    toggleClass(true);
+                }
+            });
+        } else if (w.confirm(removeMsg)) {
+            bgData({ "chat": 2 }, function (response) {
+                if (response) {
+                    toggleClass(false);
+                }
+            });
         }
     }
 
@@ -49,30 +76,29 @@
             return;
         }
 
-        var
-            link = d.createElement("a"),
-            icon = d.createElement("i"),
-            text = d.createTextNode("save room"),
+        link = d.createElement("a");
+
+        var icon = d.createElement("i"),
             division = d.createTextNode("|"),
-            space1 = d.createTextNode(" "),
-            space2 = d.createTextNode(" ")
-        ;
+            space = d.createTextNode(" ");
 
         link.href = "javascript:void(0);";
         link.className = "btn-pin";
 
+        if (added) {
+            link.className += " added";
+        }
+
         link.onclick = function() {
-            alert("Not available");
+            pinchat(!addedRegExp.test(link.className));
         };
 
         icon.className = "inroom-heart-icon";
 
         link.appendChild(icon);
-        link.appendChild(space1);
-        link.appendChild(text);
 
         el.appendChild(division);
-        el.appendChild(space2);
+        el.appendChild(space);
         el.appendChild(link);
     }
 
@@ -92,13 +118,16 @@
     {
         loadCss("pinchat.css");
 
-        appendLinks();
+        bgData({ "chat": 3 }, function(response) {
+            added = (response && response.added);
+            appendLinks();
+        });
     }
 
     if (/^(interactive|complete)$/i.test(d.readyState)) {
         bootPinChat();
     } else {
         d.addEventListener("DOMContentLoaded", bootPinChat);
-        window.addEventListener("load", bootPinChat);
+        w.addEventListener("load", bootPinChat);
     }
-})(document, chrome||browser);
+})(window, document, chrome||browser);

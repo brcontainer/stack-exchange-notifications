@@ -16,7 +16,7 @@
             <a title="Setup" id="setup-button" href="#setup-button">
                 <span class="icon">&nbsp;</span>
             </a>
-            <a title="Linked chat" id="chat-button" href="#chat-button" style="display: none;">
+            <a title="Linked chat" id="chat-button" href="#chat-button">
                 <span class="icon">&nbsp;</span>
             </a>
             <a title="Show Achievements" id="achievements-button" href="#achievements-button">
@@ -96,6 +96,14 @@
                         <small>off</small>
                     </a>
                 </p>
+                <p class="field">
+                    <span class="label">Prevent duplicate pages</span>
+
+                    <a data-switch="prevent_duplicate" data-switch-value="off" href="#">
+                        <small>on</small>
+                        <small>off</small>
+                    </a>
+                </p>
 
                 <h2>Editor</h2>
                 <p class="field first">
@@ -161,19 +169,11 @@
 
         <div class="tab-item hide" id="chat-content">
             <div class="header">
-                <h3>
-                    chat rooms
-                </h3>
+                <h3>Chat rooms</h3>
             </div>
-            <div class="modal-content">
-                <div class="room">
-                    <a href="#">Test</a>
-                </div>
-                <div class="room">
-                    <a href="#">Test</a>
-                </div>
-                <div class="room">
-                    <a href="#">Test</a>
+            <div class="modal-content rooms">
+                <div class="notice hide">
+                    You have no items added
                 </div>
             </div>
         </div>

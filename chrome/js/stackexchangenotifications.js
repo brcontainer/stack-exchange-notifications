@@ -264,15 +264,11 @@
                 data = localStorage.getItem(keyData);
 
             if (data) {
-                switch (key) {
-                    case "inbox":
-                        change = StackExchangeNotifications.getInbox() !== 0;
-                    break;
-
-                    case "achievements":
-                        var ach = StackExchangeNotifications.getAchievements();
-                        change = ach.score !== 0 || ach.acquired !== 0;
-                    break;
+                if (key === "inbox") {
+                    change = StackExchangeNotifications.getInbox() !== 0;
+                } else if (key === "achievements") {
+                    var ach = StackExchangeNotifications.getAchievements();
+                    change = ach.score !== 0 || ach.acquired !== 0;
                 }
 
                 if (change) {
@@ -421,8 +417,8 @@
         },
         "pushs": function(callback) {
             if (false === isRunning && typeof callback === "function") {
-                isRunning     = true;
-                doneCallback  = callback;
+                isRunning = true;
+                doneCallback = callback;
 
                 retrieveData();
             }
@@ -494,15 +490,11 @@
             return !!SimpleCache.get(cache);
         },
         "clearCache": function(current) {
-            switch (current) {
-                case "inbox":
-                case "achievements":
-                    SimpleCache.set(current, null);
-                break;
-
-                default:
-                    SimpleCache.set("inbox", null);
-                    SimpleCache.set("achievements", null);
+            if (current === "inbox" || current === "achievements") {
+                SimpleCache.set(current, null);
+            } else {
+                SimpleCache.set("inbox", null);
+                SimpleCache.set("achievements", null);
             }
         },
         "update": function(reload) {
