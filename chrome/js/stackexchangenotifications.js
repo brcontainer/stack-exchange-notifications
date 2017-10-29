@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(d, browser) {
+(function(w, d, browser) {
     "use strict";
 
     var delay = 60, //In seconds
@@ -23,8 +23,7 @@
     var doneCallback = null,
         isRunning = false,
         timer = null,
-        noNeedRequestXhr = false
-    ;
+        noNeedRequestXhr = false;
 
     var tmpDom     = d.createElement("div"),
         validAttrs = [ "class", "id", "href" ];
@@ -534,4 +533,4 @@
         "meta": metaData,
         "utils": Utils
     };
-})(document, chrome||browser);
+})(window, document, chrome||browser);

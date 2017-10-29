@@ -30,7 +30,7 @@
     function bgData(data, callback)
     {
         if (browser && browser.runtime && browser.runtime.sendMessage) {
-            data.url = String(w.location.href).replace(/(#|\?)[\s\S]/, "");
+            data.url = String(w.location.href).replace(/(#|\?)[\s\S]+$/, "");
             browser.runtime.sendMessage(data, callback);
         }
     }
@@ -124,10 +124,5 @@
         });
     }
 
-    if (/^(interactive|complete)$/i.test(d.readyState)) {
-        bootPinChat();
-    } else {
-        d.addEventListener("DOMContentLoaded", bootPinChat);
-        w.addEventListener("load", bootPinChat);
-    }
+    StackExchangeNotifications.utils.ready(bootPinChat);
 })(window, document, chrome||browser);

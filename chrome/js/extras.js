@@ -163,12 +163,7 @@
             if (response) {
                 copyCodeEnabled = !!response.copycode;
 
-                if (/interactive|complete/i.test(d.readyState)) {
-                    init();
-                } else {
-                    d.addEventListener("DOMContentLoaded", init);
-                    w.addEventListener("onload", init);
-                }
+                StackExchangeNotifications.utils.ready(init);
             }
         });
     }

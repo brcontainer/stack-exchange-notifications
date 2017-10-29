@@ -537,12 +537,7 @@
             loadCss("themes/" + theme + "/editor.css");
         }
 
-        if (/^(interactive|complete)$/i.test(d.readyState)) {
-            loadAll();
-        } else {
-            d.addEventListener("DOMContentLoaded", loadAll);
-            w.addEventListener("load", loadAll);
-        }
+        StackExchangeNotifications.utils.ready(loadAll);
     }
 
     //Disable functions in chat

@@ -34,7 +34,7 @@ For debugging or testing push notifications there are some functions:
 | `.getAchievements()` | Get current total achievements, return a object like `{score: int, acquired: int}` |
 | `.hasCache()` | Return `true` if has cache or `false` if no |
 | `.clearCache([, type])` | Clear inbox and achievements cache, if first parameter empty clear cache from inbox and achivements, or specific inbox and achievements in first parameter |
-| `.meta` | Get appname and version, return object like this `{appname: string, version: string}` |
+| `.meta()` | Get appname and version, return object like this `{appname: string, version: string}` |
 | `.getInbox()` | Get total messages in Inbox, return `int` |
 
 ## Debugging in Opera or Chrome

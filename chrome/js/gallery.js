@@ -584,20 +584,10 @@
         loadView();
     }
 
-    function initiate()
-    {
-        if (/^(interactive|complete)$/i.test(d.readyState)) {
-            bootGallery();
-        } else {
-            d.addEventListener("DOMContentLoaded", bootGallery);
-            w.addEventListener("load", bootGallery);
-        }
-    }
-
     if (browser && browser.runtime && browser.runtime.sendMessage) {
         browser.runtime.sendMessage("gallery", function(response) {
             if (response && response.available) {
-                initiate();
+                StackExchangeNotifications.utils.ready(bootGallery);
             }
         });
     }

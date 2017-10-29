@@ -95,10 +95,5 @@
         browser.runtime.sendMessage("changebydom", function(response) {});
     }
 
-    if (/interactive|complete/i.test(d.readyState)) {
-        applyEvents();
-    } else {
-        d.addEventListener("DOMContentLoaded", applyEvents);
-        w.addEventListener("onload", applyEvents);
-    }
+    StackExchangeNotifications.utils.ready(applyEvents);
 })(window, document, chrome||browser);
