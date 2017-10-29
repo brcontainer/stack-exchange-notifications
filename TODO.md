@@ -11,7 +11,7 @@
 
 - [x] Lightbox for images in Questions and Answers posts
 - [x] Lightbox for chat
-- [ ] Lightbox for "favorites" in chat
+- [x] Lightbox for "favorites" in chat
 - [ ] Remove arrows if there is only one image on the page
 - [ ] Button to restore image size after zoom
 
@@ -33,7 +33,7 @@
 ## Chat
 
 - [ ] Remove onebox
-- [ ] "Pin" favorite chat rooms
+- [x] "Pin" favorite chat rooms
 
 ## Others
 

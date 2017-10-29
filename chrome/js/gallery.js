@@ -26,13 +26,14 @@
         isOpen = false,
         ignorePreviewRegExp = /(^|\s)wmd-preview(\s|$)/,
         validImages         = /\.(png|jpeg|jpe|jpg|svg|gif)(|\?[\s\S]+)$/i,
-        errorRegExp        = /(^|\s)sen-error(\s|$)/,
-        loaderRegExp       = /(^|\s)sen-bg-loader(\s|$)/,
+        errorRegExp         = /(^|\s)sen-error(\s|$)/,
+        loaderRegExp        = /(^|\s)sen-bg-loader(\s|$)/,
         inLoadRegxp         = /(^|\s)in-load(\s|$)/,
-        magnifiedRegExp    = /(^|\s)magnified(\s|$)/,
+        magnifiedRegExp     = /(^|\s)magnified(\s|$)/,
         magnificationRegexp = /(^|\s)magnification(\s|$)/,
-        showRegExp         = /(^|\s)show(\s|$)/,
-        mainSelector        = "a[href]"
+        showRegExp          = /(^|\s)show(\s|$)/,
+        mainSelector        = "a[href]",
+        linkSelector        = "#starred-posts a"
     ;
 
     function loadCss(uri)
@@ -494,7 +495,10 @@
         if (
             !current.senLightbox &&
             validImages.test(current.href) &&
-            current.getElementsByTagName("img").length === 1
+            (
+                current.getElementsByTagName("img").length === 1 ||
+                current.matches(linkSelector)
+            )
         ) {
             /*
             if (current.getElementsByTagName("img")[0].src !== current.href) {
@@ -597,4 +601,16 @@
             }
         });
     }
+
+    var m = w.Element && w.Element.prototype;
+
+    if (!m || m.matches) return;
+
+    m.matches = m.matchesSelector || m.mozMatchesSelector || m.msMatchesSelector ||
+    m.oMatchesSelector || m.webkitMatchesSelector || function(s) {
+        var m = (this.document || this.ownerDocument).querySelectorAll(s), i = m.length;
+
+        while (--i >= 0 && m[i] !== this);
+        return i > -1;
+    };
 })(window, document, chrome||browser);
