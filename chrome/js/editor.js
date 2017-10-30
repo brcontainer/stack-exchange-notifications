@@ -9,10 +9,10 @@
 (function(w, d, browser) {
     "use strict";
 
-    var
-        theme,
+    var theme,
         rootDoc,
         done = false,
+        autoFullscreen = false,
         syncScroll = false,
         lastcheck,
         viewHTML,
@@ -40,10 +40,6 @@
     {
         var start = target.selectionStart, end = target.selectionEnd;
         return start === end ? false : target.value.substr(start, end);
-    }
-
-    function getSelection(target)
-    {
     }
 
     function triggerEvent(type, target)
@@ -225,12 +221,9 @@
 
     function bootMain(navbar, realEditor)
     {
-        var
+        var realPreview = realEditor.querySelector(".wmd-preview"),
             container = isContainer.test(realEditor.className) ?
                             realEditor : realEditor.querySelector(".wmd-container");
-
-        var
-            realPreview = realEditor.querySelector(".wmd-preview");
 
         if (container.senEditorAtived || !realPreview) {
             return;
@@ -242,9 +235,7 @@
 
         container.senEditorAtived = true;
 
-        var
-            realTextField = realEditor.querySelector(".wmd-input"),
-
+        var realTextField = realEditor.querySelector(".wmd-input"),
             fullBtn = navbar.querySelector("a.sen-full-button"),
             previewBtn = navbar.querySelector("a.sen-preview-button"),
             flipBtn = navbar.querySelector("a.sen-flip-button"),
@@ -268,8 +259,13 @@
             onScroll("preview", realPreview, realTextField);
             onScroll("field", realTextField, realPreview);
 
-            realTextField.addEventListener("focus", function() {
+            realTextField.addEventListener("focus", function(e) {
                 realEditor.className += " sen-editor-focus";
+
+                if (autoFullscreen && e.target.onSenFull && !e.target.senFirstAutoFS) {
+                    e.target.senFirstAutoFS = true;
+                    setTimeout(e.target.onSenFull, 1);
+                }
             });
 
             realTextField.addEventListener("blur", function() {
@@ -553,6 +549,7 @@
                 inverted = !!response.inverted;
                 italicWithUnderScore = !!response.italic;
                 syncScroll = !!response.scroll;
+                autoFullscreen = !!response.full;
                 lastcheck = response.lastcheck;
                 theme = response.theme;
 

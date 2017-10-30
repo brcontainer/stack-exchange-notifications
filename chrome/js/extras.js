@@ -9,9 +9,7 @@
 (function (w, d, browser) {
     "use strict";
 
-    var
-        validValueRegExp    = /^[\d.]+(px|em|pt)$/,
-        hideRegExp          = /(^|\s)sen-tools-hide(\s|$)/g,
+    var hideRegExp = /(^|\s)sen-tools-hide(\s|$)/g,
         ignorePreviewRegExp = /(^|\s)wmd-preview(\s|$)/g,
         mainBody,
         notification,
@@ -82,7 +80,7 @@
             if (el.tagName === "PRE" && !el.senCopyCode) {
                 var space, tools, button, nextEl = el.nextSibling, code = el.firstElementChild;
 
-                if (!code || !nextEl || code.tagName !== "CODE" || code.senCopyCode) {
+                if (!code || code.tagName !== "CODE" || code.senCopyCode) {
                     return;
                 }
 
@@ -96,15 +94,22 @@
                 code.senCopyCode = true;
 
                 button.textContent = "Copy code";
-                button.onclick = function () {
+                button.onclick = function (e) {
+                    e.preventDefault();
                     copyFromDOM(code);
                     showNotification("Copied to clipboard!");
                 };
                 button.href = "javascript:void(0);";
 
                 tools.appendChild(button);
-                el.parentNode.insertBefore(space, nextEl);
-                el.parentNode.insertBefore(tools, nextEl);
+
+                if (!nextEl) {
+                    el.parentNode.appendChild(space);
+                    el.parentNode.appendChild(tools);
+                } else {
+                    el.parentNode.insertBefore(space, nextEl);
+                    el.parentNode.insertBefore(tools, nextEl);
+                }
             }
         }
 

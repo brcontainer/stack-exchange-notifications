@@ -119,7 +119,9 @@
 
         if (response.acquired > 0 && StackExchangeNotifications.switchEnable("acquired")) {
             ++updates;
-        } else if (response.score !== 0 && StackExchangeNotifications.switchEnable("score")) {
+        }
+
+        if (response.score !== 0 && StackExchangeNotifications.switchEnable("score")) {
             ++updates;
         }
 
@@ -146,7 +148,7 @@
             case "achievements":
                 var achievements = StackExchangeNotifications.getAchievements();
 
-                if (value !== achievements.score || value !== achievements.acquired) {
+                if (value !== achievements.score + achievements.acquired) {
                     StackExchangeNotifications.setAchievements(value);
                 }
             break;
@@ -173,6 +175,7 @@
                 "italic":    StackExchangeNotifications.switchEnable("editor_italic"),
                 "scroll":    StackExchangeNotifications.switchEnable("editor_sync_scroll"),
                 "indent":    StackExchangeNotifications.switchEnable("editor_tabs_by_spaces"),
+                "full":      StackExchangeNotifications.switchEnable("editor_auto_fs"),
                 "theme":     StackExchangeNotifications.switchEnable("black_theme") ?
                                                                             "black" : null
             });

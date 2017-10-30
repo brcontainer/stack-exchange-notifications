@@ -380,7 +380,7 @@
 
     window.StackExchangeNotifications = {
         "boot": function() {
-            //Improve perfomance in Opera and older machines
+            //Improve performance in Opera and older machines
             setTimeout(function() { initiateDelay = 1; }, initiateDelay);
 
             if (SimpleCache.get("firstrun2", true)) {
