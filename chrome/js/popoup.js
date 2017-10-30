@@ -65,6 +65,17 @@
         debugMode = false;
     }
 
+    function adjustPopup(m)
+    {
+        if (m === true) {
+            d.body.classList.add("fix-popup");
+            setTimeout(adjustPopup, 1);
+        } else {
+            d.body.classList.remove("fix-popup");
+            w.scrollTo(0, 0);
+        }
+    }
+
     function disableEvent()
     {
         return debugMode;
@@ -141,6 +152,8 @@
         for (j = els.length; i < j; i++) {
             setActionAnchor(els[i]);
         }
+
+        setTimeout(adjustPopup, 1, true);
     }
 
     function createRoom(url, data)
@@ -419,7 +432,7 @@
         inboxActive = false;
         achievementsActive = false;
 
-        w.scrollTo(0, 0);
+        adjustPopup(true);
 
         StackExchangeNotifications.saveState("lastTab", "setup");
 
@@ -452,7 +465,7 @@
         inboxActive = false;
         achievementsActive = false;
 
-        w.scrollTo(0, 0);
+        adjustPopup(true);
 
         StackExchangeNotifications.saveState("lastTab", "chat");
 
@@ -501,7 +514,7 @@
         inboxActive = false;
         achievementsActive = false;
 
-        w.scrollTo(0, 0);
+        adjustPopup(true);
 
         StackExchangeNotifications.saveState("lastTab", "about");
 
@@ -529,7 +542,7 @@
 
         achievementsActive = false;
 
-        w.scrollTo(0, 0);
+        adjustPopup(true);
 
         if (inboxActive && StackExchangeNotifications.hasCache("inbox")) {
             return false;
@@ -599,7 +612,7 @@
 
         inboxActive = false;
 
-        w.scrollTo(0, 0);
+        adjustPopup(true);
 
         if (achievementsActive && StackExchangeNotifications.hasCache("achievements")) {
             return false;

@@ -40,7 +40,11 @@ body > .dialog > .modal > .act > button {
     color: #fff;
     cursor: pointer;
     opacity: .8;
+    outline: none;
     transition: opacity .2s;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
 }
 
 body > .dialog > .modal > .confirm > button {

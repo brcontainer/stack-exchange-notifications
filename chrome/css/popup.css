@@ -31,6 +31,10 @@ body {
               user-select: none;
 }
 
+body.fix-popup {
+    width: 399px;
+}
+
 body, a {
     color: #4F4949;
 }
