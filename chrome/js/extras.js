@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.6
+ * StackExchangeNotifications 1.0.7
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -10,7 +10,7 @@
     "use strict";
 
     var hideRegExp = /(^|\s)sen-tools-hide(\s|$)/g,
-        ignorePreviewRegExp = /(^|\s)wmd-preview(\s|$)/g,
+        previewRegExp = /(^|\s)wmd-preview(\s|$)/g,
         mainBody,
         notification,
         hideTimer,
@@ -77,7 +77,7 @@
 
         function applyEvents(el)
         {
-            if (el.tagName === "PRE" && !el.senCopyCode) {
+            if (el.tagName === "PRE" && !el.senCopyCode && !el.matches(".wmd-preview pre")) {
                 var space, tools, button, nextEl = el.nextSibling, code = el.firstElementChild;
 
                 if (!code || code.tagName !== "CODE" || code.senCopyCode) {
@@ -115,7 +115,11 @@
 
         function findPreCodes(target)
         {
-            var pres = target.querySelectorAll("pre > code");
+            if (target.matches(".wmd-preview " + target.tagName)) {
+                return;
+            }
+
+            var pres = target.querySelectorAll(":not(.wmd-preview) pre > code");
 
             for (var i = pres.length - 1; i >= 0; i--) {
                 applyEvents(pres[i].parentNode);
@@ -124,7 +128,7 @@
 
         loadCss("extras.css");
 
-        findPreCodes(d);
+        findPreCodes(d.body);
 
         notification = d.createElement("div");
         notification.className = "sen-tools-popup sen-tools-hide";
@@ -141,7 +145,7 @@
             inprogress = true;
 
             mutations.forEach(function (mutation) {
-                if (ignorePreviewRegExp.test(mutation.target.className) === false) {
+                if (previewRegExp.test(mutation.target.className) === false) {
                     findPreCodes(mutation.target);
                 }
             });

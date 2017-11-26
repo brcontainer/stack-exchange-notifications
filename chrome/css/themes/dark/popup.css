@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.6
+ * StackExchangeNotifications 1.0.7
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -7,19 +7,23 @@
  */
 
 body {
-    background-color: #353535 !important;
+    background-color: #262b30 !important;
     background-size: 90% auto !important;
 }
 
 body.horror {
-    background: #353535 url(../../../images/pumpkins.svg#clear) center center fixed no-repeat !important;
+    background: #262b30 url(../../../images/pumpkins.svg#clear) center center fixed no-repeat !important;
     background-size: 90% auto !important;
 }
 
 body,
 a,
 #about-content,
-select.field {
+select.field,
+.utc-clock,
+.notice,
+.tab-item .item-location,
+.tab-item .message-text h4 {
     color: #fff !important;
     text-shadow: none !important;
 }
@@ -28,17 +32,13 @@ select.field {
     background-image: url(../../../images/arrow.svg#white);
 }
 
-.tab-item .item-location,
-.tab-item .message-text h4 {
-    color: #fff !important;
-}
-
 hr,
 .utc-clock,
 .tab-item
 .modal-content li,
-.tab-item .modal-content div.date-group {
-    border-color: #1d1b1b !important;
+.tab-item .modal-content div.date-group,
+.tab-item .modal-content .room {
+    border-color: #111215 !important;
 }
 
 .tab-item .modal-content li.inbox-se-link,
@@ -51,8 +51,13 @@ hr,
     background-color: #2e5682 !important;
 }
 
-.tab-item .modal-content li:hover {
+.tab-item .modal-content li:hover,
+.tab-item .modal-content .room:hover {
     background-color: #333d48 !important;
+}
+
+.tab-item .modal-content .room:hover .close > .icon {
+    background-color: #2f2e2a !important;
 }
 
 .header {
@@ -62,8 +67,9 @@ hr,
 
 .btn,
 .field,
-.date-group-toggle-row {
-    background-color: #403b3b !important;
+.date-group-toggle-row,
+.tab-item .modal-content .more-rooms > a:hover {
+    background-color: #35404a !important;
 }
 
 .btn,
@@ -74,14 +80,22 @@ hr,
     border-color: #272525 !important;
 }
 
-
-.btn:focus {
+.btn:focus, body > .dialog > .modal {
     background-color: #333d48 !important;
     color: #cfcfcf !important;
 }
 
+body.horror > .dialog > .modal > .confirm > button:first-child {
+    background-color: #da7137 !important;
+}
+
 .nav a {
     border-color: transparent;
+}
+
+.bg-sen {
+    -webkit-filter: none;
+            filter: none;
 }
 
 ::-webkit-scrollbar {

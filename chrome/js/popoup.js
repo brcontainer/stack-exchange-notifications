@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.6
+ * StackExchangeNotifications 1.0.7
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -11,19 +11,18 @@
 
     var
         debugMode,
+        lastTab,
         navgation           = d.querySelector(".nav"),
 
         inboxButton         = d.getElementById("inbox-button"),
         inboxContent        = d.getElementById("inbox-content"),
         inboxData           = inboxButton.querySelector("span.push"),
         inboxXhr            = null,
-        inboxActive         = false,
 
         achievementsButton  = d.getElementById("achievements-button"),
         achievementsContent = d.getElementById("achievements-content"),
         achievementsData    = achievementsButton.querySelector("span.push"),
         achievementsXhr     = null,
-        achievementsActive  = false,
 
         aboutButton         = d.getElementById("about-button"),
         aboutContent        = d.getElementById("about-content"),
@@ -61,18 +60,20 @@
         backgroundEngine    = browser.extension.getBackgroundPage()
     ;
 
-    if ("update_url" in browser.runtime.getManifest()) {
+    if ("update_url" in browser.runtime.getManifest() || browser.runtime.id === "stackexchangenotifications@mozilla.org") {
         debugMode = false;
     }
 
     function adjustPopup(m)
     {
+        console.log(12);
+
         if (m === true) {
-            d.body.classList.add("fix-popup");
-            setTimeout(adjustPopup, 1);
-        } else {
             d.body.classList.remove("fix-popup");
             w.scrollTo(0, 0);
+        } else {
+            d.body.classList.add("fix-popup");
+            setTimeout(adjustPopup, 10, true);
         }
     }
 
@@ -115,7 +116,7 @@
                         return;
                     }
 
-                    browser.tabs.query({ url: "https://*/*" }, function (tabs) {
+                    browser.tabs.query({ "url": "https://*/*" }, function (tabs) {
                         var tabId, checkUrl = removeQuerystringAndHash(cUrl);
 
                         for (var i = 0, j = tabs.length; i < j; i++) {
@@ -152,8 +153,6 @@
         for (j = els.length; i < j; i++) {
             setActionAnchor(els[i]);
         }
-
-        setTimeout(adjustPopup, 1, true);
     }
 
     function createRoom(url, data)
@@ -221,14 +220,11 @@
 
     function checkEvent()
     {
-        var lastcheck = StackExchangeNotifications.restoreState("lastcheck");
+        var lc = StackExchangeNotifications.restoreState("lastcheck");
+        var t = lc ? new Date(lc) : new Date;
 
-        if (lastcheck) {
-            var d = new Date(lastcheck);
-
-            if ((d.getDate() == 31 && d.getMonth() == 9) || (d.getDate() == 31 && d.getDay() == 5)) {
-                d.body.className += " horror";
-            }
+        if ((t.getDate() == 31 && t.getMonth() == 9) || (t.getDate() == 31 && t.getDay() == 5)) {
+            d.body.className += " horror";
         }
     }
 
@@ -236,11 +232,11 @@
 
     function changeTheme()
     {
-        if (StackExchangeNotifications.switchEnable("black_theme")) {
+        if (StackExchangeNotifications.switchEnable("dark_theme")) {
             if (!theme) {
                 theme = d.createElement("link");
 
-                theme.href = "/css/themes/black/popup.css";
+                theme.href = "/css/themes/dark/popup.css";
                 theme.type = "text/css";
                 theme.rel  = "stylesheet";
 
@@ -315,6 +311,8 @@
         for (j = els.length; i < j; i++) {
             actionCheckRead(els[i], box);
         }
+
+        setTimeout(adjustPopup, 1);
     }
 
     function switchEngine(el)
@@ -338,6 +336,21 @@
                 StackExchangeNotifications.switchEnable(key, !nval);
             }
         });
+    }
+
+    function isCurrentTab(type)
+    {
+        if (lastTab === type) {
+            return true;
+        }
+
+        lastTab = type;
+
+        StackExchangeNotifications.saveState("lastTab", type);
+
+        adjustPopup();
+
+        return false;
     }
 
     for (var i = 0, j = switchs.length; i < j; i++) {
@@ -421,6 +434,10 @@
 
     setupButton.onclick = function()
     {
+        if (isCurrentTab("setup")) {
+            return false;
+        }
+
         if (inboxXhr) {
             inboxXhr.abort();
         }
@@ -428,13 +445,6 @@
         if (achievementsXhr) {
             achievementsXhr.abort();
         }
-
-        inboxActive = false;
-        achievementsActive = false;
-
-        adjustPopup(true);
-
-        StackExchangeNotifications.saveState("lastTab", "setup");
 
         achievementsContent.className =
             achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
@@ -454,6 +464,10 @@
 
     chatButton.onclick = function()
     {
+        if (isCurrentTab("chat")) {
+            return false;
+        }
+
         if (inboxXhr) {
             inboxXhr.abort();
         }
@@ -461,13 +475,6 @@
         if (achievementsXhr) {
             achievementsXhr.abort();
         }
-
-        inboxActive = false;
-        achievementsActive = false;
-
-        adjustPopup(true);
-
-        StackExchangeNotifications.saveState("lastTab", "chat");
 
         achievementsContent.className =
             achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
@@ -503,6 +510,10 @@
 
     aboutButton.onclick = function()
     {
+        if (isCurrentTab("about")) {
+            return false;
+        }
+
         if (inboxXhr) {
             inboxXhr.abort();
         }
@@ -510,13 +521,6 @@
         if (achievementsXhr) {
             achievementsXhr.abort();
         }
-
-        inboxActive = false;
-        achievementsActive = false;
-
-        adjustPopup(true);
-
-        StackExchangeNotifications.saveState("lastTab", "about");
 
         achievementsContent.className =
             achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
@@ -536,21 +540,13 @@
 
     inboxButton.onclick = function()
     {
-        if (achievementsXhr) {
-            achievementsXhr.abort();
-        }
-
-        achievementsActive = false;
-
-        adjustPopup(true);
-
-        if (inboxActive && StackExchangeNotifications.hasCache("inbox")) {
+        if (isCurrentTab("inbox") && StackExchangeNotifications.hasCache("inbox")) {
             return false;
         }
 
-        inboxActive = true;
-
-        StackExchangeNotifications.saveState("lastTab", "inbox");
+        if (achievementsXhr) {
+            achievementsXhr.abort();
+        }
 
         aboutContent.className =
             aboutContent.className.replace(hideRegExp, "").trim() + " hide";
@@ -579,7 +575,7 @@
                     '<div class="sen-error notice">',
                     'Response error:<br>',
                     'You must be logged in to <br>',
-                    '<a href="https://stackexchange.com">https://stackexchange.com</a>',
+                    '<a href="https://stackexchange.com/">https://stackexchange.com</a>',
                     '</div>'
                 ].join("");
 
@@ -606,21 +602,13 @@
 
     achievementsButton.onclick = function()
     {
-        if (inboxXhr) {
-            inboxXhr.abort();
-        }
-
-        inboxActive = false;
-
-        adjustPopup(true);
-
-        if (achievementsActive && StackExchangeNotifications.hasCache("achievements")) {
+        if (isCurrentTab("achievements") && StackExchangeNotifications.hasCache("achievements")) {
             return false;
         }
 
-        achievementsActive = true;
-
-        StackExchangeNotifications.saveState("lastTab", "achievements");
+        if (inboxXhr) {
+            inboxXhr.abort();
+        }
 
         aboutContent.className =
             aboutContent.className.replace(hideRegExp, "").trim() + " hide";
@@ -652,7 +640,7 @@
                     '<div class="sen-error notice">',
                     'Response error:<br>',
                     'You must be logged in to <br>',
-                    '<a href="https://stackexchange.com">https://stackexchange.com</a>',
+                    '<a href="https://stackexchange.com/">https://stackexchange.com</a>',
                     '</div>'
                 ].join("");
 
@@ -707,7 +695,7 @@
         });
     };
 
-    d.querySelector("a[data-switch='black_theme']").addEventListener("click", changeTheme);
+    d.querySelector("a[data-switch='dark_theme']").addEventListener("click", changeTheme);
 
     changeTheme();
 
@@ -721,8 +709,7 @@
         });
     }
 
-    switch (StackExchangeNotifications.restoreState("lastTab"))
-    {
+    switch (StackExchangeNotifications.restoreState("lastTab")) {
         case "setup":
             setupButton.onclick();
         break;

@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.6
+ * StackExchangeNotifications 1.0.7
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -176,8 +176,8 @@
                 "scroll":    StackExchangeNotifications.switchEnable("editor_sync_scroll"),
                 "indent":    StackExchangeNotifications.switchEnable("editor_tabs_by_spaces"),
                 "full":      StackExchangeNotifications.switchEnable("editor_auto_fs"),
-                "theme":     StackExchangeNotifications.switchEnable("black_theme") ?
-                                                                            "black" : null
+                "theme":     StackExchangeNotifications.switchEnable("dark_theme") ?
+                                                                            "dark" : null
             });
         } else if (request === "extras") {
             sendResponse({

@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.6
+ * StackExchangeNotifications 1.0.7
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -236,6 +236,7 @@
         container.senEditorAtived = true;
 
         var realTextField = realEditor.querySelector(".wmd-input"),
+            grippie = realEditor.querySelector(".grippie"),
             fullBtn = navbar.querySelector("a.sen-full-button"),
             previewBtn = navbar.querySelector("a.sen-preview-button"),
             flipBtn = navbar.querySelector("a.sen-flip-button"),
@@ -264,7 +265,10 @@
 
                 if (autoFullscreen && e.target.onSenFull && !e.target.senFirstAutoFS) {
                     e.target.senFirstAutoFS = true;
-                    setTimeout(e.target.onSenFull, 1);
+
+                    if (fullRegExp.test(realEditor.className) === false) {
+                        setTimeout(e.target.onSenFull, 1);
+                    }
                 }
             });
 
@@ -362,6 +366,10 @@
         if (inverted) {
             realEditor.className += " sen-editor-inverted";
         }
+
+        grippie.addEventListener("mousedown", function() {
+            realTextField.senFirstAutoFS = true;
+        });
 
         flipBtn.addEventListener("click", function() {
             if (invertedRegExp.test(realEditor.className)) {

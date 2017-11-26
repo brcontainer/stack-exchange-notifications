@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.6
+ * StackExchangeNotifications 1.0.7
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -174,33 +174,25 @@
 
     function dragablePhoto()
     {
-        var isMove = false,
-            x = 0, y = 0,
-            xel = 0, yel = 0;
+        var isMove = false, x = 0, y = 0, xel = 0, yel = 0;
 
-        currentPhoto.addEventListener("mousedown", function() {
+        currentPhoto.addEventListener("mousedown", function(e) {
             if (!magnified) {
                 return;
             }
 
             isMove = true;
 
-            x = w.event ? w.event.clientX : e.pageX;
-            y = w.event ? w.event.clientY : e.pageY;
-
-            xel = x - currentPhoto.offsetLeft;
-            yel = y - currentPhoto.offsetTop;
+            xel = e.pageX - currentPhoto.offsetLeft;
+            yel = e.pageY - currentPhoto.offsetTop;
         });
 
         d.addEventListener("mousemove", function(e) {
             if (isMove && magnified) {
                 e.preventDefault();
 
-                x = w.event ? w.event.clientX : e.pageX;
-                y = w.event ? w.event.clientY : e.pageY;
-
-                currentPhoto.style.left = (x - xel) + 'px';
-                currentPhoto.style.top  = (y - yel) + 'px';
+                currentPhoto.style.left = (e.pageX - xel) + 'px';
+                currentPhoto.style.top  = (e.pageY - yel) + 'px';
             }
         });
 
