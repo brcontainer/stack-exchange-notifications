@@ -66,8 +66,6 @@
 
     function adjustPopup(m)
     {
-        console.log(12);
-
         if (m === true) {
             d.body.classList.remove("fix-popup");
             w.scrollTo(0, 0);

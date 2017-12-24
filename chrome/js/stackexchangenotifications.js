@@ -326,7 +326,7 @@
             el = target[0];
 
             if (el.display !== "none") {
-                result = parseInt(el.innerHTML);
+                result = parseInt(el.textContent);
             }
         }
 

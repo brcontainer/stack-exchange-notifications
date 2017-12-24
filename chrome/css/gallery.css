@@ -104,7 +104,9 @@
     background-color: rgba(0,0,0,.4) !important;
 }
 
-.sen-gallery-close, .sen-gallery-left .icon, .sen-gallery-right .icon {
+.sen-gallery-close,
+.sen-gallery-left .sen-gallery-icon,
+.sen-gallery-right .sen-gallery-icon {
     display: block !important;
     border-radius: 4px !important;
     text-decoration: none !important;
@@ -120,7 +122,9 @@
     content: "Close photo" !important;
 }
 
-.sen-gallery-close::before, .sen-gallery-left .icon::before, .sen-gallery-right .icon::before {
+.sen-gallery-close::before,
+.sen-gallery-left .sen-gallery-icon::before,
+.sen-gallery-right .sen-gallery-icon::before {
     overflow: hidden !important;
     text-indent: -1000px !important;
 }
@@ -132,7 +136,8 @@
     height: 100% !important;
 }
 
-.sen-gallery-left > .icon, .sen-gallery-right > .icon {
+.sen-gallery-left > .sen-gallery-icon,
+.sen-gallery-right > .sen-gallery-icon {
     position: relative !important;
     margin-right: 18px !important;
     padding: 14px 0 !important;
@@ -151,11 +156,13 @@
     left: 0 !important;
 }
 
-.sen-gallery-left:hover > .icon, .sen-gallery-right:hover > .icon {
+.sen-gallery-left:hover > .sen-gallery-icon,
+.sen-gallery-right:hover > .sen-gallery-icon {
     opacity: 1 !important;
 }
 
-.sen-gallery-left > .icon::before, .sen-gallery-right > .icon::before {
+.sen-gallery-left > .sen-gallery-icon::before,
+.sen-gallery-right > .sen-gallery-icon::before {
     background: url(../images/arrow.svg#white-shadow) center no-repeat !important;
     background-size: contain !important;
     position: relative !important;
@@ -165,12 +172,12 @@
     content: "Next photo" !important;
 }
 
-.sen-gallery-left > .icon {
+.sen-gallery-left > .sen-gallery-icon {
     margin-left: 18px !important;
     margin-right: 0 !important;
 }
 
-.sen-gallery-left > .icon::before {
+.sen-gallery-left > .sen-gallery-icon::before {
     content: "Prev photo" !important;
     -webkit-transform: scaleX(-1);
        -moz-transform: scaleX(-1);
