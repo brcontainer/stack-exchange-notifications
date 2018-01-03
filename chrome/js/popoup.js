@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(w, d, browser) {
+(function (w, d, browser) {
     "use strict";
 
     var
@@ -82,8 +82,8 @@
 
     function linkPrevent(el)
     {
-        el.addEventListener("click", function(evt) {
-            (evt || w.event).preventDefault();
+        el.addEventListener("click", function (e) {
+            (e || w.event).preventDefault();
         });
     }
 
@@ -99,10 +99,10 @@
 
             var cUrl = el.href;
 
-            el.onclick = function(e) {
+            el.onclick = function (e) {
                 e.preventDefault();
 
-                setTimeout(function() {
+                setTimeout(function () {
                     //var id = StackExchangeNotifications.notificationsSession() + el.href;
 
                     //browser.notifications.clear(id);
@@ -178,7 +178,7 @@
                     return;
                 }
 
-                browser.runtime.sendMessage({ "chat": 2, "url": url }, function(response) {
+                browser.runtime.sendMessage({ "chat": 2, "url": url }, function (response) {
                     if (!response) {
                         return;
                     }
@@ -286,7 +286,7 @@
     {
         var target = box === "inbox" ? inboxContent : achievementsContent;
 
-        current.addEventListener("click", function() {
+        current.addEventListener("click", function () {
             current.className = current.className.replace(/(^|\s)unread-item(\s|$)/g, " ").trim();
 
             var data = StackExchangeNotifications.restoreState(box);
@@ -325,7 +325,7 @@
             }
         }
 
-        el.addEventListener("click", function() {
+        el.addEventListener("click", function () {
             var nval = el.getAttribute("data-switch-value") === "on";
 
             el.setAttribute("data-switch-value", nval ? "off" : "on");
@@ -370,7 +370,7 @@
     function bgCss()
     {
         if (cssLoaded) {
-            /*browser.runtime.sendMessage({ "storeimages": true }, function(response) {
+            /*browser.runtime.sendMessage({ "storeimages": true }, function (response) {
                 if (response) {
                     setStyle(response);
                 }
@@ -416,13 +416,13 @@
         }
 
         if (allRulesBg.length) {
-            browser.runtime.sendMessage({ "storeimages": allRulesBg }, function(response) {
+            browser.runtime.sendMessage({ "storeimages": allRulesBg }, function (response) {
                 if (response) {
                     setStyle(response);
                 }
             });
         } else {
-            browser.runtime.sendMessage({ "storeimages": true }, function(response) {
+            browser.runtime.sendMessage({ "storeimages": true }, function (response) {
                 if (response) {
                     setStyle(response);
                 }
@@ -430,7 +430,7 @@
         }
     }
 
-    setupButton.onclick = function()
+    setupButton.onclick = function ()
     {
         if (isCurrentTab("setup")) {
             return false;
@@ -460,7 +460,7 @@
             aboutContent.className.replace(hideRegExp, "").trim();
     };
 
-    chatButton.onclick = function()
+    chatButton.onclick = function ()
     {
         if (isCurrentTab("chat")) {
             return false;
@@ -506,7 +506,7 @@
         showNoticeRoom(!has);
     };
 
-    aboutButton.onclick = function()
+    aboutButton.onclick = function ()
     {
         if (isCurrentTab("about")) {
             return false;
@@ -536,7 +536,7 @@
             aboutContent.className.replace(hideRegExp, "").trim();
     };
 
-    inboxButton.onclick = function()
+    inboxButton.onclick = function ()
     {
         if (isCurrentTab("inbox") && StackExchangeNotifications.hasCache("inbox")) {
             return false;
@@ -563,7 +563,7 @@
 
         inboxContent.innerHTML = "";
 
-        inboxXhr = StackExchangeNotifications.inbox(function(data, code) {
+        inboxXhr = StackExchangeNotifications.inbox(function (data, code) {
             if (code !== 200 && code !== -1) {
                 inboxContent.innerHTML =
                     '<div class="sen-error notice">HTTP error - status: ' + code + '</div>';
@@ -598,7 +598,7 @@
         });
     };
 
-    achievementsButton.onclick = function()
+    achievementsButton.onclick = function ()
     {
         if (isCurrentTab("achievements") && StackExchangeNotifications.hasCache("achievements")) {
             return false;
@@ -625,7 +625,7 @@
 
         achievementsContent.innerHTML = "";
 
-        achievementsXhr = StackExchangeNotifications.achievements(function(data, code, headers) {
+        achievementsXhr = StackExchangeNotifications.achievements(function (data, code, headers) {
             var dateContent, date, hour, min;
 
             if (code !== 200 && code !== -1) {
@@ -678,12 +678,12 @@
         });
     };
 
-    clearCache.onclick = function()
+    clearCache.onclick = function ()
     {
         StackExchangeNotifications.clearCache();
     };
 
-    clearAllData.onclick = function()
+    clearAllData.onclick = function ()
     {
         StackExchangeNotifications.utils.dialog.confirm("Do you really want to remove?", function (ok) {
             if (ok) {
@@ -698,10 +698,10 @@
     changeTheme();
 
     for (var i = btns.length - 1; i >= 0; i--) {
-        btns[i].addEventListener("click", function() {
+        btns[i].addEventListener("click", function () {
             var s = this;
 
-            setTimeout(function() {
+            setTimeout(function () {
                 s.blur();
             }, 300);
         });

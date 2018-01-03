@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(browser) {
+(function (browser) {
     "use strict";
 
     var caller = null;
@@ -31,7 +31,7 @@
     }
     */
 
-    window.detectUpdate = function(callback) {
+    window.detectUpdate = function (callback) {
         if (typeof callback === "function" || callback === null) {
             caller = callback;
         }
@@ -46,7 +46,7 @@
             return;
         }
 
-        StackExchangeNotifications.inbox(function(data, code) {
+        StackExchangeNotifications.inbox(function (data, code) {
             if (code == 200 && data.indexOf("<") !== -1) {
                 var tmpParseDom = document.createElement("div");
 
@@ -106,7 +106,7 @@
     }
     */
 
-    StackExchangeNotifications.pushs(function(response) {
+    StackExchangeNotifications.pushs(function (response) {
         if (caller) {
             caller();
         }
@@ -157,7 +157,7 @@
         StackExchangeNotifications.update();
     }
 
-    browser.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         if (request === "desktopnotification") {
             sendResponse({
                 "available": StackExchangeNotifications.switchEnable("desktop_notification")
@@ -214,7 +214,7 @@
                     cssbg = null;
                 }
             } else {
-                StackExchangeNotifications.utils.generateCssImages(request.storeimages, function(data) {
+                StackExchangeNotifications.utils.generateCssImages(request.storeimages, function (data) {
                     StackExchangeNotifications.saveState("cssbg", data);
                     sendResponse(data);
                 });

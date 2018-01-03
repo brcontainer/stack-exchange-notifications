@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(w, d, browser) {
+(function (w, d, browser) {
     "use strict";
 
     var link,
@@ -89,7 +89,7 @@
             link.className += " added";
         }
 
-        link.onclick = function(e) {
+        link.onclick = function (e) {
             e.preventDefault();
             pinchat(!addedRegExp.test(link.className));
         };
@@ -119,7 +119,7 @@
     {
         loadCss("pinchat.css");
 
-        bgData({ "chat": 3 }, function(response) {
+        bgData({ "chat": 3 }, function (response) {
             added = (response && response.added);
             appendLinks();
         });

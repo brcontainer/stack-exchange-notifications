@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(w, d, browser) {
+(function (w, d, browser) {
     "use strict";
 
     var delay = 60, //In seconds
@@ -29,7 +29,7 @@
         validAttrs = [ "class", "id", "href" ];
 
     var Utils = {
-        "convertResult": function(size) {
+        "convertResult": function (size) {
             if (size === 0) {
                 return "";
             } else if (size < 1000) {
@@ -38,7 +38,7 @@
 
             return "+1k";
         },
-        "removeInvalidAttributes": function(target) {
+        "removeInvalidAttributes": function (target) {
             var attrs = target.attributes, currentAttr;
 
             for (var i = attrs.length - 1; i >= 0; i--) {
@@ -56,7 +56,7 @@
                 }
             }
         },
-        "clearDomString": function(data) {
+        "clearDomString": function (data) {
             tmpDom = (new DOMParser).parseFromString(data, "text/html").body;
 
             var list, current, currentHref;
@@ -83,7 +83,7 @@
 
             return tmpDom.innerHTML;
         },
-        "generateCssImages": function(resources, callback) {
+        "generateCssImages": function (resources, callback) {
             var total = resources.length;
 
             function trigger() {
@@ -107,13 +107,13 @@
                 var current = i;
                 var img = new Image();
 
-                img.onload = function() {
+                img.onload = function () {
                     --total;
                     resources[current].bin = img2base64(img);
                     trigger();
                 };
 
-                img.onerror = function() {
+                img.onerror = function () {
                     --total;
                     resources[current] = null;
                     trigger();
@@ -215,7 +215,7 @@
                 headers = headersXhrJson(xhr);
 
                 if (xhr.status === 0) {
-                    setTimeout(function() {
+                    setTimeout(function () {
                         callback("", 0, headers);
                     }, 200);
                 } else {
@@ -224,7 +224,7 @@
                     callback(xhr.responseText, status, headers);
                 }
 
-                setTimeout(function() {
+                setTimeout(function () {
                     callback = null;
                     xhr = null;
                 }, 1000);
@@ -234,7 +234,7 @@
         xhr.send(null);
 
         return {
-            "abort": function() {
+            "abort": function () {
                 if (completed === false) {
                     isAborted = true;
                     try {
@@ -379,9 +379,9 @@
     }
 
     window.StackExchangeNotifications = {
-        "boot": function() {
+        "boot": function () {
             //Improve performance in Opera and older machines
-            setTimeout(function() { initiateDelay = 1; }, initiateDelay);
+            setTimeout(function () { initiateDelay = 1; }, initiateDelay);
 
             if (SimpleCache.get("firstrun2", true)) {
                 return false;
@@ -404,7 +404,7 @@
 
             return true;
         },
-        "switchEnable": function(key, enable) {
+        "switchEnable": function (key, enable) {
             var kn = "switch_" + key;
 
             if (typeof enable === "boolean") {
@@ -414,7 +414,7 @@
 
             return !!SimpleCache.get(kn, true);
         },
-        "pushs": function(callback) {
+        "pushs": function (callback) {
             if (false === isRunning && typeof callback === "function") {
                 isRunning = true;
                 doneCallback = callback;
@@ -422,7 +422,7 @@
                 retrieveData();
             }
         },
-        "achievements": function(callback) {
+        "achievements": function (callback) {
             if (typeof callback === "function") {
                 var cache = SimpleCache.get("achievements");
 
@@ -442,7 +442,7 @@
 
             return null;
         },
-        "inbox": function(callback) {
+        "inbox": function (callback) {
             if (typeof callback === "function") {
                 var cache = SimpleCache.get("inbox");
 
@@ -462,7 +462,7 @@
 
             return null;
         },
-        "setAchievements": function(sizeScore, sizeAcquired) {
+        "setAchievements": function (sizeScore, sizeAcquired) {
             if (sizeScore % 1 === 0) {
                 score = sizeScore;
             }
@@ -471,24 +471,24 @@
                 acquired = sizeAcquired;
             }
         },
-        "setInbox": function(size) {
+        "setInbox": function (size) {
             if (size > -1 && size % 1 === 0) {
                 inbox = size;
             }
         },
-        "getAchievements": function() {
+        "getAchievements": function () {
             return {
                 "acquired": acquired,
                 "score": score,
             };
         },
-        "getInbox": function() {
+        "getInbox": function () {
             return inbox;
         },
-        "hasCache": function(cache) {
+        "hasCache": function (cache) {
             return !!SimpleCache.get(cache);
         },
-        "clearCache": function(current) {
+        "clearCache": function (current) {
             if (current === "inbox" || current === "achievements") {
                 SimpleCache.set(current, null);
             } else {
@@ -496,7 +496,7 @@
                 SimpleCache.set("achievements", null);
             }
         },
-        "update": function(reload) {
+        "update": function (reload) {
             if (false === isRunning) {
                 return;
             }
@@ -515,10 +515,10 @@
                 });
             }
         },
-        "saveState": function(key, data, noToken) {
+        "saveState": function (key, data, noToken) {
             return SimpleCache.set(key, data, noToken);
         },
-        "restoreState": function(key, noToken) {
+        "restoreState": function (key, noToken) {
             var data = SimpleCache.get(key, noToken);
 
             if (data) {
@@ -527,7 +527,7 @@
 
             return false;
         },
-        "detectDOM": function(detect) {
+        "detectDOM": function (detect) {
             noNeedRequestXhr = detect;
         },
         "meta": metaData,

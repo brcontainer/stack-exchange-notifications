@@ -13,7 +13,7 @@
         w.StackExchangeNotifications = { "utils": {} };
     }
 
-    w.StackExchangeNotifications.utils.ready = function(callback) {
+    w.StackExchangeNotifications.utils.ready = function (callback) {
         if (readyRegExp.test(d.readyState)) {
             callback();
         } else {

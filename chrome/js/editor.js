@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(w, d, browser) {
+(function (w, d, browser) {
     "use strict";
 
     var theme,
@@ -48,15 +48,15 @@
             return;
         }
 
-        var evt = new MouseEvent(type, {
+        var e = new MouseEvent(type, {
             "view": w,
             "bubbles": true,
             "cancelable": true
         });
 
-        target.dispatchEvent(evt);
+        target.dispatchEvent(e);
 
-        evt = null;
+        e = null;
     }
 
     //Fix bug in Firefox when on click in a button
@@ -94,7 +94,7 @@
             return;
         }
 
-        button.addEventListener("click", function() {
+        button.addEventListener("click", function () {
             if (timerHideButtons) {
                 clearTimeout(timerHideButtons);
             }
@@ -126,7 +126,7 @@
                 clearTimeout(rtsTimer);
             }
 
-            rtsTimer = setTimeout(function() {
+            rtsTimer = setTimeout(function () {
                 var val = el.value;
 
                 if (val && tabsBySpaces) {
@@ -166,7 +166,7 @@
             eventsInput(from);
         }
 
-        from.addEventListener("scroll", function()
+        from.addEventListener("scroll", function ()
         {
             if (!syncScroll || (inScrollEvt && inScrollEvt !== type)) {
                 return;
@@ -185,7 +185,7 @@
 
             to.scrollTop = st * (from.scrollTop / sf);
 
-            timerScroll = setTimeout(function() {
+            timerScroll = setTimeout(function () {
                 inScrollEvt = null;
             }, 200);
         });
@@ -249,7 +249,7 @@
         container.insertBefore(navbar, container.firstElementChild);
         container.appendChild(realPreview);
 
-        setTimeout(function() {
+        setTimeout(function () {
             var buttons = navbar.querySelectorAll("a[class^='sen-btn ']");
 
             for (var i = buttons.length - 1; i >= 0; i--) {
@@ -260,7 +260,7 @@
             onScroll("preview", realPreview, realTextField);
             onScroll("field", realTextField, realPreview);
 
-            realTextField.addEventListener("focus", function(e) {
+            realTextField.addEventListener("focus", function (e) {
                 realEditor.className += " sen-editor-focus";
 
                 if (autoFullscreen && e.target.onSenFull && !e.target.senFirstAutoFS) {
@@ -272,7 +272,7 @@
                 }
             });
 
-            realTextField.addEventListener("blur", function() {
+            realTextField.addEventListener("blur", function () {
                 realEditor.className
                     = realEditor.className
                         .replace(focusRegExp, " ")
@@ -284,7 +284,7 @@
             container.style.backgroundColor = bgColor ? bgColor : "#fff";
         }, 600);
 
-        realPreview.addEventListener("click", function() {
+        realPreview.addEventListener("click", function () {
             if (!fullRegExp.test(realEditor.className)) {
                 realTextField.focus();
             }
@@ -298,7 +298,7 @@
             }
         }
 
-        fullBtn.addEventListener("click", function() {
+        fullBtn.addEventListener("click", function () {
             var inPreview = readyRegExp.test(realEditor.className);
 
             if (fullRegExp.test(realEditor.className)) {
@@ -333,7 +333,7 @@
             }
         });
 
-        previewBtn.addEventListener("click", function()
+        previewBtn.addEventListener("click", function ()
         {
             var ca = "" + realEditor.className;
             var inFull = fullRegExp.test(ca);
@@ -355,11 +355,11 @@
             }
         });
 
-        realTextField.onSenFull = function() {
+        realTextField.onSenFull = function () {
             fullBtn.click();
         };
 
-        realTextField.onSenPreview = function() {
+        realTextField.onSenPreview = function () {
             previewBtn.click();
         };
 
@@ -367,11 +367,11 @@
             realEditor.className += " sen-editor-inverted";
         }
 
-        grippie.addEventListener("mousedown", function() {
+        grippie.addEventListener("mousedown", function () {
             realTextField.senFirstAutoFS = true;
         });
 
-        flipBtn.addEventListener("click", function() {
+        flipBtn.addEventListener("click", function () {
             if (invertedRegExp.test(realEditor.className)) {
                 realEditor.className = realEditor.className
                                         .replace(invertedRegExp, " ")
@@ -385,7 +385,7 @@
             syncScrollBtn.className += " sen-disabled";
         }
 
-        syncScrollBtn.addEventListener("click", function() {
+        syncScrollBtn.addEventListener("click", function () {
             if (activeRegExp.test(syncScrollBtn.className)) {
                 syncScrollBtn.className = syncScrollBtn.className
                                             .replace(activeRegExp, " ")
@@ -465,7 +465,7 @@
 
     function triggerObserver()
     {
-        var observer = new MutationObserver(function(mutations) {
+        var observer = new MutationObserver(function (mutations) {
             var all = d.querySelectorAll(".post-editor, .wmd-container");
 
             for (var i = all.length - 1; i >= 0; i--) {
@@ -491,7 +491,7 @@
             return;
         }
 
-        d.addEventListener("click", function(e) {
+        d.addEventListener("click", function (e) {
             if (e.target.matches(".wmd-preview a:not([class*=snippet])")) {
                 e.preventDefault();
             }
@@ -501,7 +501,7 @@
 
         done = true;
 
-        setTimeout(function() {
+        setTimeout(function () {
             var els = d.querySelectorAll("form.post-form, .edit-profile form");
 
             if (els.length > 0) {
@@ -513,7 +513,7 @@
 
         setTimeout(triggerObserver, 300);
 
-        d.addEventListener("keydown", function(e) {
+        d.addEventListener("keydown", function (e) {
             if (e.altKey && e.target && isInput.test(e.target.className)) {
                 switch (e.keyCode) {
                     case 70: //Alt+F change to fullscreen or normal
@@ -550,7 +550,7 @@
     }
 
     if (browser && browser.runtime && browser.runtime.sendMessage) {
-        browser.runtime.sendMessage("editor", function(response) {
+        browser.runtime.sendMessage("editor", function (response) {
             if (response && response.available) {
                 preferPreviewInFull = !!response.preview;
                 tabsBySpaces = !!response.indent;

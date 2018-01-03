@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(w, d, browser) {
+(function (w, d, browser) {
     "use strict";
 
     if (!w.StackExchangeNotifications) {
@@ -33,8 +33,8 @@
             setTimeout(alertCallback, 1);
         }
 
-        ddialog.classList.add("hide");
         dalert.classList.add("hide");
+        ddialog.classList.add("hide");
         dconfirm.classList.add("hide");
     }
 

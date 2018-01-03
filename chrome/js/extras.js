@@ -168,7 +168,7 @@
     }
 
     if (browser && browser.runtime && browser.runtime.sendMessage) {
-        browser.runtime.sendMessage("extras", function(response) {
+        browser.runtime.sendMessage("extras", function (response) {
             if (response) {
                 copyCodeEnabled = !!response.copycode;
 

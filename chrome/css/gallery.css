@@ -185,6 +185,13 @@
             transform: scaleX(-1);
 }
 
+.sen-gallery-no-arrows .sen-gallery-left,
+.sen-gallery-no-arrows .sen-gallery-right,
+.sen-gallery-no-left-arrow .sen-gallery-left,
+.sen-gallery-no-left-arrow .sen-gallery-right {
+    display: none !important;
+}
+
 .sen-limit-width {
     width: 100% !important;
 }

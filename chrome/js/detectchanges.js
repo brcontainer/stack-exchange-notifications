@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(w, d, browser) {
+(function (w, d, browser) {
     "use strict";
 
     var running = false,
@@ -35,7 +35,7 @@
             browser.runtime.sendMessage({
                 "data": data,
                 "type": type
-            }, function(response) {});
+            }, function (response) {});
         }
     }
 
@@ -92,7 +92,7 @@
             "attributes": true
         });
 
-        browser.runtime.sendMessage("changebydom", function(response) {});
+        browser.runtime.sendMessage("changebydom", function (response) {});
     }
 
     StackExchangeNotifications.utils.ready(applyEvents);

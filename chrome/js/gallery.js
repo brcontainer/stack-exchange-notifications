@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function(w, d, browser) {
+(function (w, d, browser) {
     "use strict";
 
     var setupKeyEsc,
@@ -176,7 +176,7 @@
     {
         var isMove = false, x = 0, y = 0, xel = 0, yel = 0;
 
-        currentPhoto.addEventListener("mousedown", function(e) {
+        currentPhoto.addEventListener("mousedown", function (e) {
             if (!magnified) {
                 return;
             }
@@ -187,7 +187,7 @@
             yel = e.pageY - currentPhoto.offsetTop;
         });
 
-        d.addEventListener("mousemove", function(e) {
+        d.addEventListener("mousemove", function (e) {
             if (isMove && magnified) {
                 e.preventDefault();
 
@@ -196,7 +196,7 @@
             }
         });
 
-        d.addEventListener("mouseup", function() {
+        d.addEventListener("mouseup", function () {
             isMove = false;
         });
     }
@@ -257,12 +257,12 @@
         currentPhoto.addEventListener("DOMMouseScroll", mouseWheel);
         currentPhoto.addEventListener("mousewheel", mouseWheel);
 
-        currentPhoto.addEventListener("dblclick", function() {
+        currentPhoto.addEventListener("dblclick", function () {
             currentPhoto.style.transform = "scale(1)";
             currentZoom = null;
         });
 
-        currentPhoto.addEventListener("click", function(e) {
+        currentPhoto.addEventListener("click", function (e) {
             if (!magnifyPhoto || magnified) {
                 return;
             }
@@ -291,7 +291,7 @@
         }
 
         if (prevBtn) {
-            prevBtn.addEventListener("click", function(e) {
+            prevBtn.addEventListener("click", function (e) {
                 e.preventDefault();
 
                 navigateTo("prev");
@@ -301,7 +301,7 @@
         }
 
         if (nextBtn) {
-            nextBtn.addEventListener("click", function(e) {
+            nextBtn.addEventListener("click", function (e) {
                 e.preventDefault();
 
                 navigateTo("next");
@@ -310,19 +310,19 @@
             });
         }
 
-        viewHTML.addEventListener("mouseout", function(e) {
+        viewHTML.addEventListener("mouseout", function (e) {
             closeBtn.className = closeBtn.className
                                     .replace(showRegExp, " ").trim();
         });
 
-        viewHTML.addEventListener("mouseover", function(e) {
+        viewHTML.addEventListener("mouseover", function (e) {
             if (!showRegExp.test(closeBtn.className)) {
                 closeBtn.className += " show";
             }
         });
 
         if (currentPhoto) {
-            viewHTML.addEventListener("click", function(e) {
+            viewHTML.addEventListener("click", function (e) {
                 if (e.target !== photos) {
                     return;
                 }
@@ -501,6 +501,8 @@
             current.senLightbox = true;
             current.addEventListener("click", eventPhoto);
         }
+
+        return current.senLightbox;
     }
 
     function setGallery(target)
@@ -509,11 +511,15 @@
             return;
         }
 
-        var current, links = target.querySelectorAll(mainSelector);
+        var j = 0, current, links = target.querySelectorAll(mainSelector);
 
         for (var i = links.length - 1, current; i >= 0; i--) {
-            addLinkEvent(links[i]);
+            if (addLinkEvent(links[i])) {
+                j++;
+            }
         }
+
+        viewHTML.classList.toggle("sen-gallery-no-arrows", j < 2);
     }
 
     var timerObserver;
@@ -577,7 +583,7 @@
     }
 
     if (browser && browser.runtime && browser.runtime.sendMessage) {
-        browser.runtime.sendMessage("gallery", function(response) {
+        browser.runtime.sendMessage("gallery", function (response) {
             if (response && response.available) {
                 StackExchangeNotifications.utils.ready(bootGallery);
             }
@@ -589,7 +595,7 @@
     if (!m || m.matches) return;
 
     m.matches = m.matchesSelector || m.mozMatchesSelector || m.msMatchesSelector ||
-    m.oMatchesSelector || m.webkitMatchesSelector || function(s) {
+    m.oMatchesSelector || m.webkitMatchesSelector || function (s) {
         var m = (this.document || this.ownerDocument).querySelectorAll(s), i = m.length;
 
         while (--i >= 0 && m[i] !== this);
