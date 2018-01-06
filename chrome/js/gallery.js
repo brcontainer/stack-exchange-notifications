@@ -15,7 +15,6 @@
         mainBody,
         photos,
         loader,
-        loaded = false,
         magnified = false,
         magnifyPhoto = false,
         currentZoom = null,
@@ -35,17 +34,6 @@
         mainSelector        = "a[href]",
         linkSelector        = "#starred-posts a"
     ;
-
-    function loadCss(uri)
-    {
-        var style = d.createElement("link");
-
-        style.rel  = "stylesheet";
-        style.type = "text/css";
-        style.href = browser.extension.getURL("/css/" + uri);
-
-        mainBody.appendChild(style);
-    }
 
     function resizeImage()
     {
@@ -335,29 +323,6 @@
         setTimeout(triggerObserver, 50);
     }
 
-    function loadView()
-    {
-        var
-            xhr = new XMLHttpRequest(),
-            uri = browser.extension.getURL("/view/gallery.html");
-        ;
-
-        xhr.open("GET", uri, true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    if (!mainBody) {
-                        return;
-                    }
-
-                    prepareDOM(xhr.responseText);
-                }
-            }
-        };
-
-        xhr.send(null);
-    }
-
     function removeLoader()
     {
         loader.className = loader.className
@@ -563,12 +528,6 @@
 
     function bootGallery()
     {
-        if (loaded) {
-            return;
-        }
-
-        loaded = false;
-
         mainBody = d.body;
 
         if (!mainBody) {
@@ -576,10 +535,16 @@
             return;
         }
 
-        loadCss("gallery.css");
-        loadCss("animate.css");
+        StackExchangeNotifications.utils.resourceStyle("gallery");
+        StackExchangeNotifications.utils.resourceStyle("animate");
 
-        loadView();
+        StackExchangeNotifications.utils.resource("/view/gallery.html", function (response) {
+            if (!mainBody) {
+                return;
+            }
+
+            prepareDOM(response);
+        });
     }
 
     if (browser && browser.runtime && browser.runtime.sendMessage) {

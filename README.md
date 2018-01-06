@@ -1,9 +1,11 @@
-# Install
+## Installing StackExchangeNotifications
 
 - Opera: https://addons.opera.com/en/extensions/details/stackexchange-notifications/
 - Firefox: https://addons.mozilla.org/en-US/firefox/addon/stackexchangenotifications/
 
-# About
+> **Note:** requires Firefox 48+, extension uses [`web_accessible_resources`](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/manifest.json/web_accessible_resources) only supported in 48 version
+
+## About StackExchangeNotifications
 
 ![preview](http://i.stack.imgur.com/EM13u.png)
 
@@ -14,7 +16,7 @@ This extension has been created for you to stay connected on their StackExchange
 - Quick read of "inbox"
 - Quick read of "achievements"
 
-# Screenshots
+## StackExchangeNotifications screenshots
 
 - Inbox: [Inbox](http://i.stack.imgur.com/6FS0H.png)
 
@@ -22,7 +24,7 @@ This extension has been created for you to stay connected on their StackExchange
 
 ![inbox and achievements in your browser](http://i.stack.imgur.com/YgDIV.png)
 
-# For developers
+## For developers
 
 For debugging or testing push notifications there are some functions:
 
@@ -37,16 +39,16 @@ For debugging or testing push notifications there are some functions:
 | `.meta()` | Get appname and version, return object like this `{appname: string, version: string}` |
 | `.getInbox()` | Get total messages in Inbox, return `int` |
 
-## Debugging in Opera or Chrome
+### Debugging in Opera or Chrome
 
 - Click with right mouse button, and select "Inspect pop-up"
 - Go to Console tab in "Developer Tools" and type your commands
 
 (More details: https://developer.chrome.com/extensions/tut_debugging)
 
-## Debugging in Firefox
+### Debugging in Firefox
 
-**Note:** Requires Firefox 48+ (or Developer Edition) for load of temporary add-on
+> **Note:** Requires Firefox 48+ (or Developer Edition) for load of temporary add-on
 
 - Type `about:debugging` in "address bar"
 - Click in "Load Temporary Add-on"
@@ -56,7 +58,7 @@ For debugging or testing push notifications there are some functions:
 
 (More details: https://developer.mozilla.org/en-US/docs/Tools/about:debugging)
 
-## Examples
+### Examples
 
 Show fake new score:
 

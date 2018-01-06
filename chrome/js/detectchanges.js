@@ -9,8 +9,7 @@
 (function (w, d, browser) {
     "use strict";
 
-    var running = false,
-        unreadRegExp       = /(^|\s)(js-unread-count|unread-count)(\s|$)/,
+    var unreadRegExp       = /(^|\s)(js-unread-count|unread-count)(\s|$)/,
         inboxRegExp        = /(^|\s)(js-inbox-button|icon-inbox)(\s|$)/,
         achievementsRegExp = /(^|\s)(js-achievements-button|icon-achievements)(\s|$)/
     ;
@@ -58,18 +57,12 @@
 
     function applyEvents()
     {
-        if (running) {
-            return;
-        }
-
         var networkSE = d.querySelector(".network-items, body > header .secondary-nav");
 
         if (!networkSE) {
             setTimeout(applyEvents, 1000);
             return;
         }
-
-        running = true;
 
         var inboxUnred = ".js-inbox-button > .js-unread-count," +
                          ".icon-inbox > .js-unread-count," +

@@ -58,17 +58,6 @@
         hideTimer = setTimeout(hideNotification, 2000);
     }
 
-    function loadCss(uri)
-    {
-        var style = d.createElement("link");
-
-        style.rel  = "stylesheet";
-        style.type = "text/css";
-        style.href = browser.extension.getURL("/css/" + uri);
-
-        mainBody.appendChild(style);
-    }
-
     function bootCopyCode()
     {
         if (!copyCodeEnabled) {
@@ -126,7 +115,7 @@
             }
         }
 
-        loadCss("extras.css");
+        StackExchangeNotifications.utils.resourceStyle("extras");
 
         findPreCodes(d.body);
 

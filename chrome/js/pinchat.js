@@ -59,17 +59,6 @@
         }
     }
 
-    function loadCss(url)
-    {
-        var style = d.createElement("link");
-
-        style.rel  = "stylesheet";
-        style.type = "text/css";
-        style.href = browser.extension.getURL("/css/" + url);
-
-        d.body.appendChild(style);
-    }
-
     function createLink(el)
     {
         if (el.getElementsByClassName(".inroom-heart-icon").length) {
@@ -117,7 +106,7 @@
 
     function bootPinChat()
     {
-        loadCss("pinchat.css");
+        StackExchangeNotifications.utils.resourceStyle("pinchat");
 
         bgData({ "chat": 3 }, function (response) {
             added = (response && response.added);

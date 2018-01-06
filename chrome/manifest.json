@@ -16,7 +16,7 @@
     "background": {
         "scripts": [
             "js/stackexchangenotifications.js",
-            "js/utilsready.js",
+            "js/extends.js",
             "js/background.js"
         ]
     },
@@ -42,7 +42,7 @@
             "*://*.mathoverflow.com/*"
         ],
         "js": [
-            "js/utilsready.js",
+            "js/extends.js",
             "js/detectchanges.js",
             "js/gallery.js",
             "js/editor.js",

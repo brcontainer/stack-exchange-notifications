@@ -479,7 +479,7 @@
         "getAchievements": function () {
             return {
                 "acquired": acquired,
-                "score": score,
+                "score": score
             };
         },
         "getInbox": function () {

@@ -9,9 +9,13 @@
 (function (w, d, browser) {
     "use strict";
 
+    //Disable functions in chat
+    if (w.location.hostname.indexOf("chat.") === 0) {
+        return;
+    }
+
     var theme,
         rootDoc,
-        done = false,
         autoFullscreen = false,
         syncScroll = false,
         lastcheck,
@@ -398,17 +402,6 @@
         });
     }
 
-    function loadCss(url)
-    {
-        var style = d.createElement("link");
-
-        style.rel  = "stylesheet";
-        style.type = "text/css";
-        style.href = browser.extension.getURL("/css/" + url);
-
-        d.body.appendChild(style);
-    }
-
     function loadView(realEditor)
     {
         if (viewHTML) {
@@ -416,26 +409,13 @@
             return;
         }
 
-        var
-            xhr = new XMLHttpRequest(),
-            uri = browser.extension.getURL("/view/editor.html")
-        ;
+        StackExchangeNotifications.utils.resource("/view/editor.html", function (response) {
+            viewHTML = d.createElement("div");
+            viewHTML.innerHTML = response;
+            viewHTML = viewHTML.firstElementChild;
 
-        xhr.open("GET", uri, true);
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    viewHTML = d.createElement("div");
-                    viewHTML.innerHTML = xhr.responseText;
-                    viewHTML = viewHTML.firstElementChild;
-
-                    bootMain(viewHTML.cloneNode(true), realEditor);
-                }
-            }
-        };
-
-        xhr.send(null);
+            bootMain(viewHTML.cloneNode(true), realEditor);
+        });
     }
 
     function createEditor(target)
@@ -487,10 +467,6 @@
     }
 
     function loadAll() {
-        if (done) {
-            return;
-        }
-
         d.addEventListener("click", function (e) {
             if (e.target.matches(".wmd-preview a:not([class*=snippet])")) {
                 e.preventDefault();
@@ -498,8 +474,6 @@
         });
 
         rootDoc = d.body.parentNode;
-
-        done = true;
 
         setTimeout(function () {
             var els = d.querySelectorAll("form.post-form, .edit-profile form");
@@ -535,18 +509,13 @@
 
     function initiate()
     {
-        loadCss("editor.css");
+        StackExchangeNotifications.utils.resourceStyle("editor");
 
         if (typeof theme === "string") {
-            loadCss("themes/" + theme + "/editor.css");
+            StackExchangeNotifications.utils.resourceStyle("themes/" + theme + "/editor");
         }
 
         StackExchangeNotifications.utils.ready(loadAll);
-    }
-
-    //Disable functions in chat
-    if (w.location.hostname.indexOf("chat.") === 0) {
-        return;
     }
 
     if (browser && browser.runtime && browser.runtime.sendMessage) {
