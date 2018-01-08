@@ -13,98 +13,11 @@
 
     StackExchangeNotifications.boot();
 
-    /*
-    var restoreMessages = StackExchangeNotifications.restoreState("notificationbackup", true);
-
-    if (restoreMessages) {
-        restoreMessages = restoreMessages.reverse();
-
-        for (var i = restoreMessages.length - 1; i >= 0; i--) {
-            if (restoreMessages[i] !== true) {
-                StackExchangeNotifications.notify(
-                    restoreMessages[i].id,
-                    restoreMessages[i].title,
-                    restoreMessages[i].message
-                );
-            }
-        }
-    }
-    */
-
     window.detectUpdate = function (callback) {
         if (typeof callback === "function" || callback === null) {
             caller = callback;
         }
     };
-
-    /*
-    var idMessages = [];
-
-    function getMessages()
-    {
-        if (!StackExchangeNotifications.switchEnable("desktop_notification")) {
-            return;
-        }
-
-        StackExchangeNotifications.inbox(function (data, code) {
-            if (code == 200 && data.indexOf("<") !== -1) {
-                var tmpParseDom = document.createElement("div");
-
-                tmpParseDom.innerHTML = StackExchangeNotifications.utils.cleanDomString(data);
-
-                var
-                    type,
-                    summary,
-                    location,
-                    currentEl,
-                    relist = [],
-                    els = tmpParseDom.querySelectorAll("li.unread-item a")
-                ;
-
-                for (var i = els.length - 1; i >= 0; i--) {
-                    currentEl = els[i];
-
-                    if (idMessages.indexOf(currentEl.href) === -1) {
-                        idMessages.push(currentEl.href);
-
-                        type     = currentEl.querySelector(".item-type");
-                        summary  = currentEl.querySelector(".item-summary");
-                        location = currentEl.querySelector(".item-location");
-
-                        if (type && summary && location) {
-                            relist.push({
-                                "id":       currentEl.href,
-                                "type":     type.textContent.trim(),
-                                "summary":  summary.textContent.trim(),
-                                "location": location.textContent.trim()
-                            });
-                        }
-                    }
-                }
-
-                relist = relist.reverse();
-
-                for (var i = relist.length - 1; i >= 0; i--) {
-                    var obj = relist[i];
-
-                    StackExchangeNotifications.notify(
-                        obj.id,
-                        obj.type + " in " + obj.location,
-                        obj.summary
-                    );
-                }
-
-                obj =
-                els =
-                type =
-                relist =
-                summary =
-                location =
-                currentEl = null;
-            }
-        });
-    }
-    */
 
     StackExchangeNotifications.pushs(function (response) {
         if (caller) {
@@ -124,12 +37,6 @@
         if (response.score !== 0 && StackExchangeNotifications.switchEnable("score")) {
             ++updates;
         }
-
-        /*if (response.inbox > 0 &&
-              StackExchangeNotifications.switchEnable("desktop_notification")
-        ) {
-            setTimeout(getMessages, 200);
-        }*/
 
         browser.browserAction.setBadgeText({
             "text": StackExchangeNotifications.utils.convertResult(updates)

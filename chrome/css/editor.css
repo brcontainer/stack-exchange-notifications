@@ -189,6 +189,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .sen-editor-ready:not(.sen-editor-full) .wmd-preview {
     display: block !important;
+    min-height: 400px !important;
 }
 
 .sen-editor-full:not(.sen-editor-ready) .wmd-input {

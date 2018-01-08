@@ -53,7 +53,7 @@ hr,
 
 .tab-item .modal-content li:hover,
 .tab-item .modal-content .room:hover {
-    background-color: #333d48 !important;
+    background-color: rgba(51, 61, 72, 0.9) !important;
 }
 
 .tab-item .modal-content .room:hover .close > .icon {

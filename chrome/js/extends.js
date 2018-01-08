@@ -13,6 +13,13 @@
         w.StackExchangeNotifications = { "utils": {} };
     }
 
+    w.StackExchangeNotifications.utils.eventDay = function (date) {
+        var t = date ? new Date(date) : new Date;
+
+        return (t.getDate() == 31 && t.getMonth() == 9) ||
+               (t.getDate() == 13 && t.getDay() == 5)
+    };
+
     w.StackExchangeNotifications.utils.resource = function (url, callback) {
         var
             xhr = new XMLHttpRequest(),

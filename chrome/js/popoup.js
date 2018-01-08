@@ -9,9 +9,7 @@
 (function (w, d, browser) {
     "use strict";
 
-    var
-        debugMode,
-        lastTab,
+    var lastTab,
         navgation           = d.querySelector(".nav"),
 
         inboxButton         = d.getElementById("inbox-button"),
@@ -57,12 +55,12 @@
 
         headDOM             = d.head,
 
-        backgroundEngine    = browser.extension.getBackgroundPage()
-    ;
+        backgroundEngine    = browser.extension.getBackgroundPage();
 
-    if ("update_url" in browser.runtime.getManifest() || browser.runtime.id === "stackexchangenotifications@mozilla.org") {
-        debugMode = false;
-    }
+    var debugMode = !(
+        "update_url" in browser.runtime.getManifest() ||
+        browser.runtime.id === "stackexchangenotifications@mozilla.org"
+    );
 
     function adjustPopup(m)
     {
@@ -75,9 +73,12 @@
         }
     }
 
-    function disableEvent()
+    function disableEvent(e)
     {
-        return debugMode;
+        if (!debugMode) {
+            e.preventDefault();
+            return false;
+        }
     }
 
     function linkPrevent(el)
@@ -103,12 +104,6 @@
                 e.preventDefault();
 
                 setTimeout(function () {
-                    //var id = StackExchangeNotifications.notificationsSession() + el.href;
-
-                    //browser.notifications.clear(id);
-
-                    //StackExchangeNotifications.removeNotificationFromCache(el.href);
-
                     if (!StackExchangeNotifications.switchEnable("prevent_duplicate")) {
                         browser.tabs.create({ "url": cUrl });
                         return;
@@ -136,8 +131,6 @@
         }
 
         linkPrevent(el);
-
-        el.ondragstart = disableEvent;
     }
 
     function setDomEvents(target)
@@ -208,6 +201,8 @@
 
     d.oncontextmenu = disableEvent;
 
+    d.ondragstart = disableEvent;
+
     setDomEvents();
 
     StackExchangeNotifications.boot();
@@ -219,9 +214,8 @@
     function checkEvent()
     {
         var lc = StackExchangeNotifications.restoreState("lastcheck");
-        var t = lc ? new Date(lc) : new Date;
 
-        if ((t.getDate() == 31 && t.getMonth() == 9) || (t.getDate() == 31 && t.getDay() == 5)) {
+        if (StackExchangeNotifications.utils.eventDay(lc)) {
             d.body.className += " horror";
         }
     }
@@ -660,10 +654,10 @@
                         hour = date.getUTCHours();
                         min  = date.getUTCMinutes();
 
-                        hour = hour > 9 ? hour : ("0" + "" + hour);
-                        min  = min  > 9 ? min  : ("0" + "" + min );
+                        hour = hour > 9 ? hour : ("0" + hour);
+                        min  = min > 9 ? min : ("0" + min);
 
-                        dateContent.innerHTML = hour + ":" + min
+                        dateContent.innerHTML = hour + ":" + min;
                     }
                 }
 
@@ -699,11 +693,7 @@
 
     for (var i = btns.length - 1; i >= 0; i--) {
         btns[i].addEventListener("click", function () {
-            var s = this;
-
-            setTimeout(function () {
-                s.blur();
-            }, 300);
+            setTimeout(function (s) { s.blur(); }, 300, this);
         });
     }
 

@@ -32,8 +32,7 @@
         magnificationRegexp = /(^|\s)magnification(\s|$)/,
         showRegExp          = /(^|\s)show(\s|$)/,
         mainSelector        = "a[href]",
-        linkSelector        = "#starred-posts a"
-    ;
+        linkSelector        = "#starred-posts a";
 
     function resizeImage()
     {

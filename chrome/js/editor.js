@@ -37,8 +37,7 @@
         isContainer    = /(^|\s)wmd-container(\s|$)/,
         activeRegExp   = /(^|\s)sen-disabled(\s|$)/,
         isMetaDomain   = /(^|\.)meta\./,
-        isMac          = /(\s|\()Mac\s/.test(navigator.platform)
-    ;
+        isMac          = /(\s|\()Mac\s/.test(navigator.platform);
 
     function getSelection(target)
     {
@@ -294,12 +293,8 @@
             }
         });
 
-        if (lastcheck) {
-            var d = new Date(lastcheck);
-
-            if ((d.getDate() == 31 && d.getMonth() == 9) || (d.getDate() == 31 && d.getDay() == 5)) {
-                realPreview.className += " horror";
-            }
+        if (StackExchangeNotifications.utils.eventDay(lastcheck)) {
+            realPreview.className += " horror";
         }
 
         fullBtn.addEventListener("click", function () {

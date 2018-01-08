@@ -183,15 +183,13 @@
     function headersXhrJson(xhr)
     {
         var headersStr = String(xhr.getAllResponseHeaders()).trim(),
-            headersLines = headersStr.split(/\n/),
-            current,
-            headers = {},
-            re = /^([a-z0-9\-]+[:])[\s\S]+$/gi;
+            headersLines = headersStr.split(/\n+/),
+            re = /^([\w\-]+)[:]\s?([\s\S]+)$/i,
+            headers = {}, current;
 
         for (var i = headersLines.length - 1; i >= 0; i--) {
-            current = headersLines[i];
-            headers[ current.replace(/:[\s\S]+$/, "") ] =
-                                    current.replace(/^[^:]+:/, "").trim();
+            current = re.exec(headersLines[i]);
+            headers[ current[1] ] = current[2];
         }
 
         return headers;
@@ -348,9 +346,8 @@
             } catch (ee) {}
 
             if (typeof data.UnreadRepCount !== "undefined") {
-
-                if (headers && headers.Date) {
-                    StackExchangeNotifications.saveState("lastcheck", headers.Date);
+                if (headers && headers.date) {
+                    StackExchangeNotifications.saveState("lastcheck", headers.date);
                 }
 
                 score = parseInt(data.UnreadRepCount);
@@ -378,7 +375,7 @@
         timer = setTimeout(retrieveData, currentDelay);
     }
 
-    window.StackExchangeNotifications = {
+    w.StackExchangeNotifications = {
         "boot": function () {
             //Improve performance in Opera and older machines
             setTimeout(function () { initiateDelay = 1; }, initiateDelay);
