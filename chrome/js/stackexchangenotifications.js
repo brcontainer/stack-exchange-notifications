@@ -50,7 +50,7 @@
 
                 if (
                     currentAttr === "href" &&
-                    /^(#|javascript[:])/gi.test(target.getAttribute("href"))
+                    /^(#|javascript[:])/i.test(target.getAttribute("href"))
                 ) {
                     target.parentNode.removeChild(currentAttr);
                 }
@@ -378,7 +378,11 @@
     w.StackExchangeNotifications = {
         "boot": function () {
             //Improve performance in Opera and older machines
-            setTimeout(function () { initiateDelay = 1; }, initiateDelay);
+            setTimeout(function () {
+                initiateDelay = 1;
+                StackExchangeNotifications.inbox();
+                StackExchangeNotifications.achievements();
+            }, initiateDelay);
 
             if (SimpleCache.get("firstrun2", true)) {
                 return false;
@@ -420,44 +424,38 @@
             }
         },
         "achievements": function (callback) {
-            if (typeof callback === "function") {
-                var cache = SimpleCache.get("achievements");
+            var hc = typeof callback === "function";
+            var cache = hc && SimpleCache.get("achievements");
 
-                if (cache) {
-                    callback(cache[0], cache[1], cache[2]);
-                    return null;
-                }
-
-                return quickXhr(achievementsURI, function (data, code, headers) {
-                    if (code === 200) {
-                        SimpleCache.set("achievements", [data, code, headers]);
-                    }
-
-                    callback(data, code, headers);
-                });
+            if (cache) {
+                callback(cache[0], cache[1], cache[2]);
+                return null;
             }
 
-            return null;
+            return quickXhr(achievementsURI, function (data, code, headers) {
+                if (code === 200) {
+                    SimpleCache.set("achievements", [data, code, headers]);
+                }
+
+                hc && callback(data, code, headers);
+            });
         },
         "inbox": function (callback) {
-            if (typeof callback === "function") {
-                var cache = SimpleCache.get("inbox");
+            var hc = typeof callback === "function";
+            var cache = hc && SimpleCache.get("inbox");
 
-                if (cache) {
-                    callback(cache[0], cache[1], cache[2]);
-                    return null;
-                }
-
-                return quickXhr(inboxURI, function (data, code, headers) {
-                    if (code === 200) {
-                        SimpleCache.set("inbox", [data, code, headers]);
-                    }
-
-                    callback(data, code, headers);
-                });
+            if (cache) {
+                callback(cache[0], cache[1], cache[2]);
+                return null;
             }
 
-            return null;
+            return quickXhr(inboxURI, function (data, code, headers) {
+                if (code === 200) {
+                    SimpleCache.set("inbox", [data, code, headers]);
+                }
+
+                hc && callback(data, code, headers);
+            });
         },
         "setAchievements": function (sizeScore, sizeAcquired) {
             if (sizeScore % 1 === 0) {
@@ -517,12 +515,7 @@
         },
         "restoreState": function (key, noToken) {
             var data = SimpleCache.get(key, noToken);
-
-            if (data) {
-                return data;
-            }
-
-            return false;
+            return data ? data : false;
         },
         "detectDOM": function (detect) {
             noNeedRequestXhr = detect;

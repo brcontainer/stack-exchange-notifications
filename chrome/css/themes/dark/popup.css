@@ -65,6 +65,10 @@ hr,
     color: #fff !important;
 }
 
+.tab-item .modal-content .more-rooms > a {
+    border-color: #606065 !important;
+}
+
 .btn,
 .field,
 .date-group-toggle-row,
