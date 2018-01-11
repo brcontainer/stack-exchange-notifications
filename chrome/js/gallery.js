@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 1.0.7
+ * StackExchangeNotifications 1.1.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (w, d, browser) {
+(function (w, d) {
     "use strict";
 
     var setupKeyEsc,
@@ -32,7 +32,8 @@
         magnificationRegexp = /(^|\s)magnification(\s|$)/,
         showRegExp          = /(^|\s)show(\s|$)/,
         mainSelector        = "a[href]",
-        linkSelector        = "#starred-posts a";
+        linkSelector        = "#starred-posts a",
+        browser             = w.chrome||w.browser;
 
     function resizeImage()
     {
@@ -565,4 +566,4 @@
         while (--i >= 0 && m[i] !== this);
         return i > -1;
     };
-})(window, document, chrome||browser);
+})(window, document);

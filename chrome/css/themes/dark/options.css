@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.7
+ * StackExchangeNotifications 1.1.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -32,7 +32,10 @@ select.field {
     background-image: url(../../../images/arrow.svg#white);
 }
 
-hr,
+hr {
+    border-color: #4f5154 !important;
+}
+
 .utc-clock,
 .tab-item
 .modal-content li,
@@ -76,11 +79,7 @@ hr,
     background-color: #35404a !important;
 }
 
-.btn,
-.field,
-.btn.first,
-.field.first,
-.tab-item .modal-content li {
+.field, select.field, .btn, .group {
     border-color: #272525 !important;
 }
 
@@ -100,6 +99,21 @@ body.horror > .dialog > .modal > .confirm > button:first-child {
 .bg-sen {
     -webkit-filter: none;
             filter: none;
+}
+
+.setup-header{
+    border-color: #404e5a !important
+}
+
+.setup-header::after {
+    border-bottom-color: #262b30;
+}
+
+.setup-header::before {
+    border-bottom-color: #404e5a;
+}
+.setup-header .ico {
+    background-image: url(../../../images/gears.svg);
 }
 
 ::-webkit-scrollbar {

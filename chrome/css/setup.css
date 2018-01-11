@@ -1,0 +1,17 @@
+/*
+ * StackExchangeNotifications 1.1.0
+ * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Released under the MIT license
+ *
+ * https://github.com/brcontainer/stack-exchange-notification
+ */
+
+.setup {
+    padding: 10px 0 15px 0;
+}
+
+.setup h2 {
+    font-size: 10pt;
+    padding: 1.1em;
+    text-transform: uppercase;
+}

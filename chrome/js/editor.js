@@ -1,13 +1,15 @@
 /*
- * StackExchangeNotifications 1.0.7
+ * StackExchangeNotifications 1.1.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (w, d, browser) {
+(function (w, d) {
     "use strict";
+
+    var browser = w.chrome||w.browser;
 
     //Disable functions in chat
     if (w.location.hostname.indexOf("chat.") === 0) {
@@ -196,8 +198,7 @@
 
     var
         rgbaToRgb = /rgba\((.*)(,|,\s+)[\d.]+\)/i,
-        transparentRe = /rgba\(.*(,|,\s+)[0.]+\)/i
-    ;
+        transparentRe = /rgba\(.*(,|,\s+)[0.]+\)/i;
 
     function getBgColor(el)
     {
@@ -228,7 +229,7 @@
             container = isContainer.test(realEditor.className) ?
                             realEditor : realEditor.querySelector(".wmd-container");
 
-        if (container.senEditorAtived || !realPreview) {
+        if (container.getAttribute("data-sen-editor") || !realPreview) {
             return;
         }
 
@@ -236,15 +237,14 @@
             navbar.className += " sen-is-meta";
         }
 
-        container.senEditorAtived = true;
+        container.setAttribute("data-sen-editor", "true");
 
         var realTextField = realEditor.querySelector(".wmd-input"),
             grippie = realEditor.querySelector(".grippie"),
             fullBtn = navbar.querySelector("a.sen-full-button"),
             previewBtn = navbar.querySelector("a.sen-preview-button"),
             flipBtn = navbar.querySelector("a.sen-flip-button"),
-            syncScrollBtn = navbar.querySelector("a.sen-syncscroll-button")
-        ;
+            syncScrollBtn = navbar.querySelector("a.sen-syncscroll-button");
 
         triggerEvent("click", realTextField);
         triggerEvent("focus", realTextField);
@@ -415,7 +415,7 @@
 
     function createEditor(target)
     {
-        if (!target || target.senEditorAtived) {
+        if (!target || target.getAttribute("data-sen-editor")) {
             return;
         }
 
@@ -529,4 +529,4 @@
             }
         });
     }
-})(window, document, chrome||browser);
+})(window, document);

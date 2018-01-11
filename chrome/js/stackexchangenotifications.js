@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 1.0.7
+ * StackExchangeNotifications 1.1.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (w, d, browser) {
+(function (w, d) {
     "use strict";
 
     var delay = 60, //In seconds
@@ -23,7 +23,8 @@
     var doneCallback = null,
         isRunning = false,
         timer = null,
-        noNeedRequestXhr = false;
+        noNeedRequestXhr = false,
+        browser = w.chrome||w.browser;
 
     var tmpDom     = d.createElement("div"),
         validAttrs = [ "class", "id", "href" ];
@@ -189,7 +190,10 @@
 
         for (var i = headersLines.length - 1; i >= 0; i--) {
             current = re.exec(headersLines[i]);
-            headers[ current[1] ] = current[2];
+
+            if (current) {
+                headers[ current[1] ] = current[2];
+            }
         }
 
         return headers;
@@ -523,4 +527,4 @@
         "meta": metaData,
         "utils": Utils
     };
-})(window, document, chrome||browser);
+})(window, document);

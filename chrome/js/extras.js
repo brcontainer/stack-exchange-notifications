@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 1.0.7
+ * StackExchangeNotifications 1.1.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (w, d, browser) {
+(function (w, d) {
     "use strict";
 
     var hideRegExp = /(^|\s)sen-tools-hide(\s|$)/g,
@@ -14,8 +14,8 @@
         mainBody,
         notification,
         hideTimer,
-        copyCodeEnabled = false
-    ;
+        copyCodeEnabled = false,
+        browser = w.chrome||w.browser;
 
     function copyFromDOM(target)
     {
@@ -165,4 +165,4 @@
             }
         });
     }
-})(window, document, chrome||browser);
+})(window, document);

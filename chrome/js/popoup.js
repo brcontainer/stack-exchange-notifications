@@ -1,12 +1,12 @@
 /*
- * StackExchangeNotifications 1.0.7
+ * StackExchangeNotifications 1.1.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (w, d, browser) {
+(function (w, d) {
     "use strict";
 
     var lastTab,
@@ -34,19 +34,12 @@
         setupButton         = d.getElementById("setup-button"),
         setupContent        = d.getElementById("setup-content"),
 
-        switchs             = d.querySelectorAll("a[data-switch]"),
-
         //notificationSwitch  = d.getElementById("notification-switch"),
 
         editorSwitch        = d.getElementById("editor-switch"),
         editorSwitchTabs    = d.getElementById("editor-switch-tabs"),
         editorSwitchInvert  = d.getElementById("editor-switch-invert"),
         editorSwitchPreview = d.getElementById("editor-switch-preview"),
-
-        btns                = d.querySelectorAll(".btn"),
-
-        clearCache          = d.getElementById("clear-cache"),
-        clearAllData        = d.getElementById("clear-all-data"),
 
         bgLoaderRegExp      = /(^|\s)(hide|sen-bg-loader)(\s|$)/g,
         hideRegExp          = /(^|\s)hide(\s|$)/g,
@@ -55,12 +48,7 @@
 
         headDOM             = d.head,
 
-        backgroundEngine    = browser.extension.getBackgroundPage();
-
-    var debugMode = !(
-        "update_url" in browser.runtime.getManifest() ||
-        browser.runtime.id === "stackexchangenotifications@mozilla.org"
-    );
+        browser             = w.chrome||w.browser;
 
     function adjustPopup(m)
     {
@@ -73,77 +61,9 @@
         }
     }
 
-    function disableEvent(e)
-    {
-        if (!debugMode) {
-            e.preventDefault();
-            return false;
-        }
-    }
-
-    function linkPrevent(el)
-    {
-        el.addEventListener("click", function (e) {
-            (e || w.event).preventDefault();
-        });
-    }
-
     function removeQuerystringAndHash(url)
     {
         return url.replace(/(\?|#)[\s\S]+$/, "");
-    }
-
-    function setActionAnchor(el)
-    {
-        if (el && el.senLink !== true && el.href && /^(http|https)\:\/\//.test(el.href)) {
-            el.senLink = true;
-
-            var cUrl = el.href;
-
-            el.onclick = function (e) {
-                e.preventDefault();
-
-                setTimeout(function () {
-                    if (!StackExchangeNotifications.switchEnable("prevent_duplicate")) {
-                        browser.tabs.create({ "url": cUrl });
-                        return;
-                    }
-
-                    browser.tabs.query({ "url": "https://*/*" }, function (tabs) {
-                        var tabId, checkUrl = removeQuerystringAndHash(cUrl);
-
-                        for (var i = 0, j = tabs.length; i < j; i++) {
-                            if (removeQuerystringAndHash(tabs[i].url) === checkUrl) {
-                                tabId = tabs[i].id;
-                                break;
-                            }
-                        }
-
-                        if (tabId) {
-                            browser.tabs.update(tabId, { "active": true }, function () {});
-                            //browser.tabs.executeScript(tabId, { "code": "foobar" });
-                        } else {
-                            browser.tabs.create({ "url": cUrl });
-                        }
-                    });
-                }, 1);
-            };
-        }
-
-        linkPrevent(el);
-    }
-
-    function setDomEvents(target)
-    {
-        var els, j, i = 0;
-
-        target = target || d;
-
-        els = target.getElementsByTagName("a");
-
-        for (j = els.length; i < j; i++) {
-            setActionAnchor(els[i]);
-        }
     }
 
     function createRoom(url, data)
@@ -162,8 +82,6 @@
             '</div></a>' +
             '<div class="close"><a class="icon" href="#"></a></div>' +
             '</div>';
-
-        setActionAnchor(el.querySelector(".lnk"));
 
         el.querySelector(".close > a").onclick = function () {
             StackExchangeNotifications.utils.dialog.confirm("Do you really want to remove?", function (ok) {
@@ -197,51 +115,11 @@
         }
     }
 
-    w.StackExchangeNotifications = backgroundEngine.StackExchangeNotifications;
-
-    d.oncontextmenu = disableEvent;
-
-    d.ondragstart = disableEvent;
-
-    setDomEvents();
-
     StackExchangeNotifications.boot();
 
     var manifestData = StackExchangeNotifications.meta();
 
     d.getElementById("about-title").innerHTML = manifestData.appname + " " + manifestData.version;
-
-    function checkEvent()
-    {
-        var lc = StackExchangeNotifications.restoreState("lastcheck");
-
-        if (StackExchangeNotifications.utils.eventDay(lc)) {
-            d.body.className += " horror";
-        }
-    }
-
-    var theme;
-
-    function changeTheme()
-    {
-        if (StackExchangeNotifications.switchEnable("dark_theme")) {
-            if (!theme) {
-                theme = d.createElement("link");
-
-                theme.href = "/css/themes/dark/popup.css";
-                theme.type = "text/css";
-                theme.rel  = "stylesheet";
-
-                d.body.appendChild(theme);
-            } else {
-                theme.disabled = false;
-            }
-
-            checkEvent();
-        } else if (theme) {
-            theme.disabled = true;
-        }
-    }
 
     function showInButtons()
     {
@@ -273,8 +151,7 @@
     }
 
     showInButtons();
-
-    backgroundEngine.detectUpdate(showInButtons);
+    browser.extension.getBackgroundPage().detectUpdate(showInButtons);
 
     function actionCheckRead(current, box)
     {
@@ -345,10 +222,6 @@
         return false;
     }
 
-    for (var i = 0, j = switchs.length; i < j; i++) {
-        switchEngine(switchs[i]);
-    }
-
     function setStyle(cssText)
     {
         if (cssLoaded) {
@@ -374,7 +247,7 @@
         }
 
         var i, j, rules, image, imgUrl, allRulesBg = [],
-            isHttp = /^(http|https)\:\/\/[^/]/i,
+            isHttp = /^https?\:\/\/[^/]/i,
             reImg  = /url\(("|'|)([\s\S]+?\.(png|jpg|jpeg|gif)(\?|\?[\s\S]+?|))("|'|)\)/i,
             styles = d.styleSheets;
 
@@ -570,8 +443,6 @@
                     '<a href="https://stackexchange.com/">https://stackexchange.com</a>',
                     '</div>'
                 ].join("");
-
-                setDomEvents(inboxContent);
             } else if (data.indexOf("<") !== -1) {
                 StackExchangeNotifications.setInbox(0);
 
@@ -581,7 +452,6 @@
 
                 inboxContent.innerHTML = StackExchangeNotifications.utils.clearDomString(data);
 
-                setDomEvents(inboxContent);
                 saveStateDetect("inbox");
             }
 
@@ -635,8 +505,6 @@
                     '<a href="https://stackexchange.com/">https://stackexchange.com</a>',
                     '</div>'
                 ].join("");
-
-                setDomEvents(achievementsContent);
             } else if (data.indexOf("<") !== -1) {
                 setTimeout(function () {
                     StackExchangeNotifications.setAchievements(0, 0);
@@ -661,7 +529,6 @@
                     }
                 }
 
-                setDomEvents(achievementsContent);
                 saveStateDetect("achievements");
             }
 
@@ -671,31 +538,6 @@
                 achievementsContent.className.replace(bgLoaderRegExp, "").trim();
         });
     };
-
-    clearCache.onclick = function ()
-    {
-        StackExchangeNotifications.clearCache();
-    };
-
-    clearAllData.onclick = function ()
-    {
-        StackExchangeNotifications.utils.dialog.confirm("Do you really want to remove?", function (ok) {
-            if (ok) {
-                localStorage.clear();
-                w.location.reload();
-            }
-        });
-    };
-
-    d.querySelector("a[data-switch='dark_theme']").addEventListener("click", changeTheme);
-
-    changeTheme();
-
-    for (var i = btns.length - 1; i >= 0; i--) {
-        btns[i].addEventListener("click", function () {
-            setTimeout(function (s) { s.blur(); }, 300, this);
-        });
-    }
 
     switch (StackExchangeNotifications.restoreState("lastTab")) {
         case "setup":
@@ -714,4 +556,4 @@
             achievementsButton.onclick();
         break;
     }
-})(window, document, chrome||browser);
+})(window, document);

@@ -1,13 +1,15 @@
 /*
- * StackExchangeNotifications 1.0.7
+ * StackExchangeNotifications 1.1.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (w, d, browser) {
+(function (w, d) {
     "use strict";
+
+    var browser = w.chrome||w.browser;
 
     if (!w.StackExchangeNotifications) {
         w.StackExchangeNotifications = { "utils": {} };
@@ -92,4 +94,4 @@
 
         w.StackExchangeNotifications.utils.dialog = dialog;
     });
-})(window, document, chrome||browser);
+})(window, document);

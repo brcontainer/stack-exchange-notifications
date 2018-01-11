@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.0.7
+ * StackExchangeNotifications 1.1.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -48,6 +48,7 @@ body > .dialog > .modal > .act > button {
 }
 
 body > .dialog > .modal > .confirm > button {
+    text-align: center;
     width: 50%;
     float: right;
 }

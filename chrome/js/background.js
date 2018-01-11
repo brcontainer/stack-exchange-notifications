@@ -1,19 +1,19 @@
 /*
- * StackExchangeNotifications 1.0.7
+ * StackExchangeNotifications 1.1.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (browser) {
+(function (w) {
     "use strict";
 
-    var caller = null;
+    var browser = w.chrome||w.browser, caller = null, callerTheme = [];
 
     StackExchangeNotifications.boot();
 
-    window.detectUpdate = function (callback) {
+    w.detectUpdate = function (callback) {
         if (typeof callback === "function" || callback === null) {
             caller = callback;
         }
@@ -130,4 +130,4 @@
             }
         }
     });
-})(chrome||browser);
+})(window);

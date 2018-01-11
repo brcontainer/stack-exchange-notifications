@@ -1,18 +1,18 @@
 /*
- * StackExchangeNotifications 1.0.7
+ * StackExchangeNotifications 1.1.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (w, d, browser) {
+(function (w, d) {
     "use strict";
 
     var unreadRegExp       = /(^|\s)(js-unread-count|unread-count)(\s|$)/,
         inboxRegExp        = /(^|\s)(js-inbox-button|icon-inbox)(\s|$)/,
-        achievementsRegExp = /(^|\s)(js-achievements-button|icon-achievements)(\s|$)/
-    ;
+        achievementsRegExp = /(^|\s)(js-achievements-button|icon-achievements)(\s|$)/,
+        browser            = w.chrome||w.browser;
 
     function isHide(elem)
     {
@@ -89,4 +89,4 @@
     }
 
     StackExchangeNotifications.utils.ready(applyEvents);
-})(window, document, chrome||browser);
+})(window, document);

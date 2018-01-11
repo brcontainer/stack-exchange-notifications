@@ -1,6 +1,6 @@
 {
     "name": "StackExchangeNotifications",
-    "version": "1.0.7",
+    "version": "1.1.0",
     "manifest_version": 2,
     "description": "Show recent achievements and inbox messages from Stack Exchange",
     "icons": {
@@ -12,6 +12,9 @@
     "browser_action": {
         "default_icon":  "images/icon.png",
         "default_popup": "view/popup.html"
+    },
+    "options_ui": {
+        "page": "view/options.html"
     },
     "background": {
         "scripts": [

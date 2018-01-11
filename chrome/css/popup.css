@@ -1,20 +1,10 @@
 /*
- * StackExchangeNotifications 1.0.7
+ * StackExchangeNotifications 1.1.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
-
-html, body, h1, h2, h3, h4, h5, p, a {
-    font-family: "Helvetica Neue", Helvetica, "lucida grande", tahoma, Arial, sans-serif;
-    padding: 0;
-    margin: 0;
-}
-
-p {
-    line-height: 18px;
-}
 
 html, body {
     width: 400px;
@@ -27,45 +17,6 @@ body.fix-popup {
 body {
     background-color: #f6f6f6;
     min-height: 460px;
-    font-size: 10pt;
-    font-size: 13px;
-    -webkit-touch-callout: none;
-      -webkit-user-select: none;
-       -khtml-user-select: none;
-         -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;
-}
-
-body, a {
-    color: #4F4949;
-}
-
-h1, h2, h3 {
-    letter-spacing: 1px;
-    font-size: 10pt;
-}
-
-hr {
-    border: none;
-    border-top: 1px #efefef solid;
-    text-shadow: none;
-    margin: 0.5em;
-}
-
-::-webkit-scrollbar {
-    background: #dfdfdf;
-    border-radius: 4px;
-    width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .header {
@@ -82,6 +33,7 @@ hr {
 }
 
 .nav {
+    background-color: rgba(255,255,255,0.02); /*fix driver video render bug firefox*/
     position: fixed;
     z-index: 99;
     width: 100%;
@@ -142,34 +94,6 @@ hr {
     box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
 }
 
-.sen-bg-loader {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 98;
-}
-
-.hide {
-    display: none !important;
-}
-
-.notice {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 98;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    color: #bdb9b9;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-shadow: 0 1px rgba(255, 255, 255, 1);
-}
-
 .bg-sen {
     width: 64px;
     height: 64px;
@@ -185,75 +109,6 @@ hr {
     display: block;
     margin: -25% auto 0 auto;
     width: 70%;
-}
-
-select.field {
-    background: url(../images/arrow.svg) 370px center no-repeat;
-    background-size: 16px 16px;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    width: 100%;
-    border: none;
-    outline: none;
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-}
-
-.field, select.field, .btn {
-    margin: 0;
-    border-bottom: 1px #e4e4e4 solid;
-    background-color: #fff;
-    display: block;
-}
-
-.field {
-    padding: 1px .7em 0 1.3em;
-}
-
-.btn {
-    padding: 13px 10px;
-    text-align: center;
-    text-decoration: none;
-    transition: background-color .4s, color .4s;
-}
-
-.btn:focus {
-    background-color: #fcfcfc;
-    color: #e4e4e4;
-}
-
-.field::after {
-    content: " ";
-    display: block;
-    clear: both;
-}
-
-.field.first, .btn.first {
-    border-top: 1px #e4e4e4 solid;
-}
-
-.field .label {
-    margin: 12px 0;
-    vertical-align: middle;
-    float: left;
-}
-
-.field a[data-switch] {
-    margin: 7px 0;
-    float: right;
-}
-
-.field .input {
-    font-size: 11pt;
-}
-.field input.input,
-.field select.input,
-.field textarea.input {
-    padding: 2px;
-}
-.field input[type=number] {
-    width: 35px;
 }
 
 #inbox-button {
@@ -549,6 +404,13 @@ select.field {
     padding: 60px 0.25em 0.55em 0.55em;
 }
 
+.about p {
+    padding: 2px 0;
+}
+.about p:last-child {
+    padding: 15px 0;
+}
+
 .about-icon {
     width: 88px;
     height: 88px;
@@ -568,13 +430,9 @@ select.field {
 .tab-item .modal-content .room {
     min-height: 42px;
 }
-.tab-item .modal-content .room-fav-icon {
+.tab-item .modal-content .room-fav {
     display: block;
     padding: 15px 0;
-}
-.tab-item .modal-content .room-fav-icon > img {
-    width: 48px;
-    height: 48px;
 }
 .tab-item .modal-content .room::after {
     clear: both;
@@ -630,6 +488,18 @@ select.field {
     text-indent: -1000px;
 }
 
+.fav-icon {
+    background: url(../images/heart.svg#gray) center center no-repeat;
+    vertical-align: text-bottom;
+    display: inline-block;
+    height: 48px;
+    width: 48px;
+}
+
+.about .bug-icon {
+    margin-right: 5px;
+}
+
 @-moz-document url-prefix() {
     html, body {
         height: 600px;
@@ -652,5 +522,14 @@ select.field {
         html, body {
             height: 480px;
         }
+    }
+}
+
+@media (min-width: 600px)
+{
+    html, body {
+        max-height: initial;
+        height: auto;
+        width: auto;
     }
 }
