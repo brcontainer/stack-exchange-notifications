@@ -26,19 +26,20 @@
         inverted = false,
         tabsBySpaces = false,
         preferPreviewInFull = false,
-        focusRegExp    = /(^|\s)sen-editor-focus(\s|$)/,
-        visibleRegExp  = /(^|\s)sen-editor-visible(\s|$)/,
-        fullRegExp     = /(^sen|\ssen)-editor-(full$|full\s)/,
-        readyRegExp    = /(^|\s)sen-editor-ready(\s|$)/,
-        invertedRegExp = /(^|\s)sen-editor-inverted(\s|$)/,
-        noscrollRegExp = /(^|\s)sen-editor-noscroll(\s|$)/,
+        focusRegExp    = /\bsen-editor-focus\b/,
+        visibleRegExp  = /\bsen-editor-visible\b/,
+        fullRegExp     = /\bsen-editor-full\b/,
+        readyRegExp    = /\bsen-editor-ready\b/,
+        invertedRegExp = /\bsen-editor-inverted\b/,
+        noscrollRegExp = /\bsen-editor-noscroll\b/,
         getClassRegExp = /^([\s\S]+?\s|)(wmd-[\S]+?-button)([\s\S]+|)$/,
         skipBtnRegExp  = /sen-(preview|full|flip|italic|strikethrough|syncscroll)-button/,
-        isPostRegExp   = /(^|\s)(inline-(editor|answer|post))(\s|$)/,
-        isInput        = /(^|\s)wmd-input(\s|$)/,
-        isContainer    = /(^|\s)wmd-container(\s|$)/,
-        activeRegExp   = /(^|\s)sen-disabled(\s|$)/,
+        isPostRegExp   = /\b(inline-(editor|answer|post))\b/,
+        isInput        = /\bwmd-input\b/,
+        isContainer    = /\bwmd-container\b/,
+        activeRegExp   = /\bsen-disabled\b/,
         isMetaDomain   = /(^|\.)meta\./,
+        isMsgRE        = /\bmessage\b/,
         isMac          = /(\s|\()Mac\s/.test(navigator.platform);
 
     function getSelection(target)
@@ -196,8 +197,7 @@
         });
     }
 
-    var
-        rgbaToRgb = /rgba\((.*)(,|,\s+)[\d.]+\)/i,
+    var rgbaToRgb = /rgba\((.*)(,|,\s+)[\d.]+\)/i,
         transparentRe = /rgba\(.*(,|,\s+)[0.]+\)/i;
 
     function getBgColor(el)
@@ -242,6 +242,7 @@
         var realTextField = realEditor.querySelector(".wmd-input"),
             grippie = realEditor.querySelector(".grippie"),
             fullBtn = navbar.querySelector("a.sen-full-button"),
+            saveBtn = navbar.querySelector("a.sen-save-button"),
             previewBtn = navbar.querySelector("a.sen-preview-button"),
             flipBtn = navbar.querySelector("a.sen-flip-button"),
             syncScrollBtn = navbar.querySelector("a.sen-syncscroll-button");
@@ -294,7 +295,7 @@
         });
 
         if (StackExchangeNotifications.utils.eventDay(lastcheck)) {
-            realPreview.className += " horror";
+            realPreview.className += " sen-horror";
         }
 
         fullBtn.addEventListener("click", function () {
@@ -332,8 +333,7 @@
             }
         });
 
-        previewBtn.addEventListener("click", function ()
-        {
+        previewBtn.addEventListener("click", function () {
             var ca = "" + realEditor.className;
             var inFull = fullRegExp.test(ca);
 
@@ -395,6 +395,14 @@
                 syncScroll = false;
             }
         });
+
+        saveBtn.addEventListener("click", function () {
+            var btn = realEditor.querySelector("input[type=submit],button[type=submit]");
+
+            if (btn) {
+                btn.click();
+            }
+        });
     }
 
     function loadView(realEditor)
@@ -404,7 +412,7 @@
             return;
         }
 
-        StackExchangeNotifications.utils.resource("/view/editor.html", function (response) {
+        StackExchangeNotifications.utils.resource("/views/editor.html", function (response) {
             viewHTML = d.createElement("div");
             viewHTML.innerHTML = response;
             viewHTML = viewHTML.firstElementChild;
@@ -436,12 +444,69 @@
         }
     }
 
+    var lastAnswers = "";
+
+    function checkNewAnswers()
+    {
+        // #new-answer-activity
+        var news = "", total = 0, naa = d.getElementById("new-answer-activity");
+
+        if (naa && !StackExchangeNotifications.utils.isHide(naa)) {
+            total = parseInt(naa.textContent);
+
+            if (isNaN(total)) {
+                total = 0;
+            }
+        }
+
+        if (total === lastAnswers) {
+            return;
+        }
+
+        total = StackExchangeNotifications.utils.convertResult(total);
+
+        lastAnswers = total;
+
+        if (total) {
+            news = total + " new answers";
+        }
+
+        var saf = d.querySelectorAll(".sen-answers-flag");
+
+        for (var i = saf.length - 1; i >= 0; i--) {
+            saf[i].textContent = news;
+        }
+    }
+
+    var lastMessage = "";
+
+    function checkMessage(msg)
+    {
+        if (!msg) {
+            return;
+        }
+
+        var txt = String(msg.querySelector(".message-text").textContent).trim();
+
+        if (lastMessage === txt || StackExchangeNotifications.utils.isHide(msg)) {
+            return;
+        }
+
+        lastMessage = txt;
+
+        if (txt && d.getElementsByClassName("sen-editor-full").length) {
+            StackExchangeNotifications.utils.showLabelNotification(txt, 3000, function () {
+                lastMessage = "";
+            });
+        }
+    }
+
     var timerObserver;
 
     function triggerObserver()
     {
         var observer = new MutationObserver(function (mutations) {
-            var all = d.querySelectorAll(".post-editor, .wmd-container");
+            var mutation, all = d.querySelectorAll(".post-editor, .wmd-container");
 
             for (var i = all.length - 1; i >= 0; i--) {
                 setTimeout(createEditor, 1, all[i]);
@@ -452,6 +517,17 @@
             }
 
             timerObserver = setTimeout(checkRemoveFullEditorOpts, 100);
+
+            checkNewAnswers();
+
+            for (var i = mutations.length - 1; i >= 0; i--) {
+                mutation = mutations[i];
+
+                if (mutation.attributeName === "style" && mutation.target && isMsgRE.test(mutation.target.className)) {
+                    setTimeout(checkMessage, 100, mutation.target);
+                    break;
+                }
+            }
         });
 
         observer.observe(d.body, {

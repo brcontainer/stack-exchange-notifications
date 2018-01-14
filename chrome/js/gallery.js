@@ -23,14 +23,14 @@
         currentPhotoToken,
         currentUrl,
         isOpen = false,
-        ignorePreviewRegExp = /(^|\s)wmd-preview(\s|$)/,
+        ignorePreviewRegExp = /\bwmd-preview\b/,
         validImages         = /\.(png|jpeg|jpe|jpg|svg|gif)(|\?[\s\S]+)$/i,
-        errorRegExp         = /(^|\s)sen-error(\s|$)/,
-        loaderRegExp        = /(^|\s)sen-bg-loader(\s|$)/,
-        inLoadRegxp         = /(^|\s)in-load(\s|$)/,
-        magnifiedRegExp     = /(^|\s)magnified(\s|$)/,
-        magnificationRegexp = /(^|\s)magnification(\s|$)/,
-        showRegExp          = /(^|\s)show(\s|$)/,
+        errorRegExp         = /\bsen-error\b/,
+        loaderRegExp        = /\bsen-bg-loader\b/,
+        inLoadRegxp         = /\bsen-in-load\b/,
+        magnifiedRegExp     = /\bsen-magnified\b/,
+        magnificationRegexp = /\bsen-magnification\b/,
+        showRegExp          = /\bsen-show\b/,
         mainSelector        = "a[href]",
         linkSelector        = "#starred-posts a",
         browser             = w.chrome||w.browser;
@@ -58,10 +58,10 @@
         magnifyPhoto = iw > vw || ih > vh;
 
         if (magnifyPhoto) {
-            currentPhoto.className += " magnification";
+            currentPhoto.className += " sen-magnification";
             magnified = false;
         } else {
-            currentPhoto.className += " magnified";
+            currentPhoto.className += " sen-magnified";
             magnified = true;
         }
 
@@ -144,13 +144,13 @@
         for (var i = 0, j = lnks.length; i < j; i++) {
             var imgs = lnks[i].getElementsByTagName("img");
 
-            if (imgs.length === 1) {
-                if (findNext && imgs[0].src === lnks[i].href) {
-                    el = lnks[i];
-                    break;
-                } else if (lnks[i].getAttribute("data-sen-gallery") === currentPhotoToken) {
-                    findNext = true;
-                }
+            if (imgs.length !== 1) continue;
+
+            if (findNext && imgs[0].src === lnks[i].href) {
+                el = lnks[i];
+                break;
+            } else if (lnks[i].getAttribute("data-sen-gallery") === currentPhotoToken) {
+                findNext = true;
             }
         }
 
@@ -259,7 +259,7 @@
 
             magnified = true;
 
-            currentPhoto.className += " magnified";
+            currentPhoto.className += " sen-magnified";
 
             lastSize.height = String(targetImg.style.height).replace(/\!important$/i, "").trim();
             lastSize.width  = String(targetImg.style.width).replace(/\!important$/i, "").trim();
@@ -305,7 +305,7 @@
 
         viewHTML.addEventListener("mouseover", function (e) {
             if (!showRegExp.test(closeBtn.className)) {
-                closeBtn.className += " show";
+                closeBtn.className += " sen-show";
             }
         });
 
@@ -367,11 +367,11 @@
                                         .replace(inLoadRegxp, " ").trim();
 
         if (!inLoadRegxp.test(currentPhoto.className)) {
-            currentPhoto.className += " in-load";
+            currentPhoto.className += " sen-in-load";
         }
 
         if (!showRegExp.test(viewHTML.className)) {
-            viewHTML.className += " show";
+            viewHTML.className += " sen-show";
         }
 
         targetImg = new Image;
@@ -538,7 +538,7 @@
         StackExchangeNotifications.utils.resourceStyle("gallery");
         StackExchangeNotifications.utils.resourceStyle("animate");
 
-        StackExchangeNotifications.utils.resource("/view/gallery.html", function (response) {
+        StackExchangeNotifications.utils.resource("/views/gallery.html", function (response) {
             if (!mainBody) {
                 return;
             }
@@ -557,7 +557,9 @@
 
     var m = w.Element && w.Element.prototype;
 
-    if (!m || m.matches) return;
+    if (!m || m.matches) {
+        return;
+    }
 
     m.matches = m.matchesSelector || m.mozMatchesSelector || m.msMatchesSelector ||
     m.oMatchesSelector || m.webkitMatchesSelector || function (s) {

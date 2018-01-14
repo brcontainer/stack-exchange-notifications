@@ -9,11 +9,7 @@
 (function (w, d) {
     "use strict";
 
-    var hideRegExp = /(^|\s)sen-tools-hide(\s|$)/g,
-        previewRegExp = /(^|\s)wmd-preview(\s|$)/g,
-        mainBody,
-        notification,
-        hideTimer,
+    var previewRegExp = /\bwmd-preview\b/g,
         copyCodeEnabled = false,
         browser = w.chrome||w.browser;
 
@@ -35,27 +31,6 @@
         w.getSelection().removeAllRanges();
 
         range = null;
-    }
-
-    function hideNotification()
-    {
-        notification.className += " sen-tools-hide";
-    }
-
-    function showNotification(label)
-    {
-        if (hideTimer) {
-            clearTimeout(hideTimer);
-        }
-
-        notification.textContent = label;
-        notification.className =
-            notification.className
-                .replace(hideRegExp, " ")
-                    .replace(/\s\s/g, " ")
-                        .trim();
-
-        hideTimer = setTimeout(hideNotification, 2000);
     }
 
     function bootCopyCode()
@@ -86,7 +61,8 @@
                 button.onclick = function (e) {
                     e.preventDefault();
                     copyFromDOM(code);
-                    showNotification("Copied to clipboard!");
+
+                    StackExchangeNotifications.utils.showLabelNotification("Copied to clipboard!");
                 };
                 button.href = "javascript:void(0);";
 
@@ -119,11 +95,6 @@
 
         findPreCodes(d.body);
 
-        notification = d.createElement("div");
-        notification.className = "sen-tools-popup sen-tools-hide";
-
-        mainBody.appendChild(notification);
-
         var inprogress = false;
 
         var observer = new MutationObserver(function (mutations) {
@@ -149,19 +120,12 @@
         });
     }
 
-    function init()
-    {
-        mainBody = d.body;
-
-        bootCopyCode();
-    }
-
     if (browser && browser.runtime && browser.runtime.sendMessage) {
         browser.runtime.sendMessage("extras", function (response) {
             if (response) {
                 copyCodeEnabled = !!response.copycode;
 
-                StackExchangeNotifications.utils.ready(init);
+                StackExchangeNotifications.utils.ready(bootCopyCode);
             }
         });
     }

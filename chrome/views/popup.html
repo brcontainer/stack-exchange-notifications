@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
+    <title>StackExchange Notifications</title>
+    <link rel="icon" type="image/png" href="../images/icon.png">
+    <link rel="stylesheet" type="text/css" href="../css/global.css">
+    <link rel="stylesheet" type="text/css" href="../css/popup.css">
+    <link rel="stylesheet" type="text/css" href="../css/setup.css">
+    <link rel="stylesheet" type="text/css" href="../css/switch.css">
+    <link rel="stylesheet" type="text/css" href="../css/animate.css">
+    <link rel="stylesheet" type="text/css" href="../css/dialog.css">
+</head>
+<body class="topbar top-bar">
+    <div class="nav">
+        <a title="Show About" id="about-button" href="#about-button">
+            <i class="icon">&nbsp;</i>
+        </a>
+        <a title="Setup" id="setup-button" href="#setup-button">
+            <i class="icon">&nbsp;</i>
+        </a>
+        <a title="Linked chat" id="chat-button" href="#chat-button">
+            <i class="icon">&nbsp;</i>
+        </a>
+        <a title="Show Achievements" id="achievements-button" href="#achievements-button">
+            <span class="push hide">0</span>
+            <i class="icon">&nbsp;</i>
+        </a>
+        <a title="Show Inbox" id="inbox-button" href="#inbox-button">
+            <span class="push hide">0</span>
+            <i class="icon">&nbsp;</i>
+        </a>
+    </div>
+
+    <div id="setup-content" class="tab-item hide">
+        <div id="setup-inner"></div>
+    </div>
+
+    <div class="tab-item hide" id="chat-content">
+        <div class="header">
+            <h3>Chat rooms</h3>
+        </div>
+        <div class="modal-content rooms">
+            <div class="notice hide">
+                You have no rooms added<br>
+                <div class="room-fav">
+                    <i class="fav-icon"></i>
+                </div>
+                see more rooms from:
+                <div class="more-rooms">
+                    <a href="https://chat.stackoverflow.com/?tab=all&amp;sort=people">
+                        stack overflow
+                    </a>
+                    <a href="https://chat.stackexchange.com/?tab=all&amp;sort=people">
+                        Others
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-item hide" id="inbox-content"></div>
+
+    <div class="tab-item hide" id="achievements-content"></div>
+
+    <div class="tab-item" id="about-content">
+        <div class="about">
+            <div class="about-icon bg-sen">
+                <img src="../images/sen.svg#gray">
+            </div>
+
+            <h1 id="about-title">&nbsp;</h1>
+            <p>
+                Created by
+                <a href="http://stackexchange.com/users/1647724/guilherme-nascimento?tab=accounts">
+                    Guilherme Nascimento
+                </a>
+            </p>
+            <p>
+                Hosted in
+                <a href="http://stackapps.com/q/6455/33963">StackApps</a>
+                and
+                <a href="https://github.com/brcontainer/stack-exchange-notifications">Github</a>
+            </p>
+
+            <hr>
+
+            <h2>Thanks to</h2>
+            <p>
+                <a href="http://stackexchange.com/users/5960/gabe?tab=accounts">@gabe</a>,
+                <a href="http://stackexchange.com/users/3548243/nicael?tab=accounts">@nicael</a>,
+                <a href="http://stackexchange.com/users/1211516/brasofilo?tab=accounts">@brasofilo</a>
+                and<br>
+                <a href="http://pt.stackoverflow.com/users">
+                    Stack Overflow em Português Community
+                </a>
+            </p>
+
+            <hr>
+
+            <h2>Credits</h2>
+            <p>Icons designed by Freepik and distributed by Flaticon</p>
+
+            <hr>
+
+            <p>
+                <a href="https://github.com/brcontainer/stack-exchange-notifications/issues/new">
+                    <i class="bug-icon"></i> Report a issue
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <div class="dialog hide">
+        <div class="modal">
+            <div class="content"></div>
+            <div class="act alert hide">
+                <button>Ok</button>
+            </div>
+            <div class="act confirm hide">
+                <button>Confirm</button>
+                <button>Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../js/stackexchangenotifications.js"></script>
+    <script type="text/javascript" src="../js/extends.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
+    <script type="text/javascript" src="../js/popoup.js"></script>
+    <script type="text/javascript" src="../js/dialog.js"></script>
+</body>
+</html>

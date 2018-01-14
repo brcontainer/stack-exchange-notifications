@@ -47,6 +47,7 @@ pre + :not(.sen-tools-clipboard) {
     text-align: center !important;
     line-height: 62px !important;
     font-size: 18pt !important;
+    z-index: 1052 !important;
 }
 
 .sen-tools-hide {

@@ -11,10 +11,10 @@
     },
     "browser_action": {
         "default_icon":  "images/icon.png",
-        "default_popup": "view/popup.html"
+        "default_popup": "views/popup.html"
     },
     "options_ui": {
-        "page": "view/options.html"
+        "page": "views/options.html"
     },
     "background": {
         "scripts": [
@@ -63,7 +63,7 @@
         ]
     }],
     "web_accessible_resources": [
-        "view/*",
+        "views/*",
         "css/*",
         "images/*"
     ],

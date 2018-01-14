@@ -11,7 +11,7 @@
 
     var link,
         added = true,
-        addedRegExp = /(^|\s)added($|\s)/g,
+        addedRegExp = /\bsen-added\b/g,
         removeMsg = "Do you really want to remove this room?",
         browser = w.chrome||w.browser;
 
@@ -24,7 +24,7 @@
         link.className = link.className.replace(addedRegExp, "").trim();
 
         if (add) {
-            link.className += " added";
+            link.className += " sen-added";
         }
     }
 
@@ -73,10 +73,10 @@
             space = d.createTextNode(" ");
 
         link.href = "javascript:void(0);";
-        link.className = "btn-pin";
+        link.className = "sen-btn-pin";
 
         if (added) {
-            link.className += " added";
+            link.className += " sen-added";
         }
 
         link.onclick = function (e) {
@@ -84,7 +84,7 @@
             pinchat(!addedRegExp.test(link.className));
         };
 
-        icon.className = "inroom-heart-icon";
+        icon.className = "sen-inroom-heart-icon";
 
         link.appendChild(icon);
 

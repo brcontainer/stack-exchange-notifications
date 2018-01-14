@@ -9,23 +9,15 @@
 (function (w, d) {
     "use strict";
 
-    var unreadRegExp       = /(^|\s)(js-unread-count|unread-count)(\s|$)/,
-        inboxRegExp        = /(^|\s)(js-inbox-button|icon-inbox)(\s|$)/,
-        achievementsRegExp = /(^|\s)(js-achievements-button|icon-achievements)(\s|$)/,
+    var unreadRegExp       = /\b(js-unread-count|unread-count)\b/,
+        inboxRegExp        = /\b(js-inbox-button|icon-inbox)\b/,
+        achievementsRegExp = /\b(js-achievements-button|icon-achievements)\b/,
         browser            = w.chrome||w.browser;
-
-    function isHide(elem)
-    {
-        var prop = w.getComputedStyle(elem, null);
-
-        return prop.getPropertyValue("display") === "none" ||
-                prop.getPropertyValue("visibility") === "hidden";
-    }
 
     function sendNotification(type, el, fromload)
     {
         if (type && el && browser && browser.runtime && browser.runtime.sendMessage) {
-            var data = isHide(el) ? 0 : (el.textContent ? parseInt(el.textContent) : 0);
+            var data = StackExchangeNotifications.utils.isHide(el) ? 0 : (el.textContent ? parseInt(el.textContent) : 0);
 
             if (fromload && data < 1) {
                 return;

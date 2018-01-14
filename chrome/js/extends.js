@@ -10,24 +10,75 @@
     "use strict";
 
     var browser = w.chrome||w.browser,
-        readyRegExp = /^(interactive|complete)$/;
+        hideRegExp = /\bsen-tools-hide\b/g,
+        readyRegExp = /^(interactive|complete)$/,
+        notification,
+        hideTimer;
 
     if (!w.StackExchangeNotifications) {
-        w.StackExchangeNotifications = { "utils": {} };
+        w.StackExchangeNotifications = {};
     }
 
-    w.StackExchangeNotifications.utils.eventDay = function (date) {
+    if (!w.StackExchangeNotifications.utils) {
+        w.StackExchangeNotifications.utils = {};
+    }
+
+    var Utils = w.StackExchangeNotifications.utils;
+
+    Utils.showLabelNotification = function (label, timeout, callback) {
+        if (!notification) {
+            notification = d.createElement("div");
+            notification.className = "sen-tools-popup sen-tools-hide";
+
+            d.body.appendChild(notification);
+        }
+
+        if (hideTimer) {
+            clearTimeout(hideTimer);
+        }
+
+        notification.textContent = label;
+        notification.className =
+            notification.className
+                .replace(hideRegExp, " ")
+                    .replace(/\s\s/g, " ")
+                        .trim();
+
+        hideTimer = setTimeout(function () {
+            notification.className += " sen-tools-hide";
+            callback && callback();
+        }, timeout ? timeout : 2000);
+    };
+
+    Utils.convertResult = function (size) {
+        if (size === 0) {
+            return "";
+        } else if (size < 1000) {
+            return String(size);
+        }
+
+        return "+1k";
+    };
+
+    Utils.isHide = function (elem) {
+        if (elem.offsetParent) {
+            return false;
+        }
+
+        var prop = w.getComputedStyle(elem, null);
+        return prop.display === "none" || prop.visibility === "hidden";
+    };
+
+    Utils.eventDay = function (date) {
         var t = date ? new Date(date) : new Date;
 
         return (t.getDate() == 31 && t.getMonth() == 9) ||
                (t.getDate() == 13 && t.getDay() == 5)
     };
 
-    w.StackExchangeNotifications.utils.resource = function (url, callback) {
-        var
-            xhr = new XMLHttpRequest(),
-            url = browser.extension.getURL(url)
-        ;
+    Utils.resource = function (url, callback) {
+        var xhr = new XMLHttpRequest,
+            url = browser.extension.getURL(url);
 
         xhr.open("GET", url, true);
         xhr.onreadystatechange = function () {
@@ -40,7 +91,7 @@
         xhr.send(null);
     };
 
-    w.StackExchangeNotifications.utils.resourceStyle = function (url) {
+    Utils.resourceStyle = function (url) {
         var style = d.createElement("link");
 
         style.rel  = "stylesheet";
@@ -51,7 +102,7 @@
         return style;
     };
 
-    w.StackExchangeNotifications.utils.ready = function (callback) {
+    Utils.ready = function (callback) {
         var started = false;
 
         function trigger() {

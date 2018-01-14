@@ -16,10 +16,6 @@
         achievementsURI = "https://stackexchange.com/topbar/achievements",
         inboxURI        = "https://stackexchange.com/topbar/inbox";
 
-    var inbox = 0,
-        score = 0,
-        acquired = 0;
-
     var doneCallback = null,
         isRunning = false,
         timer = null,
@@ -28,102 +24,6 @@
 
     var tmpDom     = d.createElement("div"),
         validAttrs = [ "class", "id", "href" ];
-
-    var Utils = {
-        "convertResult": function (size) {
-            if (size === 0) {
-                return "";
-            } else if (size < 1000) {
-                return String(size);
-            }
-
-            return "+1k";
-        },
-        "removeInvalidAttributes": function (target) {
-            var attrs = target.attributes, currentAttr;
-
-            for (var i = attrs.length - 1; i >= 0; i--) {
-                currentAttr = attrs[i].name;
-
-                if (attrs[i].specified && validAttrs.indexOf(currentAttr) === -1) {
-                    target.removeAttribute(currentAttr);
-                }
-
-                if (
-                    currentAttr === "href" &&
-                    /^(#|javascript[:])/i.test(target.getAttribute("href"))
-                ) {
-                    target.parentNode.removeChild(currentAttr);
-                }
-            }
-        },
-        "clearDomString": function (data) {
-            tmpDom = (new DOMParser).parseFromString(data, "text/html").body;
-
-            var list, current, currentHref;
-
-            list = tmpDom.querySelectorAll("script,img");
-
-            for (var i = list.length - 1; i >= 0; i--) {
-                current = list[i];
-                current.parentNode.removeChild(current);
-            }
-
-            list = tmpDom.getElementsByTagName("*");
-
-            for (i = list.length - 1; i >= 0; i--) {
-                Utils.removeInvalidAttributes(list[i]);
-            }
-
-            list = tmpDom.querySelectorAll("link");
-
-            for (var i = list.length - 1; i >= 0; i--) {
-                list[i].type = "text/css";
-                list[i].rel  = "stylesheet";
-            }
-
-            return tmpDom.innerHTML;
-        },
-        "generateCssImages": function (resources, callback) {
-            var total = resources.length;
-
-            function trigger() {
-                if (total > 0) {
-                    return;
-                }
-
-                var tmpCss = "";
-
-                for (i = resources.length - 1; i >= 0; i--) {
-                    if (resources[i].bin) {
-                        tmpCss += resources[i].selector +
-                                    ' { background-image: url(' + resources[i].bin + '); }';
-                    }
-                }
-
-                callback(tmpCss);
-            }
-
-            for (var c, i = resources.length - 1; i >= 0; i--) {
-                var current = i;
-                var img = new Image();
-
-                img.onload = function () {
-                    --total;
-                    resources[current].bin = img2base64(img);
-                    trigger();
-                };
-
-                img.onerror = function () {
-                    --total;
-                    resources[current] = null;
-                    trigger();
-                };
-
-                img.src = resources[i].url;
-            }
-        }
-    };
 
     var tmpCanvas, canvasContext;
 
@@ -205,7 +105,7 @@
             headers,
             completed = false,
             isAborted = false,
-            xhr       = new XMLHttpRequest();
+            xhr       = new XMLHttpRequest;
 
         xhr.open("GET", noCacheURI(uri), true);
 
@@ -227,8 +127,7 @@
                 }
 
                 setTimeout(function () {
-                    callback = null;
-                    xhr = null;
+                    xhr = callback = null;
                 }, 1000);
             }
         };
@@ -354,9 +253,9 @@
                     StackExchangeNotifications.saveState("lastcheck", headers.date);
                 }
 
-                score = parseInt(data.UnreadRepCount);
-                inbox = data.UnreadInboxCount ? parseInt(data.UnreadInboxCount) : 0;
-                acquired = data.UnreadNonRepCount ? parseInt(data.UnreadNonRepCount) : 0;
+                var score = parseInt(data.UnreadRepCount),
+                    inbox = data.UnreadInboxCount ? parseInt(data.UnreadInboxCount) : 0,
+                    acquired = data.UnreadNonRepCount ? parseInt(data.UnreadNonRepCount) : 0;
 
                 if (score !== 0 || acquired > 0) {
                     SimpleCache.set("achievements", null);
@@ -462,27 +361,34 @@
             });
         },
         "setAchievements": function (sizeScore, sizeAcquired) {
+            var data = StackExchangeNotifications.getAchievements();
+
             if (sizeScore % 1 === 0) {
-                score = sizeScore;
+                data.score = sizeScore;
             }
 
             if (sizeAcquired > -1 && sizeAcquired % 1 === 0) {
-                acquired = sizeAcquired;
+                data.acquired = sizeAcquired;
             }
+
+            SimpleCache.set("achievementsCount", data);
+            data = null;
         },
         "setInbox": function (size) {
             if (size > -1 && size % 1 === 0) {
-                inbox = size;
+                SimpleCache.set("inboxCount", size);
             }
         },
         "getAchievements": function () {
+            var data = SimpleCache.get("achievementsCount");
             return {
-                "acquired": acquired,
-                "score": score
+                "acquired": data && data.acquired ? data.acquired : 0,
+                "score": data && data.score ? data.score : 0
             };
         },
         "getInbox": function () {
-            return inbox;
+            var data = SimpleCache.get("inboxCount");
+            return data ? data : 0;
         },
         "hasCache": function (cache) {
             return !!SimpleCache.get(cache);
@@ -507,11 +413,13 @@
 
                 setTimeout(retrieveData, 1);
             } else if (doneCallback !== null) {
-                doneCallback({
-                    "acquired": acquired,
-                    "score": score,
-                    "inbox": inbox
-                });
+                var data = StackExchangeNotifications.getAchievements();
+
+                data.inbox = StackExchangeNotifications.getInbox();
+
+                doneCallback(data);
+
+                data = null;
             }
         },
         "saveState": function (key, data, noToken) {
@@ -524,7 +432,103 @@
         "detectDOM": function (detect) {
             noNeedRequestXhr = detect;
         },
-        "meta": metaData,
-        "utils": Utils
+        "meta": metaData
     };
+
+    var Utils = {
+        "convertResult": function (size) {
+            if (size === 0) {
+                return "";
+            } else if (size < 1000) {
+                return String(size);
+            }
+
+            return "+1k";
+        },
+        "removeInvalidAttributes": function (target) {
+            var attrs = target.attributes, currentAttr;
+
+            for (var i = attrs.length - 1; i >= 0; i--) {
+                currentAttr = attrs[i].name;
+
+                if (attrs[i].specified && validAttrs.indexOf(currentAttr) === -1) {
+                    target.removeAttribute(currentAttr);
+                }
+
+                if (
+                    currentAttr === "href" &&
+                    /^(#|javascript[:])/i.test(target.getAttribute("href"))
+                ) {
+                    target.parentNode.removeChild(currentAttr);
+                }
+            }
+        },
+        "clearDomString": function (data) {
+            tmpDom = (new DOMParser).parseFromString(data, "text/html").body;
+
+            var list, current, currentHref;
+
+            list = tmpDom.querySelectorAll("script,img");
+
+            for (var i = list.length - 1; i >= 0; i--) {
+                current = list[i];
+                current.parentNode.removeChild(current);
+            }
+
+            list = tmpDom.getElementsByTagName("*");
+
+            for (i = list.length - 1; i >= 0; i--) {
+                Utils.removeInvalidAttributes(list[i]);
+            }
+
+            list = tmpDom.querySelectorAll("link");
+
+            for (var i = list.length - 1; i >= 0; i--) {
+                list[i].type = "text/css";
+                list[i].rel  = "stylesheet";
+            }
+
+            return tmpDom.innerHTML;
+        },
+        "generateCssImages": function (resources, callback) {
+            var total = resources.length;
+
+            function trigger() {
+                if (total > 0) {
+                    return;
+                }
+
+                var tmpCss = "";
+
+                for (i = resources.length - 1; i >= 0; i--) {
+                    if (resources[i].bin) {
+                        tmpCss += resources[i].selector +
+                                    ' { background-image: url(' + resources[i].bin + '); }';
+                    }
+                }
+
+                callback(tmpCss);
+            }
+
+            for (var c, i = resources.length - 1; i >= 0; i--) {
+                var current = i, img = new Image;
+
+                img.onload = function () {
+                    --total;
+                    resources[current].bin = img2base64(img);
+                    trigger();
+                };
+
+                img.onerror = function () {
+                    --total;
+                    resources[current] = null;
+                    trigger();
+                };
+
+                img.src = resources[i].url;
+            }
+        }
+    };
+
+    w.StackExchangeNotifications.utils = Utils;
 })(window, document);

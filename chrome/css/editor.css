@@ -89,24 +89,62 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     border-bottom: 1px solid #c8ccd0 !important;
     padding: 4px !important;
     height: 41px !important;
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+       -khtml-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
 }
-.sen-editor-toolbar > .sen-meta-flag {
+
+.sen-editor-inner {
+    float: left;
+}
+
+.sen-actions > .sen-meta-flag,
+.sen-actions > .sen-save-button,
+.sen-actions > .sen-answers-flag {
     display: none !important;
     background-color: #f48024 !important;
     font-weight: bold !important;
-    position: absolute !important;
-    top: 10px !important;
-    right: 6px !important;
     color: #fff !important;
     font-size: 7pt !important;
-    padding: 2px 4px !important;
+    padding: 5px 6px !important;
     border-radius: 2px !important;
-}
-.sen-editor-toolbar.sen-is-meta > .sen-meta-flag {
-    display: block !important;
+    margin-left: 2px !important;
 }
 
-.sen-editor-toolbar > span {
+.sen-actions {
+    vertical-align: middle !important;
+    text-align: right !important;
+    height: 100% !important;
+}
+.sen-actions::before {
+    content: "";
+    vertical-align: middle !important;
+    display: inline-block !important;
+    height: 100% !important;
+    width: 0 !important;
+}
+
+.sen-actions > .sen-answers-flag {
+    background-color: #749aea !important;
+}
+
+.sen-actions > .sen-save-button {
+    background-color: #33bb4e !important;
+}
+
+.sen-editor-full .sen-actions > .sen-save-button,
+.sen-editor-toolbar.sen-is-meta .sen-actions > .sen-meta-flag,
+.post-editor.sen-editor-full .sen-actions > .sen-answers-flag:not(:empty),
+.post-editor .sen-editor-full .sen-actions > .sen-answers-flag:not(:empty),
+.post-form.sen-editor-full .sen-actions > .sen-answers-flag:not(:empty),
+.post-form .sen-editor-full .sen-actions > .sen-answers-flag:not(:empty) {
+    display: inline-block !important;
+}
+
+.sen-editor-inner > span {
     border-left: 1px #e2e2e2 solid;
     margin: 0 1px !important;
     padding: 13px 0 !important;
@@ -115,7 +153,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     font-size: 0 !important;
 }
 
-.sen-editor-toolbar > a.sen-btn {
+.sen-editor-inner > a.sen-btn {
     display: inline-block !important;
     background-color: transparent !important;
     vertical-align: middle !important;
@@ -126,12 +164,12 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     outline: none !important;
 }
 
-.sen-editor-toolbar > a.sen-btn i {
+.sen-editor-inner > a.sen-btn i {
     display: block !important;
     padding: 3px 2px !important;
 }
 
-.sen-editor-toolbar > a.sen-btn i::before {
+.sen-editor-inner > a.sen-btn i::before {
     background: url(../images/editor.svg) no-repeat !important;
     content: " " !important;
     display: block !important;
@@ -139,7 +177,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     height: 24px;
 }
 
-.sen-editor-toolbar > a.sen-btn:hover {
+.sen-editor-inner > a.sen-btn:hover {
     border-color: #cfcfcf !important;
 }
 
@@ -148,6 +186,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     left: 0px !important;
     width: 100% !important;
     height: 100% !important;
+    min-width: 860px !important;
     z-index: 1051 !important;
     position: fixed !important;
     border: none !important;
@@ -173,6 +212,12 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 .sen-editor-full.sen-editor-inverted .wmd-preview {
     float: left !important;
+}
+
+.sen-editor-full .message {
+    top: -9999px !important;
+    left: -9999px !important;
+    z-index: -5 !important;
 }
 
 .sen-editor-focus:not(.sen-editor-ready) .wmd-container {
@@ -201,68 +246,68 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     display: block !important;
 }
 
-.sen-editor-toolbar > a.wmd-bold-button i::before {          background-position: 0 0 !important; }
-.sen-editor-toolbar > a.wmd-italic-button i::before {        background-position: -24px 0 !important; }
-.sen-editor-toolbar > a.sen-strikethrough-button i::before { background-position: -48px 0 !important; }
-.sen-editor-toolbar > a.wmd-link-button i::before {          background-position: -72px 0 !important; }
-.sen-editor-toolbar > a.wmd-quote-button i::before {         background-position: -96px 0 !important; }
-.sen-editor-toolbar > a.wmd-code-button i::before {          background-position: -120px 0 !important; }
-.sen-editor-toolbar > a.wmd-image-button i::before {         background-position: -144px 0 !important; }
-.sen-editor-toolbar > a.wmd-snippet-button i::before {       background-position: -168px 0 !important; }
-.sen-editor-toolbar > a.wmd-olist-button i::before {         background-position: -192px 0 !important; }
-.sen-editor-toolbar > a.wmd-ulist-button i::before {         background-position: -216px 0 !important; }
-.sen-editor-toolbar > a.wmd-heading-button i::before {       background-position: -240px 0 !important; }
-.sen-editor-toolbar > a.wmd-hr-button i::before {            background-position: -264px 0 !important; }
-.sen-editor-toolbar > a.wmd-undo-button i::before,
-.sen-editor-toolbar > a.wmd-redo-button i::before {          background-position: -288px 0 !important; }
-.sen-editor-toolbar > a.sen-full-button i::before {          background-position: -312px 0 !important; }
-.sen-editor-full .sen-editor-toolbar > a.sen-full-button i::before {     background-position: -336px 0 !important; }
-.sen-editor-toolbar > a.sen-preview-button i::before {       background-position: -360px 0 !important; }
-.sen-editor-toolbar > a.sen-flip-button i::before {          background-position: -384px 0 !important; }
-.sen-editor-toolbar > a.sen-syncscroll-button i::before {    background-position: -408px 0 !important; }
+.sen-editor-inner > a.wmd-bold-button i::before {          background-position: 0 0 !important; }
+.sen-editor-inner > a.wmd-italic-button i::before {        background-position: -24px 0 !important; }
+.sen-editor-inner > a.sen-strikethrough-button i::before { background-position: -48px 0 !important; }
+.sen-editor-inner > a.wmd-link-button i::before {          background-position: -72px 0 !important; }
+.sen-editor-inner > a.wmd-quote-button i::before {         background-position: -96px 0 !important; }
+.sen-editor-inner > a.wmd-code-button i::before {          background-position: -120px 0 !important; }
+.sen-editor-inner > a.wmd-image-button i::before {         background-position: -144px 0 !important; }
+.sen-editor-inner > a.wmd-snippet-button i::before {       background-position: -168px 0 !important; }
+.sen-editor-inner > a.wmd-olist-button i::before {         background-position: -192px 0 !important; }
+.sen-editor-inner > a.wmd-ulist-button i::before {         background-position: -216px 0 !important; }
+.sen-editor-inner > a.wmd-heading-button i::before {       background-position: -240px 0 !important; }
+.sen-editor-inner > a.wmd-hr-button i::before {            background-position: -264px 0 !important; }
+.sen-editor-inner > a.wmd-undo-button i::before,
+.sen-editor-inner > a.wmd-redo-button i::before {          background-position: -288px 0 !important; }
+.sen-editor-inner > a.sen-full-button i::before {          background-position: -312px 0 !important; }
+.sen-editor-full .sen-editor-inner > a.sen-full-button i::before {     background-position: -336px 0 !important; }
+.sen-editor-inner > a.sen-preview-button i::before {       background-position: -360px 0 !important; }
+.sen-editor-inner > a.sen-flip-button i::before {          background-position: -384px 0 !important; }
+.sen-editor-inner > a.sen-syncscroll-button i::before {    background-position: -408px 0 !important; }
 
-.sen-editor-toolbar > a.wmd-undo-button i::before {
+.sen-editor-inner > a.wmd-undo-button i::before {
     -webkit-transform: scaleX(-1) !important;
        -moz-transform: scaleX(-1) !important;
             transform: scaleX(-1) !important;
 }
 
-.sen-editor-toolbar > a.sen-flip-button,
-.sen-editor-toolbar > a.sen-syncscroll-button {
+.sen-editor-inner > a.sen-flip-button,
+.sen-editor-inner > a.sen-syncscroll-button {
     display: none !important;
 }
 
-.sen-editor-full .sen-editor-toolbar > a.sen-flip-button,
-.sen-editor-full .sen-editor-toolbar > a.sen-syncscroll-button {
+.sen-editor-full .sen-editor-inner > a.sen-flip-button,
+.sen-editor-full .sen-editor-inner > a.sen-syncscroll-button {
     display: inline-block !important;
 }
 
-.sen-editor-toolbar > a.wmd-help-button i::before {
+.sen-editor-inner > a.wmd-help-button i::before {
     background-image: url(../images/about.svg#gray) !important;
     background-position: center center !important;
     background-size: 18px 18px !important;
 }
 
 /*tooltip*/
-.sen-editor-toolbar > a.sen-btn {
+.sen-editor-inner > a.sen-btn {
     position: relative !important;
     font-size: 0 !important;
 }
 
-.sen-editor-toolbar > a.sen-btn::before,
-.sen-editor-toolbar > a.sen-btn::after {
+.sen-editor-inner > a.sen-btn::before,
+.sen-editor-inner > a.sen-btn::after {
     position: absolute !important;
     left: 50% !important;
     display: none !important;
     z-index: 100 !important;
 }
 
-.sen-editor-toolbar > a.sen-btn:hover::before,
-.sen-editor-toolbar > a.sen-btn:hover::after {
+.sen-editor-inner > a.sen-btn:hover::before,
+.sen-editor-inner > a.sen-btn:hover::after {
     display: block !important;
 }
 
-.sen-editor-toolbar > a.sen-btn::before {
+.sen-editor-inner > a.sen-btn::before {
     border-style: solid !important;
     border-width: 0 6px 8px 6px !important;
     border-color: transparent transparent rgba(82, 72, 71, .90) transparent !important;
@@ -271,7 +316,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     content: " " !important;
 }
 
-.sen-editor-toolbar > a.sen-btn::after {
+.sen-editor-inner > a.sen-btn::after {
     background: rgba(82, 72, 71, .90) !important;
     border-radius: 0.25em !important;
     top: 35px !important;
@@ -285,22 +330,22 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     font-size: 9pt !important;
 }
 
-.sen-editor-full .sen-editor-toolbar > a.sen-full-button::after {
+.sen-editor-full .sen-editor-inner > a.sen-full-button::after {
     content: attr(data-title-inmax) !important;
 }
 
-.sen-editor-ready .sen-editor-toolbar > a.sen-preview-button::after {
+.sen-editor-ready .sen-editor-inner > a.sen-preview-button::after {
     content: attr(data-title-inpreview) !important;
 }
 /*tooltip*/
 
-.sen-editor-toolbar > a.sen-btn.sen-disabled {
+.sen-editor-inner > a.sen-btn.sen-disabled {
     opacity: .5;
 }
 
-.sen-editor-toolbar > a.sen-btn.sen-hide,
-.sen-editor-toolbar > a.sen-btn.sen-disabled:hover::after,
-.sen-editor-toolbar > a.sen-btn.sen-disabled:hover::before {
+.sen-editor-inner > a.sen-btn.sen-hide,
+.sen-editor-inner > a.sen-btn.sen-disabled:hover::after,
+.sen-editor-inner > a.sen-btn.sen-disabled:hover::before {
     display: none !important;
 }
 

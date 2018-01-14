@@ -65,14 +65,14 @@
     outline: 0 !important;
     background-color: #fff !important;
 }
-.sen-gallery-current.in-load > img.in-load {
+.sen-gallery-current.sen-in-load > img.sen-in-load {
     opacity: .001 !important;
 }
 
-.sen-gallery-current.magnification {
+.sen-gallery-current.sen-magnification {
     cursor: zoom-in !important;
 }
-.sen-gallery-current.magnified {
+.sen-gallery-current.sen-magnified {
     cursor: -webkit-grab !important;
     cursor: -moz-grab !important;
     cursor: grab !important;
@@ -97,10 +97,10 @@
     opacity: .1 !important;
     transition: opacity .2s, background-color .2s;
 }
-.sen-gallery-close.show {
+.sen-gallery-close.sen-show {
     opacity: .99 !important;
 }
-.sen-gallery-close.show:hover, .sen-gallery-close.show:focus {
+.sen-gallery-close.sen-show:hover, .sen-gallery-close.sen-show:focus {
     background-color: rgba(0,0,0,.4) !important;
 }
 

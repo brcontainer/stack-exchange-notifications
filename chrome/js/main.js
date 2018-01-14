@@ -11,15 +11,15 @@
 
     var theme, browser = w.chrome||w.browser, version = d.getElementById("version");
 
-    if (version) {
-        var manifestData = StackExchangeNotifications.meta();
-        version.innerHTML = manifestData.appname + " " + manifestData.version;
-    }
-
     var debugMode = !(
         "update_url" in browser.runtime.getManifest() ||
         browser.runtime.id === "stackexchangenotifications@mozilla.org"
     );
+
+    if (version) {
+        var manifestData = StackExchangeNotifications.meta();
+        version.innerHTML = manifestData.appname + " " + manifestData.version;
+    }
 
     function changeTheme()
     {
@@ -126,7 +126,9 @@
 
     function setActionAnchor(e)
     {
-        if (e.button !== 0) return;
+        if (e.button !== 0) {
+            return;
+        }
 
         setTimeout(function (s) { s.blur(); }, 300, e.target);
 
@@ -140,45 +142,51 @@
             }
         }
 
-        if (el && el.href) {
-            e.preventDefault();
+        if (!el || !el.href) {
+            return;
+        }
 
-            if (!/^https?\:\/\//.test(el.href)) return;
+        e.preventDefault();
 
-            setTimeout(function (url) {
-                if (!StackExchangeNotifications.switchEnable("prevent_duplicate")) {
-                    browser.tabs.create({ "url": url });
-                    return;
+        if (!/^https?\:\/\//.test(el.href)) {
+            return;
+        }
+
+        setTimeout(function (url) {
+            if (!StackExchangeNotifications.switchEnable("prevent_duplicate")) {
+                browser.tabs.create({ "url": url });
+                return;
+            }
+
+            browser.tabs.query({ "url": "https://*/*" }, function (tabs) {
+                var tabId, checkUrl = removeQuerystringAndHash(url);
+
+                for (var i = 0, j = tabs.length; i < j; i++) {
+                    if (removeQuerystringAndHash(tabs[i].url) === checkUrl) {
+                        tabId = tabs[i].id;
+                        break;
+                    }
                 }
 
-                browser.tabs.query({ "url": "https://*/*" }, function (tabs) {
-                    var tabId, checkUrl = removeQuerystringAndHash(url);
-
-                    for (var i = 0, j = tabs.length; i < j; i++) {
-                        if (removeQuerystringAndHash(tabs[i].url) === checkUrl) {
-                            tabId = tabs[i].id;
-                            break;
-                        }
-                    }
-
-                    if (tabId) {
-                        browser.tabs.update(tabId, { "active": true }, function () {});
-                        //browser.tabs.executeScript(tabId, { "code": "foobar" });
-                    } else {
-                        browser.tabs.create({ "url": url });
-                    }
-                });
-            }, 1, el.href);
-        }
+                if (tabId) {
+                    browser.tabs.update(tabId, { "active": true }, function () {});
+                    //browser.tabs.executeScript(tabId, { "code": "foobar" });
+                } else {
+                    browser.tabs.create({ "url": url });
+                }
+            });
+        }, 1, el.href);
     }
 
     d.oncontextmenu = disableEvent;
     d.ondragstart = disableEvent;
     d.onclick = setActionAnchor;
 
-    StackExchangeNotifications.boot();
+    setTimeout(function () {
+        StackExchangeNotifications.boot();
 
-    changeTheme();
+        changeTheme();
 
-    StackExchangeNotifications.utils.resource("/view/setup.html", ready);
+        StackExchangeNotifications.utils.resource("/views/setup.html", ready);
+    }, 50);
 })(window, document);

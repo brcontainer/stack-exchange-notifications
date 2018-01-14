@@ -64,7 +64,7 @@ body {
     margin-right: 7px;
 }
 
-.nav a span.icon {
+.nav a .icon {
     background: center center no-repeat;
     background-size: contain;
     display: block;
@@ -158,23 +158,23 @@ body {
     background-color: #ea5d5d;
 }
 
-#inbox-button span.icon {
+#inbox-button .icon {
     background-image: url(../images/inbox.svg);
 }
 
-#about-button span.icon {
+#about-button .icon {
     background-image: url(../images/about.svg);
 }
 
-#achievements-button span.icon {
+#achievements-button .icon {
     background-image: url(../images/achievements.svg);
 }
 
-#chat-button span.icon {
+#chat-button .icon {
     background-image: url(../images/chat.svg);
 }
 
-#setup-button span.icon {
+#setup-button .icon {
     background-image: url(../images/gears.svg);
 }
 

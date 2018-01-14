@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-a.btn-pin > i.inroom-heart-icon {
+a.sen-btn-pin > i.sen-inroom-heart-icon {
     background: url(../images/heart.svg#red) no-repeat;
     background-size: contain;
     vertical-align: middle;
@@ -19,17 +19,17 @@ a.btn-pin > i.inroom-heart-icon {
     transition: transform ease-out 1s;
 }
 
-a.btn-pin:hover > i.inroom-heart-icon {
+a.sen-btn-pin:hover > i.sen-inroom-heart-icon {
     transform: rotateY(-180deg);
 }
 
-a.btn-pin > i.inroom-heart-icon {
+a.sen-btn-pin > i.sen-inroom-heart-icon {
     width: 10px;
     height: 10px;
 }
-a.btn-pin::after {
+a.sen-btn-pin::after {
     content: " save room";
 }
-a.btn-pin.added::after {
+a.sen-btn-pin.sen-added::after {
     content: " remove room";
 }

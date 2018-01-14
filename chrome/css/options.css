@@ -53,7 +53,7 @@ body {
 }
 
 .group {
-    margin: 0 12px;
+    margin: 0 12px 18px 12px;
     border: 1px solid;
     overflow: hidden;
     border-radius: 3px;
@@ -106,8 +106,17 @@ body {
     text-align: center;
 }
 
-@-moz-document url-prefix() {
-    body {
-        background-color: transparent;
+/*
+@media (min-width: 390px)
+{
+    .setup-header::after, .setup-header::before {
+        display: none;
+    }
+
+    @-moz-document url-prefix() {
+        body {
+            background-color: transparent;
+        }
     }
 }
+*/

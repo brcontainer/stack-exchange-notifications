@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (w, d) {
+(function (w, d, u) {
     "use strict";
 
     var lastTab,
@@ -41,8 +41,8 @@
         editorSwitchInvert  = d.getElementById("editor-switch-invert"),
         editorSwitchPreview = d.getElementById("editor-switch-preview"),
 
-        bgLoaderRegExp      = /(^|\s)(hide|sen-bg-loader)(\s|$)/g,
-        hideRegExp          = /(^|\s)hide(\s|$)/g,
+        bgLoaderRegExp      = /\b(hide|sen-bg-loader)\b/g,
+        hideRegExp          = /\bhide\b/g,
 
         cssLoaded           = false,
 
@@ -115,17 +115,17 @@
         }
     }
 
-    StackExchangeNotifications.boot();
+    StackExchangeNotifications.boot(w, d);
 
     var manifestData = StackExchangeNotifications.meta();
 
     d.getElementById("about-title").innerHTML = manifestData.appname + " " + manifestData.version;
 
-    function showInButtons()
+    function showButtonPushs(i, a)
     {
-        var inbox = StackExchangeNotifications.getInbox();
-        var achievements = StackExchangeNotifications.getAchievements();
         var total = 0;
+        var inbox = i !== u ? i : StackExchangeNotifications.getInbox();
+        var achievements = a !== u ? a : StackExchangeNotifications.getAchievements();
 
         if (achievements.acquired > 0) {
             total += achievements.acquired;
@@ -150,15 +150,23 @@
         }
     }
 
-    showInButtons();
-    browser.extension.getBackgroundPage().detectUpdate(showInButtons);
+    showButtonPushs();
+
+    browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+        if (request.updatecounts) {
+            showButtonPushs(request.updatecounts.inbox, {
+                "acquired": request.updatecounts.acquired,
+                "score": request.updatecounts.score
+            });
+        }
+    });
 
     function actionCheckRead(current, box)
     {
         var target = box === "inbox" ? inboxContent : achievementsContent;
 
         current.addEventListener("click", function () {
-            current.className = current.className.replace(/(^|\s)unread-item(\s|$)/g, " ").trim();
+            current.className = current.className.replace(/\bunread-item\b/g, " ").trim();
 
             var data = StackExchangeNotifications.restoreState(box);
 
@@ -444,11 +452,10 @@
                     '</div>'
                 ].join("");
             } else if (data.indexOf("<") !== -1) {
-                StackExchangeNotifications.setInbox(0);
-
                 setTimeout(function () {
+                    StackExchangeNotifications.setInbox(0);
                     StackExchangeNotifications.update();
-                }, 1500);
+                }, 500);
 
                 inboxContent.innerHTML = StackExchangeNotifications.utils.clearDomString(data);
 

@@ -9,21 +9,11 @@
 (function (w) {
     "use strict";
 
-    var browser = w.chrome||w.browser, caller = null, callerTheme = [];
+    var browser = w.chrome||w.browser;
 
     StackExchangeNotifications.boot();
 
-    w.detectUpdate = function (callback) {
-        if (typeof callback === "function" || callback === null) {
-            caller = callback;
-        }
-    };
-
     StackExchangeNotifications.pushs(function (response) {
-        if (caller) {
-            caller();
-        }
-
         var updates = 0;
 
         if (response.inbox > 0 && StackExchangeNotifications.switchEnable("inbox")) {
@@ -41,6 +31,8 @@
         browser.browserAction.setBadgeText({
             "text": StackExchangeNotifications.utils.convertResult(updates)
         });
+
+        browser.runtime.sendMessage({ "updatecounts": response }, function (response) {});
     });
 
     function updateChanges(type, value)
