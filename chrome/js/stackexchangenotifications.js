@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (w, d) {
+(function (w, d, u) {
     "use strict";
 
     var delay = 60, //In seconds
@@ -22,8 +22,20 @@
         noNeedRequestXhr = false,
         browser = w.chrome||w.browser;
 
-    var tmpDom     = d.createElement("div"),
-        validAttrs = [ "class", "id", "href" ];
+    var isHttpRegExp = /^https?\:\/\/[^/]/i,
+        tmpDom = d.createElement("div"),
+        allowedAttrs = [ "class", "id", "href" ],
+        allowedTags = [
+            "link",
+            "h1", "h2", "h3", "h4", "a",
+            "div", "span", "article", "aside", "details",
+            "footer", "header", "main", "mark", "nav",
+            "section", "summary", "time",
+            "i", "s", "u", "strong", "em",
+            "ul", "ol", "li"
+        ];
+
+    var notSelector = ":not(" + allowedTags.join("):not(") + ")";
 
     var tmpCanvas, canvasContext;
 
@@ -59,8 +71,6 @@
 
     function metaData()
     {
-        var u;
-
         if (browser && browser.runtime && browser.runtime.getManifest) {
             var meta = browser.runtime.getManifest();
 
@@ -101,8 +111,7 @@
 
     function quickXhr(uri, callback)
     {
-        var
-            headers,
+        var headers,
             completed = false,
             isAborted = false,
             xhr       = new XMLHttpRequest;
@@ -278,6 +287,21 @@
         timer = setTimeout(retrieveData, currentDelay);
     }
 
+    function fixLinkStyle(l)
+    {
+        if (!isHttpRegExp.test(l.href)) {
+            return false;
+        }
+
+        if (l.type === "text/css" || l.rel === "stylesheet" || (l.type === "" && l.rel === "")) {
+            l.type = "text/css";
+            l.rel = "stylesheet";
+            return true;
+        }
+
+        return false;
+    }
+
     w.StackExchangeNotifications = {
         "boot": function () {
             //Improve performance in Opera and older machines
@@ -451,7 +475,7 @@
             for (var i = attrs.length - 1; i >= 0; i--) {
                 currentAttr = attrs[i].name;
 
-                if (attrs[i].specified && validAttrs.indexOf(currentAttr) === -1) {
+                if (attrs[i].specified && allowedAttrs.indexOf(currentAttr) === -1) {
                     target.removeAttribute(currentAttr);
                 }
 
@@ -468,7 +492,7 @@
 
             var list, current, currentHref;
 
-            list = tmpDom.querySelectorAll("script,img");
+            list = tmpDom.querySelectorAll(notSelector);
 
             for (var i = list.length - 1; i >= 0; i--) {
                 current = list[i];
@@ -483,10 +507,17 @@
 
             list = tmpDom.querySelectorAll("link");
 
-            for (var i = list.length - 1; i >= 0; i--) {
-                list[i].type = "text/css";
-                list[i].rel  = "stylesheet";
+            for (var toRemove = [], i = list.length - 1; i >= 0; i--) {
+                if (!fixLinkStyle(list[i])) {
+                    toRemove.push(list[i]);
+                }
             }
+
+            for (var i = toRemove.length - 1; i >= 0; i--) {
+                toRemove[i].parentNode.removeChild(toRemove[i]);
+            }
+
+            toRemove = list = null;
 
             return tmpDom.innerHTML;
         },

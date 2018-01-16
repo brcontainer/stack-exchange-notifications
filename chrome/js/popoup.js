@@ -43,6 +43,8 @@
 
         bgLoaderRegExp      = /\b(hide|sen-bg-loader)\b/g,
         hideRegExp          = /\bhide\b/g,
+        isHttpRegExp        = /^https?\:\/\/[^/]/i,
+        imgExtensionRegexp  = /url\(("|'|)([\s\S]+?\.(png|jpg|jpeg|gif)(\?|\?[\s\S]+?|))("|'|)\)/i,
 
         cssLoaded           = false,
 
@@ -119,32 +121,32 @@
 
     var manifestData = StackExchangeNotifications.meta();
 
-    d.getElementById("about-title").innerHTML = manifestData.appname + " " + manifestData.version;
+    d.getElementById("about-title").textContent = manifestData.appname + " " + manifestData.version;
 
     function showButtonPushs(i, a)
     {
-        var total = 0;
-        var inbox = i !== u ? i : StackExchangeNotifications.getInbox();
-        var achievements = a !== u ? a : StackExchangeNotifications.getAchievements();
+        var total = 0,
+            inbox = i !== u ? i : StackExchangeNotifications.getInbox(),
+            achievements = a !== u ? a : StackExchangeNotifications.getAchievements();
 
         if (achievements.acquired > 0) {
             total += achievements.acquired;
         }
 
-        if (total.score !== 0) {
+        if (achievements.score !== 0) {
             total += achievements.score;
         }
 
         if (inbox > 0) {
             inboxData.className = "push";
-            inboxData.innerHTML = StackExchangeNotifications.utils.convertResult(inbox);
+            inboxData.textContent = StackExchangeNotifications.utils.convertResult(inbox);
         } else {
             inboxData.className = "push hide";
         }
 
         if (total !== 0) {
             achievementsData.className = "push";
-            achievementsData.innerHTML = StackExchangeNotifications.utils.convertResult(total);
+            achievementsData.textContent = StackExchangeNotifications.utils.convertResult(total);
         } else {
             achievementsData.className = "push hide";
         }
@@ -254,13 +256,11 @@
             return;
         }
 
-        var i, j, rules, image, imgUrl, allRulesBg = [],
-            isHttp = /^https?\:\/\/[^/]/i,
-            reImg  = /url\(("|'|)([\s\S]+?\.(png|jpg|jpeg|gif)(\?|\?[\s\S]+?|))("|'|)\)/i,
-            styles = d.styleSheets;
+        var i, j, rules, image, imgUrl,
+            allRulesBg = [], styles = d.styleSheets;
 
         for (var i = styles.length - 1; i >= 0; i--) {
-            if (false === isHttp.test(styles[i].href)) {
+            if (false === isHttpRegExp.test(styles[i].href)) {
                 continue;
             }
 
@@ -274,11 +274,11 @@
                 if (
                     rules[j].style &&
                     rules[j].style.backgroundImage &&
-                    (image = rules[j].style.backgroundImage.match(reImg))
+                    (image = rules[j].style.backgroundImage.match(imgExtensionRegexp))
                 ) {
                     imgUrl = image[2];
 
-                    if (!isHttp.test(imgUrl)) {
+                    if (!isHttpRegExp.test(imgUrl)) {
                         imgUrl = styles[i].href.replace(/\/[^\/]+?$/, "/") + imgUrl;
                     }
 
@@ -532,7 +532,7 @@
                         hour = hour > 9 ? hour : ("0" + hour);
                         min  = min > 9 ? min : ("0" + min);
 
-                        dateContent.innerHTML = hour + ":" + min;
+                        dateContent.textContent = hour + ":" + min;
                     }
                 }
 

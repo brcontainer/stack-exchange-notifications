@@ -448,7 +448,6 @@
 
     function checkNewAnswers()
     {
-        // #new-answer-activity
         var news = "", total = 0, naa = d.getElementById("new-answer-activity");
 
         if (naa && !StackExchangeNotifications.utils.isHide(naa)) {

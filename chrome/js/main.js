@@ -18,7 +18,7 @@
 
     if (version) {
         var manifestData = StackExchangeNotifications.meta();
-        version.innerHTML = manifestData.appname + " " + manifestData.version;
+        version.textContent = manifestData.appname + " " + manifestData.version;
     }
 
     function changeTheme()
