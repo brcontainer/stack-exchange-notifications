@@ -307,8 +307,8 @@
             //Improve performance in Opera and older machines
             setTimeout(function () {
                 initiateDelay = 1;
-                StackExchangeNotifications.inbox();
-                StackExchangeNotifications.achievements();
+                //StackExchangeNotifications.inbox();
+                //StackExchangeNotifications.achievements();
             }, initiateDelay);
 
             if (SimpleCache.get("firstrun2", true)) {

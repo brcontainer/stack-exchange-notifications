@@ -18,6 +18,10 @@
     display: none !important;
 }
 
+.sen-gallery.sen-show {
+    display: block !important;
+}
+
 .sen-gallery * {
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Chrome/Safari/Opera */

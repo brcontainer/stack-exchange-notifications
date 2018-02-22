@@ -500,7 +500,22 @@
         }
     }
 
-    var timerObserver;
+    var timerObserver, timerObserver2;
+
+    function checkMutations(mutations) {
+        var mutation;
+
+        checkNewAnswers();
+
+        for (var i = mutations.length - 1; i >= 0; i--) {
+            mutation = mutations[i];
+
+            if (mutation.attributeName === "style" && mutation.target && isMsgRE.test(mutation.target.className)) {
+                setTimeout(checkMessage, 1, mutation.target);
+                break;
+            }
+        }
+    }
 
     function triggerObserver()
     {
@@ -515,18 +530,12 @@
                 clearTimeout(timerObserver);
             }
 
-            timerObserver = setTimeout(checkRemoveFullEditorOpts, 100);
-
-            checkNewAnswers();
-
-            for (var i = mutations.length - 1; i >= 0; i--) {
-                mutation = mutations[i];
-
-                if (mutation.attributeName === "style" && mutation.target && isMsgRE.test(mutation.target.className)) {
-                    setTimeout(checkMessage, 100, mutation.target);
-                    break;
-                }
+            if (timerObserver2) {
+                clearTimeout(timerObserver2);
             }
+
+            timerObserver = setTimeout(checkRemoveFullEditorOpts, 100);
+            timerObserver2 = setTimeout(checkMutations, 300, mutations);
         });
 
         observer.observe(d.body, {

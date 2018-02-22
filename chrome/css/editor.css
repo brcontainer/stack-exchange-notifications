@@ -44,8 +44,10 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     border: none !important;
     float: none !important;
     margin: 0 !important;
-    height: 0 !important;
     padding: 0 !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: 0 !important;
     width: auto !important;
 }
 
@@ -67,7 +69,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     display: block !important;
     margin: 0 !important;
     outline: 0 !important;
-    height: 400px;
+    height: 400px !important;
     box-shadow: 0 0 4px rgba(0, 0, 0, .08) inset !important;
     -moz-tab-size: 4 !important;
          tab-size: 4 !important;
