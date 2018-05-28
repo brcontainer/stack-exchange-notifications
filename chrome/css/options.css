@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.1.0
+ * StackExchangeNotifications 1.2.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -7,7 +7,7 @@
  */
 
 body {
-    background: #f9f9f9;
+    background-color: #f9f9f9;
 }
 
 .setup-header {
@@ -39,14 +39,14 @@ body {
 }
 
 .setup-header::after {
-    border-color: rgba(250, 247, 247, 0);
+    border-color: rgba(250,247,247,0);
     border-bottom-color: #faf7f7;
     border-width: 5px;
     margin-left: -5px;
 }
 
 .setup-header::before {
-    border-color: rgba(222, 218, 218, 0);
+    border-color: rgba(222,218,218,0);
     border-bottom-color: #dedada;
     border-width: 6px;
     margin-left: -6px;
@@ -57,7 +57,7 @@ body {
     border: 1px solid;
     overflow: hidden;
     border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 
 .group-btns {
@@ -97,7 +97,7 @@ body {
     float: none;
 }
 
-.field a[data-switch] {
+.field > .toggle {
     float: left;
 }
 
@@ -105,18 +105,3 @@ body {
     padding: 15px 0;
     text-align: center;
 }
-
-/*
-@media (min-width: 390px)
-{
-    .setup-header::after, .setup-header::before {
-        display: none;
-    }
-
-    @-moz-document url-prefix() {
-        body {
-            background-color: transparent;
-        }
-    }
-}
-*/

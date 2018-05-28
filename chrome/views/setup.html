@@ -1,142 +1,144 @@
 <div class="setup">
     <h2>Pushs</h2>
     <div class="group">
-        <p class="field">
+        <div class="field">
             <span class="label">New inbox messages</span>
 
-            <a data-switch="inbox" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
-        <p class="field">
+            <div class="toggle">
+                <input type="checkbox" id="inbox" disabled>
+                <label for="inbox"></label>
+            </div>
+        </div>
+        <div class="field">
             <span class="label">Score (Reputation)</span>
 
-            <a data-switch="score" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
-        <p class="field">
+            <div class="toggle">
+                <input type="checkbox" id="score" disabled>
+                <label for="score"></label>
+            </div>
+        </div>
+        <div class="field">
             <span class="label">Achievements (eg. badges, privileges acquired)</span>
 
-            <a data-switch="acquired" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
+            <div class="toggle">
+                <input type="checkbox" id="acquired" disabled>
+                <label for="acquired"></label>
+            </div>
+        </div>
     </div>
 
     <h2>Appearance</h2>
     <div class="group">
-        <p class="field">
+        <div class="field">
             <span class="label">Dark theme (internal pages)</span>
 
-            <a data-switch="dark_theme" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
+            <div class="toggle">
+                <input type="checkbox" id="dark_theme" disabled>
+                <label for="dark_theme"></label>
+            </div>
+        </div>
     </div>
 
-    <!--
+    <!--//
     <h2>Desktop</h2>
-    p class="field first">
-        <span class="label">Desktop Notifications (Experimental)</span>
+    <div class="group">
+        <div class="field">
+            <span class="label">Desktop Notifications (Experimental)</span>
 
-        <a data-switch="desktop_notification" data-switch-value="off" href="#">
-            <small>on</small>
-            <small>off</small>
-        </a>
-    </p
+            <div class="toggle">
+                <input type="checkbox" id="desktop_notification" disabled>
+                <label for="desktop_notification"></label>
+            </div>
+        </div>
+    </div>
     -->
 
     <h2>Site</h2>
     <div class="group">
-        <p class="field">
+        <div class="field">
             <span class="label">Lightbox gallery</span>
 
-            <a data-switch="gallery_box" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
-        <p class="field">
+            <div class="toggle">
+                <input type="checkbox" id="gallery_box" disabled>
+                <label for="gallery_box"></label>
+            </div>
+        </div>
+        <div class="field">
             <span class="label">Copy code to clipboard</span>
 
-            <a data-switch="copy_code" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
-        <p class="field">
+            <div class="toggle">
+                <input type="checkbox" id="copy_code" disabled>
+                <label for="copy_code"></label>
+            </div>
+        </div>
+        <div class="field">
             <span class="label">Prevent duplicate pages</span>
 
-            <a data-switch="prevent_duplicate" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
+            <div class="toggle">
+                <input type="checkbox" id="prevent_duplicate" disabled>
+                <label for="prevent_duplicate"></label>
+            </div>
+        </div>
     </div>
 
     <h2>Editor</h2>
     <div class="group">
-        <p class="field">
+        <div class="field">
             <span class="label">Improved text editor</span>
 
-            <a data-switch="editor_actived" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
-        <p class="field">
+            <div class="toggle">
+                <input type="checkbox" id="editor_actived" disabled>
+                <label for="editor_actived"></label>
+            </div>
+        </div>
+        <div class="field">
             <span class="label">Invert editor position</span>
 
-            <a data-switch="editor_inverted" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
-        <p class="field">
+            <div class="toggle">
+                <input type="checkbox" id="editor_inverted" disabled>
+                <label for="editor_inverted"></label>
+            </div>
+        </div>
+        <div class="field">
             <span class="label">Sync scroll with preview</span>
 
-            <a data-switch="editor_sync_scroll" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
-        <p class="field">
+            <div class="toggle">
+                <input type="checkbox" id="editor_sync_scroll" disabled>
+                <label for="editor_sync_scroll"></label>
+            </div>
+        </div>
+        <div class="field">
             <span class="label">Autopreview in fullscreen</span>
 
-            <a data-switch="editor_preview" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
-        <p class="field">
+            <div class="toggle">
+                <input type="checkbox" id="editor_preview" disabled>
+                <label for="editor_preview"></label>
+            </div>
+        </div>
+        <div class="field">
             <span class="label">Auto fullscreen when focusing (only the first time)</span>
 
-            <a data-switch="editor_auto_fs" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
-        <p class="field">
+            <div class="toggle">
+                <input type="checkbox" id="editor_auto_fs" disabled>
+                <label for="editor_auto_fs"></label>
+            </div>
+        </div>
+        <div class="field">
             <span class="label">Replace tabs by spaces (Experimental)</span>
 
-            <a data-switch="editor_tabs_by_spaces" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
-        <p class="field">
+            <div class="toggle">
+                <input type="checkbox" id="editor_tabs_by_spaces" disabled>
+                <label for="editor_tabs_by_spaces"></label>
+            </div>
+        </div>
+        <div class="field">
             <span class="label">Italic as _foo_ instead of *foo* (Unavailable)</span>
 
-            <a data-switch="editor_italic" data-switch-value="off" href="#">
-                <small>on</small>
-                <small>off</small>
-            </a>
-        </p>
+            <div class="toggle">
+                <input type="checkbox" id="editor_italic" disabled>
+                <label for="editor_italic"></label>
+            </div>
+        </div>
     </div>
 
     <div class="group-btns">

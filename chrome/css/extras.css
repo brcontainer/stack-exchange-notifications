@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.1.0
+ * StackExchangeNotifications 1.2.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -40,7 +40,7 @@ pre + :not(.sen-tools-clipboard) {
     left: 50% !important;
     top: 50% !important;
     margin: -31px -150px !important;
-    background-color: rgba(0, 0, 0, .8) !important;
+    background-color: rgba(0,0,0,.8) !important;
     color: #fff !important;
     width: 300px !important;
     height: 62px !important;

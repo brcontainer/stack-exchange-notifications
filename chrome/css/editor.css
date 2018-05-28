@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.1.0
+ * StackExchangeNotifications 1.2.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -69,8 +69,9 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     display: block !important;
     margin: 0 !important;
     outline: 0 !important;
-    height: 400px !important;
-    box-shadow: 0 0 4px rgba(0, 0, 0, .08) inset !important;
+    min-height: 300px !important;
+    height: 400px;
+    box-shadow: 0 0 4px rgba(0,0,0,.08) inset !important;
     -moz-tab-size: 4 !important;
          tab-size: 4 !important;
 }
@@ -184,8 +185,8 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 
 .sen-editor-full .wmd-container {
-    top: 0px !important;
-    left: 0px !important;
+    top: 0 !important;
+    left: 0 !important;
     width: 100% !important;
     height: 100% !important;
     min-width: 860px !important;
@@ -224,7 +225,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 
 .sen-editor-focus:not(.sen-editor-ready) .wmd-container {
     border-color: #51a7e8 !important;
-    box-shadow: 0 0 5px rgba(81, 167, 232, 0.5) !important;
+    box-shadow: 0 0 5px rgba(81,167,232,.5) !important;
 }
 
 .sen-editor-ready:not(.sen-editor-full) .wmd-input {
@@ -312,15 +313,15 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 .sen-editor-inner > a.sen-btn::before {
     border-style: solid !important;
     border-width: 0 6px 8px 6px !important;
-    border-color: transparent transparent rgba(82, 72, 71, .90) transparent !important;
+    border-color: transparent transparent rgba(82,72,71,.9) transparent !important;
     top: 27px !important;
     margin-left: -6px !important;
     content: " " !important;
 }
 
 .sen-editor-inner > a.sen-btn::after {
-    background: rgba(82, 72, 71, .90) !important;
-    border-radius: 0.25em !important;
+    background: rgba(82,72,71,.9) !important;
+    border-radius: .25em !important;
     top: 35px !important;
     color: #fff !important;
     min-width: 13.5em !important;

@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.1.0
+ * StackExchangeNotifications 1.2.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -10,6 +10,8 @@
     "use strict";
 
     var lastTab,
+        mainElement         = d.querySelector("body > .main"),
+
         navgation           = d.querySelector(".nav"),
 
         inboxButton         = d.getElementById("inbox-button"),
@@ -44,19 +46,28 @@
         bgLoaderRegExp      = /\b(hide|sen-bg-loader)\b/g,
         hideRegExp          = /\bhide\b/g,
         isHttpRegExp        = /^https?\:\/\/[^/]/i,
-        imgExtensionRegexp  = /url\(("|'|)([\s\S]+?\.(png|jpg|jpeg|gif)(\?|\?[\s\S]+?|))("|'|)\)/i,
+        imgExtensionRegexp  = /url\(("|'|)([\s\S]+?\.(png|gif|jp?eg)(\?|\?[\s\S]+?|))("|'|)\)/i,
 
         cssLoaded           = false,
 
         headDOM             = d.head,
 
-        browser             = w.chrome||w.browser;
+        browser             = w.chrome||w.browser,
+
+        fixPopupSize        = d.querySelector(".fix-scroll > .sub").clientWidth;
+
+    var s = d.createElement("style");
+    s.textContent = ".tab-item .modal-content li.inbox-se-link,:not(#chat-content) > .header,.nav" +
+                    "{ width: " + fixPopupSize + "px !important; }";
+    d.body.appendChild(s);
 
     function adjustPopup(m)
     {
         if (m === true) {
             d.body.classList.remove("fix-popup");
-            w.scrollTo(0, 0);
+            mainElement.scrollTop = 0;
+            mainElement.scrollLeft = 0;
+            //w.scrollTo(0, 0);
         } else {
             d.body.classList.add("fix-popup");
             setTimeout(adjustPopup, 10, true);
@@ -76,14 +87,14 @@
             data.icon = "../images/chat.svg";
         }
 
-        el.innerHTML = '<div class="room">' +
-            '<a class="lnk" href="' + url + '">' +
+        el.className = "room";
+
+        el.innerHTML = '<a class="lnk" href="' + url + '">' +
             '<div class="icon"><img src="' + data.icon + '"></div>' +
             '<div class="content">' +
             '<p>' + data.title + '</p>' +
             '</div></a>' +
-            '<div class="close"><a class="icon" href="#"></a></div>' +
-            '</div>';
+            '<div class="close"><a class="icon" href="#"></a></div>';
 
         el.querySelector(".close > a").onclick = function () {
             StackExchangeNotifications.utils.dialog.confirm("Do you really want to remove?", function (ok) {
@@ -103,7 +114,7 @@
                     }
                 });
             });
-        }
+        };
 
         chatRooms.appendChild(el);
     }
@@ -192,29 +203,6 @@
         }
 
         setTimeout(adjustPopup, 1);
-    }
-
-    function switchEngine(el)
-    {
-        var val, key = el.getAttribute("data-switch");
-
-        if (key) {
-            val = StackExchangeNotifications.switchEnable(key);
-
-            if (val === true) {
-                el.setAttribute("data-switch-value", "on");
-            }
-        }
-
-        el.addEventListener("click", function () {
-            var nval = el.getAttribute("data-switch-value") === "on";
-
-            el.setAttribute("data-switch-value", nval ? "off" : "on");
-
-            if (key) {
-                StackExchangeNotifications.switchEnable(key, !nval);
-            }
-        });
     }
 
     function isCurrentTab(type)

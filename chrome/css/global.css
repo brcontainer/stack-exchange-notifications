@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.1.0
+ * StackExchangeNotifications 1.2.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -40,7 +40,7 @@ hr {
     border: none;
     border-top: 1px #efe1e1 solid;
     text-shadow: none;
-    margin: 0.5em;
+    margin: .5em;
 }
 
 ::-webkit-scrollbar {
@@ -50,12 +50,12 @@ hr {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0,0,0,.2);
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,.5);
 }
 
 .sen-bg-loader {
@@ -83,7 +83,7 @@ hr {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    text-shadow: 0 1px rgba(255, 255, 255, 1);
+    text-shadow: 0 1px rgba(255,255,255,1);
 }
 
 select.field {
@@ -148,7 +148,7 @@ select.field {
     float: left;
 }
 
-.field a[data-switch] {
+.field > .toggle {
     margin: 7px 0;
     float: right;
 }

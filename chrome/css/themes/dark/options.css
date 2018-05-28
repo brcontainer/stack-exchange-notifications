@@ -1,17 +1,17 @@
 /*
- * StackExchangeNotifications 1.1.0
+ * StackExchangeNotifications 1.2.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-body {
+body > .main, body {
     background-color: #262b30 !important;
     background-size: 90% auto !important;
 }
 
-body.horror {
+body.horror > .main {
     background: #262b30 url(../../../images/pumpkins.svg#clear) center center fixed no-repeat !important;
     background-size: 90% auto !important;
 }
@@ -20,7 +20,6 @@ body,
 a,
 #about-content,
 select.field,
-.utc-clock,
 .notice,
 .tab-item .item-location,
 .tab-item .message-text h4 {
@@ -36,7 +35,6 @@ hr {
     border-color: #4f5154 !important;
 }
 
-.utc-clock,
 .tab-item
 .modal-content li,
 .tab-item .modal-content div.date-group,
@@ -45,8 +43,7 @@ hr {
 }
 
 .tab-item .modal-content li.inbox-se-link,
-.tab-item .modal-content li.inbox-se-link:hover,
-.utc-clock {
+.tab-item .modal-content li.inbox-se-link:hover {
     background-color: #646464 !important;
 }
 
@@ -56,7 +53,7 @@ hr {
 
 .tab-item .modal-content li:hover,
 .tab-item .modal-content .room:hover {
-    background-color: rgba(51, 61, 72, 0.9) !important;
+    background-color: rgba(51,61,72,.9) !important;
 }
 
 .tab-item .modal-content .room:hover .close > .icon {
@@ -121,5 +118,5 @@ body.horror > .dialog > .modal > .confirm > button:first-child {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: rgba(0,0,0,.85);
 }

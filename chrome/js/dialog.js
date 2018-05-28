@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.1.0
+ * StackExchangeNotifications 1.2.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -15,8 +15,8 @@
         w.StackExchangeNotifications = { "utils": {} };
     }
 
-    var ddialog, dmodal, dcontent, alertBtn, okBtn, cancelBtn,
-        alertCallback, confirmCallback, dalert, dconfirm;
+    var body, ddialog, dmodal, dcontent, dalert, dconfirm,
+        alertCallback, confirmCallback, alertBtn, okBtn, cancelBtn;
 
     function isOpen()
     {
@@ -26,6 +26,9 @@
     function openDialog(msg)
     {
         dcontent.textContent = msg;
+
+        body.classList.add("dialog-open");
+
         ddialog.classList.remove("hide");
     }
 
@@ -34,6 +37,8 @@
         if (e && alertCallback) {
             setTimeout(alertCallback, 1);
         }
+
+        body.classList.remove("dialog-open");
 
         dalert.classList.add("hide");
         ddialog.classList.add("hide");
@@ -82,11 +87,12 @@
     }
 
     w.StackExchangeNotifications.utils.ready(function () {
+        body = d.body;
         ddialog = d.querySelector(".dialog");
         dmodal = ddialog.querySelector(".modal");
-        dcontent = ddialog.querySelector(".content");
         dalert = ddialog.querySelector(".alert");
         dconfirm = ddialog.querySelector(".confirm");
+        dcontent = ddialog.querySelector(".content");
 
         ddialog.querySelector(".alert > button").addEventListener("click", closeDialog);
         ddialog.querySelector(".confirm > button:first-child").addEventListener("click", confirmDialog);

@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.1.0
+ * StackExchangeNotifications 1.2.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -7,16 +7,38 @@
  */
 
 html, body {
-    width: 400px;
+    overflow: hidden;
 }
 
-body.fix-popup {
+body > .main {
+    background-color: #f6f6f6;
+    height: 580px;
+    overflow: auto;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body.fix-popup > .main {
     width: 399px;
 }
 
-body {
-    background-color: #f6f6f6;
-    min-height: 460px;
+body > .main, body > .fix-scroll {
+    width: 400px;
+}
+
+body > .fix-scroll {
+    position: fixed;
+    top: -150px;
+    height: 100px;
+    background: #fc0;
+    overflow: scroll;
+    overflow-x: hidden;
+    z-index: 999;
+    pointer-events: none;
+}
+
+body > .fix-scroll > .sub {
+    width: 100%;
 }
 
 .header {
@@ -52,16 +74,16 @@ body {
     margin: 4px 4px 0 4px;
     position: relative;
     text-decoration: none;
-    border-radius: 0.23em;
+    border-radius: .23em;
     border: 1px transparent solid;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 0 rgba(0,0,0,.08);
     pointer-events: auto;
     outline: none;
     transition: background-color 1s;
 }
 
 .nav a:first-child {
-    margin-right: 7px;
+    margin-right: 8px;
 }
 
 .nav a .icon {
@@ -86,22 +108,22 @@ body {
     line-height: 20px;
     padding: 0 6px;
     color: #fff;
-    text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px rgba(0,0,0,.2);
     border: 1px #911f28 solid;
     border-radius: 11px;
     background-color: #e23442;
     background-image: linear-gradient(to bottom, #e8616c, #dd202f);
-    box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+    box-shadow: inset 0 0 1px 1px rgba(255,255,255,.1), 0 1px rgba(0,0,0,.12);
 }
 
 .bg-sen {
     width: 64px;
     height: 64px;
-    border: 0.25em #F0EBEB solid;
+    border: .25em #F0EBEB solid;
     border-radius: 4px;
     margin: 0 auto;
-    -webkit-filter: drop-shadow(1px 1px 0 rgba(255, 255, 255, 0.8));
-            filter: drop-shadow(1px 1px 0 rgba(255, 255, 255, 0.8));
+    -webkit-filter: drop-shadow(1px 1px 0 rgba(255,255,255,.8));
+            filter: drop-shadow(1px 1px 0 rgba(255,255,255,.8));
 }
 .bg-sen img {
     position: relative;
@@ -182,6 +204,7 @@ body {
 .tab-item .modal-content li {
     margin: 0;
     padding: 0;
+    list-style-type: none;
 }
 
 .tab-item .modal-content li .privileges-page {
@@ -189,7 +212,6 @@ body {
     display: inline-block;
 }
 
-.utc-clock,
 .tab-item .modal-content li,
 .tab-item .modal-content div.date-group,
 .tab-item .modal-content .room {
@@ -198,6 +220,7 @@ body {
 
 .tab-item .modal-content li {
     line-height: 16px;
+    min-height: 38px;
 }
 
 .tab-item .modal-content li:last-child {
@@ -216,7 +239,7 @@ body {
 }
 .tab-item .modal-content li a,
 .tab-item .modal-content .room > a {
-    padding: 0.65em 0.25em 0.65em 0.55em;
+    padding: .65em .25em .65em .55em;
     text-decoration: none;
     display: block;
 }
@@ -251,39 +274,38 @@ body {
     color: #fff;
 }
 
-.tab-item .modal-content li.inbox-se-link, .utc-clock {
+.tab-item .modal-content li.inbox-se-link {
     position: fixed;
-    bottom: 0;
     left: 0;
-    width: 100%;
+    bottom: 0;
+    width: calc(100% - 8px);
     background-color: #fff;
-    box-shadow: 0 -2px 1px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 -2px 1px rgba(0,0,0,.08);
 }
 
 .tab-item .modal-content li.inbox-se-link:hover {
     background-color: #fcfcfc;
 }
-.tab-item .modal-content::after {
+
+.tab-item:not(#chat-content):not(#achievements-content) .modal-content::after {
     visibility: hidden;
-    padding: 13px 0 14px 0;
+    padding: 17px 0;
     content: "W";
     display: block;
 }
 
-.tab-item .modal-content li.inbox-se-link a, .utc-clock {
+.tab-item .modal-content li.inbox-se-link a {
     padding: 16px 0;
     text-align: center;
     font-size: 9pt;
 }
 
 .utc-clock {
-    letter-spacing: normal;
-    font-weight: normal;
-    font-size: 7pt;
+    display: none !important;
 }
 
 .date-group-toggle-row {
-    padding: 0.8em 0.5em;
+    padding: .8em .5em;
     background-color: #fafafa;
 }
 .date-group:first-child .date-group-toggle-row {
@@ -303,11 +325,11 @@ body {
 }
 
 .tab-item .item-location {
-    padding: 0.8em 0;
+    padding: .8em 0;
 }
 
 .tab-item .item-summary {
-    padding-left: 0.8em;
+    padding-left: .8em;
 }
 
 .tab-item .rep-site,
@@ -352,7 +374,7 @@ body {
 }
 
 .tab-item .rep-site-container {
-    padding-top: 0.8em;
+    padding-top: .8em;
     display: block;
 }
 
@@ -384,11 +406,10 @@ body {
     text-decoration: none;
 }
 
-#about-content a:hover, .inbox-se-link a:hover, .utc-clock {
+#about-content a:hover, .inbox-se-link a:hover {
     color: #AD9B9B;
 }
-#about-content h1,
-#about-content h2 {
+#about-content h1, #about-content h2 {
     padding: 10px 0;
 }
 #about-content h3 {
@@ -396,12 +417,12 @@ body {
 }
 #about-content ul {
     width: 240px;
-    padding: 0.8em 0;
+    padding: .8em 0;
     margin: 0 auto;
 }
 
 .about {
-    padding: 60px 0.25em 0.55em 0.55em;
+    padding: 88px .25em 0 .55em;
 }
 
 .about p {
@@ -438,15 +459,17 @@ body {
     clear: both;
     content: "";
     display: block;
+    height: 0;
 }
 .tab-item .modal-content .room > a {
     box-sizing: border-box;
     float: left;
-    width: 360px;
+    width: 352px;
 }
 .tab-item .modal-content .room > a > .icon {
     float: left;
     width: 32px;
+    overflow: hidden;
 }
 .tab-item .modal-content .room .content {
     margin-left: 36px;
@@ -460,7 +483,7 @@ body {
     height: 36px;
 }
 .tab-item .modal-content .room .close {
-    margin-top: 0.65em;
+    margin-top: .65em;
     float: right;
     width: 38px;
     text-align: center;
@@ -474,6 +497,7 @@ body {
     border-radius: 100%;
     width: 24px;
     height: 24px;
+    margin: 0 auto;
 }
 
 .tab-item .modal-content .room .close > .icon::before {
@@ -500,36 +524,12 @@ body {
     margin-right: 5px;
 }
 
-@-moz-document url-prefix() {
-    html, body {
-        height: 600px;
-    }
-
-    body {
-        overflow-x: hidden;
-    }
-
-    .field {
-        padding-right: 24px !important;
-    }
-
-    select.field {
-        background-position: 360px center !important;
-    }
-
-    @media (max-device-height: 600px)
-    {
-        html, body {
-            height: 480px;
-        }
-    }
-}
-
-@media (min-width: 600px)
+@media (max-device-height: 600px)
 {
-    html, body {
-        max-height: initial;
-        height: auto;
-        width: auto;
+    body > .main {
+        height: 460px;
+    }
+    .about {
+        padding-top: 60px;
     }
 }

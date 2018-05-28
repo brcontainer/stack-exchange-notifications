@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.1.0
+ * StackExchangeNotifications 1.2.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -42,24 +42,22 @@
 
     function switchEngine(el)
     {
-        var val, key = el.getAttribute("data-switch");
+        var val, key = el.id;
 
-        if (key) {
-            val = StackExchangeNotifications.switchEnable(key);
-
-            if (val === true) {
-                el.setAttribute("data-switch-value", "on");
-            }
+        if (!key) {
+            return;
         }
 
-        el.addEventListener("click", function () {
-            var nval = el.getAttribute("data-switch-value") === "on";
+        val = StackExchangeNotifications.switchEnable(key);
 
-            el.setAttribute("data-switch-value", nval ? "off" : "on");
+        el.disabled = false;
 
-            if (key) {
-                StackExchangeNotifications.switchEnable(key, !nval);
-            }
+        if (val === true) {
+            el.checked = true;
+        }
+
+        el.addEventListener("change", function () {
+            StackExchangeNotifications.switchEnable(key, el.checked);
         });
     }
 
@@ -67,12 +65,12 @@
     {
         d.getElementById("setup-inner").innerHTML = response;
 
-        var switchs = d.querySelectorAll("a[data-switch]"),
+        var switchs = d.querySelectorAll("input[type=checkbox]"),
             clearCache = d.getElementById("clear-cache"),
             clearAllData = d.getElementById("clear-all-data"),
-            switchTheme = d.querySelector("a[data-switch='dark_theme']");
+            switchTheme = d.getElementById("dark_theme");
 
-        switchTheme.addEventListener("click", function () {
+        switchTheme.addEventListener("change", function () {
             setTimeout(changeTheme, 150, false);
 
             browser.runtime.sendMessage({

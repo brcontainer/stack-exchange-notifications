@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.1.0
+ * StackExchangeNotifications 1.2.0
  * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -43,7 +43,7 @@
     {
         if (!tmpCanvas) {
             tmpCanvas = d.createElement("canvas");
-            canvasContext = tmpCanvas.getContext('2d');
+            canvasContext = tmpCanvas.getContext("2d");
         }
 
         canvasContext.clearRect(0, 0, tmpCanvas.width, tmpCanvas.height);
@@ -65,9 +65,9 @@
         }
     }
 
-    var sitesRE = new RegExp('^(' + getMatches(0).join("|")
+    var sitesRE = new RegExp("^(" + getMatches(0).join("|")
                                     .replace(/(\.|\/)/g, "\\$1")
-                                        .replace(/\*/g, ".*?") + ')$', 'i');
+                                        .replace(/\*/g, ".*?") + ")$", "i");
 
     function metaData()
     {
@@ -80,10 +80,7 @@
             };
         }
 
-        return {
-            "appname": u,
-            "version": u
-        }
+        return { "appname": u, "version": u }
     };
 
     function noCacheURI(uri)
@@ -126,9 +123,7 @@
                 headers = headersXhrJson(xhr);
 
                 if (xhr.status === 0) {
-                    setTimeout(function () {
-                        callback("", 0, headers);
-                    }, 200);
+                    setTimeout(callback, 200, "", 0, headers);
                 } else {
                     var status = xhr.responseText === "" && xhr.status === 200 ? -1 : xhr.status;
 
@@ -147,6 +142,7 @@
             "abort": function () {
                 if (completed === false) {
                     isAborted = true;
+
                     try {
                         xhr.abort();
                     } catch (ee) {}
@@ -534,7 +530,7 @@
                 for (i = resources.length - 1; i >= 0; i--) {
                     if (resources[i].bin) {
                         tmpCss += resources[i].selector +
-                                    ' { background-image: url(' + resources[i].bin + '); }';
+                                    " { background-image: url(" + resources[i].bin + "); }";
                     }
                 }
 
