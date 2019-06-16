@@ -190,7 +190,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     width: 100% !important;
     height: 100% !important;
     min-width: 860px !important;
-    z-index: 1051 !important;
+    z-index: 5051 !important;
     position: fixed !important;
     border: none !important;
 }
