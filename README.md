@@ -50,9 +50,9 @@ For debugging or testing push notifications there are some functions:
 
 > **Note:** Requires Firefox 48+ (or Developer Edition) for load of temporary add-on
 
-- Type `about:debugging` in "address bar"
+- Type `about:debugging` in "address bar" (in new firefox version access `about:debugging#/runtime/this-firefox`)
 - Click in "Load Temporary Add-on"
-- Go to chrome folder (from this project) and select `background.js`
+- Go to `chrome` folder (from this project) and select `manifest.json`
 - After add-on is showed, click on "Debug" button (on right extension)
 - In Console tab type your commands
 
