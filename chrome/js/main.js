@@ -9,7 +9,7 @@
 (function (w, d, u) {
     "use strict";
 
-    var theme, browser = w.chrome||w.browser, version = d.getElementById("version");
+    var theme, version = d.getElementById("version");
 
     var debugMode = !(
         "update_url" in browser.runtime.getManifest() ||

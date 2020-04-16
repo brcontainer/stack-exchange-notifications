@@ -19,7 +19,9 @@ a.sen-btn-pin > i.sen-inroom-heart-icon {
     transition: transform ease-out 1s;
 }
 
-a.sen-btn-pin:hover > i.sen-inroom-heart-icon {
+a.sen-btn-pin:hover > i.sen-inroom-heart-icon,
+.roomcard:hover a.sen-btn-pin > i.sen-inroom-heart-icon,
+[id^=room-]:hover a.sen-btn-pin > i.sen-inroom-heart-icon {
     transform: rotateY(-180deg);
 }
 
@@ -32,4 +34,9 @@ a.sen-btn-pin::after {
 }
 a.sen-btn-pin.sen-added::after {
     content: " remove room";
+}
+
+.roomcard a.sen-btn-pin, [id^=room-] a.sen-btn-pin {
+    display: block;
+    text-align: right;
 }

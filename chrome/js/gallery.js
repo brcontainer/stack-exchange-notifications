@@ -32,8 +32,7 @@
         magnificationRegexp = /\bsen-magnification\b/,
         showRegExp          = /\bsen-show\b/,
         mainSelector        = "a[href]",
-        linkSelector        = "#starred-posts a",
-        browser             = w.chrome||w.browser;
+        linkSelector        = "#starred-posts a";
 
     function resizeImage()
     {

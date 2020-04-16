@@ -9,8 +9,6 @@
 (function (w, d) {
     "use strict";
 
-    var browser = w.chrome||w.browser;
-
     //Disable functions in chat
     if (w.location.hostname.indexOf("chat.") === 0) {
         return;
@@ -440,7 +438,7 @@
         if (d.getElementsByClassName("sen-editor-full").length === 0) {
             rootDoc.className = rootDoc.className
                                     .replace(noscrollRegExp, " ")
-                                        .replace(/\s\s/g, " ").trim();
+                                        .replace(/([\t\n\r])\1{1,}/g, "$1").trim();
         }
     }
 

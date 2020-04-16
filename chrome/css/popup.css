@@ -16,6 +16,7 @@ body > .main {
     overflow: auto;
     overflow-x: hidden;
     position: relative;
+    scrollbar-width: thin;
 }
 
 body.fix-popup > .main {
@@ -47,7 +48,7 @@ body > .fix-scroll > .sub {
     font-size: 13px;
     color: #646464;
     text-transform: uppercase;
-    box-shadow: 0 2px 2px rgba(0, 0, 0,.04);
+    box-shadow: 0 2px 2px rgba(0,0,0,.04);
     position: relative;
 }
 .header > :not(h3) {
@@ -55,7 +56,7 @@ body > .fix-scroll > .sub {
 }
 
 .nav {
-    background-color: rgba(255,255,255,0.02); /*fix driver video render bug firefox*/
+    background-color: rgba(255,255,255,.02); /*fix driver video render bug firefox*/
     position: fixed;
     z-index: 99;
     width: 100%;
@@ -245,9 +246,11 @@ body > .fix-scroll > .sub {
 }
 
 .tab-item .modal-content .more-rooms {
+    border-top: 1px #cfcfcf solid;
     padding: 20px 0;
     white-space: nowrap;
     font-size: 0;
+    text-align: center;
 }
 .tab-item .modal-content .more-rooms > a {
     border: 1px #bdb9b9 solid;
@@ -286,13 +289,13 @@ body > .fix-scroll > .sub {
 .tab-item .modal-content li.inbox-se-link:hover {
     background-color: #fcfcfc;
 }
-
+/*
 .tab-item:not(#chat-content):not(#achievements-content) .modal-content::after {
     visibility: hidden;
     padding: 17px 0;
     content: "W";
     display: block;
-}
+}*/
 
 .tab-item .modal-content li.inbox-se-link a {
     padding: 16px 0;
@@ -436,7 +439,7 @@ body > .fix-scroll > .sub {
     width: 88px;
     height: 88px;
     margin: 5px auto;
-    border-color: rgb(208, 190, 190);
+    border-color: rgb(208,190,190);
 }
 
 .setup {
@@ -476,12 +479,20 @@ body > .fix-scroll > .sub {
 }
 .tab-item .modal-content .room .icon,
 .tab-item .modal-content .room .close,
-.tab-item .modal-content .room .content p {
+.tab-item .modal-content .room .content {
     justify-content: center;
     flex-direction: column;
     display: flex;
     height: 36px;
 }
+
+.tab-item .modal-content .room .content p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+
 .tab-item .modal-content .room .close {
     margin-top: .65em;
     float: right;

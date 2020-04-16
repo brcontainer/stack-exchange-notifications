@@ -9,6 +9,12 @@
 (function (w, d, u) {
     "use strict";
 
+    if (typeof browser === "undefined") {
+        w.browser = chrome;
+    } else if (!w.browser) {
+        w.browser = browser;
+    }
+
     var delay = 60, //In seconds
         initiateDelay = 5000; //Milliseconds
 
@@ -19,8 +25,7 @@
     var doneCallback = null,
         isRunning = false,
         timer = null,
-        noNeedRequestXhr = false,
-        browser = w.chrome||w.browser;
+        noNeedRequestXhr = false;
 
     var isHttpRegExp = /^https?\:\/\/[^/]/i,
         tmpDom = d.createElement("div"),

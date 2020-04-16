@@ -29,6 +29,7 @@ pre + :not(.sen-tools-clipboard) {
     border-top-right-radius: 0 !important;
     display: inline-block !important;
     text-align: center !important;
+    text-decoration: none !important;
     line-height: 32px !important;
     height: 32px !important;
     font-size: 10pt;

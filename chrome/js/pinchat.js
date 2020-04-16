@@ -10,12 +10,16 @@
     "use strict";
 
     var link,
-        added = true,
+        rooms = {},
         addedRegExp = /\bsen-added\b/g,
-        removeMsg = "Do you really want to remove this room?",
-        browser = w.chrome||w.browser;
+        removeMsg = "Do you really want to remove this room?";
 
-    function toggleClass(add)
+    function parseUrl(url)
+    {
+        return String(url).replace(/^https?:\/\//i, "").replace(/\/(\d+)\/.*(\?[\s\S]+)?([#][\s\S]+)?$/, "/$1");
+    }
+
+    function toggleClass(link, add)
     {
         if (!link) {
             return;
@@ -31,78 +35,134 @@
     function bgData(data, callback)
     {
         if (browser && browser.runtime && browser.runtime.sendMessage) {
-            data.url = String(w.location.href).replace(/(#|\?)[\s\S]+$/, "");
+            data.url = parseUrl(data.url);
             browser.runtime.sendMessage(data, callback);
         }
     }
 
-    function pinchat(pinned)
+    function togglePinchat(pinned, room, link)
     {
         if (pinned) {
-            var roomIco = d.querySelector(".small-site-logo"),
-                roomName = d.getElementById("roomname");
+            var url, roomName, roomIco = room.querySelector(".small-site-logo");
+
+            if (room !== d) {
+                url = room.querySelector(".room-name a[href^='/']").href;
+                var el = room.querySelector(".room-name, .roomname");
+
+                if (el) {
+                    roomName = el.title;
+                }
+            } else {
+                url = w.location.href;
+                var el = room.getElementById("roomname");
+
+                if (el) {
+                    roomName = el.textContent;
+                }
+            }
 
             bgData({
                 "chat": 1,
                 "icon": roomIco ? roomIco.src : "",
-                "title": roomName ? roomName.textContent : ""
+                "title": roomName,
+                "url": url
             }, function (response) {
                 if (response) {
-                    toggleClass(true);
+                    toggleClass(link, true);
                 }
             });
         } else if (w.confirm(removeMsg)) {
-            bgData({ "chat": 2 }, function (response) {
+            bgData({ "chat": 2, "url": url }, function (response) {
                 if (response) {
-                    toggleClass(false);
+                    toggleClass(link, false);
                 }
             });
         }
     }
 
-    function createLink(el)
+    function createLink(el, rc)
     {
-        if (el.getElementsByClassName(".inroom-heart-icon").length) {
+        if (el.getElementsByClassName("sen-btn-pin").length) {
             return;
         }
 
-        link = d.createElement("a");
-
         var icon = d.createElement("i"),
-            division = d.createTextNode("|"),
+            link = d.createElement("a"),
+            division,
+            space,
+            url;
+
+        if (!rc) {
+            division = d.createTextNode("|");
             space = d.createTextNode(" ");
+            url = w.location.href;
+        } else {
+            url = el.querySelector(".room-name a[href^='/']").href;
+        }
+
+        url = parseUrl(url);
 
         link.href = "javascript:void(0);";
         link.className = "sen-btn-pin";
 
-        if (added) {
+        if (rooms[url]) {
             link.className += " sen-added";
         }
 
         link.onclick = function (e) {
             e.preventDefault();
-            pinchat(!addedRegExp.test(link.className));
+            togglePinchat(!addedRegExp.test(link.className), rc ? el : d, link);
         };
 
         icon.className = "sen-inroom-heart-icon";
 
         link.appendChild(icon);
 
-        el.appendChild(division);
-        el.appendChild(space);
-        el.appendChild(link);
+        if (!rc) {
+            el.appendChild(division);
+            el.appendChild(space);
+            el.appendChild(link);
+        } else {
+            el.insertBefore(link, el.firstElementChild);
+        }
     }
 
     function appendLinks()
     {
-        var els = d.querySelectorAll(".roomcard, [id^=room-], #sidebar-menu");
+        var els, mainChat = d.getElementById("sidebar-menu");
+
+        if (mainChat) {
+            els = [mainChat];
+        } else {
+            els = d.querySelectorAll(".roomcard, [id^=room-]");
+        }
 
         for (var i = els.length - 1; i >= 0; i--) {
             if (els[i].id === "sidebar-menu") {
-                createLink(els[i]);
+                createLink(els[i], false);
                 break;
+            } else if (els[i].matches(".roomcard, [id^=room-]")) {
+                createLink(els[i], true);
             }
         }
+    }
+
+    function observerPinChat()
+    {
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                if (mutation.target.matches("#roomlist, .roomcard, * .roomcard")) {
+                    appendLinks();
+                    return;
+                }
+            });
+        });
+
+        observer.observe(d.body, {
+            "subtree": true,
+            "childList": true,
+            "attributes": false
+        });
     }
 
     function bootPinChat()
@@ -110,8 +170,12 @@
         StackExchangeNotifications.utils.resourceStyle("pinchat");
 
         bgData({ "chat": 3 }, function (response) {
-            added = (response && response.added);
+            if (response.rooms) {
+                rooms = response.rooms;
+            }
+
             appendLinks();
+            observerPinChat();
         });
     }
 

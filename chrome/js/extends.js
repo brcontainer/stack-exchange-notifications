@@ -9,8 +9,13 @@
 (function (w, d) {
     "use strict";
 
-    var browser = w.chrome||w.browser,
-        hideRegExp = /\bsen-tools-hide\b/g,
+    if (typeof browser === "undefined") {
+        w.browser = chrome;
+    } else if (!w.browser) {
+        w.browser = browser;
+    }
+
+    var hideRegExp = /\bsen-tools-hide\b/g,
         readyRegExp = /^(interactive|complete)$/,
         notification,
         hideTimer;

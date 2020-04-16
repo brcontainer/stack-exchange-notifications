@@ -10,8 +10,7 @@
     "use strict";
 
     var previewRegExp = /\bwmd-preview\b/g,
-        copyCodeEnabled = false,
-        browser = w.chrome||w.browser;
+        copyCodeEnabled = false;
 
     function copyFromDOM(target)
     {

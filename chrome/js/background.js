@@ -91,13 +91,35 @@
             } else if (type === 2) {
                 delete rooms[url];
             } else if (type === 3) {
-                sendResponse({ "added": !!rooms[url] });
+                var update = false, adjust = {};
+
+                for (var room in rooms) {
+                    //Fix urls in from old version
+                    if (/^https?:/i.test(room)) {
+                        var newName = room.replace(/^https?:\/\//i, "").replace(/\/(\d+)\/.*(\?[\s\S]+)?([#][\s\S]+)?$/, "/$1");
+                        adjust[newName] = rooms[room];
+                        update = true;
+                    } else {
+                        adjust[room] = rooms[room];
+                    }
+                }
+
+                if (update) {
+                    rooms = adjust;
+                    sn.saveState("saved_rooms", adjust, true);
+                }
+
+                sendResponse({ "rooms": rooms });
+
+                adjust = null;
             }
 
             if (type > 0 && type < 3) {
                 sn.saveState("saved_rooms", rooms, true);
                 sendResponse(true);
             }
+
+            rooms = null;
         } else if (request.hasOwnProperty("storeimages")) {
             if (request.storeimages === true) {
                 var cssbg = sn.restoreState("cssbg");

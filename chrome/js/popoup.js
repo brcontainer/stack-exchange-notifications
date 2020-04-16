@@ -9,52 +9,50 @@
 (function (w, d, u) {
     "use strict";
 
-    var lastTab,
-        mainElement         = d.querySelector("body > .main"),
-
-        navgation           = d.querySelector(".nav"),
-
-        inboxButton         = d.getElementById("inbox-button"),
-        inboxContent        = d.getElementById("inbox-content"),
-        inboxData           = inboxButton.querySelector("span.push"),
-        inboxXhr            = null,
-
-        achievementsButton  = d.getElementById("achievements-button"),
-        achievementsContent = d.getElementById("achievements-content"),
-        achievementsData    = achievementsButton.querySelector("span.push"),
-        achievementsXhr     = null,
-
-        aboutButton         = d.getElementById("about-button"),
-        aboutContent        = d.getElementById("about-content"),
-
-        chatButton          = d.getElementById("chat-button"),
-        chatContent         = d.getElementById("chat-content"),
-        chatRooms           = d.querySelector(".rooms"),
-        chatNotice          = chatRooms.querySelector(".rooms > .notice"),
-        chatActived         = false,
-
-        setupButton         = d.getElementById("setup-button"),
-        setupContent        = d.getElementById("setup-content"),
-
-        //notificationSwitch  = d.getElementById("notification-switch"),
-
-        editorSwitch        = d.getElementById("editor-switch"),
-        editorSwitchTabs    = d.getElementById("editor-switch-tabs"),
-        editorSwitchInvert  = d.getElementById("editor-switch-invert"),
-        editorSwitchPreview = d.getElementById("editor-switch-preview"),
-
-        bgLoaderRegExp      = /\b(hide|sen-bg-loader)\b/g,
+    var bgLoaderRegExp      = /\b(hide|sen-bg-loader)\b/g,
         hideRegExp          = /\bhide\b/g,
         isHttpRegExp        = /^https?\:\/\/[^/]/i,
         imgExtensionRegexp  = /url\(("|'|)([\s\S]+?\.(png|gif|jp?eg)(\?|\?[\s\S]+?|))("|'|)\)/i,
 
-        cssLoaded           = false,
+        lastTab,
+        mainElement = d.querySelector("body > .main"),
 
-        headDOM             = d.head,
+        navgation = d.querySelector(".nav"),
 
-        browser             = w.chrome||w.browser,
+        inboxButton = d.getElementById("inbox-button"),
+        inboxContent = d.getElementById("inbox-content"),
+        inboxData = inboxButton.querySelector("span.push"),
+        inboxXhr = null,
 
-        fixPopupSize        = d.querySelector(".fix-scroll > .sub").clientWidth;
+        achievementsButton = d.getElementById("achievements-button"),
+        achievementsContent = d.getElementById("achievements-content"),
+        achievementsData = achievementsButton.querySelector("span.push"),
+        achievementsXhr = null,
+
+        aboutButton = d.getElementById("about-button"),
+        aboutContent = d.getElementById("about-content"),
+
+        chatButton = d.getElementById("chat-button"),
+        chatContent = d.getElementById("chat-content"),
+        chatRooms = d.querySelector(".rooms"),
+        chatNotice = chatRooms.querySelector(".rooms > .notice"),
+        chatActived = false,
+
+        setupButton = d.getElementById("setup-button"),
+        setupContent = d.getElementById("setup-content"),
+
+        //notificationSwitch = d.getElementById("notification-switch"),
+
+        editorSwitch = d.getElementById("editor-switch"),
+        editorSwitchTabs = d.getElementById("editor-switch-tabs"),
+        editorSwitchInvert = d.getElementById("editor-switch-invert"),
+        editorSwitchPreview = d.getElementById("editor-switch-preview"),
+
+        cssLoaded = false,
+
+        headDOM = d.head,
+
+        fixPopupSize = d.querySelector(".fix-scroll > .sub").clientWidth;
 
     var s = d.createElement("style");
     s.textContent = ".tab-item .modal-content li.inbox-se-link,:not(#chat-content) > .header,.nav" +
@@ -89,7 +87,9 @@
 
         el.className = "room";
 
-        el.innerHTML = '<a class="lnk" href="' + url + '">' +
+        url = url.replace(/^https?:\/\//i, "").replace(/\/(\d+)\/.*(\?[\s\S]+)?([#][\s\S]+)?$/, "/$1");
+
+        el.innerHTML = '<a class="lnk" href="https://' + url + '">' +
             '<div class="icon"><img src="' + data.icon + '"></div>' +
             '<div class="content">' +
             '<p>' + data.title + '</p>' +
@@ -178,7 +178,11 @@
     {
         var target = box === "inbox" ? inboxContent : achievementsContent;
 
-        current.addEventListener("click", function () {
+        current.addEventListener("mousedown", function (e) {
+            if (e.button != 0 && e.button != 1) {
+                return;
+            }
+
             current.className = current.className.replace(/\bunread-item\b/g, " ").trim();
 
             var data = StackExchangeNotifications.restoreState(box);
@@ -515,10 +519,10 @@
                     if (dateContent) {
                         date = new Date(headers.date);
                         hour = date.getUTCHours();
-                        min  = date.getUTCMinutes();
+                        min = date.getUTCMinutes();
 
                         hour = hour > 9 ? hour : ("0" + hour);
-                        min  = min > 9 ? min : ("0" + min);
+                        min = min > 9 ? min : ("0" + min);
 
                         dateContent.textContent = hour + ":" + min;
                     }
