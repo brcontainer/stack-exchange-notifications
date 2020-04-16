@@ -1,6 +1,6 @@
 /*
- * StackExchangeNotifications 1.2.0
- * Copyright (c) 2017 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * StackExchangeNotifications 1.2.2
+ * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
  * https://github.com/brcontainer/stack-exchange-notification
