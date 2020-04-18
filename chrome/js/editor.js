@@ -27,7 +27,7 @@
         focusRegExp    = /\bsen-editor-focus\b/,
         visibleRegExp  = /\bsen-editor-visible\b/,
         fullRegExp     = /\bsen-editor-full\b/,
-        readyRegExp    = /\bsen-editor-ready\b/,
+        readyRegExp    = /\bsen-editor-preview\b/,
         invertedRegExp = /\bsen-editor-inverted\b/,
         noscrollRegExp = /\bsen-editor-noscroll\b/,
         getClassRegExp = /^([\s\S]+?\s|)(wmd-[\S]+?-button)([\s\S]+|)$/,
@@ -320,7 +320,7 @@
                 rootDoc.className += " sen-editor-noscroll";
 
                 if (preferPreviewInFull) {
-                    realEditor.className += " sen-editor-ready";
+                    realEditor.className += " sen-editor-preview";
                     inPreview = true;
                 }
             }
@@ -344,7 +344,7 @@
                     realTextField.readOnly = false;
                 }
             } else {
-                realEditor.className += " sen-editor-ready";
+                realEditor.className += " sen-editor-preview";
 
                 if (!inFull) {
                     realTextField.readOnly = true;
@@ -565,23 +565,42 @@
         setTimeout(triggerObserver, 300);
 
         d.addEventListener("keydown", function (e) {
-            if (e.altKey && e.target && isInput.test(e.target.className)) {
-                switch (e.keyCode) {
-                    case 70: //Alt+F change to fullscreen or normal
-                        if (e.target.onSenFull) {
-                            e.preventDefault();
-                            e.target.onSenFull();
-                        }
-                    break;
-                    case 86: //Alt+V show/hide preview
-                        if (e.target.onSenPreview) {
-                            e.preventDefault();
-                            e.target.onSenPreview();
-                        }
-                    break;
+            if (e.target && isInput.test(e.target.className)) {
+                if (e.altKey) {
+                    switch (e.keyCode) {
+                        case 70: //Alt+F change to fullscreen or normal
+                            if (e.target.onSenFull) {
+                                e.preventDefault();
+                                e.target.onSenFull();
+                            }
+                            break;
+                        case 86: //Alt+V show/hide preview
+                            if (e.target.onSenPreview) {
+                                e.preventDefault();
+                                e.target.onSenPreview();
+                            }
+                            break;
+                    }
+                } else if (italicWithUnderScore && e.ctrlKey && e.keyCode == 73) {
+                    setTimeout(italicWithUnderScoreReplacer, 100, e.target);
                 }
             }
         });
+    }
+
+    function italicWithUnderScoreReplacer(target)
+    {
+        var start = target.selectionStart,
+            end = target.selectionEnd,
+            value = target.value;
+
+        value = value.substring(0, start - 1) +
+                "_" + value.substring(start, end) + "_" +
+                value.substring(end + 1, value.length);
+
+        target.value = value;
+
+        target.setSelectionRange(start, end);
     }
 
     function initiate()

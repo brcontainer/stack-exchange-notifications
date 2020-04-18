@@ -8,50 +8,48 @@
 
 (function (w, d) {
     "use strict";
+    
+    var italicWithUnderScore = false;
 
-    var re = /\{[<][:]=\(TEXT\)=[:][>]\}/g;
-
-    function applyMarkdown(markdown, textarea, select, alternative)
+    function applyMarkdown(prefix, sulfix, textarea, select, alternative)
     {
-        var text,
+        var md,
             start = textarea.selectionStart,
             end = textarea.selectionEnd,
             value = textarea.value,
             ini = value.substring(start, end);
 
-        console.log({ alternative })
-
         if (!ini) {
             ini = alternative;
-            text = markdown.replace(re, ini);
+            md = sulfix + ini + sulfix;
         } else if (ini.trim() !== ini) {
             ini = ini.trim();
-            text = markdown.replace(re, ini) + " ";
+            md = sulfix + ini + sulfix + " ";
         } else {
-            text = markdown.replace(re, ini);
+            md = sulfix + ini + sulfix;
         }
 
-        textarea.value = value.substring(0, start) + text + value.substring(end, value.length);
+        textarea.value = value.substring(0, start) + md + value.substring(end, value.length);
 
         textarea.setSelectionRange(start + select, start + ini.length + select);
     }
 
     d.addEventListener("keydown", function (e) {
         if (e.ctrlKey && e.target.matches("textarea.js-comment-text-input")) {
-            var md, alternative = "", select = 1;
+            var prefix, sulfix, alternative = "", select = 1;
 
             switch (typeof e.which === "undefined" ? e.keyCode : e.which) {
                 case 66: //B
-                    md = "**{<:=(TEXT)=:>}**";
+                    prefix = sulfix = "**";
                     select = 2;
                     alternative = "strong text";
                     break;
                 case 73: //I
-                    md = "*{<:=(TEXT)=:>}*";
+                    prefix = sulfix = italicWithUnderScore ? "_" : "*";
                     alternative = "emphasized text";
                     break;
                 case 75: //K
-                    md = "`{<:=(TEXT)=:>}`";
+                    prefix = sulfix = "`";
                     alternative = "code text";
                     break;
                 case 76: //L link
@@ -59,15 +57,22 @@
 
                     if (!link) return;
 
-                    md = "[{<:=(TEXT)=:>}](" + link + ")";
+                    prefix = "[";
+                    sulfix = "](" + link + ")";
                     alternative = "enter link description here";
                     break;
             }
 
-            if (md) {
+            if (prefix) {
                 e.preventDefault();
-                applyMarkdown(md, e.target, select, alternative);
+                applyMarkdown(prefix, sulfix, e.target, select, alternative);
             }
         }
     });
+
+    if (browser && browser.runtime && browser.runtime.sendMessage) {
+        browser.runtime.sendMessage("editor", function (response) {
+            italicWithUnderScore = !!response.italic;
+        });
+    }
 })(window, document);

@@ -134,11 +134,11 @@
 
     d.getElementById("about-title").textContent = manifestData.appname + " " + manifestData.version;
 
-    function showButtonPushs(i, a)
+    function showButtonPushs()
     {
         var total = 0,
-            inbox = i !== u ? i : StackExchangeNotifications.getInbox(),
-            achievements = a !== u ? a : StackExchangeNotifications.getAchievements();
+            inbox = StackExchangeNotifications.getInbox(),
+            achievements = StackExchangeNotifications.getAchievements();
 
         if (achievements.acquired > 0) {
             total += achievements.acquired;
@@ -161,18 +161,11 @@
         } else {
             achievementsData.className = "push hide";
         }
+
+        setTimeout(showButtonPushs, 1000);
     }
 
     showButtonPushs();
-
-    browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-        if (request.updatecounts) {
-            showButtonPushs(request.updatecounts.inbox, {
-                "acquired": request.updatecounts.acquired,
-                "score": request.updatecounts.score
-            });
-        }
-    });
 
     function actionCheckRead(current, box)
     {

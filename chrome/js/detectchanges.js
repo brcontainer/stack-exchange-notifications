@@ -11,8 +11,7 @@
 
     var unreadRegExp       = /\b(js-unread-count|unread-count)\b/,
         inboxRegExp        = /\b(js-inbox-button|icon-inbox)\b/,
-        achievementsRegExp = /\b(js-achievements-button|icon-achievements)\b/,
-        browser            = w.chrome||w.browser;
+        achievementsRegExp = /\b(js-achievements-button|icon-achievements)\b/;
 
     function sendNotification(type, el, fromload)
     {

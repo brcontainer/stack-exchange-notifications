@@ -11,12 +11,10 @@ html, body {
 }
 
 body > .main {
-    background-color: #f6f6f6;
     height: 580px;
     overflow: auto;
     overflow-x: hidden;
     position: relative;
-    scrollbar-width: thin;
 }
 
 body.fix-popup > .main {

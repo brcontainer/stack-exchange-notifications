@@ -113,10 +113,15 @@ body.horror > .dialog > .modal > .confirm > button:first-child {
     background-image: url(../../../images/gears.svg);
 }
 
-::-webkit-scrollbar {
-    background-color: #907979;
+html, html * {
+    scrollbar-color: #cdcdcd #f0f0f0;
+    scrollbar-width: thin;
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: rgba(0,0,0,.85);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #a6a6a6;
 }

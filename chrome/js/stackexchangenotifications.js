@@ -307,9 +307,18 @@
         "boot": function () {
             //Improve performance in Opera and older machines
             setTimeout(function () {
+                try {
+                    chrome.browserAction.setBadgeTextColor({color: "white"});
+                } catch (ee) {}
+
+                chrome.browserAction.setBadgeBackgroundColor({color:"#EE0101"});
+            }, 1);
+
+            setTimeout(function () {
                 initiateDelay = 1;
-                //StackExchangeNotifications.inbox();
-                //StackExchangeNotifications.achievements();
+
+                StackExchangeNotifications.inbox();
+                StackExchangeNotifications.achievements();
             }, initiateDelay);
 
             if (SimpleCache.get("firstrun2", true)) {

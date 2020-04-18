@@ -9,8 +9,7 @@
 (function (w) {
     "use strict";
 
-    var browser = w.chrome||w.browser,
-        sn = StackExchangeNotifications;
+    var sn = StackExchangeNotifications;
 
     sn.boot();
 
@@ -32,8 +31,6 @@
         browser.browserAction.setBadgeText({
             "text": sn.utils.convertResult(updates)
         });
-
-        browser.runtime.sendMessage({ "updatecounts": response }, function (response) {});
     });
 
     function updateChanges(type, value)

@@ -9,8 +9,6 @@
 (function (w, d) {
     "use strict";
 
-    var browser = w.chrome||w.browser;
-
     if (!w.StackExchangeNotifications) {
         w.StackExchangeNotifications = { "utils": {} };
     }
