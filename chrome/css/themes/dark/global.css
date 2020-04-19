@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.2.2
+ * StackExchangeNotifications 1.2.4
  * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -65,6 +65,7 @@ hr {
     color: #fff !important;
 }
 
+.tab-item .modal-content .more-rooms,
 .tab-item .modal-content .more-rooms > a {
     border-color: #606065 !important;
 }
@@ -114,14 +115,18 @@ body.horror > .dialog > .modal > .confirm > button:first-child {
 }
 
 html, html * {
-    scrollbar-color: #cdcdcd #f0f0f0;
+    scrollbar-color: #56585a #262b30;
     scrollbar-width: thin;
 }
 
+::-webkit-scrollbar {
+    background-color: #262b30;
+}
+
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,.85);
+    background-color: #56585a;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #a6a6a6;
+    background-color: #6f7275;
 }
