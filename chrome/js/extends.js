@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.2.4
+ * StackExchangeNotifications
  * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -38,9 +38,7 @@
             d.body.appendChild(notification);
         }
 
-        if (hideTimer) {
-            clearTimeout(hideTimer);
-        }
+        if (hideTimer) clearTimeout(hideTimer);
 
         notification.textContent = label;
         notification.className =
@@ -111,9 +109,7 @@
         var started = false;
 
         function trigger() {
-            if (started) {
-                return;
-            }
+            if (started) return;
 
             started = true;
 

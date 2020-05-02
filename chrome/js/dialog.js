@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.2.4
+ * StackExchangeNotifications
  * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -59,9 +59,7 @@
 
     var dialog = {
         "alert": function (msg, callback) {
-            if (isOpen()) {
-                return false;
-            }
+            if (isOpen()) return false;
 
             if (typeof callback === "function") {
                 alertCallback = callback;
@@ -71,9 +69,7 @@
             openDialog(msg);
         },
         "confirm": function (msg, callback) {
-            if (isOpen()) {
-                return false;
-            }
+            if (isOpen()) return false;
 
             if (typeof callback === "function") {
                 confirmCallback = callback;

@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.2.4
+ * StackExchangeNotifications
  * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -10,9 +10,7 @@
     "use strict";
 
     //Disable functions in chat
-    if (w.location.hostname.indexOf("chat.") === 0) {
-        return;
-    }
+    if (w.location.hostname.indexOf("chat.") === 0) return;
 
     var theme,
         rootDoc,
@@ -48,9 +46,7 @@
 
     function triggerEvent(type, target)
     {
-        if (!target) {
-            return;
-        }
+        if (!target) return;
 
         var e = new MouseEvent(type, {
             "view": w,
@@ -77,9 +73,7 @@
     {
         var timerHideButtons, innerBtn;
 
-        if (skipBtnRegExp.test(button.className)) {
-            return;
-        }
+        if (skipBtnRegExp.test(button.className)) return;
 
         var c = button.className.replace(getClassRegExp, "$2").trim();
 
@@ -103,9 +97,7 @@
                 clearTimeout(timerHideButtons);
             }
 
-            if (!btn) {
-                return;
-            }
+            if (!btn) return;
 
             if (!innerBtn) {
                 innerBtn = btn.querySelector("*");
@@ -126,20 +118,14 @@
         var rtsTimer;
 
         el.addEventListener("change", function () {
-            if (rtsTimer) {
-                clearTimeout(rtsTimer);
-            }
+            if (rtsTimer) clearTimeout(rtsTimer);
 
             rtsTimer = setTimeout(function () {
                 var val = el.value;
 
-                if (val && tabsBySpaces) {
-                    val = val.replace(/\t/g, "    ");
-                }
+                if (val && tabsBySpaces) val = val.replace(/\t/g, "    ");
 
-                if (el.value !== val) {
-                    el.value = val;
-                }
+                if (el.value !== val) el.value = val;
 
                 triggerEvent("scroll", el);
             }, 100);
@@ -148,16 +134,12 @@
 
     function changeShorcutTitle(btn)
     {
-        if (!isMac) {
-            return;
-        }
+        if (!isMac) return;
 
         var o = btn.getAttribute("data-title");
         var n = o.replace("Ctrl", "\u2318").replace("Alt", "\u2325");
 
-        if (o !== n) {
-            btn.setAttribute("data-title", n);
-        }
+        if (o !== n) btn.setAttribute("data-title", n);
     }
 
     var inScrollEvt;
@@ -166,19 +148,13 @@
     {
         var timerScroll;
 
-        if (type === "field") {
-            eventsInput(from);
-        }
+        if (type === "field") eventsInput(from);
 
         from.addEventListener("scroll", function ()
         {
-            if (!syncScroll || (inScrollEvt && inScrollEvt !== type)) {
-                return;
-            }
+            if (!syncScroll || (inScrollEvt && inScrollEvt !== type)) return;
 
-            if (type !== "field" && to === d.activeElement) {
-                return;
-            }
+            if (type !== "field" && to === d.activeElement) return;
 
             clearTimeout(timerScroll);
 
@@ -227,9 +203,7 @@
             container = isContainer.test(realEditor.className) ?
                             realEditor : realEditor.querySelector(".wmd-container");
 
-        if (container.getAttribute("data-sen-editor") || !realPreview) {
-            return;
-        }
+        if (container.getAttribute("data-sen-editor") || !realPreview) return;
 
         if (isMetaDomain.test(w.location.hostname)) {
             navbar.className += " sen-is-meta";
@@ -340,15 +314,11 @@
                                         .replace(readyRegExp, " ")
                                             .replace(/\s\s/g, " ").trim();
 
-                if (!inFull) {
-                    realTextField.readOnly = false;
-                }
+                if (!inFull) realTextField.readOnly = false;
             } else {
                 realEditor.className += " sen-editor-preview";
 
-                if (!inFull) {
-                    realTextField.readOnly = true;
-                }
+                if (!inFull) realTextField.readOnly = true;
             }
         });
 
@@ -360,9 +330,7 @@
             previewBtn.click();
         };
 
-        if (inverted) {
-            realEditor.className += " sen-editor-inverted";
-        }
+        if (inverted) realEditor.className += " sen-editor-inverted";
 
         grippie.addEventListener("mousedown", function () {
             realTextField.senFirstAutoFS = true;
@@ -378,9 +346,7 @@
             }
         });
 
-        if (!syncScroll) {
-            syncScrollBtn.className += " sen-disabled";
-        }
+        if (!syncScroll) syncScrollBtn.className += " sen-disabled";
 
         syncScrollBtn.addEventListener("click", function () {
             if (activeRegExp.test(syncScrollBtn.className)) {
@@ -397,9 +363,7 @@
         saveBtn.addEventListener("click", function () {
             var btn = realEditor.querySelector("input[type=submit],button[type=submit]");
 
-            if (btn) {
-                btn.click();
-            }
+            if (btn) btn.click();
         });
     }
 
@@ -421,9 +385,7 @@
 
     function createEditor(target)
     {
-        if (!target || target.getAttribute("data-sen-editor")) {
-            return;
-        }
+        if (!target || target.getAttribute("data-sen-editor")) return;
 
         if (target.offsetParent === null || target.querySelector(".wmd-button-bar li") === null) {
             setTimeout(createEditor, 100, target);
@@ -451,22 +413,16 @@
         if (naa && !StackExchangeNotifications.utils.isHide(naa)) {
             total = parseInt(naa.textContent);
 
-            if (isNaN(total)) {
-                total = 0;
-            }
+            if (isNaN(total)) total = 0;
         }
 
-        if (total === lastAnswers) {
-            return;
-        }
+        if (total === lastAnswers) return;
 
         total = StackExchangeNotifications.utils.convertResult(total);
 
         lastAnswers = total;
 
-        if (total) {
-            news = total + " new answers";
-        }
+        if (total) news = total + " new answers";
 
         var saf = d.querySelectorAll(".sen-answers-flag");
 
@@ -479,15 +435,11 @@
 
     function checkMessage(msg)
     {
-        if (!msg) {
-            return;
-        }
+        if (!msg) return;
 
         var txt = String(msg.querySelector(".message-text").textContent).trim();
 
-        if (lastMessage === txt || StackExchangeNotifications.utils.isHide(msg)) {
-            return;
-        }
+        if (lastMessage === txt || StackExchangeNotifications.utils.isHide(msg)) return;
 
         lastMessage = txt;
 

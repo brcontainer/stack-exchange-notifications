@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.2.4
+ * StackExchangeNotifications
  * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -103,9 +103,7 @@
         for (var i = headersLines.length - 1; i >= 0; i--) {
             current = re.exec(headersLines[i]);
 
-            if (current) {
-                headers[ current[1] ] = current[2];
-            }
+            if (current) headers[ current[1] ] = current[2];
         }
 
         return headers;
@@ -236,9 +234,7 @@
         if (target.length > 0) {
             el = target[0];
 
-            if (el.display !== "none") {
-                result = parseInt(el.textContent);
-            }
+            if (el.display !== "none") result = parseInt(el.textContent);
         }
 
         return isNaN(result) ? 0 : result;
@@ -267,13 +263,9 @@
                     inbox = data.UnreadInboxCount ? parseInt(data.UnreadInboxCount) : 0,
                     acquired = data.UnreadNonRepCount ? parseInt(data.UnreadNonRepCount) : 0;
 
-                if (score !== 0 || acquired > 0) {
-                    SimpleCache.set("achievements", null);
-                }
+                if (score !== 0 || acquired > 0) SimpleCache.set("achievements", null);
 
-                if (inbox !== 0) {
-                    SimpleCache.set("inbox", null);
-                }
+                if (inbox !== 0) SimpleCache.set("inbox", null);
 
                 if (doneCallback !== null) {
                     doneCallback({
@@ -290,9 +282,7 @@
 
     function fixLinkStyle(l)
     {
-        if (!isHttpRegExp.test(l.href)) {
-            return false;
-        }
+        if (!isHttpRegExp.test(l.href)) return false;
 
         if (l.type === "text/css" || l.rel === "stylesheet" || (l.type === "" && l.rel === "")) {
             l.type = "text/css";
@@ -321,9 +311,7 @@
                 StackExchangeNotifications.achievements();
             }, initiateDelay);
 
-            if (SimpleCache.get("firstrun2", true)) {
-                return false;
-            }
+            if (SimpleCache.get("firstrun2", true)) return false;
 
             localStorage.clear();
 
@@ -370,9 +358,7 @@
             }
 
             return quickXhr(achievementsURI, function (data, code, headers) {
-                if (code === 200) {
-                    SimpleCache.set("achievements", [data, code, headers]);
-                }
+                if (code === 200) SimpleCache.set("achievements", [data, code, headers]);
 
                 hc && callback(data, code, headers);
             });
@@ -397,21 +383,15 @@
         "setAchievements": function (sizeScore, sizeAcquired) {
             var data = StackExchangeNotifications.getAchievements();
 
-            if (sizeScore % 1 === 0) {
-                data.score = sizeScore;
-            }
+            if (sizeScore % 1 === 0) data.score = sizeScore;
 
-            if (sizeAcquired > -1 && sizeAcquired % 1 === 0) {
-                data.acquired = sizeAcquired;
-            }
+            if (sizeAcquired > -1 && sizeAcquired % 1 === 0) data.acquired = sizeAcquired;
 
             SimpleCache.set("achievementsCount", data);
             data = null;
         },
         "setInbox": function (size) {
-            if (size > -1 && size % 1 === 0) {
-                SimpleCache.set("inboxCount", size);
-            }
+            if (size > -1 && size % 1 === 0) SimpleCache.set("inboxCount", size);
         },
         "getAchievements": function () {
             var data = SimpleCache.get("achievementsCount");
@@ -436,14 +416,10 @@
             }
         },
         "update": function (reload) {
-            if (false === isRunning) {
-                return;
-            }
+            if (false === isRunning) return;
 
             if (reload === true) {
-                if (timer !== false) {
-                    clearTimeout(timer);
-                }
+                if (timer !== false) clearTimeout(timer);
 
                 setTimeout(retrieveData, 1);
             } else if (doneCallback !== null) {
@@ -518,9 +494,7 @@
             list = tmpDom.querySelectorAll("link");
 
             for (var toRemove = [], i = list.length - 1; i >= 0; i--) {
-                if (!fixLinkStyle(list[i])) {
-                    toRemove.push(list[i]);
-                }
+                if (!fixLinkStyle(list[i])) toRemove.push(list[i]);
             }
 
             for (var i = toRemove.length - 1; i >= 0; i--) {
@@ -535,9 +509,7 @@
             var total = resources.length;
 
             function trigger() {
-                if (total > 0) {
-                    return;
-                }
+                if (total > 0) return;
 
                 var tmpCss = "";
 

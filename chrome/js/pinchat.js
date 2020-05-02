@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.2.4
+ * StackExchangeNotifications
  * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -21,9 +21,7 @@
 
     function toggleClass(link, add)
     {
-        if (!link) {
-            return;
-        }
+        if (!link) return;
 
         link.className = link.className.replace(addedRegExp, "").trim();
 
@@ -82,9 +80,7 @@
 
     function createLink(el, rc)
     {
-        if (el.getElementsByClassName("sen-btn-pin").length) {
-            return;
-        }
+        if (el.getElementsByClassName("sen-btn-pin").length) return;
 
         var icon = d.createElement("i"),
             link = d.createElement("a"),

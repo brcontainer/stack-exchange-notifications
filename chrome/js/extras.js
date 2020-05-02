@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.2.4
+ * StackExchangeNotifications
  * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -9,14 +9,12 @@
 (function (w, d) {
     "use strict";
 
-    var previewRegExp = /\bwmd-preview\b/g,
-        copyCodeEnabled = false;
+    var copyCodeEnabled = false,
+        previewRegExp = /(^|\s)wmd-preview($|\s)/;
 
     function copyFromDOM(target)
     {
-        if (!target) {
-            return;
-        }
+        if (!target) return;
 
         var range = d.createRange();
 
@@ -34,18 +32,14 @@
 
     function bootCopyCode()
     {
-        if (!copyCodeEnabled) {
-            return;
-        }
+        if (!copyCodeEnabled) return;
 
         function applyEvents(el)
         {
             if (el.tagName === "PRE" && !el.senCopyCode && !el.matches(".wmd-preview pre")) {
                 var space, tools, button, nextEl = el.nextSibling, code = el.firstElementChild;
 
-                if (!code || code.tagName !== "CODE" || code.senCopyCode) {
-                    return;
-                }
+                if (!code || code.tagName !== "CODE" || code.senCopyCode) return;
 
                 space = d.createTextNode(" \n ");
                 tools = d.createElement("div");
@@ -79,9 +73,7 @@
 
         function findPreCodes(target)
         {
-            if (target.matches(".wmd-preview " + target.tagName)) {
-                return;
-            }
+            if (target.matches(".wmd-preview " + target.tagName)) return;
 
             var pres = target.querySelectorAll(":not(.wmd-preview) pre > code");
 
@@ -97,9 +89,7 @@
         var inprogress = false;
 
         var observer = new MutationObserver(function (mutations) {
-            if (inprogress) {
-                return;
-            }
+            if (inprogress) return;
 
             inprogress = true;
 

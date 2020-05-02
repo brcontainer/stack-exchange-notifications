@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.2.4
+ * StackExchangeNotifications
  * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -9,12 +9,13 @@
 (function (w, d, u) {
     "use strict";
 
-    var theme, version = d.getElementById("version");
+    var theme, version = d.getElementById("version"), debugMode = false;
 
-    var debugMode = !(
-        "update_url" in browser.runtime.getManifest() ||
-        browser.runtime.id === "stackexchangenotifications@mozilla.org"
-    );
+    if (x.runtime.id && !x.runtime.requestUpdateCheck) {
+        if (/@temporary-addon$/.test(x.runtime.id)) debugMode = true;
+    } else if (!"update_url" in manifest) {
+        debugMode = true;
+    }
 
     if (version) {
         var manifestData = StackExchangeNotifications.meta();
@@ -44,17 +45,13 @@
     {
         var val, key = el.id;
 
-        if (!key) {
-            return;
-        }
+        if (!key) return;
 
         val = StackExchangeNotifications.switchEnable(key);
 
         el.disabled = false;
 
-        if (val === true) {
-            el.checked = true;
-        }
+        if (val === true) el.checked = true;
 
         el.addEventListener("change", function () {
             StackExchangeNotifications.switchEnable(key, el.checked);
@@ -116,17 +113,13 @@
 
     function disableEvent(e)
     {
-        if (!debugMode) {
-            e.preventDefault();
-            return false;
-        }
+        e.preventDefault();
+        return false;
     }
 
     function setActionAnchor(e)
     {
-        if (e.button !== 0) {
-            return;
-        }
+        if (e.button !== 0) return;
 
         setTimeout(function (s) { s.blur(); }, 300, e.target);
 
@@ -134,21 +127,15 @@
 
         if (!el.href) {
             while ((el = el.parentNode) && el.nodeType === 1) {
-                if (el.tagName === "A") {
-                    break;
-                }
+                if (el.tagName === "A") break;
             }
         }
 
-        if (!el || !el.href) {
-            return;
-        }
+        if (!el || !el.href) return;
 
         e.preventDefault();
 
-        if (!/^https?\:\/\//.test(el.href)) {
-            return;
-        }
+        if (!/^https?\:\/\//.test(el.href)) return;
 
         setTimeout(function (url) {
             if (!StackExchangeNotifications.switchEnable("prevent_duplicate")) {
@@ -176,8 +163,11 @@
         }, 1, el.href);
     }
 
-    d.oncontextmenu = disableEvent;
-    d.ondragstart = disableEvent;
+    if (!debugMode) {
+        d.oncontextmenu = disableEvent;
+        d.ondragstart = disableEvent;
+    }
+
     d.onclick = setActionAnchor;
 
     setTimeout(function () {

@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.2.4
+ * StackExchangeNotifications
  * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -18,9 +18,7 @@
         if (type && el && browser && browser.runtime && browser.runtime.sendMessage) {
             var data = StackExchangeNotifications.utils.isHide(el) ? 0 : (el.textContent ? parseInt(el.textContent) : 0);
 
-            if (fromload && data < 1) {
-                return;
-            }
+            if (fromload && data < 1) return;
 
             browser.runtime.sendMessage({
                 "data": data,

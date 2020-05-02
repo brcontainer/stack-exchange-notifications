@@ -1,5 +1,5 @@
 /*
- * StackExchangeNotifications 1.2.4
+ * StackExchangeNotifications
  * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
@@ -98,20 +98,14 @@
 
         el.querySelector(".close > a").onclick = function () {
             StackExchangeNotifications.utils.dialog.confirm("Do you really want to remove?", function (ok) {
-                if (!ok) {
-                    return;
-                }
+                if (!ok) return;
 
                 browser.runtime.sendMessage({ "chat": 2, "url": url }, function (response) {
-                    if (!response) {
-                        return;
-                    }
+                    if (!response) return;
 
                     el.parentNode.removeChild(el);
 
-                    if (!chatRooms.querySelector(".room")) {
-                        showNoticeRoom(true);
-                    }
+                    if (!chatRooms.querySelector(".room")) showNoticeRoom(true);
                 });
             });
         };
@@ -140,13 +134,9 @@
             inbox = StackExchangeNotifications.getInbox(),
             achievements = StackExchangeNotifications.getAchievements();
 
-        if (achievements.acquired > 0) {
-            total += achievements.acquired;
-        }
+        if (achievements.acquired > 0) total += achievements.acquired;
 
-        if (achievements.score !== 0) {
-            total += achievements.score;
-        }
+        if (achievements.score !== 0) total += achievements.score;
 
         if (inbox > 0) {
             inboxData.className = "push";
@@ -172,9 +162,7 @@
         var target = box === "inbox" ? inboxContent : achievementsContent;
 
         current.addEventListener("mousedown", function (e) {
-            if (e.button != 0 && e.button != 1) {
-                return;
-            }
+            if (e.button != 0 && e.button != 1) return;
 
             current.className = current.className.replace(/\bunread-item\b/g, " ").trim();
 
@@ -219,9 +207,7 @@
 
     function setStyle(cssText)
     {
-        if (cssLoaded) {
-            return;
-        }
+        if (cssLoaded) return;
 
         cssLoaded = true;
         var style = d.createElement("style");
@@ -251,9 +237,7 @@
 
             rules = styles[i].rules;
 
-            if (!rules) {
-                continue;
-            }
+            if (!rules) continue;
 
             for (j = rules.length - 1; j >= 0; j--) {
                 if (
@@ -277,32 +261,22 @@
 
         if (allRulesBg.length) {
             browser.runtime.sendMessage({ "storeimages": allRulesBg }, function (response) {
-                if (response) {
-                    setStyle(response);
-                }
+                if (response) setStyle(response);
             });
         } else {
             browser.runtime.sendMessage({ "storeimages": true }, function (response) {
-                if (response) {
-                    setStyle(response);
-                }
+                if (response) setStyle(response);
             });
         }
     }
 
     setupButton.onclick = function ()
     {
-        if (isCurrentTab("setup")) {
-            return false;
-        }
+        if (isCurrentTab("setup")) return false;
 
-        if (inboxXhr) {
-            inboxXhr.abort();
-        }
+        if (inboxXhr) inboxXhr.abort();
 
-        if (achievementsXhr) {
-            achievementsXhr.abort();
-        }
+        if (achievementsXhr) achievementsXhr.abort();
 
         achievementsContent.className =
             achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
@@ -322,17 +296,11 @@
 
     chatButton.onclick = function ()
     {
-        if (isCurrentTab("chat")) {
-            return false;
-        }
+        if (isCurrentTab("chat")) return false;
 
-        if (inboxXhr) {
-            inboxXhr.abort();
-        }
+        if (inboxXhr) inboxXhr.abort();
 
-        if (achievementsXhr) {
-            achievementsXhr.abort();
-        }
+        if (achievementsXhr) achievementsXhr.abort();
 
         achievementsContent.className =
             achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
@@ -349,9 +317,7 @@
         chatContent.className =
             chatContent.className.replace(hideRegExp, "").trim();
 
-        if (chatActived) {
-            return;
-        }
+        if (chatActived) return;
 
         chatActived = true;
 
@@ -368,17 +334,11 @@
 
     aboutButton.onclick = function ()
     {
-        if (isCurrentTab("about")) {
-            return false;
-        }
+        if (isCurrentTab("about")) return false;
 
-        if (inboxXhr) {
-            inboxXhr.abort();
-        }
+        if (inboxXhr) inboxXhr.abort();
 
-        if (achievementsXhr) {
-            achievementsXhr.abort();
-        }
+        if (achievementsXhr) achievementsXhr.abort();
 
         achievementsContent.className =
             achievementsContent.className.replace(bgLoaderRegExp, "").trim() + " hide";
@@ -398,13 +358,9 @@
 
     inboxButton.onclick = function ()
     {
-        if (isCurrentTab("inbox") && StackExchangeNotifications.hasCache("inbox")) {
-            return false;
-        }
+        if (isCurrentTab("inbox") && StackExchangeNotifications.hasCache("inbox")) return false;
 
-        if (achievementsXhr) {
-            achievementsXhr.abort();
-        }
+        if (achievementsXhr) achievementsXhr.abort();
 
         aboutContent.className =
             aboutContent.className.replace(hideRegExp, "").trim() + " hide";
@@ -456,13 +412,9 @@
 
     achievementsButton.onclick = function ()
     {
-        if (isCurrentTab("achievements") && StackExchangeNotifications.hasCache("achievements")) {
-            return false;
-        }
+        if (isCurrentTab("achievements") && StackExchangeNotifications.hasCache("achievements")) return false;
 
-        if (inboxXhr) {
-            inboxXhr.abort();
-        }
+        if (inboxXhr) inboxXhr.abort();
 
         aboutContent.className =
             aboutContent.className.replace(hideRegExp, "").trim() + " hide";
