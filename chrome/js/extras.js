@@ -102,7 +102,7 @@
     {
         if (target.matches(".wmd-preview " + target.tagName)) return;
 
-        var pres = target.querySelectorAll(":not(.wmd-preview) pre.post-text > code");
+        var pres = target.querySelectorAll(".post-text pre > code");
 
         for (var i = pres.length - 1; i >= 0; i--) {
             applyEvents(pres[i].parentNode);

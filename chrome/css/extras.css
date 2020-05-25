@@ -6,12 +6,12 @@
  * https://github.com/brcontainer
  */
 
-pre.post-text {
+.post-text pre {
     margin-bottom: 0 !important;
     position: relative;
 }
 
-pre.post-text + :not(.sen-tools-clipboard) {
+.post-text pre + :not(.sen-tools-clipboard) {
     margin-top: 1.2em !important;
 }
 
@@ -23,8 +23,8 @@ pre.post-text + :not(.sen-tools-clipboard) {
     transition: opacity .2s ease-out;
 }
 
-pre.post-text:hover + .sen-tools-clipboard,
-pre.post-text + .sen-tools-clipboard:hover {
+.post-text pre:hover + .sen-tools-clipboard,
+.post-text pre + .sen-tools-clipboard:hover {
     opacity: 1;
 }
 

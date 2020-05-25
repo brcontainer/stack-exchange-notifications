@@ -49,11 +49,7 @@
     }
 
     browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-        if (request === "desktopnotification") {
-            sendResponse({
-                "available": sn.switchEnable("desktop_notification")
-            });
-        } else if (request === "gallery") {
+        if (request === "gallery") {
             sendResponse({
                 "available": sn.switchEnable("gallery_box")
             });
