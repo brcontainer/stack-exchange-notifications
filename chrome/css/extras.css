@@ -17,6 +17,7 @@
 
 .sen-tools-clipboard {
     position: relative;
+    display: inline-block;
     top: -36px;
     left: 6px;
     opacity: 0;
