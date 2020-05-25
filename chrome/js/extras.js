@@ -34,54 +34,6 @@
     {
         if (!copyCodeEnabled) return;
 
-        function applyEvents(el)
-        {
-            if (el.tagName === "PRE" && !el.senCopyCode && !el.matches(".wmd-preview pre")) {
-                var space, tools, button, nextEl = el.nextSibling, code = el.firstElementChild;
-
-                if (!code || code.tagName !== "CODE" || code.senCopyCode) return;
-
-                space = d.createTextNode(" \n ");
-                tools = d.createElement("div");
-                tools.className = "sen-tools-clipboard";
-
-                button = d.createElement("a");
-
-                el.senCopyCode = true;
-                code.senCopyCode = true;
-
-                button.textContent = "Copy code";
-                button.onclick = function (e) {
-                    e.preventDefault();
-                    copyFromDOM(code);
-
-                    StackExchangeNotifications.utils.showLabelNotification("Copied to clipboard!");
-                };
-                button.href = "javascript:void(0);";
-
-                tools.appendChild(button);
-
-                if (!nextEl) {
-                    el.parentNode.appendChild(space);
-                    el.parentNode.appendChild(tools);
-                } else {
-                    el.parentNode.insertBefore(space, nextEl);
-                    el.parentNode.insertBefore(tools, nextEl);
-                }
-            }
-        }
-
-        function findPreCodes(target)
-        {
-            if (target.matches(".wmd-preview " + target.tagName)) return;
-
-            var pres = target.querySelectorAll(":not(.wmd-preview) pre > code");
-
-            for (var i = pres.length - 1; i >= 0; i--) {
-                applyEvents(pres[i].parentNode);
-            }
-        }
-
         StackExchangeNotifications.utils.resourceStyle("extras");
 
         findPreCodes(d.body);
@@ -107,6 +59,54 @@
             "childList": true,
             "attributes": false
         });
+    }
+
+    function applyEvents(el)
+    {
+        if (el.tagName === "PRE" && !el.senCopyCode && !el.matches(".wmd-preview pre")) {
+            var space, tools, button, nextEl = el.nextSibling, code = el.firstElementChild;
+
+            if (!code || code.tagName !== "CODE" || code.senCopyCode) return;
+
+            space = d.createTextNode(" \n ");
+            tools = d.createElement("div");
+            tools.className = "sen-tools-clipboard";
+
+            button = d.createElement("a");
+
+            el.senCopyCode = true;
+            code.senCopyCode = true;
+
+            button.textContent = "Copy";
+            button.onclick = function (e) {
+                e.preventDefault();
+                copyFromDOM(code);
+
+                StackExchangeNotifications.utils.showLabelNotification("Copied to clipboard!");
+            };
+            button.href = "javascript:void(0);";
+
+            tools.appendChild(button);
+
+            if (!nextEl) {
+                el.parentNode.appendChild(space);
+                el.parentNode.appendChild(tools);
+            } else {
+                el.parentNode.insertBefore(space, nextEl);
+                el.parentNode.insertBefore(tools, nextEl);
+            }
+        }
+    }
+
+    function findPreCodes(target)
+    {
+        if (target.matches(".wmd-preview " + target.tagName)) return;
+
+        var pres = target.querySelectorAll(":not(.wmd-preview) pre.post-text > code");
+
+        for (var i = pres.length - 1; i >= 0; i--) {
+            applyEvents(pres[i].parentNode);
+        }
     }
 
     if (browser && browser.runtime && browser.runtime.sendMessage) {

@@ -6,33 +6,40 @@
  * https://github.com/brcontainer
  */
 
-pre {
+pre.post-text {
     margin-bottom: 0 !important;
+    position: relative;
 }
 
-pre + :not(.sen-tools-clipboard) {
+pre.post-text + :not(.sen-tools-clipboard) {
     margin-top: 1.2em !important;
 }
 
 .sen-tools-clipboard {
-    margin: 0 0 1.2em 0 !important;
-    padding-left: 2px !important;
+    position: relative;
+    top: -36px;
+    left: 6px;
+    opacity: 0;
+    transition: opacity .2s ease-out;
 }
+
+pre.post-text:hover + .sen-tools-clipboard,
+pre.post-text + .sen-tools-clipboard:hover {
+    opacity: 1;
+}
+
 .sen-tools-clipboard > a {
-    border: 1px #ccc solid !important;
-    border-top: none !important;
+    border: 1px solid rgba(0, 0, 0, .2) !important;
     color: #7b7676 !important;
-    padding: 0 14px !important;
-    background-color: #fff !important;
+    padding: 6px 12px !important;
+    background-color: rgba(255, 255, 255, .8) !important;
     border-radius: 4px !important;
-    border-top-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
     display: inline-block !important;
     text-align: center !important;
     text-decoration: none !important;
-    line-height: 32px !important;
-    height: 32px !important;
+    font-weight: bold;
     font-size: 10pt;
+    text-transform: uppercase;
 }
 
 .sen-tools-popup {
@@ -56,9 +63,9 @@ pre + :not(.sen-tools-clipboard) {
 }
 
 .sen-tools-popup, .sen-tools-clipboard {
+  -webkit-touch-callout: none;
     -webkit-user-select: none;
        -moz-user-select: none;
         -ms-user-select: none;
-  -webkit-touch-callout: none;
             user-select: none;
 }
