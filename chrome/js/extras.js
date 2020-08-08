@@ -16,18 +16,19 @@
     {
         if (!target) return;
 
-        var range = d.createRange();
+        var range = d.createRange(), selection = w.getSelection();
 
         range.selectNode(target);
 
-        w.getSelection().removeAllRanges();
-        w.getSelection().addRange(range);
+        selection.removeAllRanges();
+        selection.addRange(range);
 
         d.execCommand("copy");
 
-        w.getSelection().removeAllRanges();
+        selection.removeAllRanges();
+        selection = range = null;
 
-        range = null;
+        target.blur();
     }
 
     function bootCopyCode()
@@ -72,10 +73,9 @@
             tools = d.createElement("div");
             tools.className = "sen-tools-clipboard";
 
-            button = d.createElement("a");
+            button = d.createElement("button");
 
-            el.senCopyCode = true;
-            code.senCopyCode = true;
+            el.senCopyCode = code.senCopyCode = true;
 
             button.textContent = "Copy";
             button.onclick = function (e) {
@@ -84,7 +84,7 @@
 
                 StackExchangeNotifications.utils.showLabelNotification("Copied to clipboard!");
             };
-            button.href = "javascript:void(0);";
+            button.type = "button";
 
             tools.appendChild(button);
 

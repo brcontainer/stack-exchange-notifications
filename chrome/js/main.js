@@ -11,9 +11,9 @@
 
     var theme, version = d.getElementById("version"), debugMode = false;
 
-    if (x.runtime.id && !x.runtime.requestUpdateCheck) {
-        if (/@temporary-addon$/.test(x.runtime.id)) debugMode = true;
-    } else if (!"update_url" in manifest) {
+    if (browser.runtime.id && !("requestUpdateCheck" in browser.runtime)) {
+        if (/@temporary-addon$/.test(browser.runtime.id)) debugMode = true;
+    } else if (!("update_url" in manifest)) {
         debugMode = true;
     }
 
