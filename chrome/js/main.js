@@ -13,7 +13,7 @@
 
     if (browser.runtime.id && !("requestUpdateCheck" in browser.runtime)) {
         if (/@temporary-addon$/.test(browser.runtime.id)) debugMode = true;
-    } else if (!("update_url" in manifest)) {
+    } else if (!("update_url" in browser.runtime.getManifest())) {
         debugMode = true;
     }
 

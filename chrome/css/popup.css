@@ -43,12 +43,16 @@ body > .fix-scroll > .sub {
 .header {
     padding: 1.6em 1.1em;
     background-color: #fff;
+    border-bottom: 1px #cfcfcf solid;
     font-size: 13px;
     color: #646464;
     text-transform: uppercase;
     box-shadow: 0 2px 2px rgba(0,0,0,.04);
     position: relative;
+    position: sticky;
+    top: 0;
 }
+
 .header > :not(h3) {
     display: none;
 }
@@ -217,6 +221,12 @@ body > .fix-scroll > .sub {
     border-top: 1px #cfcfcf solid;
 }
 
+.tab-item .modal-content li:first-child,
+.tab-item .modal-content div.date-group:first-child,
+.tab-item .modal-content .room:first-child {
+    border-top: none;
+}
+
 .tab-item .modal-content li {
     line-height: 16px;
     min-height: 38px;
@@ -244,7 +254,6 @@ body > .fix-scroll > .sub {
 }
 
 .tab-item .modal-content .more-rooms {
-    border-top: 1px #cfcfcf solid;
     padding: 20px 0;
     white-space: nowrap;
     font-size: 0;

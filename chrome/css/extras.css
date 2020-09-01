@@ -6,22 +6,29 @@
  * https://github.com/brcontainer
  */
 
-.post-text pre, .snippet pre {
+pre {
+    position: relative !important;
     margin-bottom: 0 !important;
-    position: relative;
 }
 
-.sen-tools-clipboard {
-    margin-bottom: 1em;
+.wmd-preview pre {
+    position: static !important;
+    position: revert !important;
+    margin-bottom: 1.6em !important;
+    margin-bottom: revert !important;
+}
+
+pre + .sen-tools-clipboard {
     position: relative;
-    top: 0;
+    bottom: 0;
     left: 0;
+    width: 100%;
     opacity: .2;
     transition: opacity .2s ease-out;
+    margin-bottom: 1.6em;
 }
 
-.post-text pre:hover + .sen-tools-clipboard,
-.post-text pre + .sen-tools-clipboard:hover {
+pre:hover + .sen-tools-clipboard, .sen-tools-clipboard:hover {
     opacity: 1;
 }
 
