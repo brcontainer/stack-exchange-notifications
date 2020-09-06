@@ -6,10 +6,6 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-body {
-    background-color: #f9f9f9;
-}
-
 .setup-header {
     position: relative;
     margin: 0 10px 10px 10px;

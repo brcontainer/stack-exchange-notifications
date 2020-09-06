@@ -35,8 +35,11 @@ html, html * {
     background-color: #a6a6a6;
 }
 
-body {
+body:not(:target) {
     background-color: #f6f6f6;
+}
+
+body {
     font-size: 10pt;
     font-size: 13px;
     -webkit-touch-callout: none;
@@ -58,7 +61,7 @@ h1, h2, h3 {
 
 hr {
     border: none;
-    border-top: 1px #efe1e1 solid;
+    border-top: 1px solid #efe1e1;
     text-shadow: none;
     margin: .5em;
 }

@@ -43,7 +43,7 @@ body > .fix-scroll > .sub {
 .header {
     padding: 1.6em 1.1em;
     background-color: #fff;
-    border-bottom: 1px #cfcfcf solid;
+    border-bottom: 1px solid #cfcfcf;
     font-size: 13px;
     color: #646464;
     text-transform: uppercase;
@@ -218,7 +218,7 @@ body > .fix-scroll > .sub {
 .tab-item .modal-content li,
 .tab-item .modal-content div.date-group,
 .tab-item .modal-content .room {
-    border-top: 1px #cfcfcf solid;
+    border-top: 1px solid #cfcfcf;
 }
 
 .tab-item .modal-content li:first-child,
@@ -317,6 +317,7 @@ body > .fix-scroll > .sub {
 .date-group-toggle-row {
     padding: .8em .5em;
     background-color: #fafafa;
+    border-bottom: 1px solid #cfcfcf;
 }
 .date-group:first-child .date-group-toggle-row {
     padding-top: 2em;
@@ -460,6 +461,7 @@ body > .fix-scroll > .sub {
 }
 .tab-item .modal-content .room {
     min-height: 42px;
+    position: relative;
 }
 .tab-item .modal-content .room-fav {
     display: block;
@@ -505,10 +507,13 @@ body > .fix-scroll > .sub {
     float: right;
     width: 38px;
     text-align: center;
-    display: none;
+    display: flex;
+    position: relative;
+    right: -42px;
+    transition: .2s all ease-out;
 }
 .tab-item .modal-content .room:hover .close {
-    display: flex;
+    right: 0;
 }
 .tab-item .modal-content .room .close > .icon {
     background-color: #b7b5ad;

@@ -58,7 +58,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 .wmd-container .grippie {
     border: none !important;
-    border-top: 1px #dfdfdf solid !important;
+    border-top: 1px solid #dfdfdf !important;
     margin: 0 !important;
     height: 12px !important;
 }
@@ -174,7 +174,7 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
 }
 
 .sen-editor-inner > span {
-    border-left: 1px #e2e2e2 solid;
+    border-left: 1px solid #e2e2e2;
     margin: 0 1px !important;
     padding: 13px 0 !important;
     display: inline-block !important;
