@@ -81,9 +81,7 @@
     {
         var el = d.createElement("div");
 
-        if (!data.icon) {
-            data.icon = "../images/chat.svg";
-        }
+        if (!data.icon) data.icon = "../images/chat.svg";
 
         el.className = "room";
 
@@ -192,9 +190,7 @@
 
     function isCurrentTab(type)
     {
-        if (lastTab === type) {
-            return true;
-        }
+        if (lastTab === type) return true;
 
         lastTab = type;
 
@@ -210,6 +206,7 @@
         if (cssLoaded) return;
 
         cssLoaded = true;
+
         var style = d.createElement("style");
         style.textContent = cssText;
         d.head.appendChild(style);
@@ -235,7 +232,11 @@
                 continue;
             }
 
-            rules = styles[i].rules;
+            try {
+                rules = styles[i].rules;
+            } catch (e) {
+                continue;
+            }
 
             if (!rules) continue;
 
@@ -486,18 +487,18 @@
     switch (StackExchangeNotifications.restoreState("lastTab")) {
         case "setup":
             setupButton.onclick();
-        break;
+            break;
         case "chat":
             chatButton.onclick();
-        break;
+            break;
         case "about":
             aboutButton.onclick();
-        break;
+            break;
         case "inbox":
             inboxButton.onclick();
-        break;
+            break;
         case "achievements":
             achievementsButton.onclick();
-        break;
+            break;
     }
 })(window, document);

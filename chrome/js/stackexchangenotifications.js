@@ -25,7 +25,8 @@
     var doneCallback = null,
         isRunning = false,
         timer = null,
-        noNeedRequestXhr = false;
+        noNeedRequestXhr = false,
+        isBackground = false;
 
     var isHttpRegExp = /^https?\:\/\/[^/]/i,
         tmpDom = d.createElement("div"),
@@ -330,6 +331,9 @@
 
             return true;
         },
+        "background": function () {
+            isBackground = true;
+        },
         "switchEnable": function (key, enable) {
             var kn = "switch_" + key;
 
@@ -416,20 +420,22 @@
             }
         },
         "update": function (reload) {
-            if (false === isRunning) return;
+            if (!isBackground) {
+                browser.runtime.sendMessage("update");
+            } else if (isRunning) {
+                if (reload === true) {
+                    if (timer !== false) clearTimeout(timer);
 
-            if (reload === true) {
-                if (timer !== false) clearTimeout(timer);
+                    setTimeout(retrieveData, 1);
+                } else if (doneCallback !== null) {
+                    var data = StackExchangeNotifications.getAchievements();
 
-                setTimeout(retrieveData, 1);
-            } else if (doneCallback !== null) {
-                var data = StackExchangeNotifications.getAchievements();
+                    data.inbox = StackExchangeNotifications.getInbox();
 
-                data.inbox = StackExchangeNotifications.getInbox();
+                    doneCallback(data);
 
-                doneCallback(data);
-
-                data = null;
+                    data = null;
+                }
             }
         },
         "saveState": function (key, data, noToken) {

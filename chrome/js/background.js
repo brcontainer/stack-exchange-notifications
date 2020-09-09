@@ -12,6 +12,7 @@
     var sn = StackExchangeNotifications;
 
     sn.boot();
+    sn.background();
 
     sn.pushs(function (response) {
         var updates = 0;
@@ -69,6 +70,8 @@
             sendResponse({
                 "copycode": sn.switchEnable("copy_code")
             });
+        } else if (request === "update") {
+            sn.update();
         } else if (request === "changebydom") {
             sn.detectDOM(true);
         } else if (request.type) {
