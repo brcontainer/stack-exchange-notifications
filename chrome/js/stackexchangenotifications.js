@@ -312,22 +312,32 @@
                 StackExchangeNotifications.achievements();
             }, initiateDelay);
 
-            if (SimpleCache.get("firstrun2", true)) return false;
+            if (SimpleCache.get("firstrun3", true)) return false;
 
-            localStorage.clear();
+            if (!SimpleCache.get("firstrun2", true)) {
+                StackExchangeNotifications.switchEnable("inbox", true);
+                StackExchangeNotifications.switchEnable("score", true);
+                StackExchangeNotifications.switchEnable("acquired", true);
 
-            StackExchangeNotifications.switchEnable("editor_actived", true);
-            StackExchangeNotifications.switchEnable("editor_preview", true);
-            StackExchangeNotifications.switchEnable("editor_sync_scroll", true);
+                StackExchangeNotifications.switchEnable("dark_theme", false);
 
-            StackExchangeNotifications.switchEnable("inbox", true);
-            StackExchangeNotifications.switchEnable("score", true);
-            StackExchangeNotifications.switchEnable("acquired", true);
+                StackExchangeNotifications.switchEnable("gallery_box", true);
+                StackExchangeNotifications.switchEnable("copy_code", true);
 
-            StackExchangeNotifications.switchEnable("gallery_box", true);
-            StackExchangeNotifications.switchEnable("copy_code", true);
+                StackExchangeNotifications.switchEnable("prevent_duplicate", false);
 
-            SimpleCache.set("firstrun2", 1, true);
+                StackExchangeNotifications.switchEnable("editor_actived", true);
+                StackExchangeNotifications.switchEnable("editor_sync_scroll", true);
+                StackExchangeNotifications.switchEnable("editor_preview", true);
+                StackExchangeNotifications.switchEnable("editor_auto_fs", true);
+                StackExchangeNotifications.switchEnable("editor_tabs_by_spaces", true);
+                StackExchangeNotifications.switchEnable("editor_italic", true);
+            }
+
+            StackExchangeNotifications.switchEnable("lose_score", true);
+            StackExchangeNotifications.switchEnable("score_bydowns", true);
+
+            SimpleCache.set("firstrun3", 1, true);
 
             return true;
         },
@@ -482,29 +492,50 @@
         "clearDomString": function (data) {
             tmpDom = (new DOMParser).parseFromString(data, "text/html").body;
 
-            var list, current, currentHref;
+            var list, current, currentHref, toRemove = [];
 
             list = tmpDom.querySelectorAll(notSelector);
 
             for (var i = list.length - 1; i >= 0; i--) {
-                current = list[i];
-                current.parentNode.removeChild(current);
+                toRemove.push(list[i]);
+            }
+
+            list = tmpDom.querySelectorAll("link");
+
+            for (var i = list.length - 1; i >= 0; i--) {
+                if (!fixLinkStyle(list[i])) toRemove.push(list[i]);
+            }
+
+            if (!StackExchangeNotifications.switchEnable("lose_score")) {
+                list = tmpDom.querySelectorAll("li a span");
+
+                for (var i = list.length - 1; i >= 0; i--) {
+                    var value = list[i].textContent.trim();
+
+                    if (value[0] === "-" || value[0] === "−") {
+                        toRemove.push(list[i].closest("li"));
+                    }
+                }
+            } else if (!StackExchangeNotifications.switchEnable("score_bydowns")) {
+                list = tmpDom.querySelectorAll("li a span");
+
+                for (var i = list.length - 1; i >= 0; i--) {
+                    var value = list[i].textContent.trim();
+
+                    if (value === "-1" || value === "−1") {
+                        toRemove.push(list[i].closest("li"));
+                    }
+                }
+            }
+
+            for (var i = toRemove.length - 1; i >= 0; i--) {
+                toRemove[i].parentNode.removeChild(toRemove[i]);
             }
 
             list = tmpDom.getElementsByTagName("*");
 
             for (i = list.length - 1; i >= 0; i--) {
                 Utils.removeInvalidAttributes(list[i]);
-            }
-
-            list = tmpDom.querySelectorAll("link");
-
-            for (var toRemove = [], i = list.length - 1; i >= 0; i--) {
-                if (!fixLinkStyle(list[i])) toRemove.push(list[i]);
-            }
-
-            for (var i = toRemove.length - 1; i >= 0; i--) {
-                toRemove[i].parentNode.removeChild(toRemove[i]);
             }
 
             toRemove = list = null;

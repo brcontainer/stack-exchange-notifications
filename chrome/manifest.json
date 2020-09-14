@@ -1,7 +1,7 @@
 {
     "author": "Guilherme Nascimento",
     "name": "StackExchangeNotifications",
-    "version": "1.2.7",
+    "version": "1.2.8",
     "manifest_version": 2,
     "description": "Show recent achievements and inbox messages from Stack Exchange",
     "icons": {
