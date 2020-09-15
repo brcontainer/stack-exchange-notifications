@@ -76,9 +76,7 @@
             }, function () {});
         });
 
-        for (var i = 0, j = switchs.length; i < j; i++) {
-            switchEngine(switchs[i]);
-        }
+        for (var i = 0, j = switchs.length; i < j; i++) switchEngine(switchs[i]);
 
         clearCache.onclick = function ()
         {

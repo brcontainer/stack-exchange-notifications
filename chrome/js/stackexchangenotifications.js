@@ -155,6 +155,26 @@
         };
     }
 
+    var switchFieldTimeouts = {};
+
+    function switchFieldClass(key, enable)
+    {
+        if (switchFieldTimeouts[key]) clearTimeout(switchFieldTimeouts[key]);
+
+        switchFieldTimeouts[key] = setTimeout(function () {
+            var input = d.querySelector("input[type='checkbox'][id='" + key + "']");
+
+            if (input) {
+                var field = input.closest(".field");
+
+                field.classList.add(key);
+                field.classList.toggle("active", enable);
+            } else {
+                setTimeout(switchFieldClass, 50, key, enable);
+            }
+        }, 50);
+    }
+
     var tokenCache = String(metaData().version) + "_cache";
 
     var SimpleCache = {
@@ -281,13 +301,19 @@
         timer = setTimeout(retrieveData, currentDelay);
     }
 
-    function fixLinkStyle(l)
+    function fixLinkStyle(link)
     {
-        if (!isHttpRegExp.test(l.href)) return false;
+        if (!isHttpRegExp.test(link.href) || d.querySelector("[href='" + link.href + "']")) {
+            return false;
+        }
 
-        if (l.type === "text/css" || l.rel === "stylesheet" || (l.type === "" && l.rel === "")) {
-            l.type = "text/css";
-            l.rel = "stylesheet";
+        if (link.type === "text/css" || link.rel === "stylesheet" || link.type === "" || link.rel === "") {
+            if (link.type !== "text/css") link.setAttribute("type", "text/css");
+
+            if (link.rel !== "stylesheet") link.setAttribute("rel", "stylesheet");
+
+            d.head.appendChild(link);
+
             return true;
         }
 
@@ -345,14 +371,21 @@
             isBackground = true;
         },
         "switchEnable": function (key, enable) {
-            var kn = "switch_" + key;
+            var keyName = "switch_" + key;
 
             if (typeof enable === "boolean") {
-                SimpleCache.set(kn, enable, true);
+                SimpleCache.set(keyName, enable, true);
+
+                switchFieldClass(key, enable);
+
                 return enable;
             }
 
-            return !!SimpleCache.get(kn, true);
+            var enable = !!SimpleCache.get(keyName, true);
+
+            switchFieldClass(key, enable);
+
+            return enable;
         },
         "pushs": function (callback) {
             if (false === isRunning && typeof callback === "function") {
@@ -525,6 +558,20 @@
                     if (value === "-1" || value === "−1") {
                         toRemove.push(list[i].closest("li"));
                     }
+                }
+            }
+
+            for (var i = toRemove.length - 1; i >= 0; i--) {
+                toRemove[i].parentNode.removeChild(toRemove[i]);
+            }
+
+            toRemove = [];
+
+            list = tmpDom.querySelectorAll("div + ul");
+
+            for (var i = list.length - 1; i >= 0; i--) {
+                if (list[i].textContent.trim() === "") {
+                    toRemove.push(list[i].closest("div"));
                 }
             }
 

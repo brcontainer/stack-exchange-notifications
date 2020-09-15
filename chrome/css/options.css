@@ -14,6 +14,7 @@
     border-bottom: 1px solid;
     text-transform: uppercase;
 }
+
 .setup-header .ico {
     background: url(../images/gears.svg#gray) right center no-repeat;
     background-size: contain;
@@ -95,9 +96,4 @@
 
 .field > .toggle {
     float: left;
-}
-
-#version {
-    padding: 15px 0;
-    text-align: center;
 }

@@ -136,8 +136,8 @@
     {
         if (!isMac) return;
 
-        var o = btn.getAttribute("data-title");
-        var n = o.replace("Ctrl", "\u2318").replace("Alt", "\u2325");
+        var o = btn.getAttribute("data-title"),
+            n = o.replace("Ctrl", "\u2318").replace("Alt", "\u2325");
 
         if (o !== n) btn.setAttribute("data-title", n);
     }

@@ -73,6 +73,24 @@
     background-color: #d5d5d5;
     pointer-events: none;
 }
+
 .toggle > input:disabled ~ label::after {
     background-color: #bcbdbc;
 }
+
+.lose_score:not(.active) ~ .score_bydowns {
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.lose_score:not(.active) ~ .score_bydowns,
+.lose_score:not(.active) ~ .score_bydowns *,
+.lose_score:not(.active) ~ .score_bydowns :before,
+.lose_score:not(.active) ~ .score_bydowns :after {
+    color: #EAE6E6 !important;
+}
+
+.lose_score:not(.active) ~ .score_bydowns .toggle > input ~ label {
+    background: #fff1f1 !important;
+}
+

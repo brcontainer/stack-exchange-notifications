@@ -432,6 +432,11 @@ body > .fix-scroll > .sub {
     margin: 0 auto;
 }
 
+#version {
+    padding: 15px 0;
+    text-align: center;
+}
+
 .about {
     padding: 88px .25em 0 .55em;
 }
