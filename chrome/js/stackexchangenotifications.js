@@ -502,13 +502,20 @@
     };
 
     var Utils = {
+        "markdown": function (message) {
+            return message
+                .replace(/(^|\s|[>])_(.*?)_($|\s|[<])/g, '$1<i>$2<\/i>$3')
+                    .replace(/(^|\s|[>])`(.*?)`($|\s|[<])/g, '$1<code>$2<\/code>$3')
+                        .replace(/\{([a-z])(\w+)?\}/gi, '<var name="$1$2"><\/var>')
+                            .replace(/(^|\s|[>])\*(.*?)\*($|\s|[<])/g, '$1<strong>$2<\/strong>$3');
+        },
         "translate": function (doc) {
             var locales = doc.querySelectorAll("[data-i18n]");
 
             for (var i = locales.length - 1; i >= 0; i--) {
                 var el = locales[i], message = browser.i18n.getMessage(el.dataset.i18n);
 
-                if (message) el.textContent = message;
+                if (message) el.innerHTML = Utils.markdown(message);
             }
 
             if (navigator.language.indexOf("en") === 0) return;
@@ -570,8 +577,6 @@
                     if (type === "-") continue;
 
                     var newtext = browser.i18n.getMessage("inbox_" + type);
-
-                    console.log("inbox_" + type, newtext);
 
                     if (newtext && newtext !== "") {
                         type = newtext;
