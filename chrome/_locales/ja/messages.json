@@ -80,6 +80,9 @@
   "chat_request_remove": {
     "message": "本当に削除しますか？"
   },
+  "setup_title": {
+    "message": "設定"
+  },
   "setup_pushs": {
     "message": "通知"
   },

@@ -80,6 +80,9 @@
   "chat_request_remove": {
     "message": "정말로 제거 하시겠습니까?"
   },
+  "setup_title": {
+    "message": "설정"
+  },
   "setup_pushs": {
     "message": "알림"
   },

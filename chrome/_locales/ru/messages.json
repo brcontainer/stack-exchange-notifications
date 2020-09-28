@@ -80,6 +80,9 @@
   "chat_request_remove": {
     "message": "Вы действительно хотите удалить?"
   },
+  "setup_title": {
+    "message": "Настройки"
+  },
   "setup_pushs": {
     "message": "Уведомления"
   },
