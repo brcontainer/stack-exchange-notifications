@@ -71,19 +71,22 @@
 
             space = d.createTextNode(" \n ");
             tools = d.createElement("div");
+
             tools.className = "sen-tools-clipboard";
 
             button = d.createElement("button");
 
             el.senCopyCode = true;
 
-            button.textContent = "Copy";
+            button.textContent = browser.i18n.getMessage("site_clipboard_button");
+
             button.onclick = function (e) {
                 e.preventDefault();
                 copyFromDOM(code);
 
-                StackExchangeNotifications.utils.showLabelNotification("Copied to clipboard!");
+                StackExchangeNotifications.utils.showLabelNotification(browser.i18n.getMessage("site_clipboard_copied"));
             };
+
             button.type = "button";
 
             tools.appendChild(button);

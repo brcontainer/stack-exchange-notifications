@@ -123,6 +123,11 @@
         return false;
     }
 
+    function removeQuerystringAndHash(url)
+    {
+        return url.replace(/(\?|#)[\s\S]+$/, "");
+    }
+
     function setActionAnchor(e)
     {
         if (e.button !== 0) return;

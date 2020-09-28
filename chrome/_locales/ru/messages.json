@@ -12,46 +12,46 @@
     "message": "Вчера"
   },
   "last_days": {
-    "message": "последние {days} дней"
+    "message": "{days} дня назад"
   },
   "date_at": {
-    "message": "{month} {date} as {hour}"
+    "message": "{date} {month} в {hour}"
   },
   "month_jan": {
-    "message": "jan"
+    "message": "янв"
   },
   "month_feb": {
-    "message": "feb"
+    "message": "фев"
   },
   "month_mar": {
-    "message": "mar"
+    "message": "мар"
   },
   "month_apr": {
-    "message": "apr"
+    "message": "апр"
   },
   "month_may": {
-    "message": "may"
+    "message": "май"
   },
   "month_jun": {
-    "message": "jun"
+    "message": "июн"
   },
   "month_jul": {
-    "message": "jul"
+    "message": "июл"
   },
   "month_aug": {
-    "message": "aug"
+    "message": "авг"
   },
   "month_sep": {
-    "message": "sep"
+    "message": "сен"
   },
   "month_oct": {
-    "message": "oct"
+    "message": "окт"
   },
   "month_nov": {
-    "message": "nov"
+    "message": "ноя"
   },
   "month_dec": {
-    "message": "dec"
+    "message": "дек"
   },
   "inbox_comment": {
     "message": "комментарий"
@@ -96,7 +96,7 @@
     "message": "Показать мои отрицательные голоса в счете"
   },
   "setup_achievements": {
-    "message": "Достижения (например, значки, полученные привилегии)"
+    "message": "Достижения (значки, полученные привилегии)"
   },
   "setup_apperance": {
     "message": "Видимость"
@@ -132,7 +132,7 @@
     "message": "Автопросмотр в полноэкранном режиме"
   },
   "setup_auto_fullscreen_editor": {
-    "message": "Автоматический полноэкранный режим при фокусировке"
+    "message": "полноэкранный режим при фокусировке"
   },
   "setup_replace_tabs_by_spaces_editor": {
     "message": "Заменить табуляции пробелами (экспериментально)"
@@ -170,7 +170,13 @@
   "dialog_ok": {
     "message": "да"
   },
-  "image_viewer_error": {
+  "site_image_viewer_error": {
     "message": "ошибка загрузки изображения"
+  },
+  "site_clipboard_button": {
+    "message": "скопировать"
+  },
+  "site_clipboard_copied": {
+    "message": "Скопировано в буфер обмена!"
   }
 }

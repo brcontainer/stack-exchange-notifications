@@ -62,11 +62,12 @@ pre:hover + .sen-tools-clipboard, .sen-tools-clipboard:hover {
     background-color: rgba(0,0,0,.8) !important;
     color: #fff !important;
     width: 300px !important;
-    height: 62px !important;
+    min-height: 62px !important;
     text-align: center !important;
-    line-height: 62px !important;
+    line-height: 1.5 !important;
     font-size: 18pt !important;
     z-index: 1052 !important;
+    padding: 10px !important;
 }
 
 .sen-tools-hide {

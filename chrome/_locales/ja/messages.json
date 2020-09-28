@@ -170,7 +170,13 @@
   "dialog_ok": {
     "message": "はい"
   },
-  "image_viewer_error": {
+  "site_image_viewer_error": {
     "message": "画像の読み込みエラー"
+  },
+  "site_clipboard_button": {
+    "message": "コピーする"
+  },
+  "site_clipboard_copied": {
+    "message": "クリップボードにコピーしました！"
   }
 }

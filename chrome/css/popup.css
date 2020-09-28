@@ -52,7 +52,7 @@ body > .fix-scroll > .sub {
     color: #646464;
     text-transform: uppercase;
     box-shadow: 0 2px 2px rgba(0,0,0,.04);
-    box-shadow: 0 2px 6px -3px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px -3px rgba(0,0,0,.1);
     position: relative;
     position: sticky;
     top: 0;
@@ -318,14 +318,17 @@ body > .fix-scroll > .sub {
 
 .inbox-item {
     position: relative;
-    padding-bottom: 25px !important;
+}
+
+.inbox-item a {
+    padding-bottom: 2.2em !important;
 }
 
 .inbox-item .sen-inbox-type {
     position: absolute;
     right: 5px;
     bottom: 5px;
-    background: rgba(0,0,0,0.1);
+    background: rgba(0,0,0,.1);
     padding: 3px 6px;
     border-radius: 3px;
     font-size: 8pt;
@@ -337,7 +340,7 @@ body > .fix-scroll > .sub {
 
 .date-group-toggle-row {
     box-shadow: 0 2px 2px rgba(0,0,0,.04);
-    box-shadow: 0 2px 6px -3px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px -3px rgba(0,0,0,.1);
     padding: .8em .5em;
     background: rgba(252,252,252,.98);
     position: sticky;

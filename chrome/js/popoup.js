@@ -72,11 +72,6 @@
         }
     }
 
-    function removeQuerystringAndHash(url)
-    {
-        return url.replace(/(\?|#)[\s\S]+$/, "");
-    }
-
     function createRoom(url, data)
     {
         var el = d.createElement("div");

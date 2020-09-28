@@ -110,7 +110,13 @@
   "dialog_ok": {
     "message": "Ok"
   },
-  "image_viewer_error": {
+  "site_image_viewer_error": {
     "message": "error loading image"
+  },
+  "site_clipboard_button": {
+    "message": "copy"
+  },
+  "site_clipboard_copied": {
+    "message": "Copied to clipboard!"
   }
 }

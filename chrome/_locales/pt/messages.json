@@ -21,7 +21,7 @@
     "message": "jan"
   },
   "month_feb": {
-    "message": "feb"
+    "message": "fev"
   },
   "month_mar": {
     "message": "mar"
@@ -30,7 +30,7 @@
     "message": "apr"
   },
   "month_may": {
-    "message": "may"
+    "message": "mai"
   },
   "month_jun": {
     "message": "jun"
@@ -39,19 +39,19 @@
     "message": "jul"
   },
   "month_aug": {
-    "message": "aug"
+    "message": "ago"
   },
   "month_sep": {
-    "message": "sep"
+    "message": "set"
   },
   "month_oct": {
-    "message": "oct"
+    "message": "out"
   },
   "month_nov": {
     "message": "nov"
   },
   "month_dec": {
-    "message": "dec"
+    "message": "dez"
   },
   "inbox_comment": {
     "message": "comentário"
@@ -170,7 +170,13 @@
   "dialog_ok": {
     "message": "Está bem"
   },
-  "image_viewer_error": {
+  "site_image_viewer_error": {
     "message": "erro ao carregar imagem"
+  },
+  "site_clipboard_button": {
+    "message": "copiar"
+  },
+  "site_clipboard_copied": {
+    "message": "Copiado para área de transferência!"
   }
 }

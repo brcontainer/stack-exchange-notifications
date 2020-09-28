@@ -30,7 +30,7 @@
 
     var isHttpRegExp = /^https?\:\/\/[^/]/i,
         dateRegExp = /last\s+?(\d+)\s+?days|(\w{3}) (\d{1,2}) at (\d{1,2}:\d{1,2})/i,
-        lastDaysRegExp = /last\s+?(\d+)\s+?days/i,
+        lastDaysRegExp = /last\s+?(\d+)\s+?days|(\d+)\s+days\s+ago/i,
         tmpDom = d.createElement("div"),
         allowedAttrs = [ "class", "id", "href" ],
         allowedTags = [
@@ -510,7 +510,8 @@
                             .replace(/(^|\s)\*(.*?)\*($|\s)/g, '$1<strong>$2<\/strong>$3');
         },
         "translate": function (doc) {
-            var locales = doc.querySelectorAll("[data-i18n]");
+            var locales = doc.querySelectorAll("[data-i18n]"),
+                inboxTypes = doc.querySelectorAll(".inbox-item .item-type > span");
 
             for (var i = locales.length - 1; i >= 0; i--) {
                 var el = locales[i], message = browser.i18n.getMessage(el.dataset.i18n);
@@ -518,7 +519,26 @@
                 if (message) el.innerHTML = Utils.markdown(message);
             }
 
-            if (navigator.language.indexOf("en") === 0) return;
+            if (navigator.language.indexOf("en") === 0) {
+                for (var i = inboxTypes.length - 1; i >= 0; i--) {
+                    var el = inboxTypes[i], textNode = el.nextSibling;
+
+                    if (textNode && textNode.nodeType === 3) {
+                        var type = textNode.textContent;
+
+                        if (type === "-") continue;
+
+                        textNode.textContent = "-";
+
+                        var badge = d.createElement("div");
+
+                        badge.className = "sen-inbox-type";
+                        badge.textContent = type;
+
+                        el.parentNode.appendChild(badge);
+                    }
+                }
+            }
 
             var inboxTitle = doc.querySelector(".inbox-dialog h3"),
                 achievementsTitle = doc.querySelector(".achievements-dialog h3");
@@ -544,8 +564,9 @@
                     var relativelastday = txtEl.match(lastDaysRegExp);
 
                     if (relativelastday !== null) {
-                        message = browser.i18n.getMessage("last_days")
-                                    .replace(/\{days\}/g, relativelastday[1]);
+                        var getDay = relativelastday[1] ? relativelastday[1] : relativelastday[2];
+
+                        message = browser.i18n.getMessage("last_days").replace(/\{days\}/g, getDay);
                     } else {
                         var relativedatehour = txtEl.match(dateRegExp);
 
@@ -566,10 +587,8 @@
                 if (message) el.innerHTML = message;
             }
 
-            var types = doc.querySelectorAll(".inbox-item .item-type > span");
-
-            for (var i = types.length - 1; i >= 0; i--) {
-                var el = types[i], textNode = el.nextSibling;
+            for (var i = inboxTypes.length - 1; i >= 0; i--) {
+                var el = inboxTypes[i], textNode = el.nextSibling;
 
                 if (textNode && textNode.nodeType === 3) {
                     var type = textNode.textContent.trim().toLowerCase().replace(/\s+/, "_");

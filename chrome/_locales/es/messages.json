@@ -18,40 +18,40 @@
     "message": "{month} {date} as {hour}"
   },
   "month_jan": {
-    "message": "jan"
+    "message": "Jan"
   },
   "month_feb": {
-    "message": "feb"
+    "message": "Feb"
   },
   "month_mar": {
-    "message": "mar"
+    "message": "Mar"
   },
   "month_apr": {
-    "message": "apr"
+    "message": "Apr"
   },
   "month_may": {
-    "message": "may"
+    "message": "May"
   },
   "month_jun": {
-    "message": "jun"
+    "message": "Jun"
   },
   "month_jul": {
-    "message": "jul"
+    "message": "Jul"
   },
   "month_aug": {
-    "message": "aug"
+    "message": "Aug"
   },
   "month_sep": {
-    "message": "sep"
+    "message": "Sep"
   },
   "month_oct": {
-    "message": "oct"
+    "message": "Oct"
   },
   "month_nov": {
-    "message": "nov"
+    "message": "Nov"
   },
   "month_dec": {
-    "message": "dec"
+    "message": "Dec"
   },
   "inbox_comment": {
     "message": "comentario"
@@ -170,7 +170,13 @@
   "dialog_ok": {
     "message": "Si"
   },
-  "image_viewer_error": {
+  "site_image_viewer_error": {
     "message": "error al cargar la imagen"
+  },
+  "site_clipboard_button": {
+    "message": "copiar"
+  },
+  "site_clipboard_copied": {
+    "message": "Copiada al portapapeles!"
   }
 }

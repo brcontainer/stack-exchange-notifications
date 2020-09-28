@@ -84,6 +84,10 @@ hr {
     border-color: #272525 !important;
 }
 
+.inbox-item .sen-inbox-type {
+    background: rgba(255,255,255,.1) !important;
+}
+
 .btn:focus, body > .dialog > .modal {
     background-color: #333d48 !important;
     color: #cfcfcf !important;
