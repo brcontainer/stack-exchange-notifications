@@ -95,7 +95,9 @@
             '<div class="close"><a class="icon" href="#"></a></div>';
 
         el.querySelector(".close > a").onclick = function () {
-            StackExchangeNotifications.utils.dialog.confirm("Do you really want to remove?", function (ok) {
+            var message = browser.i18n.getMessage("chat_request_remove");
+
+            StackExchangeNotifications.utils.dialog.confirm(message, function (ok) {
                 if (!ok) return;
 
                 browser.runtime.sendMessage({ "chat": 2, "url": url }, function (response) {
@@ -331,6 +333,8 @@
         }
 
         showNoticeRoom(!has);
+
+        StackExchangeNotifications.utils.translate(chatContent);
     };
 
     aboutButton.onclick = function ()
@@ -355,6 +359,8 @@
 
         aboutContent.className =
             aboutContent.className.replace(hideRegExp, "").trim();
+
+        StackExchangeNotifications.utils.translate(aboutContent);
     };
 
     inboxButton.onclick = function ()
@@ -456,8 +462,7 @@
                     StackExchangeNotifications.update();
                 }, 500);
 
-                achievementsContent.innerHTML =
-                    StackExchangeNotifications.utils.clearDomString(data);
+                achievementsContent.innerHTML = StackExchangeNotifications.utils.clearDomString(data);
 
                 if (headers.date) {
                     dateContent = d.querySelector(".js-utc-time")

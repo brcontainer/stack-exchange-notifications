@@ -37,6 +37,7 @@ html, html * {
 
 body:not(:target) {
     background-color: #f6f6f6;
+    background-color: #f3f3f4;
 }
 
 body {
@@ -188,4 +189,9 @@ select.field {
     display: inline-block;
     height: 16px;
     width: 16px;
+}
+
+#version {
+    padding: 15px 0;
+    text-align: center;
 }

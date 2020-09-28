@@ -29,6 +29,8 @@
         isBackground = false;
 
     var isHttpRegExp = /^https?\:\/\/[^/]/i,
+        dateRegExp = /last\s+?(\d+)\s+?days|(\w{3}) (\d{1,2}) at (\d{1,2}:\d{1,2})/i,
+        lastDaysRegExp = /last\s+?(\d+)\s+?days/i,
         tmpDom = d.createElement("div"),
         allowedAttrs = [ "class", "id", "href" ],
         allowedTags = [
@@ -320,6 +322,11 @@
         return false;
     }
 
+    function translateMonth(month)
+    {
+        return browser.i18n.getMessage("month_" + month.toLowerCase());
+    }
+
     w.StackExchangeNotifications = {
         "boot": function () {
             //Improve performance in Opera and older machines
@@ -495,6 +502,63 @@
     };
 
     var Utils = {
+        "translate": function (doc) {
+            var locales = doc.querySelectorAll("[data-i18n]");
+
+            for (var i = locales.length - 1; i >= 0; i--) {
+                var el = locales[i], message = browser.i18n.getMessage(el.dataset.i18n);
+
+                if (message) el.textContent = message;
+            }
+
+            if (navigator.language.indexOf("en") === 0) return;
+
+            var inboxTitle = doc.querySelector(".inbox-dialog h3"),
+                achievementsTitle = doc.querySelector(".achievements-dialog h3");
+
+            if (inboxTitle) {
+                inboxTitle.textContent = browser.i18n.getMessage("inbox");
+            } else if (achievementsTitle) {
+                achievementsTitle.textContent = browser.i18n.getMessage("achievements");
+            }
+
+            var relativetimes = doc.querySelectorAll(".relativetime,.date-header");
+
+            for (var i = relativetimes.length - 1; i >= 0; i--) {
+                var message = u, el = relativetimes[i], txtEl = el.textContent.trim().toLowerCase();
+
+                if (txtEl === "today") {
+                    message = browser.i18n.getMessage("today");
+                } else if (txtEl === "yesterday") {
+                    message = browser.i18n.getMessage("yesterday");
+                }
+
+                if (message === u) {
+                    var relativelastday = txtEl.match(lastDaysRegExp);
+
+                    if (relativelastday !== null) {
+                        message = browser.i18n.getMessage("last_days")
+                                    .replace(/\{days\}/g, relativelastday[1]);
+                    } else {
+                        var relativedatehour = txtEl.match(dateRegExp);
+
+                        if (relativedatehour === null) continue;
+
+                        if (relativedatehour[2] === u) {
+                            message = browser.i18n.getMessage("last_days")
+                                        .replace(/\{days\}/g, relativedatehour[1]);
+                        } else {
+                            message = browser.i18n.getMessage("date_at")
+                                        .replace(/\{month\}/g, translateMonth(relativedatehour[2]))
+                                        .replace(/\{date\}/g, relativedatehour[3])
+                                        .replace(/\{hour\}/g, relativedatehour[4]);
+                        }
+                    }
+                }
+
+                if (message) el.innerHTML = message;
+            }
+        },
         "convertResult": function (size) {
             if (size === 0) {
                 return "";
@@ -586,6 +650,8 @@
             }
 
             toRemove = list = null;
+
+            Utils.translate(tmpDom);
 
             return tmpDom.innerHTML;
         },

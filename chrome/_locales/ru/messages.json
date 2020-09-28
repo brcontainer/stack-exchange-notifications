@@ -1,0 +1,161 @@
+{
+  "inbox": {
+    "message": "входящие"
+  },
+  "achievements": {
+    "message": "достижения"
+  },
+  "today": {
+    "message": "Cегодня"
+  },
+  "yesterday": {
+    "message": "Вчера"
+  },
+  "last_days": {
+    "message": "последние {days} дней"
+  },
+  "date_at": {
+    "message": "{month} {date} as {hour}"
+  },
+  "month_jan": {
+    "message": "jan"
+  },
+  "month_feb": {
+    "message": "feb"
+  },
+  "month_mar": {
+    "message": "mar"
+  },
+  "month_apr": {
+    "message": "apr"
+  },
+  "month_may": {
+    "message": "may"
+  },
+  "month_jun": {
+    "message": "jun"
+  },
+  "month_jul": {
+    "message": "jul"
+  },
+  "month_aug": {
+    "message": "aug"
+  },
+  "month_sep": {
+    "message": "sep"
+  },
+  "month_oct": {
+    "message": "oct"
+  },
+  "month_nov": {
+    "message": "nov"
+  },
+  "month_dec": {
+    "message": "dec"
+  },
+  "chat_title": {
+    "message": "Чаты"
+  },
+  "chat_others": {
+    "message": "Другие"
+  },
+  "chat_empty": {
+    "message": "У вас нет добавленных комнат"
+  },
+  "chat_request_remove": {
+    "message": "Вы действительно хотите удалить?"
+  },
+  "setup_pushs": {
+    "message": "Уведомления"
+  },
+  "setup_incoming": {
+    "message": "Новые входящие сообщения"
+  },
+  "setup_score": {
+    "message": "Оценка (Репутация)"
+  },
+  "setup_loss_score": {
+    "message": "Показать счет проигрыша"
+  },
+  "setup_my_downvotes": {
+    "message": "Показать мои отрицательные голоса в счете"
+  },
+  "setup_achievements": {
+    "message": "Достижения (например, значки, полученные привилегии)"
+  },
+  "setup_apperance": {
+    "message": "Видимость"
+  },
+  "setup_apperance_theme": {
+    "message": "Темная тема (внутренние страницы)"
+  },
+  "setup_site": {
+    "message": "Веб-сайты StackExchange"
+  },
+  "setup_image_viewer": {
+    "message": "Просмотр изображений"
+  },
+  "setup_clipboard": {
+    "message": "Скопировать код в буфер обмена"
+  },
+  "setup_prevent_duplicate_pages": {
+    "message": "Предотвратить дублирование страниц"
+  },
+  "setup_editor": {
+    "message": "редактор"
+  },
+  "setup_improved_editor": {
+    "message": "Улучшенный текстовый редактор"
+  },
+  "setup_invert_editor": {
+    "message": "Инвертировать позицию редактора"
+  },
+  "setup_sync_scroll_editor": {
+    "message": "Синхронизация прокрутки с предварительным просмотром"
+  },
+  "setup_auto_preview_editor": {
+    "message": "Автопросмотр в полноэкранном режиме"
+  },
+  "setup_auto_fullscreen_editor": {
+    "message": "Автоматический полноэкранный режим при фокусировке"
+  },
+  "setup_replace_tabs_by_spaces_editor": {
+    "message": "Заменить табуляции пробелами (экспериментально)"
+  },
+  "setup_italic_editor": {
+    "message": "Использует `_foo_` как курсив вместо `*foo*` "
+  },
+  "setup_data": {
+    "message": "Дата"
+  },
+  "setup_clear_cache": {
+    "message": "Очистить кэш"
+  },
+  "setup_reset_data": {
+    "message": "Сбросить все данные"
+  },
+  "setup_request_remove_cache": {
+    "message": "Вы действительно хотите удалить?"
+  },
+  "about_thanks": {
+    "message": "Спасибо"
+  },
+  "about_credits": {
+    "message": "Кредиты"
+  },
+  "about_report": {
+    "message": "Сообщить о проблеме"
+  },
+  "dialog_confirm": {
+    "message": "да"
+  },
+  "dialog_cancel": {
+    "message": "Нет"
+  },
+  "dialog_ok": {
+    "message": "да"
+  },
+  "image_viewer_error": {
+    "message": "ошибка загрузки изображения"
+  }
+}

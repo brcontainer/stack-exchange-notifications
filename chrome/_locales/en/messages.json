@@ -1,0 +1,152 @@
+{
+  "inbox": {
+    "message": "inbox"
+  },
+  "achievements": {
+    "message": "achievements"
+  },
+  "month_jan": {
+    "message": "jan"
+  },
+  "month_feb": {
+    "message": "feb"
+  },
+  "month_mar": {
+    "message": "mar"
+  },
+  "month_apr": {
+    "message": "apr"
+  },
+  "month_may": {
+    "message": "may"
+  },
+  "month_jun": {
+    "message": "jun"
+  },
+  "month_jul": {
+    "message": "jul"
+  },
+  "month_aug": {
+    "message": "aug"
+  },
+  "month_sep": {
+    "message": "sep"
+  },
+  "month_oct": {
+    "message": "oct"
+  },
+  "month_nov": {
+    "message": "nov"
+  },
+  "month_dec": {
+    "message": "dec"
+  },
+  "chat_title": {
+    "message": "Chat rooms"
+  },
+  "chat_others": {
+    "message": "Others"
+  },
+  "chat_empty": {
+    "message": "You have no rooms added"
+  },
+  "chat_request_remove": {
+    "message": "Do you really want to remove?"
+  },
+  "setup_title": {
+    "message": "Settings"
+  },
+  "setup_pushs": {
+    "message": "Pushs"
+  },
+  "setup_incoming": {
+    "message": "New incoming messages"
+  },
+  "setup_score": {
+    "message": "Score (Reputation)"
+  },
+  "setup_loss_score": {
+    "message": "Show loss score"
+  },
+  "setup_my_downvotes": {
+    "message": "Show my downvotes in score"
+  },
+  "setup_achievements": {
+    "message": "Achievements (eg. badges, privileges acquired)"
+  },
+  "setup_apperance": {
+    "message": "Appearance"
+  },
+  "setup_apperance_theme": {
+    "message": "Dark theme (internal pages)"
+  },
+  "setup_site": {
+    "message": "Stack Exchange websites"
+  },
+  "setup_image_viewer": {
+    "message": "Image viewer"
+  },
+  "setup_clipboard": {
+    "message": "Copy code to clipboard"
+  },
+  "setup_prevent_duplicate_pages": {
+    "message": "Prevent duplicate pages"
+  },
+  "setup_editor": {
+    "message": "Editor"
+  },
+  "setup_improved_editor": {
+    "message": "Improved text editor"
+  },
+  "setup_invert_editor": {
+    "message": "Invert editor position"
+  },
+  "setup_sync_scroll_editor": {
+    "message": "Sync scroll with preview"
+  },
+  "setup_auto_preview_editor": {
+    "message": "Autopreview in fullscreen"
+  },
+  "setup_auto_fullscreen_editor": {
+    "message": "Auto fullscreen when focusing (only the first time)"
+  },
+  "setup_replace_tabs_by_spaces_editor": {
+    "message": "Replace tabs by spaces (Experimental)"
+  },
+  "setup_italic_editor": {
+    "message": "Uses italic as _foo_ instead of *foo*"
+  },
+  "setup_data": {
+    "message": "Data"
+  },
+  "setup_clear_cache": {
+    "message": "Clear cache"
+  },
+  "setup_reset_data": {
+    "message": "Reset all data"
+  },
+  "setup_request_remove_cache": {
+    "message": "Do you really want to remove?"
+  },
+  "about_thanks": {
+    "message": "Thanks to"
+  },
+  "about_credits": {
+    "message": "Credits"
+  },
+  "about_report": {
+    "message": "Report a issue"
+  },
+  "dialog_confirm": {
+    "message": "Confirm"
+  },
+  "dialog_cancel": {
+    "message": "Cancel"
+  },
+  "dialog_ok": {
+    "message": "Ok"
+  },
+  "image_viewer_error": {
+    "message": "error loading image"
+  }
+}

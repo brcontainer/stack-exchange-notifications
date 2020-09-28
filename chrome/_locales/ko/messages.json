@@ -1,0 +1,161 @@
+{
+  "inbox": {
+    "message": "메시지"
+  },
+  "achievements": {
+    "message": "업적"
+  },
+  "today": {
+    "message": "오늘"
+  },
+  "yesterday": {
+    "message": "어제"
+  },
+  "last_days": {
+    "message": "지난 {days} 일"
+  },
+  "date_at": {
+    "message": "{month} {date} as {hour}"
+  },
+  "month_jan": {
+    "message": "jan"
+  },
+  "month_feb": {
+    "message": "feb"
+  },
+  "month_mar": {
+    "message": "mar"
+  },
+  "month_apr": {
+    "message": "apr"
+  },
+  "month_may": {
+    "message": "may"
+  },
+  "month_jun": {
+    "message": "jun"
+  },
+  "month_jul": {
+    "message": "jul"
+  },
+  "month_aug": {
+    "message": "aug"
+  },
+  "month_sep": {
+    "message": "sep"
+  },
+  "month_oct": {
+    "message": "oct"
+  },
+  "month_nov": {
+    "message": "nov"
+  },
+  "month_dec": {
+    "message": "dec"
+  },
+  "chat_title": {
+    "message": "대화방"
+  },
+  "chat_others": {
+    "message": "기타"
+  },
+  "chat_empty": {
+    "message": "추가 된 회의실이 없습니다."
+  },
+  "chat_request_remove": {
+    "message": "정말로 제거 하시겠습니까?"
+  },
+  "setup_pushs": {
+    "message": "알림"
+  },
+  "setup_incoming": {
+    "message": "새로운 수신 메시지"
+  },
+  "setup_score": {
+    "message": "점수 (평판)"
+  },
+  "setup_loss_score": {
+    "message": "손실 점수 표시"
+  },
+  "setup_my_downvotes": {
+    "message": "내 반대표를 점수로 표시"
+  },
+  "setup_achievements": {
+    "message": "업적 (배지, 획득 한 권한)"
+  },
+  "setup_apperance": {
+    "message": "외관"
+  },
+  "setup_apperance_theme": {
+    "message": "어두운 테마 (내부 페이지)"
+  },
+  "setup_site": {
+    "message": "Stack Exchange 웹 사이트"
+  },
+  "setup_image_viewer": {
+    "message": "이미지 뷰어"
+  },
+  "setup_clipboard": {
+    "message": "클립 보드에 코드 복사"
+  },
+  "setup_prevent_duplicate_pages": {
+    "message": "중복 페이지 방지"
+  },
+  "setup_editor": {
+    "message": "편집자"
+  },
+  "setup_improved_editor": {
+    "message": "향상된 텍스트 편집기"
+  },
+  "setup_invert_editor": {
+    "message": "편집기 위치 반전"
+  },
+  "setup_sync_scroll_editor": {
+    "message": "미리보기와 스크롤 동기화"
+  },
+  "setup_auto_preview_editor": {
+    "message": "전체 화면에서 자동 미리보기"
+  },
+  "setup_auto_fullscreen_editor": {
+    "message": "초점을 맞출 때 자동 전체 화면"
+  },
+  "setup_replace_tabs_by_spaces_editor": {
+    "message": "탭을 공백으로 바꾸기 (실험적)"
+  },
+  "setup_italic_editor": {
+    "message": "`*foo*` 대신 `_foo_` 로 기울임 꼴 사용"
+  },
+  "setup_data": {
+    "message": "데이트"
+  },
+  "setup_clear_cache": {
+    "message": "캐시 지우기"
+  },
+  "setup_reset_data": {
+    "message": "모든 데이터 재설정"
+  },
+  "setup_request_remove_cache": {
+    "message": "정말로 제거 하시겠습니까?"
+  },
+  "about_thanks": {
+    "message": "감사"
+  },
+  "about_credits": {
+    "message": "크레딧"
+  },
+  "about_report": {
+    "message": "문제 신고"
+  },
+  "dialog_confirm": {
+    "message": "확인"
+  },
+  "dialog_cancel": {
+    "message": "취소"
+  },
+  "dialog_ok": {
+    "message": "확인"
+  },
+  "image_viewer_error": {
+    "message": "이미지로드 오류"
+  }
+}

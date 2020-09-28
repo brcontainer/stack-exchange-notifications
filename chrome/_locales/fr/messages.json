@@ -1,0 +1,161 @@
+{
+  "inbox": {
+    "message": "entrants"
+  },
+  "achievements": {
+    "message": "réalisations"
+  },
+  "today": {
+    "message": "aujourd'hui"
+  },
+  "yesterday": {
+    "message": "hier"
+  },
+  "last_days": {
+    "message": "{days} derniers jours"
+  },
+  "date_at": {
+    "message": "{month} {date} as {hour}"
+  },
+  "month_jan": {
+    "message": "jan"
+  },
+  "month_feb": {
+    "message": "feb"
+  },
+  "month_mar": {
+    "message": "mar"
+  },
+  "month_apr": {
+    "message": "apr"
+  },
+  "month_may": {
+    "message": "may"
+  },
+  "month_jun": {
+    "message": "jun"
+  },
+  "month_jul": {
+    "message": "jul"
+  },
+  "month_aug": {
+    "message": "aug"
+  },
+  "month_sep": {
+    "message": "sep"
+  },
+  "month_oct": {
+    "message": "oct"
+  },
+  "month_nov": {
+    "message": "nov"
+  },
+  "month_dec": {
+    "message": "dec"
+  },
+  "chat_title": {
+    "message": "Salles de discussions"
+  },
+  "chat_others": {
+    "message": "Autres"
+  },
+  "chat_empty": {
+    "message": "Vous n'avez aucune pièce ajoutée"
+  },
+  "chat_request_remove": {
+    "message": "Voulez-vous vraiment supprimer?"
+  },
+  "setup_pushs": {
+    "message": "Notifications"
+  },
+  "setup_incoming": {
+    "message": "Nouveaux messages entrants"
+  },
+  "setup_score": {
+    "message": "Score (réputation)"
+  },
+  "setup_loss_score": {
+    "message": "Afficher le score de perte"
+  },
+  "setup_my_downvotes": {
+    "message": "Afficher mes votes négatifs dans le score"
+  },
+  "setup_achievements": {
+    "message": "Conquistas (crachás, privilégios adquiridos)"
+  },
+  "setup_apperance": {
+    "message": "Apparence"
+  },
+  "setup_apperance_theme": {
+    "message": "Thème sombre (pages internes)"
+  },
+  "setup_site": {
+    "message": "Site"
+  },
+  "setup_image_viewer": {
+    "message": "Galerie Lightbox"
+  },
+  "setup_clipboard": {
+    "message": "Copier le code dans le presse-papiers"
+  },
+  "setup_prevent_duplicate_pages": {
+    "message": "Empêcher les pages en double"
+  },
+  "setup_editor": {
+    "message": "Éditeur"
+  },
+  "setup_improved_editor": {
+    "message": "Éditeur de texte amélioré"
+  },
+  "setup_invert_editor": {
+    "message": "Inverser la position de l'éditeur"
+  },
+  "setup_sync_scroll_editor": {
+    "message": "Synchroniser le défilement avec aperçu"
+  },
+  "setup_auto_preview_editor": {
+    "message": "Aperçu automatique en plein écran"
+  },
+  "setup_auto_fullscreen_editor": {
+    "message": "Plein écran automatique lors de la mise au point"
+  },
+  "setup_replace_tabs_by_spaces_editor": {
+    "message": "Remplacer les tabulations par des espaces (expérimental)"
+  },
+  "setup_italic_editor": {
+    "message": "Utilise `_foo_` comme italique au lieu de `*foo*`"
+  },
+  "setup_data": {
+    "message": "Les données"
+  },
+  "setup_clear_cache": {
+    "message": "Vider le cache"
+  },
+  "setup_reset_data": {
+    "message": "Réinitialiser toutes les données"
+  },
+  "setup_request_remove_cache": {
+    "message": "Voulez-vous vraiment supprimer?"
+  },
+  "about_thanks": {
+    "message": "Merci"
+  },
+  "about_credits": {
+    "message": "Crédits"
+  },
+  "about_report": {
+    "message": "Signaler un problème"
+  },
+  "dialog_confirm": {
+    "message": "Confirmer"
+  },
+  "dialog_cancel": {
+    "message": "Annuler"
+  },
+  "dialog_ok": {
+    "message": "Oui"
+  },
+  "image_viewer_error": {
+    "message": "erreur de chargement de l'image"
+  }
+}

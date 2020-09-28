@@ -42,20 +42,19 @@
 
         <div class="tab-item hide" id="chat-content">
             <div class="header">
-                <h3>Chat rooms</h3>
+                <h3 data-i18n="chat_title"></h3>
             </div>
             <div class="modal-content rooms">
                 <div class="more-rooms">
                     <a href="https://chat.stackoverflow.com/?tab=all&amp;sort=people">
                         stack overflow
                     </a>
-                    <a href="https://chat.stackexchange.com/?tab=all&amp;sort=people">
-                        Others
-                    </a>
+                    <a href="https://chat.stackexchange.com/?tab=all&amp;sort=people" data-i18n="chat_others"></a>
                 </div>
 
                 <div class="notice hide">
-                    You have no rooms added<br>
+                    <div data-i18n="chat_empty"></div>
+
                     <div class="room-fav">
                         <i class="fav-icon"></i>
                     </div>
@@ -89,7 +88,7 @@
 
                 <hr>
 
-                <h2>Thanks to</h2>
+                <h2 data-i18n="about_thanks"></h2>
                 <p>
                     <a href="http://stackexchange.com/users/5960/gabe?tab=accounts">@gabe</a>,
                     <a href="http://stackexchange.com/users/3548243/nicael?tab=accounts">@nicael</a>,
@@ -102,14 +101,15 @@
 
                 <hr>
 
-                <h2>Credits</h2>
+                <h2 data-i18n="about_credits"></h2>
                 <p>Icons designed by Freepik and distributed by Flaticon</p>
 
                 <hr>
 
                 <p>
                     <a href="https://github.com/brcontainer/stack-exchange-notifications/issues/new">
-                        <i class="bug-icon"></i> Report a issue
+                        <i class="bug-icon"></i>
+                        <span data-i18n="about_report"></span>
                     </a>
                 </p>
             </div>
@@ -120,11 +120,11 @@
         <div class="modal">
             <div class="content"></div>
             <div class="act alert hide">
-                <button>Ok</button>
+                <button data-i18n="dialog_ok"></button>
             </div>
             <div class="act confirm hide">
-                <button>Confirm</button>
-                <button>Cancel</button>
+                <button data-i18n="dialog_confirm"></button>
+                <button data-i18n="dialog_cancel"></button>
             </div>
         </div>
     </div>

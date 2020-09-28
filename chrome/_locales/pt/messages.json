@@ -1,0 +1,161 @@
+{
+  "inbox": {
+    "message": "mensages"
+  },
+  "achievements": {
+    "message": "realizações"
+  },
+  "today": {
+    "message": "hoje"
+  },
+  "yesterday": {
+    "message": "ontem"
+  },
+  "last_days": {
+    "message": "últimos {days} dias"
+  },
+  "date_at": {
+    "message": "{month} {date} as {hour}"
+  },
+  "month_jan": {
+    "message": "jan"
+  },
+  "month_feb": {
+    "message": "feb"
+  },
+  "month_mar": {
+    "message": "mar"
+  },
+  "month_apr": {
+    "message": "apr"
+  },
+  "month_may": {
+    "message": "may"
+  },
+  "month_jun": {
+    "message": "jun"
+  },
+  "month_jul": {
+    "message": "jul"
+  },
+  "month_aug": {
+    "message": "aug"
+  },
+  "month_sep": {
+    "message": "sep"
+  },
+  "month_oct": {
+    "message": "oct"
+  },
+  "month_nov": {
+    "message": "nov"
+  },
+  "month_dec": {
+    "message": "dec"
+  },
+  "chat_title": {
+    "message": "bate-papo"
+  },
+  "chat_others": {
+    "message": "outras"
+  },
+  "chat_empty": {
+    "message": "Você não tem salas adicionadas"
+  },
+  "chat_request_remove": {
+    "message": "Você realmente deseja remover?"
+  },
+  "setup_pushs": {
+    "message": "Notificações"
+  },
+  "setup_incoming": {
+    "message": "Novas mensagens recebidas"
+  },
+  "setup_score": {
+    "message": "Pontuação (reputação)"
+  },
+  "setup_loss_score": {
+    "message": "Mostrar pontuação de perda"
+  },
+  "setup_my_downvotes": {
+    "message": "Mostrar meus votos negativos na pontuação"
+  },
+  "setup_achievements": {
+    "message": "Conquistas (emblemas, privilégios adquiridos)"
+  },
+  "setup_apperance": {
+    "message": "Aparência"
+  },
+  "setup_apperance_theme": {
+    "message": "Tema escuro (páginas internas)"
+  },
+  "setup_site": {
+    "message": "Sites da Stack Exchange"
+  },
+  "setup_image_viewer": {
+    "message": "Visualizador de imagens"
+  },
+  "setup_clipboard": {
+    "message": "Copiar o código para a área de transferência"
+  },
+  "setup_prevent_duplicate_pages": {
+    "message": "Evite páginas duplicadas"
+  },
+  "setup_editor": {
+    "message": "editor"
+  },
+  "setup_improved_editor": {
+    "message": "Editor de texto aprimorado"
+  },
+  "setup_invert_editor": {
+    "message": "Inverter posição do editor"
+  },
+  "setup_sync_scroll_editor": {
+    "message": "Sincronizar rolagem com visualização"
+  },
+  "setup_auto_preview_editor": {
+    "message": "Pré-visualização automática em tela cheia"
+  },
+  "setup_auto_fullscreen_editor": {
+    "message": "Tela inteira automática ao focar (primeira vez)"
+  },
+  "setup_replace_tabs_by_spaces_editor": {
+    "message": "Substitua tabulações por espaços (Experimental)"
+  },
+  "setup_italic_editor": {
+    "message": "Usa `_foo_` como italico em vez de `*foo*`"
+  },
+  "setup_data": {
+    "message": "Dados"
+  },
+  "setup_clear_cache": {
+    "message": "Limpar cache"
+  },
+  "setup_reset_data": {
+    "message": "Redefinir todos os dados"
+  },
+  "setup_request_remove_cache": {
+    "message": "Você realmente deseja remover?"
+  },
+  "about_thanks": {
+    "message": "Agradecimentos"
+  },
+  "about_credits": {
+    "message": "Créditos"
+  },
+  "about_report": {
+    "message": "Reportar um problema"
+  },
+  "dialog_confirm": {
+    "message": "Confirmar"
+  },
+  "dialog_cancel": {
+    "message": "Cancelar"
+  },
+  "dialog_ok": {
+    "message": "Está bem"
+  },
+  "image_viewer_error": {
+    "message": "erro ao carregar imagem"
+  }
+}

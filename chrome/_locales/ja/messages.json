@@ -1,0 +1,161 @@
+{
+  "inbox": {
+    "message": "受信箱"
+  },
+  "achievements": {
+    "message": "実績"
+  },
+  "today": {
+    "message": "今日"
+  },
+  "yesterday": {
+    "message": "昨日"
+  },
+  "last_days": {
+    "message": "過去 {days} 日間"
+  },
+  "date_at": {
+    "message": "{month}月{date}日 {hour}"
+  },
+  "month_jan": {
+    "message": "1"
+  },
+  "month_feb": {
+    "message": "2"
+  },
+  "month_mar": {
+    "message": "3"
+  },
+  "month_apr": {
+    "message": "4"
+  },
+  "month_may": {
+    "message": "5"
+  },
+  "month_jun": {
+    "message": "6"
+  },
+  "month_jul": {
+    "message": "7"
+  },
+  "month_aug": {
+    "message": "8"
+  },
+  "month_sep": {
+    "message": "9"
+  },
+  "month_oct": {
+    "message": "10"
+  },
+  "month_nov": {
+    "message": "11"
+  },
+  "month_dec": {
+    "message": "12"
+  },
+  "chat_title": {
+    "message": "チャットルーム"
+  },
+  "chat_others": {
+    "message": "その他"
+  },
+  "chat_empty": {
+    "message": "部屋が追加されていません"
+  },
+  "chat_request_remove": {
+    "message": "本当に削除しますか？"
+  },
+  "setup_pushs": {
+    "message": "通知"
+  },
+  "setup_incoming": {
+    "message": "新しい着信メッセージ"
+  },
+  "setup_score": {
+    "message": "スコア（評判）"
+  },
+  "setup_loss_score": {
+    "message": "損失スコアを表示"
+  },
+  "setup_my_downvotes": {
+    "message": "スコアに反対票を表示"
+  },
+  "setup_achievements": {
+    "message": "実績（バッジ、獲得した特権）"
+  },
+  "setup_apperance": {
+    "message": "出現"
+  },
+  "setup_apperance_theme": {
+    "message": "ダークテーマ（内部ページ）"
+  },
+  "setup_site": {
+    "message": "地点"
+  },
+  "setup_image_viewer": {
+    "message": "画像ビューア"
+  },
+  "setup_clipboard": {
+    "message": "コードをクリップボードにコピー"
+  },
+  "setup_prevent_duplicate_pages": {
+    "message": "ページの重複を防ぐ"
+  },
+  "setup_editor": {
+    "message": "編集者"
+  },
+  "setup_improved_editor": {
+    "message": "改善されたテキストエディター"
+  },
+  "setup_invert_editor": {
+    "message": "エディターの位置を反転"
+  },
+  "setup_sync_scroll_editor": {
+    "message": "プレビューとスクロールを同期"
+  },
+  "setup_auto_preview_editor": {
+    "message": "全画面での自動プレビュー"
+  },
+  "setup_auto_fullscreen_editor": {
+    "message": "フォーカス時の全画面自動"
+  },
+  "setup_replace_tabs_by_spaces_editor": {
+    "message": "タブをスペースで置き換える（実験的）"
+  },
+  "setup_italic_editor": {
+    "message": "イタリックを `*foo*` ではなく `_foo_` として使用します"
+  },
+  "setup_data": {
+    "message": "日付"
+  },
+  "setup_clear_cache": {
+    "message": "キャッシュの消去"
+  },
+  "setup_reset_data": {
+    "message": "すべてのデータをリセット"
+  },
+  "setup_request_remove_cache": {
+    "message": "本当に削除しますか？"
+  },
+  "about_thanks": {
+    "message": "ありがとう"
+  },
+  "about_credits": {
+    "message": "クレジット"
+  },
+  "about_report": {
+    "message": "問題を報告する"
+  },
+  "dialog_confirm": {
+    "message": "はい"
+  },
+  "dialog_cancel": {
+    "message": "いいえ"
+  },
+  "dialog_ok": {
+    "message": "はい"
+  },
+  "image_viewer_error": {
+    "message": "画像の読み込みエラー"
+  }
+}

@@ -17,6 +17,8 @@
         debugMode = true;
     }
 
+    StackExchangeNotifications.utils.translate(d.body);
+
     if (version) {
         var manifestData = StackExchangeNotifications.meta();
         version.textContent = manifestData.appname + " " + manifestData.version;
@@ -60,7 +62,11 @@
 
     function ready(response)
     {
-        d.getElementById("setup-inner").innerHTML = response;
+        var setupInner = d.getElementById("setup-inner");
+
+        setupInner.innerHTML = response;
+
+        StackExchangeNotifications.utils.translate(setupInner);
 
         var switchs = d.querySelectorAll("input[type=checkbox]"),
             clearCache = d.getElementById("clear-cache"),
@@ -85,7 +91,9 @@
 
         clearAllData.onclick = function ()
         {
-            StackExchangeNotifications.utils.dialog.confirm("Do you really want to remove?", function (ok) {
+            var message = browser.i18n.getMessage("setup_request_remove_cache");
+
+            StackExchangeNotifications.utils.dialog.confirm(message, function (ok) {
                 if (ok) {
                     localStorage.clear();
                     w.location.reload();
