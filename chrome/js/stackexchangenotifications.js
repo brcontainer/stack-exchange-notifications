@@ -558,6 +558,37 @@
 
                 if (message) el.innerHTML = message;
             }
+
+            var types = d.querySelectorAll(".inbox-item .v-visible-sr");
+            
+            for (var i = types.length - 1; i >= 0; i--) {
+                var el = types[i], textNode = el.nextSibling;
+
+                if (textNode && textNode.nodeType === 3) {
+                    var type = textNode.textContent.trim().toLowerCase().replace(/\s+/, "_");
+
+                    if (type === "-") continue;
+
+                    var newtext = browser.i18n.getMessage("inbox_" + type);
+
+                    console.log("inbox_" + type, newtext);
+
+                    if (newtext && newtext !== "") {
+                        type = newtext;
+                    } else {
+                        type = textNode.textContent;
+                    }
+
+                    textNode.textContent = "-";
+
+                    var badge = d.createElement("div");
+
+                    badge.className = "sen-inbox-type";
+                    badge.textContent = type;
+
+                    el.parentNode.appendChild(badge);
+                }
+            }
         },
         "convertResult": function (size) {
             if (size === 0) {

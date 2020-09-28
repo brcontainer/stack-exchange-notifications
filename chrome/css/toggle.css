@@ -33,10 +33,10 @@
 .toggle > label::before {
     right: 2px;
     top: 2px;
-    content: "off";
+    content: "✘";
     line-height: 26px;
     font-variant: small-caps;
-    font-size: 7pt;
+    font-size: 9pt;
     text-align: center;
     color: #868171;
 }
@@ -66,7 +66,7 @@
 .toggle > input:checked ~ label::before {
     right: 28px;
     color: #fff;
-    content: "on";
+    content: "✔";
 }
 
 .toggle > input:disabled ~ label {

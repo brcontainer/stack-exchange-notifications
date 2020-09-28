@@ -53,6 +53,21 @@
   "month_dec": {
     "message": "dec"
   },
+  "inbox_comment": {
+    "message": "comentário"
+  },
+  "inbox_answer": {
+    "message": "resposta"
+  },
+  "inbox_answer_edited": {
+    "message": "resposta editada"
+  },
+  "inbox_chat_reply": {
+    "message": "resposta chat"
+  },
+  "inbox_chat_invitation": {
+    "message": "convite chat"
+  },
   "chat_title": {
     "message": "bate-papo"
   },

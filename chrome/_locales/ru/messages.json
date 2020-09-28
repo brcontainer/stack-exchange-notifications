@@ -53,6 +53,21 @@
   "month_dec": {
     "message": "dec"
   },
+  "inbox_comment": {
+    "message": "комментарий"
+  },
+  "inbox_answer": {
+    "message": "ответ"
+  },
+  "inbox_answer_edited": {
+    "message": "ответ отредактирован"
+  },
+  "inbox_chat_reply": {
+    "message": "респоста чат"
+  },
+  "inbox_chat_invitation": {
+    "message": "пригласительный чат"
+  },
   "chat_title": {
     "message": "Чаты"
   },

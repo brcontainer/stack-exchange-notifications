@@ -53,6 +53,21 @@
   "month_dec": {
     "message": "12"
   },
+  "inbox_comment": {
+    "message": "コメント"
+  },
+  "inbox_answer": {
+    "message": "回答"
+  },
+  "inbox_answer_edited": {
+    "message": "回答を編集しました"
+  },
+  "inbox_chat_reply": {
+    "message": "チャット返信"
+  },
+  "inbox_chat_invitation": {
+    "message": "チャット招待"
+  },
   "chat_title": {
     "message": "チャットルーム"
   },

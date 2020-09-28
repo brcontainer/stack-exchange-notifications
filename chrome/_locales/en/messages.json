@@ -5,42 +5,6 @@
   "achievements": {
     "message": "achievements"
   },
-  "month_jan": {
-    "message": "jan"
-  },
-  "month_feb": {
-    "message": "feb"
-  },
-  "month_mar": {
-    "message": "mar"
-  },
-  "month_apr": {
-    "message": "apr"
-  },
-  "month_may": {
-    "message": "may"
-  },
-  "month_jun": {
-    "message": "jun"
-  },
-  "month_jul": {
-    "message": "jul"
-  },
-  "month_aug": {
-    "message": "aug"
-  },
-  "month_sep": {
-    "message": "sep"
-  },
-  "month_oct": {
-    "message": "oct"
-  },
-  "month_nov": {
-    "message": "nov"
-  },
-  "month_dec": {
-    "message": "dec"
-  },
   "chat_title": {
     "message": "Chat rooms"
   },

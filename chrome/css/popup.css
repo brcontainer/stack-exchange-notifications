@@ -316,6 +316,21 @@ body > .fix-scroll > .sub {
     font-size: 9pt;
 }
 
+.inbox-item {
+    position: relative;
+    padding-bottom: 25px !important;
+}
+
+.inbox-item .sen-inbox-type {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    background: rgba(0,0,0,0.1);
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 8pt;
+}
+
 .utc-clock {
     display: none !important;
 }
@@ -403,6 +418,11 @@ body > .fix-scroll > .sub {
 
 .achievements-dialog .date-header {
     vertical-align: middle;
+    text-transform: capitalize;
+}
+
+.achievements-dialog .date-header::first-letter {
+    text-transform: uppercase;
 }
 
 .tab-item .rep-site-container, .date-group-toggle-row a {

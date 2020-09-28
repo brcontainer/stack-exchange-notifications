@@ -53,6 +53,21 @@
   "month_dec": {
     "message": "dec"
   },
+  "inbox_comment": {
+    "message": "논평"
+  },
+  "inbox_answer": {
+    "message": "대답"
+  },
+  "inbox_answer_edited": {
+    "message": "답변 수정"
+  },
+  "inbox_chat_reply": {
+    "message": "채팅 답장"
+  },
+  "inbox_chat_invitation": {
+    "message": "채팅 초대"
+  },
   "chat_title": {
     "message": "대화방"
   },
