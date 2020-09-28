@@ -71,10 +71,9 @@ code {
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
     padding: 0.2em 0.4em;
     margin: 0;
-    color: #383535;
     font-size: 85%;
     font-weight: bold;
-    background-color: rgba(27,31,35,0.05);
+    background-color: rgba(27,31,35,0.2);
     border-radius: 3px;
     overflow: hidden;
     max-width: 100%;

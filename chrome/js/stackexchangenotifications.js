@@ -504,10 +504,10 @@
     var Utils = {
         "markdown": function (message) {
             return message
-                .replace(/(^|\s|[>])_(.*?)_($|\s|[<])/g, '$1<i>$2<\/i>$3')
-                    .replace(/(^|\s|[>])`(.*?)`($|\s|[<])/g, '$1<code>$2<\/code>$3')
+                .replace(/(^|\s)_(.*?)_($|\s)/g, '$1<i>$2<\/i>$3')
+                    .replace(/(^|\s)`(.*?)`($|\s)/g, '$1<code>$2<\/code>$3')
                         .replace(/\{([a-z])(\w+)?\}/gi, '<var name="$1$2"><\/var>')
-                            .replace(/(^|\s|[>])\*(.*?)\*($|\s|[<])/g, '$1<strong>$2<\/strong>$3');
+                            .replace(/(^|\s)\*(.*?)\*($|\s)/g, '$1<strong>$2<\/strong>$3');
         },
         "translate": function (doc) {
             var locales = doc.querySelectorAll("[data-i18n]");
