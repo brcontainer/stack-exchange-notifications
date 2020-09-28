@@ -559,8 +559,8 @@
                 if (message) el.innerHTML = message;
             }
 
-            var types = d.querySelectorAll(".inbox-item .v-visible-sr");
-            
+            var types = doc.querySelectorAll(".inbox-item .item-type > span");
+
             for (var i = types.length - 1; i >= 0; i--) {
                 var el = types[i], textNode = el.nextSibling;
 
