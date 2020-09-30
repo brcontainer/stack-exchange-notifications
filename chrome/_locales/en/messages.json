@@ -63,19 +63,19 @@
     "message": "Improved text editor"
   },
   "setup_invert_editor": {
-    "message": "Invert editor position"
+    "message": "Inverts the editor's position"
   },
   "setup_sync_scroll_editor": {
-    "message": "Sync scroll with preview"
+    "message": "Sync scrolling with preview"
   },
   "setup_auto_preview_editor": {
-    "message": "Autopreview in fullscreen"
+    "message": "Automatically previews in full screen"
   },
   "setup_auto_fullscreen_editor": {
-    "message": "Auto fullscreen when focusing (only the first time)"
+    "message": "Automatically maximizes the screen when focusing (only the first time)"
   },
   "setup_replace_tabs_by_spaces_editor": {
-    "message": "Replace tabs by spaces (Experimental)"
+    "message": "Replace tabs with spaces (Experimental)"
   },
   "setup_italic_editor": {
     "message": "Uses italic as `_foo_` instead of *foo*"
