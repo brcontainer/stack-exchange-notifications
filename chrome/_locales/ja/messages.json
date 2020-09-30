@@ -11,8 +11,14 @@
   "yesterday": {
     "message": "昨日"
   },
+  "last_mins": {
+    "message": "{time}分前"
+  },
+  "last_hours": {
+    "message": "{time}時間前"
+  },
   "last_days": {
-    "message": "過去 {days} 日間"
+    "message": "{time}日前"
   },
   "date_at": {
     "message": "{month}月{date}日 {hour}"
@@ -56,6 +62,9 @@
   "inbox_comment": {
     "message": "コメント"
   },
+  "inbox_comment_on_nomination": {
+    "message": "推薦に関するコメント"
+  },
   "inbox_answer": {
     "message": "回答"
   },
@@ -68,6 +77,9 @@
   "inbox_chat_invitation": {
     "message": "チャット招待"
   },
+  "inbox_election": {
+    "message": "選挙"
+  },
   "chat_title": {
     "message": "チャットルーム"
   },
@@ -79,6 +91,12 @@
   },
   "chat_request_remove": {
     "message": "本当に削除しますか？"
+  },
+  "chat_pin": {
+    "message": "save room"
+  },
+  "chat_unpin": {
+    "message": "remove room"
   },
   "setup_title": {
     "message": "設定"

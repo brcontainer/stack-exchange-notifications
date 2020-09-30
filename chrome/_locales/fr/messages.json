@@ -11,8 +11,14 @@
   "yesterday": {
     "message": "hier"
   },
+  "last_mins": {
+    "message": "il y a {time} minutes"
+  },
+  "last_hours": {
+    "message": "il y a {time} heures"
+  },
   "last_days": {
-    "message": "{days} derniers jours"
+    "message": "il y a {time} jours"
   },
   "date_at": {
     "message": "{month} {date} as {hour}"
@@ -56,6 +62,9 @@
   "inbox_comment": {
     "message": "commentaire"
   },
+  "inbox_comment_on_nomination": {
+    "message": "commenter la nomination"
+  },
   "inbox_answer": {
     "message": "répondre"
   },
@@ -68,6 +77,9 @@
   "inbox_chat_invitation": {
     "message": "invitation de chat"
   },
+  "inbox_election": {
+    "message": "élection"
+  },
   "chat_title": {
     "message": "Salles de discussions"
   },
@@ -79,6 +91,12 @@
   },
   "chat_request_remove": {
     "message": "Voulez-vous vraiment supprimer?"
+  },
+  "chat_pin": {
+    "message": "save room"
+  },
+  "chat_unpin": {
+    "message": "remove room"
   },
   "setup_title": {
     "message": "Réglages"

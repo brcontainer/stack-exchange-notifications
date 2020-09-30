@@ -17,6 +17,12 @@
   "chat_request_remove": {
     "message": "Do you really want to remove?"
   },
+  "chat_pin": {
+    "message": "save room"
+  },
+  "chat_unpin": {
+    "message": "remove room"
+  },
   "setup_title": {
     "message": "Settings"
   },

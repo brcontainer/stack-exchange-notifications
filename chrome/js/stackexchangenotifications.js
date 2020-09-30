@@ -30,7 +30,7 @@
 
     var isHttpRegExp = /^https?\:\/\/[^/]/i,
         dateRegExp = /last\s+?(\d+)\s+?days|(\w{3}) (\d{1,2}) at (\d{1,2}:\d{1,2})/i,
-        lastDaysRegExp = /last\s+?(\d+)\s+?days|(\d+)\s+days\s+ago/i,
+        lastTimeRegExp = /last\s+?(\d+)\s+?days|(\d+)\s+(min|hour|day)s?\s+ago/i,
         tmpDom = d.createElement("div"),
         allowedAttrs = [ "class", "id", "href" ],
         allowedTags = [
@@ -561,12 +561,24 @@
                 }
 
                 if (message === u) {
-                    var relativelastday = txtEl.match(lastDaysRegExp);
+                    var relativetime = txtEl.match(lastTimeRegExp);
 
-                    if (relativelastday !== null) {
-                        var getDay = relativelastday[1] ? relativelastday[1] : relativelastday[2];
+                    if (relativetime !== null) {
+                        var value = relativetime[1] ? relativetime[1] : relativetime[2];
 
-                        message = browser.i18n.getMessage("last_days").replace(/\{days\}/g, getDay);
+                        switch (relativetime[3]) {
+                            case "min":
+                                message = browser.i18n.getMessage("last_mins");
+                                break;
+                            case "hour":
+                                message = browser.i18n.getMessage("last_hours");
+                                break;
+                            case "day":
+                                message = browser.i18n.getMessage("last_days");
+                                break;
+                        }
+
+                        if (message) message = message.replace(/\{time\}/g, value);
                     } else {
                         var relativedatehour = txtEl.match(dateRegExp);
 
@@ -591,7 +603,7 @@
                 var el = inboxTypes[i], textNode = el.nextSibling;
 
                 if (textNode && textNode.nodeType === 3) {
-                    var type = textNode.textContent.trim().toLowerCase().replace(/\s+/, "_");
+                    var type = textNode.textContent.trim().toLowerCase().replace(/\s+/g, "_");
 
                     if (type === "-") continue;
 

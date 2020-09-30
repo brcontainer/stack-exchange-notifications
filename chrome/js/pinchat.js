@@ -12,7 +12,9 @@
     var link,
         rooms = {},
         addedRegExp = /\bsen-added\b/g,
-        removeMsg = "Do you really want to remove this room?";
+        removeMsg = browser.i18n.getMessage("chat_request_remove"),
+        pinMsg = browser.i18n.getMessage("chat_pin"),
+        unpinMsg = browser.i18n.getMessage("chat_unpin");
 
     function parseUrl(url)
     {
@@ -84,9 +86,19 @@
 
         var icon = d.createElement("i"),
             link = d.createElement("a"),
+            pin = d.createElement("span"),
+            unpin = d.createElement("span"),
             division,
             space,
             url;
+
+        pin.textContent = " " + pinMsg;
+        pin.className = "sen-pin";
+
+        unpin.textContent = " " + unpinMsg;
+        unpin.className = "sen-unpin";
+
+        icon.className = "sen-inroom-heart-icon";
 
         if (!rc) {
             division = d.createTextNode("|");
@@ -110,9 +122,9 @@
             togglePinchat(!addedRegExp.test(link.className), rc ? el : d, link);
         };
 
-        icon.className = "sen-inroom-heart-icon";
-
         link.appendChild(icon);
+        link.appendChild(pin);
+        link.appendChild(unpin);
 
         if (!rc) {
             el.appendChild(division);

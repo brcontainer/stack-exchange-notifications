@@ -372,10 +372,11 @@ body > .fix-scroll > .sub {
 
 .tab-item .item-location {
     padding: .8em 0;
+    /*font-weight: bold;*/
 }
 
-.tab-item .item-summary {
-    padding-left: .8em;
+.tab-item .message-text {
+    width: 300px;
 }
 
 .tab-item .rep-site,
@@ -396,10 +397,7 @@ body > .fix-scroll > .sub {
 }
 
 .tab-item .item-content {
-    width: 340px;
-}
-.tab-item .message-text {
-    width: 300px;
+    width: 358px;
 }
 
 .achievements-dialog .date-header,

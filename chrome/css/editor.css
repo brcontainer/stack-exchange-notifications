@@ -18,6 +18,15 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     border: 1px #c0c0c0 solid !important;
     transition: border-color .2s, box-shadow .2s !important;
 }
+
+.sen-editor-full .wmd-container .mdhelp {
+    position: absolute !important;
+    z-index: 99 !important;
+    width: 100% !important;
+    opacity: .85 !important;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.2) !important;
+}
+
 .wmd-container, .wmd-container * {
     box-sizing: border-box !important;
 }
@@ -227,7 +236,8 @@ html.sen-editor-noscroll, html.sen-editor-noscroll body {
     right: 1% !important;
     width: 48% !important;
     border: none !important;
-    border-radius: 3px !important/
+    border-radius: 3px !important;
+    background-color: rgba(0,0,0,.15) !important;
 }
 
 .sen-editor-full .js-stacks-validation,

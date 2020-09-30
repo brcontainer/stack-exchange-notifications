@@ -109,7 +109,6 @@ code {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    pointer-events: none;
     text-shadow: 0 1px rgba(255,255,255,1);
 }
 
