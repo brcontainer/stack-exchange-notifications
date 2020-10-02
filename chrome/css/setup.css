@@ -1,17 +1,115 @@
-/*
- * StackExchangeNotifications
- * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
- * Released under the MIT license
- *
- * https://github.com/brcontainer/stack-exchange-notification
- */
-
-.setup {
-    padding: 10px 0 15px 0;
+#setup-tab {
+    padding-bottom: 15px;
 }
 
-.setup h2 {
-    font-size: 10pt;
-    padding: 1.1em;
-    text-transform: uppercase;
+#setup-tab h2 {
+    padding: 36px 10px 10px 10px;
+}
+
+#setup-tab h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+#setup-tab button {
+    background: transparent;
+    padding: 16px 0;
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    border-bottom: 1px solid;
+}
+
+#setup-tab button:last-child {
+    border-bottom: none;
+}
+
+#setup-tab .group {
+    /*margin: 0 10px 20px 10px;*/
+    background: #fff;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    transition: all .1s ease;
+}
+
+/*#setup-tab .group:hover {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .04),
+                0 0 8px 0 rgba(0, 0, 0, .04),
+                0 0 15px 0 rgba(0, 0, 0, .01),
+                0 0 20px 4px rgba(0, 0, 0, .02);
+}*/
+
+#setup-tab .row {
+    padding: 5px 0 12px 0;
+    border-bottom: 1px solid;
+    transition: all .1s ease;
+}
+
+#setup-tab .row:hover, #setup-tab button:hover {
+    background: #efffff;
+}
+
+#setup-tab .row:last-child {
+    border-bottom: none;
+}
+
+#setup-tab .group, #setup-tab .row, #setup-tab button {
+    border-color: #dedada;
+}
+
+#setup-tab .row::after {
+    clear: both;
+    height: 0;
+    display: block;
+    content: " ";
+}
+
+#setup-tab .row > .col:first-child {
+    float: left;
+    width: 62px;
+    text-align: center;
+    margin-left: 8px;
+}
+
+#setup-tab .row > .col:last-child {
+    margin: 0 10px 0 80px;
+}
+
+#setup-tab .row > .col > p {
+    padding: 0;
+    margin: 0;
+    line-height: 1.3;
+}
+
+#setup-tab .col .toggle {
+    margin-top: 4px;
+}
+
+#setup-tab [data-show]:not(.data-show) {
+    display: none;
+}
+
+#setup-tab [data-ignored] button {
+    background: rgba(0,0,0,0);
+    outline: none;
+    border: none;
+    border-radius: 24px;
+    margin: 9px auto 0 auto;
+    padding: 12px 0;
+    height: 48px;
+    width: 48px;
+    cursor: pointer;
+    transform: scale(1);
+    transition: all .1s ease-out;
+}
+
+#setup-tab [data-ignored] button:hover {
+    transform: scale(1.1);
+    background-color: rgba(0,0,0,0.05);
+}
+
+#setup-tab .row > .col > p {
+    color: #928b8b;
 }

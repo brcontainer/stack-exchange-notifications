@@ -1,0 +1,96 @@
+.tab-item .header {
+    display: none;
+}
+
+.tab-item .item-content {
+    display: inline-block;
+    vertical-align: top;
+    width: 340px;
+}
+
+.tab-item .item-location {
+    padding: .8em 0;
+    /* font-weight: bold; */
+}
+
+.tab-item .message-text {
+    width: 290px;
+}
+
+.topbar-dialog .favicon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background: rgba(0,0,0,.1);
+    border-radius: 2px;
+}
+
+.inbox-item a {
+    padding-bottom: 2.2em !important;
+}
+
+.inbox-item .sen-inbox-type {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    background: rgba(0,0,0,.1);
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 8pt;
+}
+
+.inbox-item .relativetime {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
+
+.date-group-toggle-row {
+    box-shadow: 0 2px 2px rgba(0,0,0,.04);
+    box-shadow: 0 2px 6px -3px rgba(0,0,0,.1);
+    padding: .8em .5em;
+    background: rgba(252,252,252,.98);
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    height: 36px;
+}
+
+.date-group-toggle-row, .tab-item .modal-content ul {
+    border-bottom: thin solid #cfcfcf;
+}
+
+.tab-item .modal-content h4 {
+    font-weight: normal;
+}
+
+.tab-item .rep-site, .tab-item .rep-change, .tab-item .item-content, .tab-item .message-text, .tab-item .achievements-badge {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.tab-item .rep-change, .tab-item .achievements-badge {
+    text-align: right;
+}
+
+.achievements-dialog .date-header, .achievements-dialog .single-rep-site-container, .tab-item .rep-change {
+    font-weight: bold;
+}
+
+.rep-site-container {
+    display: inline-block;
+    margin-right: 14px;
+}
+
+.rep-up {
+    color: #00bf4c;
+}
+
+.rep-down {
+    color: #E20000;
+}
+
+.rep-change {
+    min-width: 30px;
+}

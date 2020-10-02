@@ -1,0 +1,42 @@
+/*
+ * Prevent Duplicate Tabs
+ * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Released under the MIT license
+ *
+ * https://github.com/brcontainer/prevent-duplicate-tabs
+ */
+
+.tab-item {
+    min-height: 100%;
+    display: none;
+}
+
+.sen-active {
+    display: block !important;
+}
+
+.tab-item .modal-content ul, .tab-item .modal-content li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.tab-item .modal-content li, .tab-item .modal-content .room {
+    border-top: 1px solid #cfcfcf;
+    position: relative;
+}
+
+.tab-item .modal-content li:first-child, .tab-item .modal-content .room:first-child {
+    border-top-color: transparent;
+}
+
+.tab-item .modal-content li a, .tab-item .modal-content .room > a {
+    padding: .65em .25em .65em .55em;
+    text-decoration: none;
+    display: block;
+}
+
+.tab-item .modal-content li:hover, .tab-item .modal-content .room:hover {
+    border-top-color: #BECFE8;
+    background-color: #D6E1ED;
+}

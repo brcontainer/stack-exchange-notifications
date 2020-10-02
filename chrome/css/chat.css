@@ -1,0 +1,87 @@
+#chat-tab .more-rooms {
+    padding: 20px 0;
+    white-space: nowrap;
+    font-size: 0;
+    text-align: center;
+}
+
+#chat-tab .more-rooms > a:first-child {
+    border-right: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#chat-tab .more-rooms > a:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#chat-tab .more-rooms > a {
+    border: 1px #bdb9b9 solid;
+    color: #bdb9b9;
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    min-width: 100px;
+    font-size: 9pt;
+    text-decoration: none;
+    text-shadow: none;
+}
+
+#chat-tab .notice {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: #bdb9b9;
+    text-shadow: 0 1px rgba(255,255,255,1);
+}
+
+#chat-tab .fav-icon {
+    background: url(../images/heart.svg#gray) center center no-repeat;
+    vertical-align: text-bottom;
+    display: inline-block;
+    height: 48px;
+    width: 48px;
+}
+
+#chat-tab .room {
+    min-height: 42px;
+    position: relative;
+}
+
+#chat-tab .room > a > .icon {
+    float: left;
+    width: 32px;
+    overflow: hidden;
+}
+
+#chat-tab .room > a {
+    box-sizing: border-box;
+    float: left;
+    width: 352px;
+}
+
+#chat-tab .room > a {
+    padding: .65em .25em .65em .55em;
+    text-decoration: none;
+    display: block;
+}
+
+#chat-tab .room .close {
+    margin-top: .65em;
+    float: right;
+    width: 38px;
+    text-align: center;
+    display: flex;
+    position: relative;
+    right: -42px;
+    transition: .2s all ease-out;
+}
+
+#chat-tab .room:hover .close {
+    right: 0;
+}
+
+#chat-tab .room p {
+    padding-top: 10px;
+}

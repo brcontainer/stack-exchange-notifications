@@ -1,137 +1,161 @@
 /*
- * StackExchangeNotifications
+ * Prevent Duplicate Tabs
  * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
  * Released under the MIT license
  *
- * https://github.com/brcontainer/stack-exchange-notification
+ * https://github.com/brcontainer/prevent-duplicate-tabs
  */
 
-(function (w) {
+(function (w, u) {
     "use strict";
 
-    var sn = StackExchangeNotifications;
+    if (typeof browser === "undefined") {
+        w.browser = chrome;
+    } else if (!w.browser) {
+        w.browser = browser;
+    }
 
-    sn.boot();
-    sn.background();
+    var configs,
+        ignoreds,
+        timeout,
+        isHttpRE = /^https?:\/\/\w/i,
+        linkJsonRE = /^\{[\s\S]+?\}$/,
+        removeHashRE = /#[\s\S]+?$/,
+        removeQueryRE = /\?[\s\S]+?$/,
+        browser = w.browser;
 
-    sn.pushs(function (response) {
-        var updates = 0;
+    var unreadCountsURI = "https://stackexchange.com/topbar/get-unread-counts",
+        achievementsURI = "https://stackexchange.com/topbar/achievements",
+        inboxURI        = "https://stackexchange.com/topbar/inbox";
 
-        if (response.inbox > 0 && sn.switchEnable("inbox")) {
-            updates = response.inbox;
-        }
+    function empty() {}
 
-        if (response.acquired > 0 && sn.switchEnable("acquired")) {
-            ++updates;
-        }
+    function setStorage(key, value) {
+        localStorage.setItem(key, JSON.stringify({ "value": value }));
+    }
 
-        if (response.score !== 0 && sn.switchEnable("score")) {
-            ++updates;
-        }
+    function getStorage(key) {
+        var itemValue = localStorage[key];
 
-        browser.browserAction.setBadgeText({
-            "text": sn.utils.convertResult(updates)
+        if (!itemValue && !linkJsonRE.test(itemValue)) return false;
+
+        var current = JSON.parse(itemValue);
+
+        return current ? current.value : itemValue;
+    }
+
+    function getConfigs() {
+        return {
+            "turnoff": getStorage("turnoff"),
+            "old": getStorage("old"),
+            "active": getStorage("active"),
+            "start": getStorage("start"),
+            "replace": getStorage("replace"),
+            "update": getStorage("update"),
+            "create": getStorage("create"),
+            "datachange": getStorage("datachange"),
+            "http": getStorage("http"),
+            "query": getStorage("query"),
+            "hash": getStorage("hash"),
+            "incognito": getStorage("incognito")
+        };
+    }
+
+    function noCacheURI(uri) {
+        return uri + (uri.indexOf("?") === -1 ? "?" : "&") + "_=" + new Date().getTime();
+    }
+
+    function update() {
+        // {"UnreadInboxCount":0,"UnreadRepCount":0,"UnreadNonRepCount":0}
+        request(unreadCountsURI, function () {
+            setTimeout(update, 5000);
         });
-    });
+    }
 
-    function updateChanges(type, value)
+    function request(uri, callback)
     {
-        if (type === "achievements") {
-            var data = sn.getAchievements();
+        var headers,
+            completed = false,
+            isAborted = false,
+            xhr       = new XMLHttpRequest;
 
-            if (value !== data.score + data.acquired) {
-                sn.setAchievements(value);
+        console.log(uri, noCacheURI(uri))
+
+        xhr.open("GET", noCacheURI(uri), true);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && isAborted === false) {
+
+                completed = true;
+
+                headers = {};//headersXhrJson(xhr);
+
+                if (xhr.status === 0) {
+                    setTimeout(callback, 200, "", 0, headers);
+                } else {
+                    var status = xhr.responseText === "" && xhr.status === 200 ? -1 : xhr.status;
+
+                    callback(xhr.responseText, status, headers);
+                }
+
+                setTimeout(function () {
+                    xhr = callback = null;
+                }, 1000);
             }
-        } else if (type === "inbox" && value !== sn.getInbox()) {
-            sn.setInbox(value);
+        };
+
+        xhr.send(null);
+
+        return {
+            "abort": function () {
+                if (completed === false) {
+                    isAborted = true;
+
+                    try {
+                        xhr.abort();
+                    } catch (ee) {}
+                }
+            }
+        };
+    }
+
+    if (!getStorage("firstrun")) {
+        configs = {
+            "turnoff": false,
+            "old": true,
+            "active": true,
+            "start": true,
+            "replace": true,
+            "update": true,
+            "create": true,
+            "datachange": true,
+            "http": true,
+            "query": true,
+            "hash": false,
+            "incognito": false
+        };
+
+        for (var config in configs) {
+            setStorage(config, configs[config]);
         }
 
-        sn.update();
+        setStorage("firstrun", true);
+    } else {
+        configs = getConfigs();
     }
 
     browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-        if (request === "gallery") {
-            sendResponse({
-                "available": sn.switchEnable("gallery_box")
-            });
-        } else if (request === "editor") {
-            sendResponse({
-                "lastcheck": sn.restoreState("lastcheck"),
-                "available": sn.switchEnable("editor_actived"),
-                "preview":   sn.switchEnable("editor_preview"),
-                "inverted":  sn.switchEnable("editor_inverted"),
-                "italic":    sn.switchEnable("editor_italic"),
-                "scroll":    sn.switchEnable("editor_sync_scroll"),
-                "indent":    sn.switchEnable("editor_tabs_by_spaces"),
-                "full":      sn.switchEnable("editor_auto_fs"),
-                "theme":     sn.switchEnable("dark_theme") ? "dark" : null
-            });
-        } else if (request === "extras") {
-            sendResponse({
-                "copycode": sn.switchEnable("copy_code")
-            });
-        } else if (request === "update") {
-            sn.update();
-        } else if (request === "changebydom") {
-            sn.detectDOM(true);
-        } else if (request.type) {
-            updateChanges(request.type, request.data);
-        } else if (request.chat) {
-            var url = request.url,
-                type = request.chat,
-                rooms = sn.restoreState("saved_rooms", true) || {};
+        if (request.setup) {
+            configs[request.setup] = request.enable;
+            setStorage(request.setup, request.enable);
+        } else if (request.configs) {
+            sendResponse(getConfigs());
+        }
 
-            if (type === 1) {
-                delete request.url;
-                rooms[url] = request;
-            } else if (type === 2) {
-                delete rooms[url];
-            } else if (type === 3) {
-                var update = false, adjust = {};
-
-                for (var room in rooms) {
-                    //Fix urls in from old version
-                    if (/^https?:/i.test(room)) {
-                        var newName = room.replace(/^https?:\/\//i, "").replace(/\/(\d+)\/.*(\?[\s\S]+)?([#][\s\S]+)?$/, "/$1");
-                        adjust[newName] = rooms[room];
-                        update = true;
-                    } else {
-                        adjust[room] = rooms[room];
-                    }
-                }
-
-                if (update) {
-                    rooms = adjust;
-                    sn.saveState("saved_rooms", adjust, true);
-                }
-
-                sendResponse({ "rooms": rooms });
-
-                adjust = null;
-            }
-
-            if (type > 0 && type < 3) {
-                sn.saveState("saved_rooms", rooms, true);
-                sendResponse(true);
-            }
-
-            rooms = null;
-        } else if (request.hasOwnProperty("storeimages")) {
-            if (request.storeimages === true) {
-                var cssbg = sn.restoreState("cssbg");
-
-                if (cssbg) {
-                    sendResponse(cssbg);
-                    cssbg = null;
-                }
-            } else {
-                sn.utils.generateCssImages(request.storeimages, function (data) {
-                    sn.saveState("cssbg", data);
-                    sendResponse(data);
-                });
-
-                return true;
-            }
+        if (request.setup || request.ignore !== u) {
+            //if (configs.datachange) setTimeout(checkTabs, 10, "datachange");
         }
     });
+
+    setTimeout(update, 1000);
 })(window);

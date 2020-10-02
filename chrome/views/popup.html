@@ -1,120 +1,1311 @@
 <!DOCTYPE html>
-<html>
+<html id="config">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
-    <title>StackExchange Notifications</title>
+    <title>Prevent Duplicate Tabs</title>
     <link rel="icon" type="image/png" href="../images/icon.png">
-    <link rel="stylesheet" type="text/css" href="../css/global.css">
     <link rel="stylesheet" type="text/css" href="../css/popup.css">
-    <link rel="stylesheet" type="text/css" href="../css/setup.css">
     <link rel="stylesheet" type="text/css" href="../css/toggle.css">
-    <link rel="stylesheet" type="text/css" href="../css/animate.css">
-    <link rel="stylesheet" type="text/css" href="../css/dialog.css">
+    <link rel="stylesheet" type="text/css" href="../css/setup.css">
+    <link rel="stylesheet" type="text/css" href="../css/stackexchange.css">
+    <link rel="stylesheet" type="text/css" href="../css/tabs.css">
+    <link rel="stylesheet" type="text/css" href="../css/chat.css">
 </head>
-<body class="topbar top-bar">
-    <div class="fix-scroll"><div class="sub"></div></div>
-
-    <div class="nav">
-        <a title="Show About" id="about-button" href="#about-button">
-            <i class="icon">&nbsp;</i>
-        </a>
-        <a title="Setup" id="setup-button" href="#setup-button">
-            <i class="icon">&nbsp;</i>
-        </a>
-        <a title="Linked chat" id="chat-button" href="#chat-button">
-            <i class="icon">&nbsp;</i>
-        </a>
-        <a title="Show Achievements" id="achievements-button" href="#achievements-button">
-            <span class="push hide">0</span>
-            <i class="icon">&nbsp;</i>
-        </a>
-        <a title="Show Inbox" id="inbox-button" href="#inbox-button">
-            <span class="push hide">0</span>
-            <i class="icon">&nbsp;</i>
-        </a>
-    </div>
-
-    <div class="main">
-        <div class="tab-item hide" id="setup-content">
-            <div id="setup-inner"></div>
+<body>
+    <main>
+        <div class="tab-item" id="inbox-tab">
+              <div class="topbar-dialog inbox-dialog dno">
+                <div class="header">
+                    <h3>inbox</h3>
+                </div>
+                <div class="modal-content">
+                    <ul>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/election" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">election</div>
+                                        </span> <span class="item-creation"><span class="relativetime">8 hours ago</span></span>
+                                    </div>
+                                    <div class="item-location "></div>
+                                    <div class="item-summary">The Stack Overflow em Português 2020 community moderator election is underway — nominations now being accepted.</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.meta.stackoverflow.com/posts/comments/33336?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-brmeta site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português Meta&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">2 days ago</span></span>
+                                    </div>
+                                    <div class="item-location ">Eleições para Moderador 2020 - Coleta de Perguntas</div>
+                                    <div class="item-summary">@GuilhermeNascimento, eu quero avaliar primeiro a pessoa para então julgar a proposta de tra...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.meta.stackoverflow.com/posts/comments/33308?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-brmeta site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português Meta&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">2 days ago</span></span>
+                                    </div>
+                                    <div class="item-location ">Eleições para Moderador 2020 - Coleta de Perguntas</div>
+                                    <div class="item-summary">Fora essa pergunta, que eu votei a favor, as demais eu votei contra, não por acahar elas rui...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/890350?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 24 at 22:46</span></span>
+                                    </div>
+                                    <div class="item-location ">Retornar void em um método ActionResult?</div>
+                                    <div class="item-summary">o que ela pretende fazer esse código não é o suficiente Guilmerme ela precisa pass...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.meta.stackoverflow.com/posts/8404/revisions" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-brmeta site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português Meta&nbsp;</span>
+                                        <div class="sen-inbox-type">answer edited</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 24 at 18:17</span></span>
+                                    </div>
+                                    <div class="item-location ">Eleições para Moderador 2020 - Coleta de Perguntas</div>
+                                    <div class="item-summary"></div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.meta.stackoverflow.com/posts/comments/33302?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-brmeta site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português Meta&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 24 at 18:06</span></span>
+                                    </div>
+                                    <div class="item-location ">Eleições para Moderador 2020 - Coleta de Perguntas</div>
+                                    <div class="item-summary">Olha, não fui eu que dei negativo (e nem positivo). Mas essa pergunta me parece ser algo que...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.meta.stackoverflow.com/posts/comments/33293?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-brmeta site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português Meta&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 23 at 23:27</span></span>
+                                    </div>
+                                    <div class="item-location ">Eleições para Moderador 2020 - Coleta de Perguntas</div>
+                                    <div class="item-summary">Uma pregunta helpdesk é aquela que foi elaborada de forma específica para apenas uma s...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/889527?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 21 at 2:47</span></span>
+                                    </div>
+                                    <div class="item-location ">Upgrade do laravel 5.7 para o 5.8</div>
+                                    <div class="item-summary">Valeu, ultimamente não tenho programado muito em php, no meu trabalho utilizo VB e C#, e no ...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/889419?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 19 at 22:25</span></span>
+                                    </div>
+                                    <div class="item-location ">Encontrar div id com variações - Web Scraping - BeautifulSoup</div>
+                                    <div class="item-summary">Perfeito! Muitíssimo obrigado!</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/889284?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 18 at 20:23</span></span>
+                                    </div>
+                                    <div class="item-location ">Retirar o R$ do tolocalestring</div>
+                                    <div class="item-summary">Eu ia comentar sobre isso na minha resposta mas vc foi mais rápido :-)</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.meta.stackoverflow.com/posts/comments/33268?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-brmeta site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português Meta&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 18 at 17:45</span></span>
+                                    </div>
+                                    <div class="item-location ">Quais os critérios para uma tag deixar de existir?</div>
+                                    <div class="item-summary">Certo. Esse detalhe eu sabia (segundo bullet), só não sabia se era o único caso. A...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/888884?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 16 at 22:21</span></span>
+                                    </div>
+                                    <div class="item-location ">Como registrar um log no PHP?</div>
+                                    <div class="item-summary">Posso adicionar em qualquer consulta de PHP? E colocar esse codigo logo apos? Basicamente isso?</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://chat.stackexchange.com/transcript/message/55564594#55564594" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-stackexchange site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Exchange&nbsp;</span>
+                                        <div class="sen-inbox-type">chat reply</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 16 at 17:33</span></span>
+                                    </div>
+                                    <div class="item-location ">Estouro de Pilha</div>
+                                    <div class="item-summary">Costamilam: @GuilhermeNascimento não precisa ser só nesse formato, mas tem que usar um ...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/888801?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 16 at 15:55</span></span>
+                                    </div>
+                                    <div class="item-location ">toLowerCase() is not a function</div>
+                                    <div class="item-summary">Boa tarde, o args é pra remover o prefixo quando utilizado um comando, ex: ".ban" ...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://chat.stackexchange.com/transcript/message/55554985#55554985" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-stackexchange site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Exchange&nbsp;</span>
+                                        <div class="sen-inbox-type">chat reply</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 16 at 1:30</span></span>
+                                    </div>
+                                    <div class="item-location ">Estouro de Pilha</div>
+                                    <div class="item-summary">Costamilam: @GuilhermeNascimento pessoalmente nunca usei, poucas coisas que as vezes preciso a AP...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/888170?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 12 at 15:02</span></span>
+                                    </div>
+                                    <div class="item-location ">O comando "npm run build -- --prod" foi encerrado com o código 1</div>
+                                    <div class="item-summary">Não fiz não Guilherme, posso tentar isso</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://chat.stackexchange.com/transcript/message/55512993#55512993" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-stackexchange site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Exchange&nbsp;</span>
+                                        <div class="sen-inbox-type">chat reply</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 11 at 18:45</span></span>
+                                    </div>
+                                    <div class="item-location ">Estouro de Pilha</div>
+                                    <div class="item-summary">Samuel Ives: @GuilhermeNascimento sabe se DIR do php tem comportamento diferente no servidor?</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://chat.stackexchange.com/transcript/112916" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-stackexchange site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Exchange&nbsp;</span>
+                                        <div class="sen-inbox-type">chat invitation</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 11 at 18:34</span></span>
+                                    </div>
+                                    <div class="item-location ">Room for Alexandre C. Caus and Guilherme Nascimento</div>
+                                    <div class="item-summary">You have been invited to join a chat</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://chat.stackexchange.com/transcript/message/55512901#55512901" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-stackexchange site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Exchange&nbsp;</span>
+                                        <div class="sen-inbox-type">chat reply</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 11 at 18:32</span></span>
+                                    </div>
+                                    <div class="item-location ">Estouro de Pilha</div>
+                                    <div class="item-summary">Alexandre C. Caus: guilherme, se me ajudar a resolver isso ai, libero acesso ao códig python...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.meta.stackoverflow.com/posts/comments/33197?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-brmeta site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português Meta&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 11 at 16:39</span></span>
+                                    </div>
+                                    <div class="item-location ">Constatação de votos de perseguição?</div>
+                                    <div class="item-summary">eu usei o formulário @GuilhermeNascimento, fazer o que neh a gente está tentando ... ob...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://chat.stackexchange.com/transcript/message/55510913#55510913" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-stackexchange site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Exchange&nbsp;</span>
+                                        <div class="sen-inbox-type">chat reply</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 11 at 15:24</span></span>
+                                    </div>
+                                    <div class="item-location ">Estouro de Pilha</div>
+                                    <div class="item-summary">Alexandre C. Caus: Resolvi isso ai, existe uma norma de resposta, e uma delas é terminar com...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://chat.stackexchange.com/transcript/message/55504280#55504280" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-stackexchange site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Exchange&nbsp;</span>
+                                        <div class="sen-inbox-type">chat reply</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 10 at 22:18</span></span>
+                                    </div>
+                                    <div class="item-location ">Estouro de Pilha</div>
+                                    <div class="item-summary">Alexandre C. Caus: Já está tudo feito, servidor e cliente, porta é aberta com suce...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/887910?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 10 at 20:45</span></span>
+                                    </div>
+                                    <div class="item-location ">por que o meu else não funciona?</div>
+                                    <div class="item-summary">então ele está todo errado :(</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/887723?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 9 at 19:24</span></span>
+                                    </div>
+                                    <div class="item-location ">Alguém sabe como bloquear uso de extensão do Chrome em site WordPress?</div>
+                                    <div class="item-summary">A maioria das extensões de salvar imagens, elas carregam o link das imagens, você sabe ...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/887535?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 8 at 23:40</span></span>
+                                    </div>
+                                    <div class="item-location ">"Main Câmera" Cega</div>
+                                    <div class="item-summary">Eu criei um novo projeto e deu certo! A câmera voltou ao normal.</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/886660?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Sep 3 at 16:07</span></span>
+                                    </div>
+                                    <div class="item-location ">Utilizar o arquivo .env no projeto PHP?</div>
+                                    <div class="item-summary">Por que eu usaria uma lib para fazer leitura de um arquivo .env se é tão simples fazer ...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://chat.stackexchange.com/transcript/message/55399142#55399142" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-stackexchange site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Exchange&nbsp;</span>
+                                        <div class="sen-inbox-type">chat reply</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Aug 30 at 19:26</span></span>
+                                    </div>
+                                    <div class="item-location ">Estouro de Pilha</div>
+                                    <div class="item-summary">Samuel Ives: @GuilhermeNascimento consegui fazer o sistema de push</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/a/470146?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">answer</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Aug 29 at 15:45</span></span>
+                                    </div>
+                                    <div class="item-location ">Qual objetivo de usar UUID (versão 4) como "primary key"?</div>
+                                    <div class="item-summary">Pensando em identificadores randômicos quaisquer, independente do padrão, há algumas vantages: É ...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/885734?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Aug 29 at 11:59</span></span>
+                                    </div>
+                                    <div class="item-location ">Meu userinfo retorna as datas erradas</div>
+                                    <div class="item-summary">Obrigado por responder, mas as datas ainda continuam erradas... tipo, eu criei minha conta a 1 an...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/885650?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Aug 28 at 20:41</span></span>
+                                    </div>
+                                    <div class="item-location ">Sugestão algorítimo!</div>
+                                    <div class="item-summary">Guilherme, a ideia é criar um pseudo código (só coloquei a tag PHP pq exigia uma h...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/885450?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Aug 27 at 21:19</span></span>
+                                    </div>
+                                    <div class="item-location ">Como otimizar o acesso ao Banco de Dados?</div>
+                                    <div class="item-summary">@GuilhermeNascimento Entendi, dependendo do que quero executar o código fica diferente, ent...</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="inbox-item ">
+                            <a href="https://pt.stackoverflow.com/posts/comments/885273?noredirect=1" class="js-gps-track grid gs8 gsx">
+                                <div class="favicon favicon-br site-icon grid--cell"></div>
+                                <div class="item-content grid--cell fl1">
+                                    <div class="item-header"> <span class="item-type "><span class="v-visible-sr">Stack Overflow em Português&nbsp;</span>
+                                        <div class="sen-inbox-type">comment</div>
+                                        </span> <span class="item-creation"><span class="relativetime">Aug 27 at 3:43</span></span>
+                                    </div>
+                                    <div class="item-location ">Qual objetivo de usar UUID (versão 4) como "primary key"?</div>
+                                    <div class="item-summary">Sem comparar com o auto incremento a motivação é que não requer uma autoridad...</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>          
         </div>
 
-        <div class="tab-item hide" id="chat-content">
-            <div class="header">
-                <h3 data-i18n="chat_title"></h3>
-            </div>
-            <div class="modal-content rooms">
-                <div class="more-rooms">
-                    <a href="https://chat.stackoverflow.com/?tab=all&amp;sort=people">
-                        stack overflow
-                    </a>
-                    <a href="https://chat.stackexchange.com/?tab=all&amp;sort=people" data-i18n="chat_others"></a>
+        <div class="tab-item" id="achievements-tab">
+            <!-- -->
+            <div class="topbar-dialog achievements-dialog dno">
+                <div class="header">
+                    <h3>achievements</h3>
                 </div>
-
-                <div class="notice hide">
-                    <div data-i18n="chat_empty"></div>
-
-                    <div class="room-fav">
-                        <i class="fav-icon"></i>
+                <div class="modal-content">
+                    <div class="js-date-group date-group">
+                        <div class="date-group-toggle-row js-date-group-toggle"> <span class="date-header">Yesterday</span>
+                            <a class="date-group-toggle"></a>
+                            <div class="rep-site-container grid">
+                                <div class="rep-site grid--cell">
+                                    <a href="https://pt.stackoverflow.com/users/current?tab=reputation" class="js-gps-track">
+                                        <div class="favicon favicon-br"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +20
+                                    </span>
+                                    </a>
+                                </div>
+                                <div class="rep-site grid--cell">
+                                    <a href="https://stackoverflow.com/users/current?tab=reputation" class="js-gps-track">
+                                        <div class="favicon favicon-stackoverflow"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="js-items items">
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/election/4" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column achievements-badge grid--cell"><span class="badge3"></span></span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">You've earned the "Eleitor" badge (Visitou uma eleição durante qualquer fase ativa, e possuía reputação suficiente para votar).</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/164124/o-que-%c3%a9-xgh-extreme-go-horse/164139#164139" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">O que é XGH (Extreme Go Horse)?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/165713/como-juntar-v%c3%a1rios-dicion%c3%a1rios-em-python/165714#165714" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Como juntar vários dicionários em Python?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://stackoverflow.com/questions/37554623/can-a-new-domparser-parsefromstring-be-safer-than-createelement" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-stackoverflow site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Can a "new DOMParser.parseFromString" be safer than "createElement"?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="js-date-group date-group">
+                        <div class="date-group-toggle-row js-date-group-toggle"> <span class="date-header">Last 7 days</span>
+                            <a class="date-group-toggle"></a>
+                        </div>
+                        <ul class="js-items items">
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/216335/laravel-notfoundhttpexception/220843#220843" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Laravel NotFoundHttpException</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/472987/upgrade-do-laravel-5-7-para-o-5-8/473060#473060" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Upgrade do laravel 5.7 para o 5.8</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://stackoverflow.com/questions/22490453/cant-connect-to-mysql-from-android-device/22490898#22490898" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-stackoverflow site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">can't connect to mysql from android device</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://stackoverflow.com/questions/25467009/internationalization-of-html-pages-for-my-google-chrome-extension/63024940#63024940" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-stackoverflow site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Internationalization of HTML pages for my Google Chrome Extension</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/473785/retornar-void-em-um-m%c3%a9todo-actionresult/473792#473792" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +20
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Retornar void em um método ActionResult?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/43281/qual-collate-utf-8-%c3%a9-o-mais-apropriada-para-web-multi-linguagem" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Qual "collate" UTF-8 é o mais apropriada para Web (multi-linguagem)</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://stackoverflow.com/questions/31865416/what-is-the-difference-between-event-target-event-toelement-and-event-srcelemen" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-stackoverflow site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">What is the difference between Event.target, Event.toElement and Event.srcElement?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/473748/transformar-imput-em-required-ao-preencher-outro-input/473750#473750" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Transformar Imput em "Required" ao Preencher outro input</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/473785/retornar-void-em-um-m%c3%a9todo-actionresult/473789#473789" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Retornar void em um método ActionResult?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/60316" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column achievements-badge grid--cell"><span class="badge2"></span></span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">You've earned the "Pergunta notável" badge (Pergunta com 2,500 visitas) for "Pontos e acentos em URLs com mod_rewrite".</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/57741/refer%c3%aancia-de-argumentos-pode-ser-prejudicial" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Referência de argumentos pode ser prejudicial?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/57741/refer%c3%aancia-de-argumentos-pode-ser-prejudicial/57759#57759" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Referência de argumentos pode ser prejudicial?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/473648/npm-start-react-da-erro/473657#473657" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">npm start react da erro</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/users/3635?tab=reputation" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −50
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">User was removed</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/472549/como-desabilitar-bot%c3%a3o-de-voltar-react-native/473008#473008" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Como Desabilitar Botão de Voltar React Native</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/472549/como-desabilitar-bot%c3%a3o-de-voltar-react-native/473488#473488" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Como Desabilitar Botão de Voltar React Native</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/75990/como-converter-segundos-para-o-formato-horaminutosegundo/290020#290020" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +20
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Como converter segundos para o formato "Hora:Minuto:Segundo"?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="js-date-group date-group">
+                        <div class="date-group-toggle-row js-date-group-toggle"> <span class="date-header">Last 30 days</span>
+                            <a class="date-group-toggle"></a>
+                        </div>
+                        <ul class="js-items items">
+                            <li class="">
+                                <a href="https://portuguese.stackexchange.com/questions/30/a-presidente-ou-a-presidenta/307#307" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-portuguese site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">"A presidente" ou "A presidenta"?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://stackoverflow.com/questions/17488207/how-to-convert-a-string-to-json-object-in-php/17488877#17488877" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-stackoverflow site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">How to convert a string to JSON object in PHP</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/472987/upgrade-do-laravel-5-7-para-o-5-8/473060#473060" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +25
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Upgrade do laravel 5.7 para o 5.8</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/453131/%c3%89-poss%c3%advel-aplicar-um-atributo-em-css-apenas-para-uma-p%c3%a1gina-que-cont%c3%a9m-uma-subs/453144#453144" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">É possível aplicar um atributo em CSS apenas para uma página que contém uma substring?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/473031/encontrar-div-id-com-varia%c3%a7%c3%b5es-web-scraping-beautifulsoup/473034#473034" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +35
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Encontrar div id com variações - Web Scraping - BeautifulSoup</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/51109/como-mascarar-um-input-no-html5/473072#473072" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Como mascarar um input no HTML5?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/472987/upgrade-do-laravel-5-7-para-o-5-8/472998#472998" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Upgrade do laravel 5.7 para o 5.8</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/473012/syntax-errors-unexpected-end-of-file-no-laravel/473019#473019" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Syntax errors, unexpected end of file no Laravel</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/472906/retirar-o-r-do-tolocalestring/472910#472910" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +50
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Retirar o R$ do tolocalestring</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/468829/como-impedir-a-rolagem-de-um-determinado-elemento/468830#468830" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +15
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Como impedir a rolagem de um determinado elemento?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/472705/failed-to-create-chrome-process/472719#472719" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Failed to create chrome process</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/463898/evitar-valida%c3%a7%c3%a3o-em-elementos-escondidos/463975#463975" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Evitar validação em elementos escondidos</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/152232/como-registrar-um-log-no-php/157782#157782" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Como registrar um log no PHP?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/users/3635?tab=reputation" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">User was removed</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/472398/usar-show-e-hide-com-bootstrap/472409#472409" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Usar show e hide com bootstrap</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/101968" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column achievements-badge grid--cell"><span class="badge3"></span></span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">You've earned the "Anunciador" badge (Share a link to a post later visited by 25 unique IP addresses) for "É possível fazer um tooltip com CSS puro?".</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/148701/como-ocultar-a-sa%c3%adda-de-comando-no-cmd/148718#148718" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Como ocultar a saída de comando no CMD?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/94646/como-misturar-um-array-em-javascript/472249#472249" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Como misturar um array em JavaScript?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://stackoverflow.com/questions/494143/creating-a-new-dom-element-from-an-html-string-using-built-in-dom-methods-or-pro/12574798#12574798" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-stackoverflow site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Creating a new DOM element from an HTML string using built-in DOM methods or Prototype</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://stackoverflow.com/questions/494143/creating-a-new-dom-element-from-an-html-string-using-built-in-dom-methods-or-pro/10114609#10114609" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-stackoverflow site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Creating a new DOM element from an HTML string using built-in DOM methods or Prototype</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/431247/a-resposta-http-418-im-a-teapot-seria-v%c3%a1lido/431262#431262" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">A resposta HTTP 418 "I'm a Teapot" seria válido?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/users/3635?tab=reputation" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">User was removed</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/users/3635?tab=reputation" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">User was removed</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/471619/por-que-o-meu-else-n%c3%a3o-funciona/471620#471620" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +20
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">por que o meu else não funciona?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/471619/por-que-o-meu-else-n%c3%a3o-funciona/471663#471663" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">por que o meu else não funciona?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/39455/lista-de-erros-exception-do-php/39508#39508" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Lista de erros exception do PHP</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/471619/por-que-o-meu-else-n%c3%a3o-funciona/471641#471641" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">por que o meu else não funciona?</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/471543/como-criar-exce%c3%a7%c3%a3o-no-mod-expires-do-htaccess/471552#471552" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-up grid--cell">
+                                        +10
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Como criar exceção no mod_expires do htaccess</h4>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="https://pt.stackoverflow.com/questions/281321/consumir-web-service-wsdl-em-php/471427#471427" class="js-gps-track grid gs8 gsx">
+                                    <div class="favicon favicon-br site-icon grid--cell"></div> <span class="js-faux-column rep-change js-rep-change rep-down grid--cell">
+                                        −1
+                                    </span>
+                                    <div class="message-text grid--cell fl1">
+                                        <h4 class="">Consumir web service (WSDL) em PHP</h4>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
+            <!-- -->
         </div>
 
-        <div class="tab-item hide" id="inbox-content"></div>
+        <div class="tab-item" id="chat-tab">
+            <div class="more-rooms">
+                <a href="https://chat.stackoverflow.com/?tab=all&amp;sort=people">
+                    stack overflow
+                </a>
+                <a href="https://chat.stackexchange.com/?tab=all&amp;sort=people" data-i18n="chat_others">Others</a>
+            </div>
 
-        <div class="tab-item hide" id="achievements-content"></div>
+            <div class="notice">
+                <div data-i18n="chat_empty">You have no rooms added</div>
+                <i class="fav-icon"></i>
+            </div>
 
-        <div class="tab-item" id="about-content">
-            <div class="about">
-                <div class="about-icon bg-sen">
-                    <img src="../images/sen.svg#gray">
+            <div class="room">
+                <a class="lnk" href="https://chat.stackoverflow.com/rooms/41570">
+                    <div class="icon">
+                        <img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico?v=dc">
+                    </div>
+                    <p>SO Close Vote Reviewers</p>
+                </a>
+                <div class="close">
+                    <a class="icon" href="#"></a>
                 </div>
+            </div>
 
-                <h1 id="about-title">&nbsp;</h1>
-                <p>
-                    Created by
-                    <a href="http://stackexchange.com/users/1647724/guilherme-nascimento?tab=accounts">
-                        Guilherme Nascimento
-                    </a>
-                </p>
-                <p>
-                    Hosted in
-                    <a href="http://stackapps.com/q/6455/33963">StackApps</a>
-                    and
-                    <a href="https://github.com/brcontainer/stack-exchange-notifications">Github</a>
-                </p>
-
-                <hr>
-
-                <h2 data-i18n="about_thanks"></h2>
-                <p>
-                    <a href="http://stackexchange.com/users/5960/gabe?tab=accounts">@gabe</a>,
-                    <a href="http://stackexchange.com/users/3548243/nicael?tab=accounts">@nicael</a>,
-                    <a href="http://stackexchange.com/users/1211516/brasofilo?tab=accounts">@brasofilo</a>
-                    and<br>
-                    <a href="http://pt.stackoverflow.com/users">
-                        Stack Overflow em Português Community
-                    </a>
-                </p>
-
-                <hr>
-
-                <h2 data-i18n="about_credits"></h2>
-                <p>Icons designed by Freepik and distributed by Flaticon</p>
-
-                <hr>
-
-                <p>
-                    <a href="https://github.com/brcontainer/stack-exchange-notifications/issues/new">
-                        <i class="bug-icon"></i>
-                        <span data-i18n="about_report"></span>
-                    </a>
-                </p>
+            <div class="room">
+                <a class="lnk" href="https://chat.stackoverflow.com/rooms/41570">
+                    <div class="icon">
+                        <img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico?v=dc">
+                    </div>
+                    <p>SO Close Vote Reviewers</p>
+                </a>
+                <div class="close">
+                    <a class="icon" href="#"></a>
+                </div>
             </div>
         </div>
-    </div>
+
+        <div class="tab-item sen-active" id="setup-tab">
+            <h2>PUSHS</h2>
+            <div class="group">
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Score (Reputation)</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Show loss score</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Show my downvotes in score</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Achievements (eg. badges, privileges acquired)</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <h2>APPEARANCE</h2>
+            <div class="group">
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Dark theme (internal pages)</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>STACK EXCHANGE WEBSITES</h2>
+            <div class="group">
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Image viewer</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Copy code to clipboard</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Prevent duplicate pages</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>EDITOR</h2>
+            <div class="group">
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Improved text editor</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Inverts the editor's position</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Sync scrolling with preview</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Automatically previews in full screen</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Automatically maximizes the screen when focusing (only the first time)</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Replace tabs with spaces (Experimental)</h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+                <div class="row" data-ignored="hosts[host]">
+                    <div class="col">
+                        <div class="toggle">
+                            <input type="checkbox" id="old" disabled>
+                            <label for="old"></label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h3>Uses italic as <code>_foo_</code> instead of <code>*foo*</code></h3>
+                        <p>foobarbaz</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>DATA</h2>
+            <div class="group">
+                <button>Clear cache</button>
+                <button>Reset all data</button>
+            </div>
+
+        </div>
+
+        <div class="tab-item" id="about-tab">
+            <img width="128" src="../images/icon-128px.png" alt="icon">
+
+            <h2>StackExchangeNotifications 1.3.0</h2>
+            <p>
+                Created by
+                <a href="http://stackexchange.com/users/1647724/guilherme-nascimento?tab=accounts">
+                    Guilherme Nascimento
+                </a>
+            </p>
+
+            <p>
+                Hosted in
+                <a href="http://stackapps.com/q/6455/33963">StackApps</a>
+                and
+                <a href="https://github.com/brcontainer/stack-exchange-notifications">Github</a>
+            </p>
+
+            <hr>
+
+            <h2>Thanks to</h2>
+            <p>
+                <a href="http://stackexchange.com/users/5960/gabe?tab=accounts">@gabe</a>,
+                <a href="http://stackexchange.com/users/3548243/nicael?tab=accounts">@nicael</a>,
+                <a href="http://stackexchange.com/users/1211516/brasofilo?tab=accounts">@brasofilo</a>
+                and<br>
+                <a href="http://pt.stackoverflow.com/users">
+                    Stack Overflow em Português Community
+                </a>
+            </p>
+
+            <hr>
+
+            <h2>Credits</h2>
+            <p>Icons designed by Freepik and distributed by Flaticon</p>
+
+            <p>
+                <a href="https://github.com/brcontainer/stack-exchange-notifications/issues/new">
+                    <i class="bug-icon"></i>
+                    <span data-i18n="about_report">Report a issue</span>
+                </a>
+            </p>
+        </div>
+
+
+        <!-- <footer>
+            <span id="version" data-i18n="version"></span>
+            <a href="https://github.com/brcontainer/prevent-duplicate-tabs/issues/new">
+                <i class="ico bug"></i>
+                <span data-i18n="report"></span>
+            </a>
+        </footer> -->
+    </main>
+
+    <header>
+        <h1 data-i18n="title"></h1>
+
+        <div>
+            <button id="inbox-btn" data-target="inbox-tab">
+                <span class="push sen-active">999</span>
+                <i class="icon"></i>
+            </button>
+            <button id="achievements-btn" data-target="achievements-tab">
+                <span class="push sen-active">1k+</span>
+                <i class="icon"></i>
+            </button>
+            <button id="chat-btn" data-target="chat-tab">
+                <i class="icon"></i>
+            </button>
+            <button id="setup-btn" data-target="setup-tab">
+                <i class="icon"></i>
+            </button>
+            <button id="about-btn" data-target="about-tab">
+                <i class="icon"></i>
+            </button>
+        </div>
+    </header>
 
     <div class="dialog hide">
         <div class="modal">
@@ -129,10 +1320,8 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="../js/stackexchangenotifications.js"></script>
-    <script type="text/javascript" src="../js/extends.js"></script>
-    <script type="text/javascript" src="../js/main.js"></script>
-    <script type="text/javascript" src="../js/popoup.js"></script>
-    <script type="text/javascript" src="../js/dialog.js"></script>
+    <script type="text/javascript" src="../js/toggle.js"></script>
+    <script type="text/javascript" src="../js/popup.js"></script>
+    <script type="text/javascript" src="../js/data.js"></script>
 </body>
 </html>
