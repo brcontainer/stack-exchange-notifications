@@ -6,6 +6,10 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
+html, body {
+    min-width: 420px;
+}
+
 .setup-header {
     position: relative;
     margin: 0 10px 10px 10px;
@@ -59,7 +63,8 @@
 
 .group-btns {
     margin: 25px auto 0 auto;
-    width: 600px;
+    min-width: 290px;
+    max-width: 600px;
     text-align: center;
 }
 

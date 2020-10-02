@@ -172,6 +172,7 @@ select.field {
     vertical-align: middle;
     margin: 12px 0;
     float: left;
+    width: 300px;
 }
 
 .field > .toggle {

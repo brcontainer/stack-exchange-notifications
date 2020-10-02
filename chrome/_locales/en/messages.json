@@ -84,7 +84,7 @@
     "message": "Replace tabs with spaces (Experimental)"
   },
   "setup_italic_editor": {
-    "message": "Uses italic as `_foo_` instead of *foo*"
+    "message": "Uses italic as `_foo_` instead of `*foo*`"
   },
   "setup_data": {
     "message": "Data"

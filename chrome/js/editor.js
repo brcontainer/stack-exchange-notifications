@@ -65,7 +65,7 @@
         target.className
             = target.className
                 .replace(visibleRegExp, " ")
-                    .replace(/\s\s/g, " ")
+                    .replace(/\s{2,}/g, " ")
                         .trim();
     }
 

@@ -29,8 +29,8 @@
         isBackground = false;
 
     var isHttpRegExp = /^https?\:\/\/[^/]/i,
-        dateRegExp = /last\s+?(\d+)\s+?days|(\w{3}) (\d{1,2}) at (\d{1,2}:\d{1,2})/i,
-        lastTimeRegExp = /last\s+?(\d+)\s+?days|(\d+)\s+(min|hour|day)s?\s+ago/i,
+        lastTimeRegExp = /last\s+?(\d+)\s+?days?|(\d+)\s+(min|hour|day)s?\s+ago/i,
+        dateRegExp = /(\w{3}) (\d{1,2}) at (\d{1,2}:\d{1,2})/i,
         tmpDom = d.createElement("div"),
         allowedAttrs = [ "class", "id", "href" ],
         allowedTags = [
@@ -290,6 +290,9 @@
 
                 if (inbox !== 0) SimpleCache.set("inbox", null);
 
+                SimpleCache.set("achievementsCount", { "acquired": acquired, "score": score });
+                SimpleCache.set("inboxCount", inbox);
+
                 if (doneCallback !== null) {
                     doneCallback({
                         "acquired": acquired,
@@ -338,12 +341,12 @@
                 chrome.browserAction.setBadgeBackgroundColor({color:"#EE0101"});
             }, 1);
 
-            setTimeout(function () {
-                initiateDelay = 1;
+            // setTimeout(function () {
+            //     initiateDelay = 1;
 
-                StackExchangeNotifications.inbox();
-                StackExchangeNotifications.achievements();
-            }, initiateDelay);
+            //     StackExchangeNotifications.inbox();
+            //     StackExchangeNotifications.achievements();
+            // }, initiateDelay);
 
             if (SimpleCache.get("firstrun3", true)) return false;
 
@@ -552,7 +555,7 @@
             var relativetimes = doc.querySelectorAll(".relativetime,.date-header");
 
             for (var i = relativetimes.length - 1; i >= 0; i--) {
-                var message = u, el = relativetimes[i], txtEl = el.textContent.trim().toLowerCase();
+                var message, el = relativetimes[i], txtEl = el.textContent.trim().toLowerCase();
 
                 if (txtEl === "today") {
                     message = browser.i18n.getMessage("today");
@@ -566,7 +569,7 @@
                     if (relativetime !== null) {
                         var value = relativetime[1] ? relativetime[1] : relativetime[2];
 
-                        switch (relativetime[3]) {
+                        switch (relativetime[3] || "day") {
                             case "min":
                                 message = browser.i18n.getMessage("last_mins");
                                 break;
@@ -584,15 +587,10 @@
 
                         if (relativedatehour === null) continue;
 
-                        if (relativedatehour[2] === u) {
-                            message = browser.i18n.getMessage("last_days")
-                                        .replace(/\{days\}/g, relativedatehour[1]);
-                        } else {
-                            message = browser.i18n.getMessage("date_at")
-                                        .replace(/\{month\}/g, translateMonth(relativedatehour[2]))
-                                        .replace(/\{date\}/g, relativedatehour[3])
-                                        .replace(/\{hour\}/g, relativedatehour[4]);
-                        }
+                        message = browser.i18n.getMessage("date_at")
+                                    .replace(/\{month\}/g, translateMonth(relativedatehour[1]))
+                                    .replace(/\{date\}/g, relativedatehour[2])
+                                    .replace(/\{hour\}/g, relativedatehour[3]);
                     }
                 }
 

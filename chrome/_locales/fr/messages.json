@@ -21,43 +21,43 @@
     "message": "il y a {time} jours"
   },
   "date_at": {
-    "message": "{month} {date} as {hour}"
+    "message": "{date} {month} À {hour}"
   },
   "month_jan": {
-    "message": "Jan"
+    "message": "janv."
   },
   "month_feb": {
-    "message": "Feb"
+    "message": "févr."
   },
   "month_mar": {
-    "message": "Mar"
+    "message": "mars"
   },
   "month_apr": {
-    "message": "Apr"
+    "message": "avril"
   },
   "month_may": {
-    "message": "May"
+    "message": "mai"
   },
   "month_jun": {
-    "message": "Jun"
+    "message": "juin"
   },
   "month_jul": {
-    "message": "Jul"
+    "message": "juil."
   },
   "month_aug": {
-    "message": "Aug"
+    "message": "août"
   },
   "month_sep": {
-    "message": "Sep"
+    "message": "sept."
   },
   "month_oct": {
-    "message": "Oct"
+    "message": "oct."
   },
   "month_nov": {
-    "message": "Nov"
+    "message": "nov."
   },
   "month_dec": {
-    "message": "Dec"
+    "message": "déc."
   },
   "inbox_comment": {
     "message": "commentaire"

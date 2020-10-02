@@ -12,52 +12,52 @@
     "message": "ayer"
   },
   "last_mins": {
-    "message": "últimos {time} días"
+    "message": "hace {time} minutos"
   },
   "last_hours": {
-    "message": "últimos {time} días"
+    "message": "hace {time} horas"
   },
   "last_days": {
-    "message": "últimos {time} días"
+    "message": "hace {time} días"
   },
   "date_at": {
-    "message": "{month} {date} as {hour}"
+    "message": "el {date} {month}. a las {hour}"
   },
   "month_jan": {
-    "message": "Jan"
+    "message": "ene."
   },
   "month_feb": {
-    "message": "Feb"
+    "message": "feb."
   },
   "month_mar": {
-    "message": "Mar"
+    "message": "mar"
   },
   "month_apr": {
-    "message": "Apr"
+    "message": "abr."
   },
   "month_may": {
-    "message": "May"
+    "message": "may."
   },
   "month_jun": {
-    "message": "Jun"
+    "message": "jun."
   },
   "month_jul": {
-    "message": "Jul"
+    "message": "jul."
   },
   "month_aug": {
-    "message": "Aug"
+    "message": "ago."
   },
   "month_sep": {
-    "message": "Sep"
+    "message": "sep."
   },
   "month_oct": {
-    "message": "Oct"
+    "message": "oct."
   },
   "month_nov": {
-    "message": "Nov"
+    "message": "nov."
   },
   "month_dec": {
-    "message": "Dec"
+    "message": "dic."
   },
   "inbox_comment": {
     "message": "comentario"

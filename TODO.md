@@ -51,5 +51,5 @@
 
 - [ ] Community icons are sometimes not displayed in the popup
 - [ ] Setup toggle not update UI in another views from extension
-- [ ] Some translations break the layout in the "settings view"
-- [ ] Remove room into room chat not working
+- [x] Some translations break the layout in the "settings view"
+- [x] Remove room into room chat not working

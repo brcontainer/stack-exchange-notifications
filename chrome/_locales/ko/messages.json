@@ -21,43 +21,43 @@
     "message": "{time} 일 전"
   },
   "date_at": {
-    "message": "{month} {date} as {hour}"
+    "message": "{month} 월 {date} 일 {hour}"
   },
   "month_jan": {
-    "message": "Jan"
+    "message": "1"
   },
   "month_feb": {
-    "message": "Feb"
+    "message": "2"
   },
   "month_mar": {
-    "message": "Mar"
+    "message": "3"
   },
   "month_apr": {
-    "message": "Apr"
+    "message": "4"
   },
   "month_may": {
-    "message": "May"
+    "message": "5"
   },
   "month_jun": {
-    "message": "Jun"
+    "message": "6"
   },
   "month_jul": {
-    "message": "Jul"
+    "message": "7"
   },
   "month_aug": {
-    "message": "Aug"
+    "message": "8"
   },
   "month_sep": {
-    "message": "Sep"
+    "message": "9"
   },
   "month_oct": {
-    "message": "Oct"
+    "message": "10"
   },
   "month_nov": {
-    "message": "Nov"
+    "message": "11"
   },
   "month_dec": {
-    "message": "Dec"
+    "message": "12"
   },
   "inbox_comment": {
     "message": "논평"

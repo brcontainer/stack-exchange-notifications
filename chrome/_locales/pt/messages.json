@@ -21,7 +21,7 @@
     "message": "{time} dias atrás"
   },
   "date_at": {
-    "message": "{month} {date} as {hour}"
+    "message": "{month} {date} ás {hour}"
   },
   "month_jan": {
     "message": "jan"

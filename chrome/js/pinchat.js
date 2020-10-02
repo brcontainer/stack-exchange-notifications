@@ -25,7 +25,7 @@
     {
         if (!link) return;
 
-        link.className = link.className.replace(addedRegExp, "").trim();
+        link.className = link.className.replace(/\bsen-added\b/g, "").trim();
 
         if (add) {
             link.className += " sen-added";
@@ -35,32 +35,31 @@
     function bgData(data, callback)
     {
         if (browser && browser.runtime && browser.runtime.sendMessage) {
-            data.url = parseUrl(data.url);
+            if (data.url) data.url = parseUrl(data.url);
+
             browser.runtime.sendMessage(data, callback);
         }
     }
 
     function togglePinchat(pinned, room, link)
     {
+        var url, roomName, roomIco = room.querySelector(".small-site-logo");
+
+        if (room !== d) {
+            var el = room.querySelector(".room-name, .roomname");
+
+            url = room.querySelector(".room-name a[href^='/']").href;
+
+            if (el) roomName = el.title;
+        } else {
+            var el = room.getElementById("roomname");
+
+            url = w.location.href;
+
+            if (el) roomName = el.textContent;
+        }
+
         if (pinned) {
-            var url, roomName, roomIco = room.querySelector(".small-site-logo");
-
-            if (room !== d) {
-                url = room.querySelector(".room-name a[href^='/']").href;
-                var el = room.querySelector(".room-name, .roomname");
-
-                if (el) {
-                    roomName = el.title;
-                }
-            } else {
-                url = w.location.href;
-                var el = room.getElementById("roomname");
-
-                if (el) {
-                    roomName = el.textContent;
-                }
-            }
-
             bgData({
                 "chat": 1,
                 "icon": roomIco ? roomIco.src : "",
@@ -113,13 +112,11 @@
         link.href = "javascript:void(0);";
         link.className = "sen-btn-pin";
 
-        if (rooms[url]) {
-            link.className += " sen-added";
-        }
+        if (rooms[url]) link.className += " sen-added";
 
         link.onclick = function (e) {
             e.preventDefault();
-            togglePinchat(!addedRegExp.test(link.className), rc ? el : d, link);
+            togglePinchat(!/\bsen-added\b/.test("" + link.className), rc ? el : d, link);
         };
 
         link.appendChild(icon);
@@ -178,9 +175,7 @@
         StackExchangeNotifications.utils.resourceStyle("pinchat");
 
         bgData({ "chat": 3 }, function (response) {
-            if (response.rooms) {
-                rooms = response.rooms;
-            }
+            if (response.rooms) rooms = response.rooms;
 
             appendLinks();
             observerPinChat();

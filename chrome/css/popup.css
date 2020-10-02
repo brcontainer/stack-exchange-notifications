@@ -358,10 +358,12 @@ body > .fix-scroll > .sub {
     height: auto;
 }
 
-.tab-item .site-icon {
+.top-bar .favicon {
     width: 16px;
     height: 16px;
     display: inline-block;
+    background: rgba(0,0,0,.1);
+    border-radius: 2px;
 }
 
 .tab-item .item-location,
@@ -431,7 +433,6 @@ body > .fix-scroll > .sub {
 }
 
 .tab-item .rep-site-container .favicon {
-    display: inline-block;
     vertical-align: middle;
 }
 
