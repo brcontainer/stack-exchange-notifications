@@ -555,7 +555,7 @@
             var relativetimes = doc.querySelectorAll(".relativetime,.date-header");
 
             for (var i = relativetimes.length - 1; i >= 0; i--) {
-                var message, el = relativetimes[i], txtEl = el.textContent.trim().toLowerCase();
+                var message = u, el = relativetimes[i], txtEl = el.textContent.trim().toLowerCase();
 
                 if (txtEl === "today") {
                     message = browser.i18n.getMessage("today");
