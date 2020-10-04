@@ -1034,8 +1034,8 @@
                         </div>
                     </div>
                     <div class="col">
-                        <h3>Score (Reputation)</h3>
-                        <p>foobarbaz</p>
+                        <h3>Score</h3>
+                        <p>Show new score in badge</p>
                     </div>
                 </div>
                 <div class="row" data-ignored="hosts[host]">
@@ -1047,7 +1047,7 @@
                     </div>
                     <div class="col">
                         <h3>Show loss score</h3>
-                        <p>foobarbaz</p>
+                        <p>Show badges score loss</p>
                     </div>
                 </div>
                 <div class="row" data-ignored="hosts[host]">
@@ -1070,8 +1070,8 @@
                         </div>
                     </div>
                     <div class="col">
-                        <h3>Achievements (eg. badges, privileges acquired)</h3>
-                        <p>foobarbaz</p>
+                        <h3>Achievements</h3>
+                        <p>badges, privileges acquired</p>
                     </div>
                 </div>
             </div>
@@ -1104,7 +1104,7 @@
                     </div>
                     <div class="col">
                         <h3>Image viewer</h3>
-                        <p>foobarbaz</p>
+                        <p>Visualizador de fotos nas postagens e chat</p>
                     </div>
                 </div>
                 <div class="row" data-ignored="hosts[host]">
@@ -1116,7 +1116,7 @@
                     </div>
                     <div class="col">
                         <h3>Copy code to clipboard</h3>
-                        <p>foobarbaz</p>
+                        <p>Adiciona atalho para copiar códigos em postagens</p>
                     </div>
                 </div>
                 <div class="row" data-ignored="hosts[host]">
@@ -1128,7 +1128,7 @@
                     </div>
                     <div class="col">
                         <h3>Prevent duplicate pages</h3>
-                        <p>foobarbaz</p>
+                        <p>previne que hajam abas duplicadas dos sites da rede stackexchange</p>
                     </div>
                 </div>
             </div>
@@ -1144,7 +1144,7 @@
                     </div>
                     <div class="col">
                         <h3>Improved text editor</h3>
-                        <p>foobarbaz</p>
+                        <p>Muda o editor do site para um editor aprimorado com modo de fullscreen e rolagem sincronizada com o previsualizador</p>
                     </div>
                 </div>
                 <div class="row" data-ignored="hosts[host]">
@@ -1156,7 +1156,7 @@
                     </div>
                     <div class="col">
                         <h3>Inverts the editor's position</h3>
-                        <p>foobarbaz</p>
+                        <p>Inverte a posição do preview com o editor</p>
                     </div>
                 </div>
                 <div class="row" data-ignored="hosts[host]">
@@ -1168,7 +1168,7 @@
                     </div>
                     <div class="col">
                         <h3>Sync scrolling with preview</h3>
-                        <p>foobarbaz</p>
+                        <p>sincroniza a posição do scrollbar do visualizador e do preview baseado em porcentagem</p>
                     </div>
                 </div>
                 <div class="row" data-ignored="hosts[host]">
@@ -1179,8 +1179,8 @@
                         </div>
                     </div>
                     <div class="col">
-                        <h3>Automatically previews in full screen</h3>
-                        <p>foobarbaz</p>
+                        <h3>Previews when full screen</h3>
+                        <p>Ao entrar em modo fullscreen irá exibir automaticamente o preview</p>
                     </div>
                 </div>
                 <div class="row" data-ignored="hosts[host]">
@@ -1191,8 +1191,8 @@
                         </div>
                     </div>
                     <div class="col">
-                        <h3>Automatically maximizes the screen when focusing (only the first time)</h3>
-                        <p>foobarbaz</p>
+                        <h3>Maximize when focusing</h3>
+                        <p>Maxmiza automaticamente o editor quando você focalizar o campo de texto, apenas na primeira vez que focalizar o editor</p>
                     </div>
                 </div>
                 <div class="row" data-ignored="hosts[host]">
@@ -1203,8 +1203,8 @@
                         </div>
                     </div>
                     <div class="col">
-                        <h3>Replace tabs with spaces (Experimental)</h3>
-                        <p>foobarbaz</p>
+                        <h3>Indentation</h3>
+                        <p>Replace tabs with spaces (Experimental)</p>
                     </div>
                 </div>
                 <div class="row" data-ignored="hosts[host]">
@@ -1215,8 +1215,8 @@
                         </div>
                     </div>
                     <div class="col">
-                        <h3>Uses italic as <code>_foo_</code> instead of <code>*foo*</code></h3>
-                        <p>foobarbaz</p>
+                        <h3>Italic</h3>
+                        <p>Uses italic as <code>_foo_</code> instead of <code>*foo*</code></p>
                     </div>
                 </div>
             </div>
@@ -1283,29 +1283,30 @@
         </footer> -->
     </main>
 
-    <header>
-        <h1 data-i18n="title"></h1>
-
-        <div>
-            <button id="inbox-btn" data-target="inbox-tab">
-                <span class="push sen-active">999</span>
-                <i class="icon"></i>
-            </button>
-            <button id="achievements-btn" data-target="achievements-tab">
-                <span class="push sen-active">1k+</span>
-                <i class="icon"></i>
-            </button>
-            <button id="chat-btn" data-target="chat-tab">
-                <i class="icon"></i>
-            </button>
-            <button id="setup-btn" data-target="setup-tab">
-                <i class="icon"></i>
-            </button>
-            <button id="about-btn" data-target="about-tab">
-                <i class="icon"></i>
-            </button>
-        </div>
-    </header>
+    <nav>
+        <button id="inbox-btn" data-target="inbox-tab">
+            <span class="push sen-active">999</span>
+            <i class="icon"></i>
+            Mensagens
+        </button>
+        <button id="achievements-btn" data-target="achievements-tab" class="active">
+            <span class="push sen-active">1k+</span>
+            <i class="icon"></i>
+            Conquistas
+        </button>
+        <button id="chat-btn" data-target="chat-tab">
+            <i class="icon"></i>
+            Chat
+        </button>
+        <button id="setup-btn" data-target="setup-tab">
+            <i class="icon"></i>
+            Configurações
+        </button>
+        <button id="about-btn" data-target="about-tab">
+            <i class="icon"></i>
+            Sobre
+        </button>
+    </nav>
 
     <div class="dialog hide">
         <div class="modal">

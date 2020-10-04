@@ -127,7 +127,7 @@ html, html * {
     color: #0d5ca0;
 }
 
-body > header {
+body > nav {
     position: fixed;
     left: 0;
     top: 0;
@@ -135,7 +135,7 @@ body > header {
     width: 380px;
     height: 60px;
     margin: 0;
-    padding: 0 6px;
+    padding: 0;
     font-size: 12pt;
     border-bottom: thin solid #cfcfcf;
     background-color: #fff;
@@ -144,132 +144,55 @@ body > header {
     text-transform: uppercase;
     box-shadow: 0 2px 2px rgba(0,0,0,.04);
     box-shadow: 0 2px 6px -3px rgba(0,0,0,.1);
+    box-shadow: 0 1px 3px rgba(3,27,78,.07);
+    overflow: hidden;
 }
 
-header > h1 {
-    padding: 24px 0 0 0;
-    float: left;
-    font-size: 9pt;
-}
-
-header > div {
-    padding: 10px 0 0 0;
-    float: right;
-}
-
-header button {
+body > nav button {
+    color: #ccc;
     position: relative;
     float: left;
-    width: 40px;
-    height: 40px;
-    margin: 0 0 0 6px;
+    font-size: 7pt;
+    width: 20%;
+    height: 100%;
     padding: 0;
     position: relative;
-    text-decoration: none;
-    border-radius: .23em;
-    border: 1px transparent solid;
-    box-shadow: 0 1px 0 rgba(0,0,0,.08);
+    background: transparent;
+    border: none;
     pointer-events: auto;
     outline: none;
     cursor: pointer;
     transition: background-color 1s;
 }
 
-header button .push {
+body > nav button.active {
+}
+
+body > nav button .push {
     position: absolute;
     z-index: 100;
-    left: -5px;
-    top: -5px;
+    right: 2px;
+    top: 2px;
     display: inline-block;
     text-align: center;
-    font-size: 8pt;
-    min-width: 20px;
-    height: 20px;
+    font-size: 7pt;
+    width: 26px;
+    height: 26px;
     line-height: 20px;
     padding: 0 6px;
     color: #fff;
-    text-shadow: 0 1px rgba(0,0,0,.2);
-    border: 1px #911f28 solid;
-    border-radius: 11px;
+    border: 2px #fff solid;
+    border-radius: 26px;
     background-color: #e23442;
-    background-image: linear-gradient(to bottom, #e8616c, #dd202f);
-    box-shadow: inset 0 0 1px 1px rgba(255,255,255,.1), 0 1px rgba(0,0,0,.12);
 }
 
-#inbox-btn {
-    background-color: #85E485;
-    border-color: #26AB26;
-}
-
-#achievements-btn {
-    background-color: #88C6EF;
-    border-color: #3E84B3;
-}
-
-#chat-btn {
-    background-color: #f5c816;
-    border-color: #c3a015;
-}
-
-#setup-btn {
-    background-color: #C5C5C5;
-    border-color: #989897;
-    background-color: #ef6868;
-    border-color: #b72c2c;
-}
-
-#about-btn {
-    background-color: #E5E1E1;
-    border-color: #BBB3B3;
-}
-
-#inbox-btn:hover, #inbox-btn:target {
-    background-color: #55D255;
-}
-
-#achievements-btn:hover, #achievements-btn:target {
-    background-color: #68B0E0;
-}
-
-#chat-btn:hover, #chat-btn:target {
-    background-color: #e0b611;
-}
-
-#setup-btn:hover, #setup-btn:target {
-    background-color: #ea5d5d;
-}
-
-#about-btn:hover, #about-btn:target {
-    background-color: #D8D4D4;
-}
-
-body > header button .icon {
+body > nav button .icon {
     background: center center no-repeat;
     background-size: contain;
     display: block;
-    height: 58%;
-    width: 58%;
-    margin: 0 auto;
-}
-
-#inbox-btn .icon {
-    background-image: url(../images/inbox.svg);
-}
-
-#achievements-btn .icon {
-    background-image: url(../images/achievements.svg);
-}
-
-#chat-btn .icon {
-    background-image: url(../images/chat.svg);
-}
-
-#setup-btn .icon {
-    background-image: url(../images/gears.svg);
-}
-
-#about-btn .icon {
-    background-image: url(../images/about.svg);
+    height: 24px;
+    width: 24px;
+    margin: 5px auto;
 }
 
 .ico {
@@ -290,27 +213,72 @@ body > header button .icon {
     margin-right: 5px;
 }
 
-#inbox-button .icon {
-    background-image: url(../images/inbox.svg);
-}
-
-#about-button .icon {
-    background-image: url(../images/about.svg);
-}
-
-#achievements-button .icon {
-    background-image: url(../images/achievements.svg);
-}
-
-#chat-button .icon {
-    background-image: url(../images/chat.svg);
-}
-
-#setup-button .icon {
-    background-image: url(../images/gears.svg);
-}
-
 #about-tab {
     padding-top: 35px;
     text-align: center;
+}
+
+/*#inbox-btn {
+    background-color: #85E485;
+    border-color: #39CA39;
+}
+
+#achievements-btn {
+    background-color: #88C6EF;
+    border-color: #53A1D5;
+}
+
+#chat-btn {
+    background-color: #f5c816;
+    border-color: #dbb520;
+}
+
+#setup-btn {
+    background-color: #ef6868;
+    border-color: #b72c2c;
+}
+
+#about-btn {
+    background-color: #E5E1E1;
+    border-color: #BBB3B3;
+}
+
+#inbox-btn:hover, #inbox-btn:target {
+    background-color: #55D255;
+}
+
+#about-btn:hover, #about-btn:target {
+    background-color: #D8D4D4;
+}
+
+#achievements-btn:hover, #achievements-btn:target {
+    background-color: #68B0E0;
+}
+
+#chat-btn:hover, #chat-btn:target {
+    background-color: #e0b611;
+}
+
+#setup-btn:hover, #setup-btn:target {
+    background-color: #ea5d5d;
+}*/
+
+#inbox-btn .icon {
+    background-image: url(../images/inbox.svg);
+}
+
+#about-btn .icon {
+    background-image: url(../images/about.svg);
+}
+
+#achievements-btn .icon {
+    background-image: url(../images/achievements.svg);
+}
+
+#chat-btn .icon {
+    background-image: url(../images/chat.svg);
+}
+
+#setup-btn .icon {
+    background-image: url(../images/gears.svg);
 }

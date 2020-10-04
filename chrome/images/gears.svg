@@ -12,7 +12,7 @@ use {
 }
 
 .default {
-    fill: #ffffff !important;
+    fill: #cfcfcf !important;
     display: block;
 }
 
