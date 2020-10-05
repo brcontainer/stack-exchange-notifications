@@ -158,4 +158,10 @@
     });
 
     setTimeout(update, 1000);
+
+    setTimeout(function () {
+        browser.browserAction.setBadgeText({text: "1k+"});
+        // browser.browserAction.setBadgeBackgroundColor({color: "#4cda64"});
+        // browser.browserAction.setBadgeTextColor({color: "#fff"});
+    }, 1);
 })(window);

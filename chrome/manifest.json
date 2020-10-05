@@ -7,9 +7,9 @@
     "default_locale": "en",
     "icons": {
         "16": "images/icons/icon.png",
-        "32": "images/icons/icon-32px.png",
-        "48": "images/icons/icon-48px.png",
-        "128": "images/icons/icon-128px.png"
+        "32": "images/icons/32px.png",
+        "48": "images/icons/48px.png",
+        "128": "images/icons/128px.png"
     },
     "browser_action": {
         "default_icon":  "images/icons/icon.png",

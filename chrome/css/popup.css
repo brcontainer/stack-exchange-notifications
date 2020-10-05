@@ -100,9 +100,10 @@ body > nav button .push {
     font-size: 7pt;
     padding: 4px;
     color: #fff;
-    border: 2px #fff solid;
+    border: 2px solid #fff;
     border-radius: 5px;
-    background-color: #e23442;
+    background: #e23442;
+    /*background: #4cda64;*/
 }
 
 body > nav button span {
