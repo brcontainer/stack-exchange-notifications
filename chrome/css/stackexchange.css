@@ -37,6 +37,7 @@
     padding: 3px 6px;
     border-radius: 3px;
     font-size: 8pt;
+    text-transform: lowercase;
 }
 
 .inbox-item .relativetime {

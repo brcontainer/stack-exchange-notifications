@@ -29,14 +29,16 @@
 }
 
 #chat-tab .notice {
+    padding-top: 120px;
     width: 100%;
-    height: 100%;
+    height: 400px;
     text-align: center;
     color: #bdb9b9;
     text-shadow: 0 1px rgba(255,255,255,1);
 }
 
 #chat-tab .fav-icon {
+    margin-top: 10px;
     background: url(../images/heart.svg#gray) center center no-repeat;
     vertical-align: text-bottom;
     display: inline-block;

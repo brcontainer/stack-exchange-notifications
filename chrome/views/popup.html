@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0">
     <title>Prevent Duplicate Tabs</title>
     <link rel="icon" type="image/png" href="../images/icon.png">
+    <link rel="stylesheet" type="text/css" href="../css/global.css">
     <link rel="stylesheet" type="text/css" href="../css/popup.css">
     <link rel="stylesheet" type="text/css" href="../css/toggle.css">
     <link rel="stylesheet" type="text/css" href="../css/setup.css">
     <link rel="stylesheet" type="text/css" href="../css/stackexchange.css">
     <link rel="stylesheet" type="text/css" href="../css/tabs.css">
     <link rel="stylesheet" type="text/css" href="../css/chat.css">
+    <link rel="stylesheet" type="text/css" href="../css/dialog.css">
 </head>
 <body>
-    <main>
-        <div class="tab-item" id="inbox-tab">
+    <main id="app">
+        <div id="inbox-tab" class="tab-item sen-active">
               <div class="topbar-dialog inbox-dialog dno">
                 <div class="header">
                     <h3>inbox</h3>
@@ -442,7 +444,7 @@
             </div>          
         </div>
 
-        <div class="tab-item" id="achievements-tab">
+        <div id="achievements-tab" class="tab-item">
             <!-- -->
             <div class="topbar-dialog achievements-dialog dno">
                 <div class="header">
@@ -985,7 +987,7 @@
             <!-- -->
         </div>
 
-        <div class="tab-item" id="chat-tab">
+        <div id="chat-tab" class="tab-item">
             <div class="more-rooms">
                 <a href="https://chat.stackoverflow.com/?tab=all&amp;sort=people">
                     stack overflow
@@ -1023,7 +1025,7 @@
             </div>
         </div>
 
-        <div class="tab-item sen-active" id="setup-tab">
+        <div id="setup-tab" class="tab-item">
             <h2>PUSHS</h2>
             <div class="group">
                 <div class="row" data-ignored="hosts[host]">
@@ -1227,10 +1229,21 @@
                 <button>Reset all data</button>
             </div>
 
+            <h2>META</h2>
+            <div class="group">
+                <button data-tab="about-tab">
+                    <img src="../images/about.svg" alt="Sobre o add-on">
+                    <span data-i18n="about">Sobre</span>
+                </button>
+                <a class="btn" href="https://github.com/brcontainer/stack-exchange-notifications/issues/new">
+                    <img src="../images/bug.svg">
+                    <span data-i18n="report">Reportar problema</span>
+                </a>
+            </div>
         </div>
 
-        <div class="tab-item" id="about-tab">
-            <img width="128" src="../images/icon-128px.png" alt="icon">
+        <div id="about-tab" class="tab-item">
+            <img width="128" src="../images/icons/icon-128px.png" alt="icon">
 
             <h2>StackExchangeNotifications 1.3.0</h2>
             <p>
@@ -1263,7 +1276,7 @@
             <hr>
 
             <h2>Credits</h2>
-            <p>Icons designed by Freepik and distributed by Flaticon</p>
+            <p>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></p>
 
             <p>
                 <a href="https://github.com/brcontainer/stack-exchange-notifications/issues/new">
@@ -1272,39 +1285,26 @@
                 </a>
             </p>
         </div>
-
-
-        <!-- <footer>
-            <span id="version" data-i18n="version"></span>
-            <a href="https://github.com/brcontainer/prevent-duplicate-tabs/issues/new">
-                <i class="ico bug"></i>
-                <span data-i18n="report"></span>
-            </a>
-        </footer> -->
     </main>
 
     <nav>
-        <button id="inbox-btn" data-target="inbox-tab">
+        <button id="inbox-btn" data-tab="inbox-tab" class="sen-active">
             <span class="push sen-active">999</span>
             <i class="icon"></i>
-            Mensagens
+            <span>Mensagens</span>
         </button>
-        <button id="achievements-btn" data-target="achievements-tab" class="active">
+        <button id="achievements-btn" data-tab="achievements-tab">
             <span class="push sen-active">1k+</span>
             <i class="icon"></i>
-            Conquistas
+            <span>Conquistas</span>
         </button>
-        <button id="chat-btn" data-target="chat-tab">
+        <button id="chat-btn" data-tab="chat-tab">
             <i class="icon"></i>
-            Chat
+            <span>Chat</span>
         </button>
-        <button id="setup-btn" data-target="setup-tab">
+        <button id="setup-btn" data-tab="setup-tab">
             <i class="icon"></i>
-            Configurações
-        </button>
-        <button id="about-btn" data-target="about-tab">
-            <i class="icon"></i>
-            Sobre
+            <span>Configurações</span>
         </button>
     </nav>
 

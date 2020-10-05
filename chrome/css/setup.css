@@ -13,17 +13,25 @@
     width: 100%;
 }
 
-#setup-tab button {
+#setup-tab button, #setup-tab .btn {
     background: transparent;
     padding: 16px 0;
     width: 100%;
     cursor: pointer;
     border: none;
     border-bottom: 1px solid;
+    display: block;
+    text-align: center;
 }
 
-#setup-tab button:last-child {
+#setup-tab button:last-child, #setup-tab .btn:last-child {
     border-bottom: none;
+}
+
+#setup-tab button img, #setup-tab .btn img {
+    vertical-align: top;
+    height: 16px;
+    margin: 0 5px;
 }
 
 #setup-tab .group {
@@ -32,6 +40,12 @@
     border-top: 1px solid;
     border-bottom: 1px solid;
     transition: all .1s ease;
+}
+
+#setup-tab .group:after {
+    clear: both;
+    content: "";
+    display: block;
 }
 
 /*#setup-tab .group:hover {
@@ -47,7 +61,7 @@
     transition: all .1s ease;
 }
 
-#setup-tab .row:hover, #setup-tab button:hover {
+#setup-tab .row:hover, #setup-tab button:hover, #setup-tab .btn:hover {
     background: #efffff;
 }
 
@@ -55,7 +69,10 @@
     border-bottom: none;
 }
 
-#setup-tab .group, #setup-tab .row, #setup-tab button {
+#setup-tab .group,
+#setup-tab .row,
+#setup-tab button,
+#setup-tab .btn {
     border-color: #dedada;
 }
 
@@ -112,4 +129,34 @@
 
 #setup-tab .row > .col > p {
     color: #928b8b;
+}
+
+#setup-opts {
+    min-width: 420px;
+}
+
+#setup-opts > main {
+    padding: 0 10px 20px 10px;
+}
+
+#setup-opts .group {
+    background: #f9f9fa;
+    border: thin solid #ccc;
+    border-radius: 4px;
+}
+
+#setup-opts button, #setup-opts .btn {
+    float: left;
+    width: 50%;
+    border: none;
+}
+
+#setup-opts button:last-child, #setup-opts .btn:last-child {
+    float: right;
+    border-left: thin solid #ccc;
+}
+
+#setup-opts .max {
+    max-width: 500px;
+    margin: 0 auto;
 }

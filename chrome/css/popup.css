@@ -8,117 +8,21 @@
 
 html, body {
     overflow: hidden;
-    height: 560px;
+    height: 530px;
     width: 380px;
 }
 
-html, body, h1, h2, h3, h4, h5, p, a {
-    padding: 0;
-    margin: 0;
+body {
+    background: #f3f3f4;
 }
 
-body > main {
+#app {
     margin-top: 60px;
     padding: 0;
     overflow: hidden;
     overflow-y: auto;
-    height: 500px;
+    height: 470px;
     scroll-behavior: smooth;
-}
-
-* {
-    font-family: "Helvetica Neue", Helvetica, "lucida grande", tahoma, Arial, sans-serif;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-}
-
-body {
-    /*padding: 57px 0 0 0;*/
-    /*background-color: #faf7f7;*/
-    background: #f3f3f4;
-    font-size: 10pt;
-    -webkit-touch-callout: none;
-      -webkit-user-select: none;
-       -khtml-user-select: none;
-         -moz-user-select: none;
-          -ms-user-select: none;
-              user-select: none;
-}
-
-body, a {
-    color: #4F4949;
-}
-
-a {
-    color: #4F4949;
-    text-decoration: none;
-}
-
-var {
-    font-style: normal;
-}
-
-h1, h2, h3 {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 0;
-    margin: 0;
-}
-
-h2 {
-    font-size: 10pt;
-    padding: 12px 12px 12px 12px;
-}
-
-h3 {
-    font-size: 9pt;
-    padding: 5px 0;
-}
-
-button * {
-    pointer-events: none;
-}
-
-code {
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    padding: 0.2em 0.4em;
-    margin: 0;
-    color: #383535;
-    font-size: 85%;
-    font-weight: bold;
-    background-color: rgba(27,31,35,0.05);
-    border-radius: 3px;
-    overflow: hidden;
-    max-width: 100%;
-    text-overflow: ellipsis;
-    display: inline-block;
-    white-space: nowrap;
-    vertical-align: text-bottom;
-    line-height: 0.9;
-}
-
-hr {
-    margin: 15px 30px;
-    border: 1px dashed #e6e6e6;
-}
-
-html, html * {
-    scrollbar-color: rgba(0,0,0,.2) #dfdfdf;
-    scrollbar-width: thin;
-}
-
-::-webkit-scrollbar {
-    background-color: #dfdfdf;
-    width: 7px;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,.2);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(0,0,0,.5);
 }
 
 #about-tab a:hover,
@@ -133,7 +37,7 @@ body > nav {
     top: 0;
     z-index: 101;
     width: 380px;
-    height: 60px;
+    height: 64px;
     margin: 0;
     padding: 0;
     font-size: 12pt;
@@ -149,11 +53,11 @@ body > nav {
 }
 
 body > nav button {
-    color: #ccc;
     position: relative;
     float: left;
-    font-size: 7pt;
-    width: 20%;
+    font-size: 6pt;
+    font-weight: bold;
+    width: 25%;
     height: 100%;
     padding: 0;
     position: relative;
@@ -162,37 +66,55 @@ body > nav button {
     pointer-events: auto;
     outline: none;
     cursor: pointer;
-    transition: background-color 1s;
+    color: #524847;
+    transition: background-color .1s;
 }
 
-body > nav button.active {
+body > nav button i, body > nav button i ~ span {
+    transition: all .3s ease-out;
+    opacity: .5;
+}
+
+body > nav button:hover *,
+body > nav button:focus *,
+body > nav button:active * {
+    opacity: 1;
+}
+
+body > nav button.sen-active {
+    background: #fafafa;
+    color: #ed3b6e;
+}
+
+body > nav button.sen-active * {
+    opacity: 1;
 }
 
 body > nav button .push {
     position: absolute;
     z-index: 100;
-    right: 2px;
-    top: 2px;
+    right: 12px;
+    top: 6px;
     display: inline-block;
     text-align: center;
     font-size: 7pt;
-    width: 26px;
-    height: 26px;
-    line-height: 20px;
-    padding: 0 6px;
+    padding: 4px;
     color: #fff;
     border: 2px #fff solid;
-    border-radius: 26px;
+    border-radius: 5px;
     background-color: #e23442;
 }
 
+body > nav button span {
+    text-transform: uppercase;
+}
+
 body > nav button .icon {
-    background: center center no-repeat;
-    background-size: contain;
+    background: url(../images/navbar.svg) -1000px -1000px no-repeat;
     display: block;
-    height: 24px;
-    width: 24px;
-    margin: 5px auto;
+    height: 25px;
+    width: 25px;
+    margin: 6px auto 3px auto;
 }
 
 .ico {
@@ -218,67 +140,14 @@ body > nav button .icon {
     text-align: center;
 }
 
-/*#inbox-btn {
-    background-color: #85E485;
-    border-color: #39CA39;
-}
+#inbox-btn .icon { background-position: 0 0; }
+#inbox-btn.sen-active .icon { background-position: 0 -50px !important; }
 
-#achievements-btn {
-    background-color: #88C6EF;
-    border-color: #53A1D5;
-}
+#achievements-btn .icon { background-position: -25px 0; }
+#achievements-btn.sen-active .icon { background-position: -25px -50px !important; }
 
-#chat-btn {
-    background-color: #f5c816;
-    border-color: #dbb520;
-}
+#chat-btn .icon { background-position: -50px 0; }
+#chat-btn.sen-active .icon { background-position: -50px -50px !important; }
 
-#setup-btn {
-    background-color: #ef6868;
-    border-color: #b72c2c;
-}
-
-#about-btn {
-    background-color: #E5E1E1;
-    border-color: #BBB3B3;
-}
-
-#inbox-btn:hover, #inbox-btn:target {
-    background-color: #55D255;
-}
-
-#about-btn:hover, #about-btn:target {
-    background-color: #D8D4D4;
-}
-
-#achievements-btn:hover, #achievements-btn:target {
-    background-color: #68B0E0;
-}
-
-#chat-btn:hover, #chat-btn:target {
-    background-color: #e0b611;
-}
-
-#setup-btn:hover, #setup-btn:target {
-    background-color: #ea5d5d;
-}*/
-
-#inbox-btn .icon {
-    background-image: url(../images/inbox.svg);
-}
-
-#about-btn .icon {
-    background-image: url(../images/about.svg);
-}
-
-#achievements-btn .icon {
-    background-image: url(../images/achievements.svg);
-}
-
-#chat-btn .icon {
-    background-image: url(../images/chat.svg);
-}
-
-#setup-btn .icon {
-    background-image: url(../images/gears.svg);
-}
+#setup-btn .icon { background-position: -75px 0; }
+#setup-btn.sen-active .icon { background-position: -75px -50px !important; }

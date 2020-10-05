@@ -1,0 +1,68 @@
+/*
+ * StackExchangeNotifications
+ * Copyright (c) 2020 Guilherme Nascimento (brcontainer@yahoo.com.br)
+ * Released under the MIT license
+ *
+ * https://github.com/brcontainer/stack-exchange-notification
+ */
+
+body.dialog-open > :not(.dialog) {
+    filter: blur(.15em);
+}
+
+body > .dialog {
+    position: fixed;
+    z-index: 101;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(12,15,19,.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body > .dialog > .modal {
+    box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
+    background-color: #fff;
+    min-width: 340px;
+    max-width: 395px;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+body > .dialog > .modal > .content {
+    padding: 32px 16px;
+    text-align: center;
+}
+body > .dialog > .modal > .act > button {
+    background-color: #2f9a5a;
+    border: none;
+    width: 100%;
+    height: 48px;
+    color: #fff;
+    cursor: pointer;
+    opacity: .8;
+    outline: none;
+    transition: opacity .2s;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+
+body > .dialog > .modal > .confirm > button {
+    text-align: center;
+    width: 50%;
+    float: left;
+}
+
+body > .dialog > .modal > .confirm > button:last-child {
+    background-color: #d6312a;
+    float: right;
+}
+
+body > .dialog > .modal > .act > button:hover {
+    opacity: 1;
+    box-shadow: none;
+}

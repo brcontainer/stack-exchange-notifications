@@ -67,12 +67,12 @@
 
     function update() {
         // {"UnreadInboxCount":0,"UnreadRepCount":0,"UnreadNonRepCount":0}
-        request(unreadCountsURI, function () {
+        httpRequest(unreadCountsURI, function () {
             setTimeout(update, 5000);
         });
     }
 
-    function request(uri, callback)
+    function httpRequest(uri, callback)
     {
         var headers,
             completed = false,
