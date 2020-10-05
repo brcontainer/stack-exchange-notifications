@@ -109,11 +109,11 @@
         var started = false;
 
         function trigger() {
-            if (started) return;
-
-            started = true;
-
-            callback();
+            if (!started) {
+                started = true;
+                console.log('ready.trigger', callback.toString())
+                callback();
+            }
         };
 
         if (readyRegExp.test(d.readyState)) {

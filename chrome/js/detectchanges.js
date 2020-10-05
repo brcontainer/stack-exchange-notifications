@@ -46,7 +46,7 @@
 
     function applyEvents()
     {
-        var networkSE = d.querySelector(".network-items, body > header .secondary-nav");
+        var networkSE = d.querySelector(".network-items, body > header .secondary-nav, header.top-bar");
 
         if (!networkSE) {
             setTimeout(applyEvents, 1000);
