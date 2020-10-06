@@ -72,23 +72,23 @@ body > nav button {
 
 body > nav button i, body > nav button i ~ span {
     transition: all .3s ease-out;
-    opacity: .5;
+    /*opacity: .5;*/
 }
 
-body > nav button:hover *,
+/*body > nav button:hover *,
 body > nav button:focus *,
 body > nav button:active * {
     opacity: 1;
-}
+}*/
 
 body > nav button.sen-active {
     background: #fafafa;
     color: #ed3b6e;
 }
 
-body > nav button.sen-active * {
+/*body > nav button.sen-active * {
     opacity: 1;
-}
+}*/
 
 body > nav button .push {
     position: absolute;
@@ -141,14 +141,12 @@ body > nav button .icon {
     text-align: center;
 }
 
-#inbox-btn .icon { background-position: 0 0; }
-#inbox-btn.sen-active .icon { background-position: 0 -50px !important; }
+#inbox-btn .icon { background-position: -1px -2px; }
+#achievements-btn .icon { background-position: -27px -2px; }
+#chat-btn .icon { background-position: -53px -2px; }
+#setup-btn .icon { background-position: -79px -2px; }
 
-#achievements-btn .icon { background-position: -25px 0; }
-#achievements-btn.sen-active .icon { background-position: -25px -50px !important; }
-
-#chat-btn .icon { background-position: -50px 0; }
-#chat-btn.sen-active .icon { background-position: -50px -50px !important; }
-
-#setup-btn .icon { background-position: -75px 0; }
-#setup-btn.sen-active .icon { background-position: -75px -50px !important; }
+#inbox-btn.sen-active .icon { background-position: -1px -54px !important; }
+#achievements-btn.sen-active .icon { background-position: -27px -54px !important; }
+#chat-btn.sen-active .icon { background-position: -53px -54px !important; }
+#setup-btn.sen-active .icon { background-position: -79px -54px !important; }
