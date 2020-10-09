@@ -31,7 +31,7 @@ body {
               user-select: none;
 }
 
-body, a {
+body, button, a {
     color: #4F4949;
 }
 

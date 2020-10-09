@@ -1,0 +1,68 @@
+body {
+    background: #272b34;
+}
+
+body, button, a {
+    color: #fff;
+}
+
+body > nav {
+    background: #383c47;
+    border-color: #434b58;
+    box-shadow: 0 1px 3px rgba(0,0,0,.4);
+}
+
+body > nav button .push {
+    border-color: #393e46;
+}
+
+body > nav button {
+    color: #fff;
+}
+
+.date-group-toggle-row {
+    background: #383c47;
+    box-shadow: 0 2px 6px -3px rgba(0,0,0,.4);
+}
+
+body > nav button.sen-active {
+    background: #424653;
+}
+
+body > nav button i, body > nav button i ~ span {
+    opacity: 1;
+}
+
+#inbox-btn .icon { background-position: -1px -27px; }
+#achievements-btn .icon { background-position: -27px -27px; }
+#chat-btn .icon { background-position: -53px -27px; }
+#setup-btn .icon { background-position: -79px -27px; }
+
+.tab-item .modal-content ul,
+.tab-item .modal-content li,
+.tab-item .modal-content .room,
+.date-group-toggle-row {
+    border-color: #434b58;
+}
+
+.tab-item .modal-content li:hover, .tab-item .modal-content .room:hover {
+    background: #2e2e2f;
+}
+
+.tab-item .modal-content li:first-child,
+.tab-item .modal-content .room:first-child {
+    background: #2e2e2f;
+}
+
+#setup-tab .group, #setup-tab .row, #setup-tab button, #setup-tab .btn {
+    background: #383c47;
+    border-color: #434b58;
+}
+
+#setup-tab .row:hover, #setup-tab button:hover, #setup-tab .btn:hover {
+    background: #50505e;
+}
+
+.inbox-item .sen-inbox-type {
+    background: rgba(255,255,255,.2)
+}

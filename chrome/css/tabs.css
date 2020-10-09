@@ -27,7 +27,7 @@
 }
 
 .tab-item .modal-content li:first-child, .tab-item .modal-content .room:first-child {
-    border-top-color: transparent;
+    border-top-color: transparent !important;
 }
 
 .tab-item .modal-content li a, .tab-item .modal-content .room > a {
@@ -37,6 +37,6 @@
 }
 
 .tab-item .modal-content li:hover, .tab-item .modal-content .room:hover {
-    border-top-color: #BECFE8;
+    /*border-top-color: #BECFE8;*/
     background-color: #D6E1ED;
 }

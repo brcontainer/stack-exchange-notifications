@@ -72,23 +72,17 @@ body > nav button {
 
 body > nav button i, body > nav button i ~ span {
     transition: all .3s ease-out;
-    /*opacity: .5;*/
+    opacity: .2;
 }
-
-/*body > nav button:hover *,
-body > nav button:focus *,
-body > nav button:active * {
-    opacity: 1;
-}*/
 
 body > nav button.sen-active {
     background: #fafafa;
     color: #ed3b6e;
 }
 
-/*body > nav button.sen-active * {
+body > nav button.sen-active * {
     opacity: 1;
-}*/
+}
 
 body > nav button .push {
     position: absolute;

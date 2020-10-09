@@ -127,10 +127,6 @@
     background-color: rgba(0,0,0,0.05);
 }
 
-#setup-tab .row > .col > p {
-    color: #928b8b;
-}
-
 #setup-opts {
     min-width: 420px;
 }
