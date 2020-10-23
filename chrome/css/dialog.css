@@ -6,13 +6,9 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-body.dialog-open > :not(.dialog) {
-    filter: blur(.15em);
-}
-
-body > .dialog {
+#dialog {
     position: fixed;
-    z-index: 101;
+    z-index: 102;
     top: 0;
     left: 0;
     width: 100%;
@@ -23,20 +19,34 @@ body > .dialog {
     justify-content: center;
 }
 
-body > .dialog > .modal {
+#dialog:not(.hide) ~ * {
+    filter: blur(.15em);
+    pointer-events: none;
+}
+
+#dialog > .modal {
     box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.24);
     background-color: #fff;
     min-width: 340px;
-    max-width: 395px;
+    max-width: 345px;
     overflow: hidden;
     border-radius: 3px;
 }
 
-body > .dialog > .modal > .content {
+#dialog_content {
     padding: 32px 16px;
     text-align: center;
 }
-body > .dialog > .modal > .act > button {
+
+/*#dialog_alert {
+
+}
+
+#dialog_confirm {
+    
+}*/
+
+#dialog > .modal > .act > button {
     background-color: #2f9a5a;
     border: none;
     width: 100%;
@@ -51,18 +61,18 @@ body > .dialog > .modal > .act > button {
             appearance: none;
 }
 
-body > .dialog > .modal > .confirm > button {
+#dialog > .modal > .confirm > button {
     text-align: center;
     width: 50%;
     float: left;
 }
 
-body > .dialog > .modal > .confirm > button:last-child {
+#dialog > .modal > .confirm > button:last-child {
     background-color: #d6312a;
     float: right;
 }
 
-body > .dialog > .modal > .act > button:hover {
+#dialog > .modal > .act > button:hover {
     opacity: 1;
     box-shadow: none;
 }

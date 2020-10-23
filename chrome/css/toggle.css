@@ -32,7 +32,7 @@
 .toggle > label::before, .toggle > label::after {
     position: absolute;
     z-index: 2;
-    left: 3px;
+    left: 2px;
     top: 2px;
     display: block;
     width: 26px;
@@ -42,8 +42,7 @@
 
 .toggle > label::before {
     position: absolute;
-    right: auto;
-    left: 27px;
+    left: 28px;
     top: 2px;
     content: "✘";
     line-height: 26px;

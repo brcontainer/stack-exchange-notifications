@@ -33,6 +33,7 @@ body {
 
 body, button, a {
     color: #4F4949;
+    outline: none;
 }
 
 a {

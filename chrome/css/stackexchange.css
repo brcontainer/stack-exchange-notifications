@@ -46,7 +46,7 @@
     top: 8px;
 }
 
-.date-group-toggle-row {
+.date-group .date-group-toggle-row {
     box-shadow: 0 2px 2px rgba(0,0,0,.04);
     box-shadow: 0 2px 6px -3px rgba(0,0,0,.1);
     padding: .8em .5em;
@@ -55,7 +55,7 @@
     top: 0;
     left: 0;
     z-index: 99;
-    height: 36px;
+    display: block;
 }
 
 .date-group-toggle-row, .tab-item .modal-content ul {
@@ -71,6 +71,15 @@
     vertical-align: top;
 }
 
+.tab-item .rep-site {
+    display: inline-block;
+    text-align: left;
+}
+
+.tab-item .rep-site ~ .rep-site {
+    padding-left: 0;
+}
+
 .tab-item .rep-change, .tab-item .achievements-badge {
     text-align: right;
 }
@@ -81,7 +90,6 @@
 
 .rep-site-container {
     display: inline-block;
-    margin-right: 14px;
 }
 
 .rep-up {
@@ -93,5 +101,6 @@
 }
 
 .rep-change {
-    min-width: 30px;
+    min-width: 10px;
+    vertical-align: bottom;
 }
