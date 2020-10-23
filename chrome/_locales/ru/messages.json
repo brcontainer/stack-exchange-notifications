@@ -199,5 +199,8 @@
   },
   "site_clipboard_copied": {
     "message": "Скопировано в буфер обмена!"
+  },
+  "site_clipboard_copied_error": {
+    "message": "Произошла ошибка при копировании!"
   }
 }

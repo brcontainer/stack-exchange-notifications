@@ -199,5 +199,8 @@
   },
   "site_clipboard_copied": {
     "message": "클립 보드에 복사되었습니다!"
+  },
+  "site_clipboard_copied_error": {
+    "message": "복사하는 동안 오류가 발생했습니다!"
   }
 }

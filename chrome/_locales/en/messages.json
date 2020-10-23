@@ -124,5 +124,8 @@
   },
   "site_clipboard_copied": {
     "message": "Copied to clipboard!"
+  },
+  "site_clipboard_copied_error": {
+    "message": "Error copying!"
   }
 }

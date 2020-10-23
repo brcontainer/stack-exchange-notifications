@@ -14,21 +14,25 @@
 
     function copyFromDOM(target)
     {
-        if (!target) return;
+        try {
+            var range = d.createRange(), selection = w.getSelection();
 
-        var range = d.createRange(), selection = w.getSelection();
+            range.selectNode(target);
 
-        range.selectNode(target);
+            selection.removeAllRanges();
+            selection.addRange(range);
 
-        selection.removeAllRanges();
-        selection.addRange(range);
+            d.execCommand("copy");
 
-        d.execCommand("copy");
+            selection.removeAllRanges();
+            selection = range = null;
 
-        selection.removeAllRanges();
-        selection = range = null;
+            target.blur();
 
-        target.blur();
+            return true;
+        } catch (ee) {
+            return false;
+        }
     }
 
     function bootCopyCode()
@@ -82,9 +86,15 @@
 
             button.onclick = function (e) {
                 e.preventDefault();
-                copyFromDOM(code);
 
-                StackExchangeNotifications.utils.showLabelNotification(browser.i18n.getMessage("site_clipboard_copied"));
+                var target = this.parentNode && this.parentNode.previousElementSibling ?
+                                this.parentNode.previousElementSibling.querySelector("code") : null;
+
+                if (target && copyFromDOM(target)) {
+                    StackExchangeNotifications.utils.showLabelNotification(browser.i18n.getMessage("site_clipboard_copied"));
+                } else {
+                    StackExchangeNotifications.utils.showLabelNotification(browser.i18n.getMessage("site_clipboard_copied_error"));
+                }
             };
 
             button.type = "button";

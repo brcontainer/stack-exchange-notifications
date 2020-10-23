@@ -6,7 +6,7 @@
  * https://github.com/brcontainer/stack-exchange-notification
  */
 
-(function (w, d) {
+(function (w, d, u) {
     "use strict";
 
     if (typeof browser === "undefined") {
@@ -17,7 +17,7 @@
 
     var hideRegExp = /\bsen-tools-hide\b/g,
         readyRegExp = /^(interactive|complete)$/,
-        notification,
+        copyNotification,
         hideTimer;
 
     if (!w.StackExchangeNotifications) {
@@ -31,24 +31,24 @@
     var Utils = w.StackExchangeNotifications.utils;
 
     Utils.showLabelNotification = function (label, timeout, callback) {
-        if (!notification) {
-            notification = d.createElement("div");
-            notification.className = "sen-tools-popup sen-tools-hide";
+        if (copyNotification === u) {
+            copyNotification = d.createElement("div");
+            copyNotification.className = "sen-tools-popup sen-tools-hide";
 
-            d.body.appendChild(notification);
+            d.body.appendChild(copyNotification);
         }
 
         if (hideTimer) clearTimeout(hideTimer);
 
-        notification.textContent = label;
-        notification.className =
-            notification.className
+        copyNotification.textContent = label;
+        copyNotification.className =
+            copyNotification.className
                 .replace(hideRegExp, " ")
                     .replace(/\s\s/g, " ")
                         .trim();
 
         hideTimer = setTimeout(function () {
-            notification.className += " sen-tools-hide";
+            copyNotification.className += " sen-tools-hide";
             callback && callback();
         }, timeout ? timeout : 2000);
     };
@@ -111,7 +111,7 @@
         function trigger() {
             if (!started) {
                 started = true;
-                console.log('ready.trigger', callback.toString())
+                //console.log('ready.trigger', callback.toString())
                 callback();
             }
         };

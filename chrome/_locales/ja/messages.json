@@ -199,5 +199,8 @@
   },
   "site_clipboard_copied": {
     "message": "クリップボードにコピーしました！"
+  },
+  "site_clipboard_copied_error": {
+    "message": "コピー中にエラーが発生しました！"
   }
 }
