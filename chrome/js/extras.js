@@ -68,7 +68,7 @@
 
     function applyEvents(el)
     {
-        if (!el.matches(".wmd-preview pre") && !el.senCopyCode) {
+        if (!el.matches(".wmd-preview pre, [contenteditable], [contenteditable] *") && !el.senCopyCode) {
             var space, tools, button, nextEl = el.nextSibling, code = el.firstElementChild;
 
             if (!code || code.tagName !== "CODE" || code.senCopyCode) return;
